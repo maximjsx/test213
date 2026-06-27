@@ -1,7 +1,7 @@
 'use client'
 import { useState, useMemo } from 'react'
 import { shuffle } from '../../lib/checker'
-import { speakText } from '../../lib/audio'
+import { speakText, hapticTap, hapticWrong } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 export default function MatchPairs({ exercise, onAnswer, disabled }) {
@@ -26,12 +26,14 @@ export default function MatchPairs({ exercise, onAnswer, disabled }) {
     const expectedRight = exercise.pairs[leftId].right
     const selectedRight = exercise.pairs[rightId].right
     if (expectedRight === selectedRight) {
+      hapticTap()
       const next = [...matchedPairs, { leftId, rightId }]
       setMatchedPairs(next)
       setSelLeftId(null)
       setSelRightId(null)
       if (next.length === totalPairs) onAnswer(true)
     } else {
+      hapticWrong()
       setWrongLeft(leftId)
       setWrongRight(rightId)
       setTimeout(() => {
@@ -45,6 +47,7 @@ export default function MatchPairs({ exercise, onAnswer, disabled }) {
 
   function pickLeft(item) {
     if (disabled || isLeftMatched(item.id)) return
+    hapticTap()
     speakText(item.val)
     if (selRightId !== null) { tryMatch(item.id, selRightId); return }
     setSelLeftId(selLeftId === item.id ? null : item.id)
@@ -52,6 +55,7 @@ export default function MatchPairs({ exercise, onAnswer, disabled }) {
 
   function pickRight(item) {
     if (disabled || isRightMatched(item.id)) return
+    hapticTap()
     speakText(item.val)
     if (selLeftId !== null) { tryMatch(selLeftId, item.id); return }
     setSelRightId(selRightId === item.id ? null : item.id)

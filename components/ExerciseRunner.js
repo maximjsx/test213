@@ -10,7 +10,7 @@ import SpeakSentence from './exercises/SpeakSentence'
 import ListenAndType from './exercises/ListenAndType'
 import ListenTranslate from './exercises/ListenTranslate'
 import Introduce from './exercises/Introduce'
-import { playCorrect, playWrong, playAllHeartsLost } from '../lib/audio'
+import { playCorrect, playWrong, playAllHeartsLost, hapticTap, hapticCorrect, hapticWrong } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
 const EXERCISE_MAP = {
@@ -32,6 +32,7 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
   const [correct, setCorrect] = useState(0)
   const [mistakes, setMistakes] = useState([])
   const [retriedMistakes, setRetriedMistakes] = useState(false)
+  const allMistakesRef = useRef([])
   const [feedback, setFeedback] = useState(null)
   const [pendingAnswer, setPendingAnswer] = useState(false)
   const [checkTrigger, setCheckTrigger] = useState(0)
@@ -90,26 +91,32 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
     feedbackSetAt.current = Date.now()
     if (isCorrect) {
       playCorrect()
+      hapticCorrect()
       setCorrect(c => c + 1)
       setFeedback({ ok: true, message: 'Great!' })
     } else {
       playWrong()
+      hapticWrong()
       onLoseHeart()
       setMistakes(m => [...m, exercise])
+      allMistakesRef.current = [...allMistakesRef.current, exercise]
       setFeedback({ ok: false, message: message || `Correct answer: "${exercise.answer}"` })
     }
   }, [exercise, onLoseHeart])
 
   function handleCheck() {
     if (!pendingAnswer || feedback) return
+    hapticTap()
     setCheckTrigger(t => t + 1)
   }
 
   function handleSkip() {
     if (feedback) return
     playWrong()
+    hapticWrong()
     onLoseHeart()
     setMistakes(m => [...m, exercise])
+    allMistakesRef.current = [...allMistakesRef.current, exercise]
     setFeedback({ ok: false, message: `Correct answer: "${exercise?.answer || '?'}"` })
   }
 
@@ -125,7 +132,9 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
         setCurrent(c => c + 1)
         setKey(k => k + 1)
       } else {
-        onComplete({ correct, total: exercises.length, mistakes })
+        const everMistakes = allMistakesRef.current
+        const uniqueErrors = everMistakes.filter((m, i) => everMistakes.findIndex(x => x.id === m.id) === i).length
+        onComplete({ correct: exercises.length - uniqueErrors, total: exercises.length, mistakes: everMistakes })
       }
     } else {
       setCurrent(c => c + 1)
@@ -232,7 +241,7 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
             </div>
             <button
               className={`${styles.continueBtn} ${feedback.ok ? styles.continueBtnOk : styles.continueBtnBad}`}
-              onClick={handleNext}
+              onClick={() => { hapticTap(); handleNext() }}
             >
               {current + 1 >= queue.length ? 'FINISH' : 'CONTINUE'}
             </button>

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle, checkAnswer } from '../../lib/checker'
-import { speakBulgarian, speakText } from '../../lib/audio'
+import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
 import BulgarianSentence, { parseWordHints } from './BulgarianSentence'
 import styles from './Exercise.module.css'
 
@@ -32,6 +32,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
 
   function addWord(item) {
     if (disabled || checkedRef.current) return
+    hapticTap()
     speakText(item.word)
     const newAnswer = [...answerWords, item]
     setAnswerWords(newAnswer)
@@ -41,6 +42,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
 
   function removeWord(item) {
     if (disabled || checkedRef.current) return
+    hapticTap()
     speakText(item.word)
     const newAnswer = answerWords.filter(w => w.id !== item.id)
     setAnswerWords(newAnswer)

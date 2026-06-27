@@ -31,23 +31,24 @@ function LessonPageInner() {
     if (!found) return []
     const all = found.lesson.exercises
 
-    const TIER = { match_pairs: 1, listen_and_type: 2, speak_sentence: 2, word_bank: 3, fill_blank: 3, translate_to_en: 4, translate_to_bg: 4, listen_translate: 4 }
+    const TIER = { multiple_choice: 1, match_pairs: 1, listen_and_type: 2, speak_sentence: 2, word_bank: 3, fill_blank: 3, translate_to_en: 4, translate_to_bg: 4, listen_translate: 4 }
 
-    // Walk the authored order: keep introduce runs + their immediately-following
-    // multiple_choice questions intact; collect everything else for shuffled placement at the end.
-    const introSection = []
-    const hardSection = []
-    let i = 0
-    while (i < all.length) {
-      if (all[i].type === 'introduce') {
-        while (i < all.length && all[i].type === 'introduce') introSection.push(all[i++])
-        while (i < all.length && all[i].type === 'multiple_choice') introSection.push(all[i++])
-      } else {
-        hardSection.push(all[i++])
-      }
+    // Intro section: everything up to and including the last `introduce` exercise,
+    // plus any `multiple_choice` questions that immediately follow it.
+    // This keeps introduce→practice pairs and any mid-lesson review exercises
+    // (match_pairs, listen tasks placed between introduce clusters) in authored order.
+    // Everything after is shuffled within tiers so repeat lessons feel varied.
+    let lastIntroIdx = -1
+    for (let i = all.length - 1; i >= 0; i--) {
+      if (all[i].type === 'introduce') { lastIntroIdx = i; break }
     }
 
-    // Shuffle the harder exercises by tier so repeat lessons feel varied
+    let splitAt = lastIntroIdx + 1
+    while (splitAt < all.length && all[splitAt].type === 'multiple_choice') splitAt++
+
+    const introSection = all.slice(0, splitAt)
+    const hardSection = all.slice(splitAt)
+
     const tiers = {}
     for (const ex of hardSection) {
       const t = TIER[ex.type] ?? 5

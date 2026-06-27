@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
-import { speakBulgarian, speakText } from '../../lib/audio'
+import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 export default function MultipleChoice({ exercise, onAnswer, onPendingChange, checkTrigger, disabled, levelColor }) {
@@ -15,6 +15,7 @@ export default function MultipleChoice({ exercise, onAnswer, onPendingChange, ch
 
   function select(choice) {
     if (disabled || checked) return
+    hapticTap()
     if (/[Ѐ-ӿ]/.test(choice)) speakText(choice)
     setSelected(choice)
     selectedRef.current = choice
