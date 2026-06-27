@@ -8,6 +8,7 @@ import MatchPairs from './exercises/MatchPairs'
 import WordBank from './exercises/WordBank'
 import SpeakSentence from './exercises/SpeakSentence'
 import ListenAndType from './exercises/ListenAndType'
+import ListenTranslate from './exercises/ListenTranslate'
 import Introduce from './exercises/Introduce'
 import { playCorrect, playWrong, playAllHeartsLost } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
@@ -21,6 +22,7 @@ const EXERCISE_MAP = {
   word_bank: WordBank,
   speak_sentence: SpeakSentence,
   listen_and_type: ListenAndType,
+  listen_translate: ListenTranslate,
   introduce: Introduce,
 }
 

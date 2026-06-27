@@ -1,4 +1,4 @@
-import clientPromise from '@/lib/mongodb'
+import getClientPromise from '@/lib/mongodb'
 
 const MONTHLY_LIMIT = 1_000_000
 
@@ -12,7 +12,7 @@ export async function POST(req) {
   if (!text) return Response.json({ error: 'no text' }, { status: 400 })
 
   const chars = text.length
-  const client = await clientPromise
+  const client = await getClientPromise()
   const col = client.db('bulgario').collection('tts_usage')
   const month = currentMonth()
 
@@ -54,7 +54,7 @@ export async function POST(req) {
 
 // GET — return current month's usage
 export async function GET() {
-  const client = await clientPromise
+  const client = await getClientPromise()
   const col = client.db('bulgario').collection('tts_usage')
   const doc = await col.findOne({ month: currentMonth() })
   return Response.json({ used: doc?.chars ?? 0, limit: MONTHLY_LIMIT })
