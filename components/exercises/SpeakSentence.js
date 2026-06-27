@@ -21,6 +21,8 @@ function speechMatches(spoken, target) {
   return overlap / bWords.length >= 0.7
 }
 
+const isSpeechSupported = typeof window !== 'undefined' && !!(window.SpeechRecognition || window.webkitSpeechRecognition)
+
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [listening, setListening] = useState(false)
   const [lastSpoken, setLastSpoken] = useState(null)
@@ -53,7 +55,6 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     )
     if (!rec) {
       setListening(false)
-      alert('Speech recognition is not supported in this browser.')
     }
   }
 
@@ -80,14 +81,20 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </p>
       )}
 
-      <button
-        className={`${styles.speakMicBtn} ${listening ? styles.speakMicListening : ''} ${succeeded ? styles.speakMicOk : ''}`}
-        onClick={handleSpeak}
-        disabled={disabled || listening || succeeded}
-      >
-        <img src="/icons/microphone.png" alt="🎤" width={24} height={24} />
-        <span>{listening ? 'LISTENING…' : failed ? 'TRY AGAIN' : 'CLICK TO SPEAK'}</span>
-      </button>
+      {isSpeechSupported ? (
+        <button
+          className={`${styles.speakMicBtn} ${listening ? styles.speakMicListening : ''} ${succeeded ? styles.speakMicOk : ''}`}
+          onClick={handleSpeak}
+          disabled={disabled || listening || succeeded}
+        >
+          <img src="/icons/microphone.png" alt="🎤" width={24} height={24} />
+          <span>{listening ? 'LISTENING…' : failed ? 'TRY AGAIN' : 'CLICK TO SPEAK'}</span>
+        </button>
+      ) : (
+        <p className={styles.speakUnsupported}>
+          Speech recognition is not supported in this browser. Use &ldquo;Can&apos;t speak now&rdquo; to skip.
+        </p>
+      )}
     </div>
   )
 }

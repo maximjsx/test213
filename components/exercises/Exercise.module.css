@@ -250,6 +250,11 @@
   border-color:var(--green)!important; background:var(--green-bg)!important;
   color:var(--green)!important;
 }
+.speakUnsupported {
+  font-size:14px; font-weight:600; color:var(--text-dim);
+  text-align:center; padding:20px; line-height:1.6;
+  border:2px dashed var(--border); border-radius:var(--r);
+}
 .speakRetryMsg {
   font-size:14px; color:var(--red); font-weight:600;
   margin-bottom:20px; text-align:center;
