@@ -215,8 +215,11 @@ export default function HomePage() {
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <div className={styles.logo}>
-            <img src="/icons/bulgarian_flag.png" alt="🇧🇬" className={styles.logoFlag} width={34} height={34} />
-            <span className={styles.logoName}>Learn Bulgarian</span>
+  <img src="/icons/bulgarian_flag.png" alt="🇧🇬" className={styles.logoFlag} width={34} height={34} />
+  <span className={styles.logoName}>
+    Learn Bulgarian
+    <sup className={styles.betaBadge}>Beta</sup>
+  </span>
           </div>
           <div className={styles.headerStats}>
             <div className={styles.streak}>
