@@ -1,16 +1,16 @@
 {
   "pages": {
-    "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/page.css",
       "static/chunks/app/page.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
     ],
     "/lesson/[id]/page": [
       "static/chunks/webpack.js",
@@ -18,23 +18,10 @@
       "static/css/app/lesson/[id]/page.css",
       "static/chunks/app/lesson/[id]/page.js"
     ],
-    "/level/[id]/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/level/[id]/page.css",
-      "static/chunks/app/level/[id]/page.js"
-    ],
-    "/privacy/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/privacy/page.css",
-      "static/chunks/app/privacy/page.js"
-    ],
-    "/legal/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/legal/page.css",
-      "static/chunks/app/legal/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

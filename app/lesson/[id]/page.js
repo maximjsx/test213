@@ -31,17 +31,32 @@ function LessonPageInner() {
     if (!found) return []
     const all = found.lesson.exercises
 
-    // Exercise difficulty tiers — lower tier always comes before higher tier
-    const TIER = { introduce: 0, multiple_choice: 1, match_pairs: 1, listen_and_type: 2, speak_sentence: 2, word_bank: 3, fill_blank: 3, translate_to_en: 4, translate_to_bg: 4 }
+    const TIER = { match_pairs: 1, listen_and_type: 2, speak_sentence: 2, word_bank: 3, fill_blank: 3, translate_to_en: 4, translate_to_bg: 4, listen_translate: 4 }
 
-    // Group by tier, shuffle within each tier, then concatenate in order
+    // Walk the authored order: keep introduce runs + their immediately-following
+    // multiple_choice questions intact; collect everything else for shuffled placement at the end.
+    const introSection = []
+    const hardSection = []
+    let i = 0
+    while (i < all.length) {
+      if (all[i].type === 'introduce') {
+        while (i < all.length && all[i].type === 'introduce') introSection.push(all[i++])
+        while (i < all.length && all[i].type === 'multiple_choice') introSection.push(all[i++])
+      } else {
+        hardSection.push(all[i++])
+      }
+    }
+
+    // Shuffle the harder exercises by tier so repeat lessons feel varied
     const tiers = {}
-    for (const ex of all) {
+    for (const ex of hardSection) {
       const t = TIER[ex.type] ?? 5
       if (!tiers[t]) tiers[t] = []
       tiers[t].push(ex)
     }
-    return Object.keys(tiers).sort((a, b) => a - b).flatMap(t => shuffle(tiers[t]))
+    const shuffledHard = Object.keys(tiers).sort((a, b) => a - b).flatMap(t => shuffle(tiers[t]))
+
+    return [...introSection, ...shuffledHard]
   }, [id])
 
   if (!found) return (

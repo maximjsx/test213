@@ -154,14 +154,22 @@
   display: flex; align-items: center; justify-content: center;
   border: 5px solid var(--border);
   background: var(--surface-hi);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
   position: relative;
 }
 .nodeCurrent { background:var(--surface-hi); cursor:pointer; }
-.nodeCurrent:hover { transform:translateY(-4px); }
+.nodeCurrent:hover:not(.nodePressed) { transform:translateY(-4px); }
 .nodeComplete { cursor:pointer; }
-.nodeComplete:hover { transform:translateY(-4px); filter:brightness(1.1); }
+.nodeComplete:hover:not(.nodePressed) { transform:translateY(-4px); filter:brightness(1.1); }
 .nodeLocked { opacity:0.45; cursor:pointer; }
+
+/* Press-down: consume the 3D shadow into translateY so it looks physically pushed */
+.nodePressed {
+  transform: translateY(4px) !important;
+  box-shadow: 0 0 0 transparent !important;
+  filter: brightness(0.92) !important;
+  transition: transform 0.06s ease, box-shadow 0.06s ease, filter 0.06s ease;
+}
 
 .nodeCheck { display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; }
 .nodeNum { font-size:28px; font-weight:900; color:var(--text); }

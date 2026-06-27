@@ -21,6 +21,7 @@ function HeartTimer({ nextHeartInMs }) {
 
 function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, levelId, isLast, levelIndex }) {
   const [showTooltip, setShowTooltip] = useState(false)
+  const [pressed, setPressed] = useState(false)
   const nodeRef = useRef(null)
 
   useEffect(() => {
@@ -39,6 +40,15 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
     setShowTooltip(v => !v)
   }
 
+  function handlePress() {
+    setPressed(true)
+    navigator.vibrate?.(12)
+  }
+
+  function handleRelease() {
+    setPressed(false)
+  }
+
   return (
     <div className={styles.nodeWrap} ref={nodeRef}>
       {isCurrent && (
@@ -49,10 +59,14 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
           !isUnlocked ? styles.nodeLocked
           : isComplete ? styles.nodeComplete
           : styles.nodeCurrent
-        }`}
+        } ${pressed ? styles.nodePressed : ''}`}
         style={isComplete ? { background: levelColor, borderColor: levelColor, boxShadow: `0 4px 0 color-mix(in srgb, ${levelColor} 60%, #000)` }
           : isCurrent ? { borderColor: levelColor, boxShadow: `0 4px 0 var(--border-hi)` } : {}}
         onClick={handleToggle}
+        onPointerDown={handlePress}
+        onPointerUp={handleRelease}
+        onPointerLeave={handleRelease}
+        onPointerCancel={handleRelease}
         aria-label={displayTitle}
       >
         {isComplete ? <span className={styles.nodeCheck}><img src="/icons/green_checkmark.png" alt="✓" width={44} height={44} /></span>
