@@ -53,6 +53,8 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
   const [flyingItems, setFlyingItems] = useState([])
   // Items hidden during flight (visibility:hidden keeps layout stable)
   const [hiddenItems, setHiddenItems] = useState(new Set())
+  // Tiles that have been moved to answer — stay in bank DOM as invisible placeholders so layout doesn't shift
+  const [placeholderItems, setPlaceholderItems] = useState(new Set())
   const [popItems, setPopItems] = useState(new Set())
 
   const answerRef = useRef([])
@@ -111,14 +113,14 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
       const dstRect = chipRefs.current.get(item.id)?.getBoundingClientRect()
       if (dstRect) launchFly({ word: item.word, srcRect, dstRect, chipStyle: false })
 
-      // After clone lands: remove tile from bank, reveal chip
+      // After clone lands: mark tile as placeholder (keeps layout), reveal chip
       setTimeout(() => {
-        setBankItems(prev => prev.filter(w => w.id !== item.id))
+        setPlaceholderItems(prev => new Set([...prev, item.id]))
         setHiddenItems(prev => { const s = new Set(prev); s.delete(item.id); return s })
         triggerPop(item.id)
       }, 260)
     } else {
-      setBankItems(prev => prev.filter(w => w.id !== item.id))
+      setPlaceholderItems(prev => new Set([...prev, item.id]))
       setAnswerWords(prev => [...prev, item])
       triggerPop(item.id)
     }
@@ -133,9 +135,9 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
     if (sourceEl) {
       const srcRect = sourceEl.getBoundingClientRect()
 
-      // Add tile hidden + keep chip hidden in answer → neither zone reflowed
+      // Tile is already in the bank DOM as a placeholder — unhide it (via hiddenItems) so we can measure it
       flushSync(() => {
-        setBankItems(prev => [...prev, item].sort((a, b) => a.id - b.id))
+        setPlaceholderItems(prev => { const s = new Set(prev); s.delete(item.id); return s })
         setHiddenItems(prev => new Set([...prev, item.id]))
       })
 
@@ -151,7 +153,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
       }, 260)
     } else {
       setAnswerWords(prev => prev.filter(w => w.id !== item.id))
-      setBankItems(prev => [...prev, item].sort((a, b) => a.id - b.id))
+      setPlaceholderItems(prev => { const s = new Set(prev); s.delete(item.id); return s })
       triggerPop(item.id)
     }
   }
@@ -276,20 +278,24 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
             onDragLeave={() => setDragOverZone(null)}
             onDrop={onDropBank}
           >
-            {bankItems.map(item => (
-              <button
-                key={item.id}
-                ref={el => { if (el) tileRefs.current.set(item.id, el); else tileRefs.current.delete(item.id) }}
-                className={`${styles.wordTile} ${popItems.has(item.id) ? styles.wordTileNew : ''}`}
-                style={hiddenItems.has(item.id) ? { visibility: 'hidden' } : undefined}
-                draggable={!disabled}
-                onDragStart={e => onDragStartBank(e, item)}
-                onClick={e => addWord(item, e.currentTarget)}
-                disabled={disabled}
-              >
-                {item.word}
-              </button>
-            ))}
+            {bankItems.map(item => {
+              const isPlaceholder = placeholderItems.has(item.id)
+              const isHidden = hiddenItems.has(item.id)
+              return (
+                <button
+                  key={item.id}
+                  ref={el => { if (el) tileRefs.current.set(item.id, el); else tileRefs.current.delete(item.id) }}
+                  className={`${styles.wordTile} ${popItems.has(item.id) ? styles.wordTileNew : ''}`}
+                  style={(isHidden || isPlaceholder) ? { visibility: 'hidden', pointerEvents: 'none' } : undefined}
+                  draggable={!disabled && !isPlaceholder}
+                  onDragStart={e => onDragStartBank(e, item)}
+                  onClick={e => addWord(item, e.currentTarget)}
+                  disabled={disabled || isPlaceholder}
+                >
+                  {item.word}
+                </button>
+              )
+            })}
           </div>
 
           {flyingItems.map(f => (

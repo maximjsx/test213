@@ -37,10 +37,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   useEffect(() => {
     if (target) speakBulgarian(target)
 
-    // iOS Safari webkitSpeechRecognition doesn't support bg-BG (offline only, no Bulgarian).
-    // Use MediaRecorder + Groq Whisper API instead.
-    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent)
-    if (ios) {
+    // webkitSpeechRecognition doesn't support bg-BG on iOS or Android.
+    // Use MediaRecorder + Groq Whisper API instead for all mobile devices.
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile) {
       setUseApiStt(true)
       setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
     } else {
