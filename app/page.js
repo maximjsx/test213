@@ -112,7 +112,7 @@ function ShopModal({ state, MAX_HEARTS, HEART_COST_XP, buyHearts, STREAK_FREEZE_
         <div className={styles.shopEmoji}><img src="/icons/gift_box.png" alt="shop" width={52} height={52} /></div>
         <h2 className={styles.shopTitle}>Shop</h2>
         <div className={styles.shopStats}>
-          <span><img src="/icons/filled_heart.png" alt="❤" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.hearts}/{MAX_HEARTS}</span>
+          <span><img src="/icons/filled_heart.png" alt="❤" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.hearts}</span>
           <span><img src="/icons/lightning.png" alt="⚡" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.xp} XP</span>
         </div>
         <div className={styles.shopItem}>
@@ -174,6 +174,7 @@ export default function HomePage() {
   const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
   const levelRefs = useRef([])
+  const currentLessonRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -193,7 +194,16 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [hydrated])
 
+  useEffect(() => {
+    if (!hydrated) return
+    const el = currentLessonRef.current
+    if (!el) return
+    const top = el.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: Math.max(0, top - window.innerHeight / 2 + 60), behavior: 'smooth' })
+  }, [hydrated])
+
   const currentLevel = COURSE.levels[visibleLevel]
+  const streakAtRisk = hydrated && state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
 
   if (!hydrated) return <div className={styles.loading}>Loading…</div>
 
@@ -222,13 +232,13 @@ export default function HomePage() {
   </span>
           </div>
           <div className={styles.headerStats}>
-            <div className={styles.streak}>
+            <div className={`${styles.streak} ${streakAtRisk ? styles.streakAtRisk : ''}`}>
               <span className={styles.streakFlame}><img src="/icons/fire.png" alt="🔥" width={26} height={26} /></span>
               <span className={styles.streakNum}>{state.streak}</span>
             </div>
             <div className={styles.hearts}>
               <span className={styles.heartIcon}><img src="/icons/filled_heart.png" alt="❤" width={26} height={26} /></span>
-              <span className={styles.heartNum}>{state.hearts}/{MAX_HEARTS}</span>
+              <span className={styles.heartNum}>{state.hearts}</span>
               <HeartTimer nextHeartInMs={nextHeartInMs()} />
             </div>
             <div className={styles.xp}>
@@ -257,7 +267,7 @@ export default function HomePage() {
 
       {/* ── Course map ── */}
       <main className={styles.main}>
-        {COURSE.levels.map((level, li) => {
+        {(() => { let foundCurrent = false; return COURSE.levels.map((level, li) => {
           return (
             <section
               key={level.id}
@@ -265,11 +275,16 @@ export default function HomePage() {
               ref={el => levelRefs.current[li] = el}
             >
               {/* Level divider */}
-              <div className={styles.levelDivider}>
-                <div className={styles.dividerLine} />
-                <span className={styles.dividerLabel}>{level.title}</span>
-                <div className={styles.dividerLine} />
-              </div>
+              {(() => {
+                const allDone = level.lessons.every(l => isLessonComplete(l.id))
+                return (
+                  <div className={`${styles.levelDivider} ${allDone ? styles.levelDividerComplete : ''}`}>
+                    <div className={styles.dividerLine} />
+                    <span className={styles.dividerLabel}>{level.title}{allDone ? ' ✓' : ''}</span>
+                    <div className={styles.dividerLine} />
+                  </div>
+                )
+              })()}
 
               {/* Skip / skipped row — first level only */}
               {li === 0 && (
@@ -296,8 +311,10 @@ export default function HomePage() {
                   const positions = ['center', 'right', 'center', 'left', 'center', 'right', 'center', 'left']
                   const pos = positions[idx % positions.length]
 
+                  const isCurrent = unlocked && !complete
+                  const assignRef = isCurrent && !foundCurrent ? (foundCurrent = true, true) : false
                   return (
-                    <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`}>
+                    <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`} ref={assignRef ? currentLessonRef : null}>
                       <LessonNode
                         lesson={lesson}
                         levelLessons={level.lessons}
@@ -316,7 +333,7 @@ export default function HomePage() {
 
             </section>
           )
-        })}
+        })})()}
       </main>
     </div>
   )
