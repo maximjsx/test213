@@ -58,6 +58,7 @@ export default function RootLayout({ children }) {
         <footer style={{ borderTop: '1px solid var(--border)', padding: '20px 24px', display: 'flex', gap: '24px', justifyContent: 'center', fontFamily: "'Nunito', sans-serif" }}>
           <Link href="/privacy" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700 }}>Privacy Policy</Link>
           <Link href="/legal" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700 }}>Legal Notice</Link>
+          <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 700 }}>Discord</a>
         </footer>
       </body>
     </html>
