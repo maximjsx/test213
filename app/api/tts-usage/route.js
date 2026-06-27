@@ -40,7 +40,7 @@ export async function POST(req) {
       `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.GOOGLE_TTS_KEY}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Referer: 'https://test213-tan.vercel.app/' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           input: { text },
           voice: { languageCode: 'bg-BG', name: 'bg-BG-Chirp3-HD-Aoede' },
