@@ -249,7 +249,7 @@ Bulgarian uses the Cyrillic alphabet with 30 letters. Each letter always makes t
             { type: 'introduce', id: 'greet-1-i4', label: 'NEW WORD', display: 'Добре', sublabel: 'used alone or as "Добре съм"', translation: 'Fine / Well', tts: 'Добре' },
             { type: 'multiple_choice', id: 'greet-1-mc2', question: 'What does "Добре" mean?', choices: ['Fine / Well', 'Hello', 'Goodbye', 'Thank you'], answer: 'Fine / Well' },
             { type: 'multiple_choice', id: 'greet-1-mc3', question: 'How do you reply to "Как си?"', choices: ['Добре съм', 'Лека нощ', 'Довиждане', 'Моля'], answer: 'Добре съм', tts: 'Добре съм' },
-            { type: 'word_bank', id: 'greet-1-wb1', direction: 'to_en', prompt: 'Добре съм', tts: 'Добре съм', words: ['I', 'am', 'fine', 'hello', 'she', 'good', 'not'], answer: 'I am fine' },
+            { type: 'word_bank', id: 'greet-1-wb1', direction: 'to_en', prompt: 'Добре съм', tts: 'Добре съм', words: ['I', 'am', 'fine', 'hello', 'she', 'bad', 'not'], answer: 'I am fine' },
             { type: 'word_bank', id: 'greet-1-wb2', direction: 'to_bg', prompt: 'I am fine', words: ['Добре', 'съм', 'Здравей', 'Как', 'си', 'Моля'], answer: 'Добре съм' },
             { type: 'translate_to_en', id: 'greet-1-tr1', prompt: 'Добре съм', answers: ['I am fine', 'I am good', 'I am well', "I'm fine", "I'm good", "I'm well"], hint: 'добре = fine, съм = I am', tts: 'Добре съм' },
             { type: 'listen_and_type', id: 'greet-1-lat1', tts: 'Здравей', answer: 'Здравей' },

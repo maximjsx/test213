@@ -12,30 +12,30 @@ export async function POST(req) {
     const { text } = await req.json()
     if (!text) return Response.json({ error: 'no text' }, { status: 400 })
 
-    const chars = text.length
     const client = await getClientPromise()
-    const col = client.db('bulgario').collection('tts_usage')
-    const month = currentMonth()
+    const db = client.db('bulgario')
 
-    // Ensure a document exists for this month before the conditional increment.
-    // Using upsert on the equality-only filter avoids duplicate-key errors when
-    // the quota-check filter below doesn't match (quota full → no match → upsert
-    // would try to insert a second doc for the same month and throw).
-    await col.updateOne({ month }, { $setOnInsert: { month, chars: 0 } }, { upsert: true })
-
-    // Atomically reserve quota — only increments if still under limit
-    const result = await col.findOneAndUpdate(
-      { month, chars: { $lte: MONTHLY_LIMIT - chars } },
-      { $inc: { chars } },
-      { returnDocument: 'after' }
-    )
-
-    if (!result) {
-      const doc = await col.findOne({ month })
-      return Response.json({ error: 'limit_reached', used: doc?.chars ?? MONTHLY_LIMIT }, { status: 429 })
+    // Cache hit — skip quota increment and Google TTS call entirely
+    const cached = await db.collection('tts_cache').findOne({ text }, { projection: { audio: 1 } })
+    if (cached?.audio) {
+      return Response.json({ audioContent: cached.audio })
     }
 
-    // Call Google TTS server-side (key never sent to browser)
+    const chars = text.length
+    const month = currentMonth()
+
+    // Single atomic upsert — increment first, then verify under limit
+    const result = await db.collection('tts_usage').findOneAndUpdate(
+      { month },
+      { $inc: { chars }, $setOnInsert: { month } },
+      { upsert: true, returnDocument: 'after' }
+    )
+
+    if (result.chars > MONTHLY_LIMIT) {
+      await db.collection('tts_usage').updateOne({ month }, { $inc: { chars: -chars } })
+      return Response.json({ error: 'limit_reached', used: result.chars }, { status: 429 })
+    }
+
     const ttsRes = await fetch(
       `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.GOOGLE_TTS_KEY}`,
       {
@@ -51,9 +51,14 @@ export async function POST(req) {
     const ttsData = await ttsRes.json()
 
     if (!ttsData.audioContent) {
-      await col.updateOne({ month }, { $inc: { chars: -chars } })
+      await db.collection('tts_usage').updateOne({ month }, { $inc: { chars: -chars } })
       return Response.json({ error: 'tts_failed', detail: ttsData.error?.message }, { status: 502 })
     }
+
+    // Cache audio for future requests (fire-and-forget — don't delay response)
+    db.collection('tts_cache')
+      .updateOne({ text }, { $set: { text, audio: ttsData.audioContent } }, { upsert: true })
+      .catch(() => {})
 
     return Response.json({ audioContent: ttsData.audioContent, used: result.chars })
   } catch (e) {
