@@ -17,11 +17,17 @@ export async function POST(req) {
     const col = client.db('bulgario').collection('tts_usage')
     const month = currentMonth()
 
+    // Ensure a document exists for this month before the conditional increment.
+    // Using upsert on the equality-only filter avoids duplicate-key errors when
+    // the quota-check filter below doesn't match (quota full → no match → upsert
+    // would try to insert a second doc for the same month and throw).
+    await col.updateOne({ month }, { $setOnInsert: { month, chars: 0 } }, { upsert: true })
+
     // Atomically reserve quota — only increments if still under limit
     const result = await col.findOneAndUpdate(
       { month, chars: { $lte: MONTHLY_LIMIT - chars } },
       { $inc: { chars } },
-      { upsert: true, returnDocument: 'after' }
+      { returnDocument: 'after' }
     )
 
     if (!result) {
@@ -34,7 +40,7 @@ export async function POST(req) {
       `https://texttospeech.googleapis.com/v1/text:synthesize?key=${process.env.GOOGLE_TTS_KEY}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Referer: 'https://test213-tan.vercel.app/' },
         body: JSON.stringify({
           input: { text },
           voice: { languageCode: 'bg-BG', name: 'bg-BG-Chirp3-HD-Aoede' },
