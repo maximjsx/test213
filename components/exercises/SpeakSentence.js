@@ -129,8 +129,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     else handleWebSpeech()
   }
 
-  const btnLabel = processing ? 'PROCESSING…'
-    : listening ? (useApiStt ? 'RECORDING… (5s)' : 'LISTENING…')
+  const btnLabel = listening || processing ? 'LISTENING…'
     : failed ? 'TRY AGAIN'
     : 'CLICK TO SPEAK'
 
