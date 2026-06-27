@@ -80,7 +80,7 @@ export default function PrivacyPage() {
           <p>
             Under GDPR you have the right to access, correct, or delete any personal data we hold.
             As we hold no personal data, there is nothing to access or delete. If you have questions,
-            contact us at <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a>.
+            contact us at <a href="mailto:legal@ur.contact">legal@ur.contact</a>.
           </p>
         </section>
 
@@ -95,8 +95,10 @@ export default function PrivacyPage() {
         <section>
           <h2>Contact</h2>
           <p>
-            Максим Фидлер (Maxim Fiedler)<br />
-            Email: <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a>
+            o7studios EOOD (о7студиос ЕООД)<br />
+            Sredna Gora St. 1, Floor 6, Apt. 66<br />
+            8217 Aheloy, Bulgaria<br />
+            Email: <a href="mailto:legal@ur.contact">legal@ur.contact</a>
           </p>
         </section>
       </main>

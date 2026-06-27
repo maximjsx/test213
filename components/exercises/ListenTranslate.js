@@ -24,10 +24,14 @@ export default function ListenTranslate({ exercise, onAnswer, onPendingChange, c
     if (!valueRef.current.trim() || submittedRef.current) return
     submittedRef.current = true
     setSubmitted(true)
-    const result = checkAnswer(valueRef.current, exercise.answer, { allowTranslit: false })
+    const answerField = exercise.answers ?? exercise.answer
+    const result = checkAnswer(valueRef.current, answerField, { allowTranslit: false })
     if (result.correct) onAnswer(true)
     else if (result.close) onAnswer(false, result.message)
-    else onAnswer(false, `Correct answer: "${exercise.answer}"`)
+    else {
+      const shown = Array.isArray(answerField) ? answerField[0] : answerField
+      onAnswer(false, `Correct answer: "${shown}"`)
+    }
   }
 
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function ListenTranslate({ exercise, onAnswer, onPendingChange, c
   }, [checkTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const resultState = submitted
-    ? (checkAnswer(value, exercise.answer, { allowTranslit: false }).correct ? 'ok' : 'bad')
+    ? (checkAnswer(value, exercise.answers ?? exercise.answer, { allowTranslit: false }).correct ? 'ok' : 'bad')
     : ''
 
   return (

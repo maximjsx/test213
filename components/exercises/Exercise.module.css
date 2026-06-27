@@ -157,6 +157,7 @@
   justify-content:center;
   margin-top:36px; padding:24px 0 0;
   border-top:2px solid var(--border);
+  min-height:68px;
 }
 .wordTile {
   background:var(--surface); border:2px solid var(--border-hi);
@@ -167,6 +168,14 @@
 }
 .wordTile:hover:not(:disabled) { border-color:var(--text-muted); background:var(--surface-hi); transform:translateY(-2px); }
 .wordTile:disabled { opacity:0.3; cursor:default; }
+
+@keyframes wordLand {
+  0%   { transform: scale(0.88); }
+  55%  { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+.wordChipNew { animation: wordLand 0.28s ease-out both; }
+.wordTileNew { animation: wordLand 0.28s ease-out both; }
 
 /* ── Introduce card ──────────────────────────────────────── */
 .introduceCard {

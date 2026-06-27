@@ -26,13 +26,17 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
     if (!valueRef.current.trim() || submittedRef.current) return
     submittedRef.current = true
     setSubmitted(true)
-    const result = checkAnswer(valueRef.current, exercise.answer, {
+    const answerField = exercise.answers ?? exercise.answer
+    const result = checkAnswer(valueRef.current, answerField, {
       allowTranslit: isToBg,
       translitMap: exercise.translitMap || {},
     })
     if (result.correct) onAnswer(true)
     else if (result.close) onAnswer(false, result.message)
-    else onAnswer(false, `Correct answer: "${exercise.answer}"`)
+    else {
+      const shown = Array.isArray(answerField) ? answerField[0] : answerField
+      onAnswer(false, `Correct answer: "${shown}"`)
+    }
   }
 
   // Fire when ExerciseRunner clicks CHECK
@@ -56,7 +60,7 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
   }
 
   const resultState = submitted
-    ? (checkAnswer(value, exercise.answer, { allowTranslit: isToBg, translitMap: exercise.translitMap }).correct ? 'ok' : 'bad')
+    ? (checkAnswer(value, exercise.answers ?? exercise.answer, { allowTranslit: isToBg, translitMap: exercise.translitMap }).correct ? 'ok' : 'bad')
     : ''
 
   return (

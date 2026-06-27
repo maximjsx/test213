@@ -1,5 +1,6 @@
 'use client'
 import styles from './BulgarianSentence.module.css'
+import { VOCAB } from '../../lib/vocab'
 
 export function parseWordHints(hint) {
   if (!hint) return {}
@@ -14,6 +15,8 @@ export function parseWordHints(hint) {
   return map
 }
 
+// Renders Bulgarian text with hover tooltips on known words.
+// Exercise-specific hints (wordMap) take priority over the global VOCAB.
 export default function BulgarianSentence({ text, wordMap = {}, className }) {
   const tokens = text.split(/(\s+)/)
 
@@ -22,7 +25,7 @@ export default function BulgarianSentence({ text, wordMap = {}, className }) {
       {tokens.map((token, i) => {
         if (/^\s+$/.test(token)) return <span key={i}> </span>
         const clean = token.replace(/[.,!?;:«»„"'()\-]/g, '').toLowerCase()
-        const translation = wordMap[clean]
+        const translation = wordMap[clean] || VOCAB[clean]
 
         if (!translation) return <span key={i}>{token}</span>
 

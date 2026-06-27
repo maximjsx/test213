@@ -1,9 +1,45 @@
 'use client'
 import { useState, useRef, useMemo, useEffect } from 'react'
+import { flushSync } from 'react-dom'
 import { shuffle, checkAnswer } from '../../lib/checker'
 import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
 import BulgarianSentence, { parseWordHints } from './BulgarianSentence'
 import styles from './Exercise.module.css'
+
+function FlyingWord({ word, fromX, fromY, toX, toY, width, height, chipStyle }) {
+  const ref = useRef(null)
+  const dx = toX - fromX
+  const dy = toY - fromY
+
+  useEffect(() => {
+    const outer = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (ref.current) ref.current.style.transform = `translate(${dx}px, ${dy}px)`
+      })
+    })
+    return () => cancelAnimationFrame(outer)
+  }, []) // eslint-disable-line
+
+  return (
+    <div
+      ref={ref}
+      className={chipStyle ? styles.wordChip : styles.wordTile}
+      style={{
+        position: 'fixed',
+        left: fromX, top: fromY,
+        width, height,
+        transform: 'none',
+        transition: 'transform 0.28s cubic-bezier(0.4,0,0.2,1)',
+        zIndex: 9999,
+        pointerEvents: 'none',
+        margin: 0,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}
+    >
+      {word}
+    </div>
+  )
+}
 
 export default function WordBank({ exercise, onAnswer, onPendingChange, checkTrigger, disabled, useKeyboard }) {
   const initialBank = useMemo(
@@ -14,10 +50,17 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
   const [bankItems, setBankItems] = useState(initialBank)
   const [textValue, setTextValue] = useState('')
   const [dragOverZone, setDragOverZone] = useState(null)
+  const [flyingItems, setFlyingItems] = useState([])
+  // Items hidden during flight (visibility:hidden keeps layout stable)
+  const [hiddenItems, setHiddenItems] = useState(new Set())
+  const [popItems, setPopItems] = useState(new Set())
+
   const answerRef = useRef([])
   const textRef = useRef('')
   const checkedRef = useRef(false)
   const dragItem = useRef(null)
+  const chipRefs = useRef(new Map())
+  const tileRefs = useRef(new Map())
 
   useEffect(() => { answerRef.current = answerWords }, [answerWords])
   useEffect(() => { textRef.current = textValue }, [textValue])
@@ -30,24 +73,87 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
     onPendingChange(useKeyboard ? textRef.current.trim().length > 0 : answerRef.current.length > 0)
   }, [useKeyboard]) // eslint-disable-line
 
-  function addWord(item) {
-    if (disabled || checkedRef.current) return
-    hapticTap()
-    speakText(item.word)
-    const newAnswer = [...answerWords, item]
-    setAnswerWords(newAnswer)
-    setBankItems(prev => prev.filter(w => w.id !== item.id))
-    onPendingChange(true)
+  function triggerPop(itemId) {
+    setPopItems(prev => { const s = new Set(prev); s.add(itemId); return s })
+    setTimeout(() => setPopItems(prev => { const s = new Set(prev); s.delete(itemId); return s }), 400)
   }
 
-  function removeWord(item) {
+  function launchFly({ word, srcRect, dstRect, chipStyle }) {
+    // Align clone center-to-center with the destination element
+    const toX = dstRect.left + (dstRect.width - srcRect.width) / 2
+    const toY = dstRect.top + (dstRect.height - srcRect.height) / 2
+    const flyId = `fly-${Date.now()}-${Math.random()}`
+    setFlyingItems(prev => [...prev, {
+      flyId, word, chipStyle,
+      fromX: srcRect.left, fromY: srcRect.top,
+      toX, toY,
+      width: srcRect.width, height: srcRect.height,
+    }])
+    setTimeout(() => setFlyingItems(prev => prev.filter(f => f.flyId !== flyId)), 340)
+  }
+
+  function addWord(item, sourceEl) {
     if (disabled || checkedRef.current) return
     hapticTap()
     speakText(item.word)
-    const newAnswer = answerWords.filter(w => w.id !== item.id)
-    setAnswerWords(newAnswer)
-    setBankItems(prev => [...prev, item].sort((a, b) => a.id - b.id))
-    onPendingChange(newAnswer.length > 0)
+    onPendingChange(true)
+
+    if (sourceEl) {
+      const srcRect = sourceEl.getBoundingClientRect()
+
+      // Add chip hidden + keep tile hidden in bank → neither zone reflowed
+      flushSync(() => {
+        setAnswerWords(prev => [...prev, item])
+        setHiddenItems(prev => new Set([...prev, item.id]))
+      })
+
+      // Chip is now in the DOM at its real position — measure it
+      const dstRect = chipRefs.current.get(item.id)?.getBoundingClientRect()
+      if (dstRect) launchFly({ word: item.word, srcRect, dstRect, chipStyle: false })
+
+      // After clone lands: remove tile from bank, reveal chip
+      setTimeout(() => {
+        setBankItems(prev => prev.filter(w => w.id !== item.id))
+        setHiddenItems(prev => { const s = new Set(prev); s.delete(item.id); return s })
+        triggerPop(item.id)
+      }, 260)
+    } else {
+      setBankItems(prev => prev.filter(w => w.id !== item.id))
+      setAnswerWords(prev => [...prev, item])
+      triggerPop(item.id)
+    }
+  }
+
+  function removeWord(item, sourceEl) {
+    if (disabled || checkedRef.current) return
+    hapticTap()
+    speakText(item.word)
+    onPendingChange(answerWords.filter(w => w.id !== item.id).length > 0)
+
+    if (sourceEl) {
+      const srcRect = sourceEl.getBoundingClientRect()
+
+      // Add tile hidden + keep chip hidden in answer → neither zone reflowed
+      flushSync(() => {
+        setBankItems(prev => [...prev, item].sort((a, b) => a.id - b.id))
+        setHiddenItems(prev => new Set([...prev, item.id]))
+      })
+
+      // Tile is now in the DOM at its real position — measure it
+      const dstRect = tileRefs.current.get(item.id)?.getBoundingClientRect()
+      if (dstRect) launchFly({ word: item.word, srcRect, dstRect, chipStyle: true })
+
+      // After clone lands: remove chip from answer, reveal tile
+      setTimeout(() => {
+        setAnswerWords(prev => prev.filter(w => w.id !== item.id))
+        setHiddenItems(prev => { const s = new Set(prev); s.delete(item.id); return s })
+        triggerPop(item.id)
+      }, 260)
+    } else {
+      setAnswerWords(prev => prev.filter(w => w.id !== item.id))
+      setBankItems(prev => [...prev, item].sort((a, b) => a.id - b.id))
+      triggerPop(item.id)
+    }
   }
 
   function onDragStartBank(e, item) {
@@ -91,13 +197,17 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
       ? textRef.current
       : answerRef.current.map(w => w.word).join(' ')
     const isToBg = exercise.direction === 'to_bg'
-    const result = checkAnswer(userInput, exercise.answer, {
+    const answerField = exercise.answers ?? exercise.answer
+    const result = checkAnswer(userInput, answerField, {
       allowTranslit: isToBg,
       translitMap: exercise.translitMap || {},
     })
     if (result.correct) onAnswer(true)
     else if (result.close && useKeyboard) onAnswer(false, result.message)
-    else onAnswer(false, `Correct: "${exercise.answer}"`)
+    else {
+      const shown = Array.isArray(answerField) ? answerField[0] : answerField
+      onAnswer(false, `Correct: "${shown}"`)
+    }
   }, [checkTrigger]) // eslint-disable-line
 
   const isToBg = exercise.direction === 'to_bg'
@@ -146,10 +256,12 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
               : answerWords.map(item => (
                   <button
                     key={item.id}
-                    className={styles.wordChip}
+                    ref={el => { if (el) chipRefs.current.set(item.id, el); else chipRefs.current.delete(item.id) }}
+                    className={`${styles.wordChip} ${popItems.has(item.id) ? styles.wordChipNew : ''}`}
+                    style={hiddenItems.has(item.id) ? { visibility: 'hidden' } : undefined}
                     draggable={!disabled}
                     onDragStart={e => onDragStartAnswer(e, item)}
-                    onClick={() => removeWord(item)}
+                    onClick={e => removeWord(item, e.currentTarget)}
                     disabled={disabled}
                   >
                     {item.word}
@@ -167,16 +279,22 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
             {bankItems.map(item => (
               <button
                 key={item.id}
-                className={styles.wordTile}
+                ref={el => { if (el) tileRefs.current.set(item.id, el); else tileRefs.current.delete(item.id) }}
+                className={`${styles.wordTile} ${popItems.has(item.id) ? styles.wordTileNew : ''}`}
+                style={hiddenItems.has(item.id) ? { visibility: 'hidden' } : undefined}
                 draggable={!disabled}
                 onDragStart={e => onDragStartBank(e, item)}
-                onClick={() => addWord(item)}
+                onClick={e => addWord(item, e.currentTarget)}
                 disabled={disabled}
               >
                 {item.word}
               </button>
             ))}
           </div>
+
+          {flyingItems.map(f => (
+            <FlyingWord key={f.flyId} {...f} />
+          ))}
         </>
       )}
     </div>

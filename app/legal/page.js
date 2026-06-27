@@ -18,30 +18,35 @@ export default function LegalPage() {
         <section>
           <h2>Service Provider</h2>
           <p>
-            <strong>Максим Фидлер</strong> (Maxim Fiedler)<br />
+            <strong>o7studios EOOD</strong> (о7студиос ЕООД)<br />
+            Sredna Gora St. 1, Floor 6, Apt. 66<br />
+            8217 Aheloy, Bulgaria
           </p>
-          <p>
-            1 6 66<br />
-            8217 гр. Ахелой, област Бургас<br />
-            Република България (Republic of Bulgaria)
-          </p>
-          <p><em>Please do not send letters to this address. Use email for correspondence.</em></p>
         </section>
 
         <section>
           <h2>Contact</h2>
           <p>
-            Email: <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a><br />
-            Phone: <a href="tel:+359888839802">+359 88 8839802</a>
+            Phone: <a href="tel:+359888839802">+359 88 8839802</a><br />
+            Email: <a href="mailto:legal@ur.contact">legal@ur.contact</a>
           </p>
         </section>
 
         <section>
-          <h2>Editorial Responsibility</h2>
+          <h2>Registration</h2>
           <p>
-            Максим Фидлер (Maxim Fiedler)<br />
-            1 6 66, 8217 гр. Ахелой, област Бургас<br />
-            Република България
+            Registration Number (EIK): 208686471<br />
+            VAT ID: BG208686471<br />
+            Commercial Register: Bulgarian Commercial Register (Агенция по вписванията)
+          </p>
+        </section>
+
+        <section>
+          <h2>Regulatory Information</h2>
+          <p>
+            o7studios EOOD is not subject to a sector-specific supervisory authority.
+            Data protection inquiries are handled by the Commission for Personal Data Protection
+            (КЗЛД), <a href="https://www.cpdp.bg" target="_blank" rel="noopener noreferrer">www.cpdp.bg</a>.
           </p>
         </section>
 
