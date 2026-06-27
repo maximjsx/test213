@@ -79,7 +79,34 @@
 /* Level section */
 .levelSection { margin-bottom:48px; }
 
-.levelDivider { display:flex; align-items:center; gap:12px; margin-bottom:32px; }
+.levelDivider { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+
+/* Skip / skipped rows */
+.skipRow {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-bottom:20px;
+}
+.skipText { font-size:13px; font-weight:700; color:var(--text-dim); }
+.skipLevelBtn {
+  font-size:13px; font-weight:800; letter-spacing:0.3px;
+  padding:7px 16px; border-radius:999px; cursor:pointer;
+  background:transparent; border:2px solid var(--border-hi); color:var(--text-muted);
+  transition:background 0.15s, color 0.15s, border-color 0.15s;
+  white-space:nowrap; flex-shrink:0;
+}
+.skipLevelBtn:hover { background:var(--surface-hi); color:var(--text); border-color:var(--text-dim); }
+
+.skippedRow {
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-bottom:20px;
+}
+.skippedNote { font-size:12px; font-weight:700; color:var(--text-dim); }
+.unskipBtn {
+  font-size:12px; font-weight:800; padding:5px 12px; border-radius:999px; cursor:pointer;
+  background:transparent; border:2px solid var(--border); color:var(--text-dim);
+  transition:background 0.15s, color 0.15s; white-space:nowrap; flex-shrink:0;
+}
+.unskipBtn:hover { background:var(--surface-hi); color:var(--text); }
 .dividerLine { flex:1; height:2px; background:var(--border); border-radius:2px; }
 .dividerLabel { font-size:12px; font-weight:800; letter-spacing:1.5px; color:var(--text-dim); text-transform:uppercase; white-space:nowrap; }
 

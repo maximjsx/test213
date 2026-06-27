@@ -259,7 +259,7 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
                 onClick={() => setUseKeyboard(v => !v)}
               >
                 <span className={styles.keyboardIcon}><img src="/icons/keyboard.png" alt="⌨" width={24} height={24} /></span>
-                {useKeyboard ? 'USE TILES' : 'USE KEYBOARD'}
+                <span className={styles.keyboardLabel}>{useKeyboard ? 'USE TILES' : 'USE KEYBOARD'}</span>
               </button>
             )}
             {!isSpeakExercise && (

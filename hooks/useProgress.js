@@ -31,6 +31,7 @@ function defaultState() {
     lastActiveDay: null,
     streakFreezes: 0,
     wrongExercises: {},   // exerciseId → wrong count across all sessions
+    skippedLevels: {},    // levelId → true
   }
 }
 
@@ -157,9 +158,28 @@ export function useProgress() {
 
   const isLessonComplete = useCallback((id) => !!state.lessons[id]?.completed, [state])
 
-  const isLessonUnlocked = useCallback((levelLessons, idx, prevLevelLessons = null) => {
+  const skipLevel = useCallback((levelId) => {
+    setState(prev => {
+      const next = { ...prev, skippedLevels: { ...(prev.skippedLevels || {}), [levelId]: true } }
+      save(next)
+      return next
+    })
+  }, [])
+
+  const unskipLevel = useCallback((levelId) => {
+    setState(prev => {
+      const skippedLevels = { ...(prev.skippedLevels || {}) }
+      delete skippedLevels[levelId]
+      const next = { ...prev, skippedLevels }
+      save(next)
+      return next
+    })
+  }, [])
+
+  const isLessonUnlocked = useCallback((levelLessons, idx, prevLevelLessons = null, prevLevelId = null) => {
     if (idx === 0) {
       if (!prevLevelLessons) return true
+      if (prevLevelId && state.skippedLevels?.[prevLevelId]) return true
       return prevLevelLessons.every(l => !!state.lessons[l.id]?.completed)
     }
     return !!state.lessons[levelLessons[idx - 1].id]?.completed
@@ -189,6 +209,7 @@ export function useProgress() {
     recordMistakes,
     completeLessonWithXP,
     isLessonComplete, isLessonUnlocked, levelProgress,
+    skipLevel, unskipLevel,
     nextHeartInMs, resetProgress, MAX_HEARTS,
   }
 }

@@ -170,7 +170,7 @@ function ShopModal({ state, MAX_HEARTS, HEART_COST_XP, buyHearts, STREAK_FREEZE_
 }
 
 export default function HomePage() {
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, nextHeartInMs, buyHearts, HEART_COST_XP, buyStreakFreeze, STREAK_FREEZE_COST_XP, MAX_HEARTS } = useProgress()
+  const { state, hydrated, isLessonComplete, isLessonUnlocked, nextHeartInMs, buyHearts, HEART_COST_XP, buyStreakFreeze, STREAK_FREEZE_COST_XP, MAX_HEARTS, skipLevel, unskipLevel } = useProgress()
   const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
   const levelRefs = useRef([])
@@ -268,12 +268,28 @@ export default function HomePage() {
                 <div className={styles.dividerLine} />
               </div>
 
+              {/* Skip / skipped row — first level only */}
+              {li === 0 && (
+                state.skippedLevels?.[level.id]
+                  ? (
+                    <div className={styles.skippedRow}>
+                      <span className={styles.skippedNote}>Alphabet skipped, lessons still available above</span>
+                      <button className={styles.unskipBtn} onClick={() => unskipLevel(level.id)}>Undo</button>
+                    </div>
+                  ) : (
+                    <div className={styles.skipRow}>
+                      <span className={styles.skipText}>Already know Cyrillic?</span>
+                      <button className={styles.skipLevelBtn} onClick={() => { skipLevel(level.id); setTimeout(() => { const el = levelRefs.current[1]; if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 200, behavior: 'smooth' }) }, 50) }}>Skip alphabet</button>
+                    </div>
+                  )
+              )}
+
               {/* Lesson path - zigzag */}
               <div className={styles.lessonPath}>
                 {level.lessons.map((lesson, idx) => {
                   const complete = isLessonComplete(lesson.id)
                   const prevLevel = li > 0 ? COURSE.levels[li - 1] : null
-                  const unlocked = isLessonUnlocked(level.lessons, idx, prevLevel?.lessons ?? null)
+                  const unlocked = isLessonUnlocked(level.lessons, idx, prevLevel?.lessons ?? null, prevLevel?.id ?? null)
                   const positions = ['center', 'right', 'center', 'left', 'center', 'right', 'center', 'left']
                   const pos = positions[idx % positions.length]
 
