@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { COURSE } from '../data/course'
 import { useProgress } from '../hooks/useProgress'
-import { hapticTap } from '../lib/audio'
+import { hapticTap, unlockAudio } from '../lib/audio'
 import styles from './page.module.css'
 
 function HeartTimer({ nextHeartInMs }) {
@@ -84,7 +84,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
               href={`/lesson/${lesson.id}?level=${levelId}`}
               className={styles.tooltipBtn}
               style={{ background: levelColor }}
-              onClick={() => setShowTooltip(false)}
+              onClick={() => { unlockAudio(); setShowTooltip(false) }}
             >
               {isComplete ? `PRACTICE +${Math.ceil(lesson.xp / 2)} XP` : `START +${lesson.xp} XP`}
             </Link>
