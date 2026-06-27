@@ -1,14 +1,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:            #131f24;
-  --surface:       #1c2d35;
-  --surface-hi:    #233541;
-  --border:        #2d4a57;
-  --border-hi:     #3d6274;
-  --text:          #e8f4f8;
-  --text-muted:    #7da8bc;
-  --text-dim:      #4a7a8e;
+  --bg:            #121825;
+  --surface:       #1a2438;
+  --surface-hi:    #22304a;
+  --border:        #2c4562;
+  --border-hi:     #3c5f80;
+  --text:          #e2ecfa;
+  --text-muted:    #7090be;
+  --text-dim:      #456080;
 
   --green:         #00cc7e;
   --green-press:   #00a264;
@@ -22,6 +22,9 @@
   --yellow-bg:     #302800;
   --orange:        #ff9600;
   --orange-bg:     #2e1a00;
+  --teal:          #00bfa0;
+  --teal-press:    #009880;
+  --teal-bg:       #002820;
 
   --r:  12px;
   --r2: 8px;
@@ -40,8 +43,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 input  { font-family: inherit; color: inherit; }
 a      { color: inherit; text-decoration: none; }
 
-/* Scroll snap helper for the course map */
 .snap-x { scroll-snap-type: x mandatory; }
 
-/* Utility */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }

@@ -2,9 +2,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
 const KEY = 'bulgarolearn'
-const MAX_HEARTS = 10
-const HEART_REFILL_MS = 20 * 60 * 1000
-const HEART_COST_XP = 10
 const STREAK_FREEZE_COST_XP = 20
 
 function load() {
@@ -24,24 +21,14 @@ function save(data) {
 function defaultState() {
   return {
     lessons: {},
-    hearts: MAX_HEARTS,
-    heartsLastLost: null,
     xp: 0,
     streak: 0,
     lastActiveDay: null,
     streakFreezes: 0,
-    wrongExercises: {},   // exerciseId → wrong count across all sessions
-    skippedLevels: {},    // levelId → true
+    specialUnlocks: {},
+    wrongExercises: {},
+    skippedLevels: {},
   }
-}
-
-function calcRefillHearts(state) {
-  if (!state.heartsLastLost || state.hearts >= MAX_HEARTS) return state
-  const elapsed = Date.now() - state.heartsLastLost
-  if (elapsed >= HEART_REFILL_MS) {
-    return { ...state, hearts: MAX_HEARTS, heartsLastLost: null }
-  }
-  return state
 }
 
 function calcStreakBreak(state) {
@@ -53,7 +40,6 @@ function calcStreakBreak(state) {
   const diffDays = Math.round((todayMidnight - lastMidnight) / 86400000)
   if (diffDays <= 1) return state
   if ((state.streakFreezes || 0) > 0) {
-    // Advance lastActiveDay to yesterday so re-opening the app doesn't consume another freeze
     const yesterday = new Date(todayMidnight - 86400000)
     return { ...state, streakFreezes: state.streakFreezes - 1, lastActiveDay: yesterday.toDateString() }
   }
@@ -67,65 +53,11 @@ export function useProgress() {
   useEffect(() => {
     const raw = load()
     if (raw) {
-      const s1 = calcRefillHearts(raw)
-      const s2 = calcStreakBreak(s1)
-      if (s2 !== raw) save(s2)
-      setState(s2)
+      const s = calcStreakBreak(raw)
+      if (s !== raw) save(s)
+      setState(s)
     }
     setHydrated(true)
-  }, [])
-
-  // Tick to recalc hearts every minute
-  useEffect(() => {
-    const t = setInterval(() => {
-      setState(prev => {
-        const next = calcRefillHearts(prev)
-        if (next.hearts !== prev.hearts) { save(next); return next }
-        return prev
-      })
-    }, 60_000)
-    return () => clearInterval(t)
-  }, [])
-
-  const loseHeart = useCallback(() => {
-    setState(prev => {
-      if (prev.hearts <= 0) return prev
-      const next = {
-        ...prev,
-        hearts: prev.hearts - 1,
-        heartsLastLost: prev.heartsLastLost || Date.now(),
-      }
-      save(next)
-      return next
-    })
-  }, [])
-
-  const buyHearts = useCallback((count = 1) => {
-    setState(prev => {
-      if (prev.xp < count * HEART_COST_XP) return prev
-      const newHearts = Math.min(MAX_HEARTS, prev.hearts + count)
-      const next = {
-        ...prev,
-        xp: prev.xp - count * HEART_COST_XP,
-        hearts: newHearts,
-        heartsLastLost: newHearts >= MAX_HEARTS ? null : prev.heartsLastLost,
-      }
-      save(next)
-      return next
-    })
-  }, [])
-
-  const buyStreakFreeze = useCallback(() => {
-    setState(prev => {
-      if (prev.xp < STREAK_FREEZE_COST_XP) return prev
-      const next = {
-        ...prev,
-        xp: prev.xp - STREAK_FREEZE_COST_XP,
-        streakFreezes: (prev.streakFreezes || 0) + 1,
-      }
-      save(next)
-      return next
-    })
   }, [])
 
   const completeLessonWithXP = useCallback((lessonId, xp) => {
@@ -151,6 +83,32 @@ export function useProgress() {
       const wrongExercises = { ...prev.wrongExercises }
       exerciseIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
       const next = { ...prev, wrongExercises }
+      save(next)
+      return next
+    })
+  }, [])
+
+  const buyStreakFreeze = useCallback(() => {
+    setState(prev => {
+      if (prev.xp < STREAK_FREEZE_COST_XP) return prev
+      const next = {
+        ...prev,
+        xp: prev.xp - STREAK_FREEZE_COST_XP,
+        streakFreezes: (prev.streakFreezes || 0) + 1,
+      }
+      save(next)
+      return next
+    })
+  }, [])
+
+  const unlockPack = useCallback((packId, costXP) => {
+    setState(prev => {
+      if (prev.xp < costXP) return prev
+      const next = {
+        ...prev,
+        xp: prev.xp - costXP,
+        specialUnlocks: { ...(prev.specialUnlocks || {}), [packId]: true },
+      }
       save(next)
       return next
     })
@@ -190,12 +148,6 @@ export function useProgress() {
     return { done, total: levelLessons.length }
   }, [state])
 
-  const nextHeartInMs = useCallback(() => {
-    if (state.hearts >= MAX_HEARTS || !state.heartsLastLost) return 0
-    const elapsed = Date.now() - state.heartsLastLost
-    return Math.max(0, HEART_REFILL_MS - elapsed)
-  }, [state])
-
   const resetProgress = useCallback(() => {
     const fresh = defaultState()
     save(fresh)
@@ -204,12 +156,10 @@ export function useProgress() {
 
   return {
     state, hydrated,
-    loseHeart, buyHearts, HEART_COST_XP,
     buyStreakFreeze, STREAK_FREEZE_COST_XP,
-    recordMistakes,
-    completeLessonWithXP,
+    unlockPack,
+    recordMistakes, completeLessonWithXP,
     isLessonComplete, isLessonUnlocked, levelProgress,
-    skipLevel, unskipLevel,
-    nextHeartInMs, resetProgress, MAX_HEARTS,
+    skipLevel, unskipLevel, resetProgress,
   }
 }

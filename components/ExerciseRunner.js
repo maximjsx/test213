@@ -10,7 +10,7 @@ import SpeakSentence from './exercises/SpeakSentence'
 import ListenAndType from './exercises/ListenAndType'
 import ListenTranslate from './exercises/ListenTranslate'
 import Introduce from './exercises/Introduce'
-import { playCorrect, playWrong, playAllHeartsLost, hapticTap, hapticCorrect, hapticWrong } from '../lib/audio'
+import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
 const EXERCISE_MAP = {
@@ -26,7 +26,7 @@ const EXERCISE_MAP = {
   introduce: Introduce,
 }
 
-export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHearts, xp, heartCostXp, onLoseHeart, onBuyHeart, onComplete, onQuit }) {
+export default function ExerciseRunner({ lesson, level, exercises, onComplete, onQuit }) {
   const [queue, setQueue] = useState(exercises)
   const [current, setCurrent] = useState(0)
   const [correct, setCorrect] = useState(0)
@@ -37,25 +37,15 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
   const [pendingAnswer, setPendingAnswer] = useState(false)
   const [checkTrigger, setCheckTrigger] = useState(0)
   const [useKeyboard, setUseKeyboard] = useState(false)
-  const [noHeartsModal, setNoHeartsModal] = useState(false)
   const [showQuitConfirm, setShowQuitConfirm] = useState(false)
   const [key, setKey] = useState(0)
   const feedbackSetAt = useRef(null)
-  const prevHeartsRef = useRef(hearts)
 
   const exercise = queue[current]
   const progress = Math.min(current / exercises.length, 1)
   const isWordBank = exercise?.type === 'word_bank'
 
-  useEffect(() => {
-    if (hearts <= 0) {
-      setNoHeartsModal(true)
-      if (prevHeartsRef.current > 0) playAllHeartsLost()
-    }
-    prevHeartsRef.current = hearts
-  }, [hearts])
-
-  // Back-button trap: intercept browser back to show quit confirmation
+  // Back-button trap
   useEffect(() => {
     window.history.pushState({ lessonActive: true }, '')
     function onPopState() {
@@ -97,12 +87,11 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
     } else {
       playWrong()
       hapticWrong()
-      onLoseHeart()
       setMistakes(m => [...m, exercise])
       allMistakesRef.current = [...allMistakesRef.current, exercise]
       setFeedback({ ok: false, message: message || `Correct answer: "${exercise.answer}"` })
     }
-  }, [exercise, onLoseHeart])
+  }, [exercise])
 
   function handleCheck() {
     if (!pendingAnswer || feedback) return
@@ -113,11 +102,10 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
   function handleSkip() {
     if (feedback) return
     if (isAudioExercise) {
-      setFeedback({ ok: 'skip', message: 'No hearts lost' })
+      setFeedback({ ok: 'skip', message: 'No penalty for audio skips' })
     } else {
       playWrong()
       hapticWrong()
-      onLoseHeart()
       setMistakes(m => [...m, exercise])
       allMistakesRef.current = [...allMistakesRef.current, exercise]
       setFeedback({ ok: false, message: `Correct answer: "${exercise?.answer || '?'}"` })
@@ -152,36 +140,6 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
   const isAudioExercise = isSpeakExercise || isListenExercise
   const isIntroExercise = exercise?.type === 'introduce'
 
-  function handleBuyHeart() {
-    onBuyHeart()
-    setNoHeartsModal(false)
-  }
-
-  if (noHeartsModal) {
-    const canAfford = xp >= heartCostXp
-    return (
-      <div className={styles.noHeartsWrap}>
-        <div className={styles.noHeartsCard}>
-          <div className={styles.noHeartsEmoji}><img src="/icons/broken_heart.png" alt="💔" width={64} height={64} /></div>
-          <h2 className={styles.noHeartsTitle}>You ran out of hearts!</h2>
-          <p className={styles.noHeartsText}>Hearts refill in 30 minutes. Check the guidebook to review the material.</p>
-          {canAfford && (
-            <button className={styles.refillBtn} onClick={handleBuyHeart}>
-              <img src="/icons/filled_heart.png" alt="❤" width={18} height={18} style={{ verticalAlign: 'middle', marginRight: 6 }} />Refill 1 Heart ({heartCostXp} XP)
-            </button>
-          )}
-          {!canAfford && (
-            <p className={styles.noXpText}>Not enough XP to refill. ({xp}/{heartCostXp} XP)</p>
-          )}
-          <Link href={`/level/${level.id}`} className={styles.guidebookBtnLarge} style={{ background: level.color }}>
-            <img src="/icons/open_book.png" alt="📖" width={18} height={18} style={{ verticalAlign: 'middle', marginRight: 8 }} />Read Notes
-          </Link>
-          <button className={styles.quitBtn2} onClick={onQuit}>← Back to Course</button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className={styles.wrap}>
       {showQuitConfirm && (
@@ -203,10 +161,6 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
           <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
           <div className={styles.progressTrack}>
             <div className={styles.progressFill} style={{ width: `${progress * 100}%`, background: level.color }} />
-          </div>
-          <div className={styles.heartsDisplay}>
-            <span className={styles.heartEmoji}><img src="/icons/filled_heart.png" alt="❤" width={20} height={20} /></span>
-            <span className={styles.heartCount}>{hearts}</span>
           </div>
         </div>
       </div>

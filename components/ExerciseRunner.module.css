@@ -25,10 +25,6 @@
 .progressTrack { flex:1;height:20px;background:var(--surface-hi);border-radius:100px;overflow:hidden; }
 .progressFill { height:100%;border-radius:100px;transition:width 0.35s ease; }
 
-.heartsDisplay { display:flex;align-items:center;gap:6px;flex-shrink:0; }
-.heartEmoji { font-size:22px; }
-.heartCount { font-size:17px;font-weight:900;color:var(--red); }
-
 /* Exercise area — flex:1 + vertically centered content */
 .area {
   flex:1;min-height:0;
@@ -197,39 +193,6 @@
 }
 .quitCancelBtn:hover { background:var(--surface-hi); }
 
-/* No hearts modal */
-.noHeartsWrap { min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--bg); }
-.noHeartsCard {
-  background:var(--surface);border:2px solid var(--border);border-radius:20px;
-  padding:48px 36px;max-width:440px;width:100%;text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:16px;
-}
-.noHeartsEmoji { font-size:64px; }
-.noHeartsTitle { font-size:26px;font-weight:900;color:var(--text); }
-.noHeartsText  { font-size:15px;color:var(--text-muted);font-weight:600;line-height:1.6; }
-.guidebookBtnLarge {
-  display:block;width:100%;padding:16px;border-radius:var(--r);
-  font-size:16px;font-weight:900;color:#fff;letter-spacing:0.3px;
-  transition:filter 0.15s;margin-top:8px;
-}
-.guidebookBtnLarge:hover { filter:brightness(1.1); }
-.quitBtn2 {
-  background:transparent;border:2px solid var(--border);color:var(--text-muted);
-  font-size:15px;font-weight:700;padding:12px 24px;border-radius:var(--r);
-  transition:background 0.15s;cursor:pointer;
-}
-.quitBtn2:hover { background:var(--surface-hi);color:var(--text); }
-
-.refillBtn {
-  width:100%;padding:16px;border-radius:var(--r);border:none;cursor:pointer;
-  background:var(--red);color:#fff;
-  font-size:16px;font-weight:900;letter-spacing:0.3px;
-  box-shadow:0 4px 0 var(--red-press);
-  transition:transform 0.1s,box-shadow 0.1s,filter 0.15s;
-}
-.refillBtn:hover  { filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 5px 0 var(--red-press); }
-.refillBtn:active { transform:translateY(2px);box-shadow:0 1px 0 var(--red-press); }
-.noXpText { font-size:13px;color:var(--text-dim);font-weight:700; }
 
 @keyframes slideUpContent {
   from { transform: translateY(200px); }

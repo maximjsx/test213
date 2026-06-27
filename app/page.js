@@ -6,19 +6,10 @@ import { useProgress } from '../hooks/useProgress'
 import { hapticTap, unlockAudio } from '../lib/audio'
 import styles from './page.module.css'
 
-function HeartTimer({ nextHeartInMs }) {
-  const [ms, setMs] = useState(nextHeartInMs)
-  useEffect(() => {
-    setMs(nextHeartInMs)
-    if (nextHeartInMs <= 0) return
-    const t = setInterval(() => setMs(m => Math.max(0, m - 1000)), 1000)
-    return () => clearInterval(t)
-  }, [nextHeartInMs])
-  if (ms <= 0) return null
-  const mins = Math.floor(ms / 60000)
-  const secs = Math.floor((ms % 60000) / 1000)
-  return <span className={styles.heartTimer}>{mins}:{secs.toString().padStart(2, '0')}</span>
-}
+const SPECIAL_PACKS = [
+  { id: 'swear_words',  name: 'Swear Words',  icon: '🤬', costXP: 200, desc: 'Bulgarian profanity & adult slang' },
+  { id: 'street_slang', name: 'Street Slang', icon: '😎', costXP: 150, desc: 'Informal expressions locals actually use' },
+]
 
 function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, levelId, isLast, levelIndex }) {
   const [showTooltip, setShowTooltip] = useState(false)
@@ -37,18 +28,9 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   const totalInLevel = levelLessons.length
   const displayTitle = isLast ? `Level ${levelIndex + 1} Review` : lesson.title
 
-  function handleToggle() {
-    setShowTooltip(v => !v)
-  }
-
-  function handlePress() {
-    setPressed(true)
-    hapticTap()
-  }
-
-  function handleRelease() {
-    setPressed(false)
-  }
+  function handleToggle() { setShowTooltip(v => !v) }
+  function handlePress() { setPressed(true); hapticTap() }
+  function handleRelease() { setPressed(false) }
 
   return (
     <div className={styles.nodeWrap} ref={nodeRef}>
@@ -56,6 +38,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
         <div className={`${styles.startLabel} ${showTooltip ? styles.startLabelHide : ''}`}>START</div>
       )}
       <button
+        data-lesson-node
         className={`${styles.node} ${
           !isUnlocked ? styles.nodeLocked
           : isComplete ? styles.nodeComplete
@@ -101,10 +84,59 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   )
 }
 
-function ShopModal({ state, MAX_HEARTS, HEART_COST_XP, buyHearts, STREAK_FREEZE_COST_XP, buyStreakFreeze, onClose }) {
-  const canAfford = state.xp >= HEART_COST_XP
-  const atMax = state.hearts >= MAX_HEARTS
+function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor }) {
+  const containerRef = useRef(null)
+  const svgRef = useRef(null)
 
+  useEffect(() => {
+    function recompute() {
+      const container = containerRef.current
+      const svg = svgRef.current
+      if (!container || !svg) return
+      const cRect = container.getBoundingClientRect()
+      const buttons = container.querySelectorAll('button[data-lesson-node]')
+      const pts = Array.from(buttons).map(btn => {
+        const r = btn.getBoundingClientRect()
+        return { x: r.left + r.width / 2 - cRect.left, y: r.top + r.height / 2 - cRect.top }
+      })
+      while (svg.firstChild) svg.removeChild(svg.firstChild)
+      if (pts.length < 2) return
+      for (let i = 0; i < pts.length - 1; i++) {
+        const a = pts[i], b = pts[i + 1]
+        const midY = (a.y + b.y) / 2
+        const d = `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`
+        const bothDone = isLessonComplete(lessons[i].id) && isLessonComplete(lessons[i + 1].id)
+        const el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        el.setAttribute('d', d)
+        el.setAttribute('fill', 'none')
+        el.setAttribute('stroke-linecap', 'round')
+        if (bothDone) {
+          el.setAttribute('stroke', levelColor)
+          el.setAttribute('stroke-width', '5')
+          el.setAttribute('opacity', '0.55')
+        } else {
+          el.setAttribute('stroke', 'var(--border-hi)')
+          el.setAttribute('stroke-width', '3')
+          el.setAttribute('stroke-dasharray', '6 7')
+          el.setAttribute('opacity', '0.45')
+        }
+        svg.appendChild(el)
+      }
+    }
+    recompute()
+    window.addEventListener('resize', recompute)
+    return () => window.removeEventListener('resize', recompute)
+  })
+
+  return (
+    <div className={styles.lessonPath} ref={containerRef}>
+      <svg ref={svgRef} style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, overflow:'visible' }} />
+      {children}
+    </div>
+  )
+}
+
+function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, onClose }) {
   return (
     <div className={styles.shopOverlay} onClick={onClose}>
       <div className={styles.shopCard} onClick={e => e.stopPropagation()}>
@@ -112,42 +144,10 @@ function ShopModal({ state, MAX_HEARTS, HEART_COST_XP, buyHearts, STREAK_FREEZE_
         <div className={styles.shopEmoji}><img src="/icons/gift_box.png" alt="shop" width={52} height={52} /></div>
         <h2 className={styles.shopTitle}>Shop</h2>
         <div className={styles.shopStats}>
-          <span><img src="/icons/filled_heart.png" alt="❤" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.hearts}</span>
-          <span><img src="/icons/lightning.png" alt="⚡" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.xp} XP</span>
-        </div>
-        <div className={styles.shopItem}>
-          <div className={styles.shopItemInfo}>
-            <span className={styles.shopItemIcon}><img src="/icons/filled_heart.png" alt="❤" width={26} height={26} /></span>
-            <div>
-              <div className={styles.shopItemName}>1 Heart</div>
-              <div className={styles.shopItemCost}>{HEART_COST_XP} XP</div>
-            </div>
-          </div>
-          <button
-            className={styles.shopBuyBtn}
-            onClick={() => { if (!atMax && canAfford) buyHearts(1) }}
-            disabled={!canAfford || atMax}
-          >
-            {atMax ? 'Full' : canAfford ? 'Buy' : 'Need XP'}
-          </button>
-        </div>
-        <div className={styles.shopItem}>
-          <div className={styles.shopItemInfo}>
-            <span className={styles.shopItemIcon}><img src="/icons/heart_with_flame.png" alt="❤️‍🔥" width={26} height={26} /></span>
-            <div>
-              <div className={styles.shopItemName}>5 Hearts</div>
-              <div className={styles.shopItemCost}>{HEART_COST_XP * 5} XP</div>
-            </div>
-          </div>
-          <button
-            className={styles.shopBuyBtn}
-            onClick={() => { if (!atMax && state.xp >= HEART_COST_XP * 5) buyHearts(5) }}
-            disabled={state.xp < HEART_COST_XP * 5 || atMax}
-          >
-            {atMax ? 'Full' : state.xp >= HEART_COST_XP * 5 ? 'Buy' : 'Need XP'}
-          </button>
+          <span><img src="/icons/lightning.png" alt="⚡" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.xp} XP available</span>
         </div>
 
+        <div className={styles.shopSectionLabel}>Streak</div>
         <div className={styles.shopItem}>
           <div className={styles.shopItemInfo}>
             <span className={styles.shopItemIcon}><img src="/icons/shield.png" alt="🛡" width={26} height={26} /></span>
@@ -164,13 +164,40 @@ function ShopModal({ state, MAX_HEARTS, HEART_COST_XP, buyHearts, STREAK_FREEZE_
             {state.xp >= STREAK_FREEZE_COST_XP ? 'Buy' : 'Need XP'}
           </button>
         </div>
+
+        <div className={styles.shopSectionLabel}>Special Packs</div>
+        {SPECIAL_PACKS.map(pack => {
+          const owned = state.specialUnlocks?.[pack.id]
+          const canAfford = state.xp >= pack.costXP
+          return (
+            <div key={pack.id} className={`${styles.shopItem} ${owned ? styles.shopItemOwned : ''}`}>
+              <div className={styles.shopItemInfo}>
+                <span className={styles.shopItemIcon}>{pack.icon}</span>
+                <div>
+                  <div className={styles.shopItemName}>{pack.name}</div>
+                  <div className={styles.shopItemCost}>{owned ? 'Unlocked' : `${pack.costXP} XP`}</div>
+                </div>
+              </div>
+              {owned
+                ? <div className={styles.shopOwnedBadge}>✓ Owned</div>
+                : <button
+                    className={styles.shopBuyBtn}
+                    onClick={() => { if (canAfford) unlockPack(pack.id, pack.costXP) }}
+                    disabled={!canAfford}
+                  >
+                    {canAfford ? 'Unlock' : 'Need XP'}
+                  </button>
+              }
+            </div>
+          )
+        })}
       </div>
     </div>
   )
 }
 
 export default function HomePage() {
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, nextHeartInMs, buyHearts, HEART_COST_XP, buyStreakFreeze, STREAK_FREEZE_COST_XP, MAX_HEARTS, skipLevel, unskipLevel } = useProgress()
+  const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, skipLevel, unskipLevel } = useProgress()
   const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
   const levelRefs = useRef([])
@@ -178,7 +205,6 @@ export default function HomePage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Switch level when the section top crosses the sticky header+banner area (~130px)
       const threshold = 130
       let current = 0
       COURSE.levels.forEach((_, i) => {
@@ -212,11 +238,9 @@ export default function HomePage() {
       {showShop && (
         <ShopModal
           state={state}
-          MAX_HEARTS={MAX_HEARTS}
-          HEART_COST_XP={HEART_COST_XP}
-          buyHearts={buyHearts}
-          STREAK_FREEZE_COST_XP={STREAK_FREEZE_COST_XP}
           buyStreakFreeze={buyStreakFreeze}
+          STREAK_FREEZE_COST_XP={STREAK_FREEZE_COST_XP}
+          unlockPack={unlockPack}
           onClose={() => setShowShop(false)}
         />
       )}
@@ -225,21 +249,16 @@ export default function HomePage() {
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <div className={styles.logo}>
-  <img src="/icons/bulgarian_flag.png" alt="🇧🇬" className={styles.logoFlag} width={34} height={34} />
-  <span className={styles.logoName}>
-    Learn Bulgarian
-    <sup className={styles.betaBadge}>Beta</sup>
-  </span>
+            <img src="/icons/bulgarian_flag.png" alt="🇧🇬" className={styles.logoFlag} width={34} height={34} />
+            <span className={styles.logoName}>
+              Learn Bulgarian
+              <sup className={styles.betaBadge}>Beta</sup>
+            </span>
           </div>
           <div className={styles.headerStats}>
             <div className={`${styles.streak} ${streakAtRisk ? styles.streakAtRisk : ''}`}>
               <span className={styles.streakFlame}><img src="/icons/fire.png" alt="🔥" width={26} height={26} /></span>
               <span className={styles.streakNum}>{state.streak}</span>
-            </div>
-            <div className={styles.hearts}>
-              <span className={styles.heartIcon}><img src="/icons/filled_heart.png" alt="❤" width={26} height={26} /></span>
-              <span className={styles.heartNum}>{state.hearts}</span>
-              <HeartTimer nextHeartInMs={nextHeartInMs()} />
             </div>
             <div className={styles.xp}>
               <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="⚡" width={24} height={24} /></span>
@@ -274,7 +293,6 @@ export default function HomePage() {
               className={styles.levelSection}
               ref={el => levelRefs.current[li] = el}
             >
-              {/* Level divider */}
               {(() => {
                 const allDone = level.lessons.every(l => isLessonComplete(l.id))
                 return (
@@ -286,7 +304,6 @@ export default function HomePage() {
                 )
               })()}
 
-              {/* Skip / skipped row — first level only */}
               {li === 0 && (
                 state.skippedLevels?.[level.id]
                   ? (
@@ -302,8 +319,7 @@ export default function HomePage() {
                   )
               )}
 
-              {/* Lesson path - zigzag */}
-              <div className={styles.lessonPath}>
+              <LessonPathWithLines lessons={level.lessons} isLessonComplete={isLessonComplete} levelColor={level.color}>
                 {level.lessons.map((lesson, idx) => {
                   const complete = isLessonComplete(lesson.id)
                   const prevLevel = li > 0 ? COURSE.levels[li - 1] : null
@@ -329,11 +345,42 @@ export default function HomePage() {
                     </div>
                   )
                 })}
-              </div>
-
+              </LessonPathWithLines>
             </section>
           )
         })})()}
+
+        {/* ── Special Packs ── */}
+        <section className={styles.levelSection}>
+          <div className={styles.levelDivider}>
+            <div className={styles.dividerLine} />
+            <span className={styles.dividerLabel}>Special Packs</span>
+            <div className={styles.dividerLine} />
+          </div>
+          <div className={styles.packsGrid}>
+            {SPECIAL_PACKS.map(pack => {
+              const owned = state.specialUnlocks?.[pack.id]
+              const canAfford = state.xp >= pack.costXP
+              return (
+                <div key={pack.id} className={`${styles.packCard} ${owned ? styles.packOwned : ''}`}>
+                  <div className={styles.packCardIcon}>{pack.icon}</div>
+                  <div className={styles.packCardName}>{pack.name}</div>
+                  <div className={styles.packCardDesc}>{pack.desc}</div>
+                  {owned
+                    ? <div className={styles.packCardUnlocked}>✓ Unlocked</div>
+                    : <button
+                        className={styles.packCardBuyBtn}
+                        onClick={() => { if (canAfford) unlockPack(pack.id, pack.costXP) }}
+                        disabled={!canAfford}
+                      >
+                        {pack.costXP} XP {!canAfford && <span className={styles.packCardNeedMore}>· need more</span>}
+                      </button>
+                  }
+                </div>
+              )
+            })}
+          </div>
+        </section>
       </main>
     </div>
   )

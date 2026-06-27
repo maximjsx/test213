@@ -1,5 +1,5 @@
 'use client'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useMemo, useState, useRef, Suspense } from 'react'
 import { COURSE } from '../../../data/course'
 import { useProgress } from '../../../hooks/useProgress'
@@ -18,26 +18,21 @@ function findLesson(id) {
 function LessonPageInner() {
   const { id } = useParams()
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const found = useMemo(() => findLesson(id), [id])
-  const { state, loseHeart, buyHearts, HEART_COST_XP, completeLessonWithXP, recordMistakes, MAX_HEARTS } = useProgress()
+  const { state, completeLessonWithXP, recordMistakes } = useProgress()
 
   const [phase, setPhase] = useState('exercise')
   const [score, setScore] = useState({ correct: 0, total: 0, mistakes: [] })
   const [xpEarned, setXpEarned] = useState(0)
   const prevWrongIdsRef = useRef({})
+
   const exercises = useMemo(() => {
     if (!found) return []
     const all = found.lesson.exercises
 
     const TIER = { multiple_choice: 1, match_pairs: 1, listen_and_type: 2, speak_sentence: 2, word_bank: 3, fill_blank: 3, translate_to_en: 4, translate_to_bg: 4, listen_translate: 4 }
 
-    // Intro section: everything up to and including the last `introduce` exercise,
-    // plus any `multiple_choice` questions that immediately follow it.
-    // This keeps introduce→practice pairs and any mid-lesson review exercises
-    // (match_pairs, listen tasks placed between introduce clusters) in authored order.
-    // Everything after is shuffled within tiers so repeat lessons feel varied.
     let lastIntroIdx = -1
     for (let i = all.length - 1; i >= 0; i--) {
       if (all[i].type === 'introduce') { lastIntroIdx = i; break }
@@ -73,7 +68,13 @@ function LessonPageInner() {
   function handleComplete(finalScore) {
     prevWrongIdsRef.current = { ...state.wrongExercises }
     setScore(finalScore)
-    const earned = isPractice ? Math.ceil(lesson.xp / 2) : lesson.xp
+
+    const pct = finalScore.total > 0 ? finalScore.correct / finalScore.total : 0
+    const perfect = finalScore.total > 0 && finalScore.correct === finalScore.total
+
+    let baseXP = isPractice ? Math.ceil(lesson.xp / 2) : lesson.xp
+    let earned = perfect ? Math.round(baseXP * 1.5) : pct >= 0.8 ? Math.round(baseXP * 1.2) : baseXP
+
     setXpEarned(earned)
     completeLessonWithXP(lesson.id, earned)
     recordMistakes((finalScore.mistakes || []).map(m => m.id).filter(Boolean))
@@ -100,12 +101,6 @@ function LessonPageInner() {
       lesson={lesson}
       level={level}
       exercises={exercises}
-      hearts={state.hearts}
-      maxHearts={MAX_HEARTS}
-      xp={state.xp}
-      heartCostXp={HEART_COST_XP}
-      onLoseHeart={loseHeart}
-      onBuyHeart={() => buyHearts(1)}
       onComplete={handleComplete}
       onQuit={() => router.push('/')}
     />
