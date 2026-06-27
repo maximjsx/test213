@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/lesson/[id]/page": "app/lesson/[id]/page.js",
+  "/level/[id]/page": "app/level/[id]/page.js",
+  "/legal/page": "app/legal/page.js",
+  "/api/tts-usage/route": "app/api/tts-usage/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/privacy/page": "app/privacy/page.js"
+}

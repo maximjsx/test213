@@ -1,0 +1,290 @@
+.loading { display:flex; align-items:center; justify-content:center; min-height:100vh; color:var(--text-muted); font-size:18px; font-weight:700; }
+
+.page { min-height:100vh; background:var(--bg); }
+
+/* Header */
+.header {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  height: 88px;
+  padding: 0 clamp(16px, 4vw, 48px);
+  display: flex; align-items: center;
+}
+.headerInner {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.logo { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.logoFlag { display:block; }
+.logoName { font-size:20px; font-weight:900; color:var(--green); letter-spacing:-0.5px; }
+
+.headerStats { display:flex; align-items:center; gap:16px; flex-shrink:0; }
+.streak,.hearts,.xp { display:flex; align-items:center; gap:5px; }
+.streakFlame,.heartIcon,.xpIcon { display:flex; align-items:center; flex-shrink:0; }
+.streakNum,.heartNum,.xpNum { font-size:17px; font-weight:800; color:var(--text); }
+.heartTimer { font-size:12px; color:var(--text-dim); font-weight:700; }
+
+/* Sticky level banner */
+.levelBanner {
+  position: sticky; top: 88px; z-index: 19;
+  padding: 10px 20px;
+}
+.bannerInner {
+  max-width: 640px; margin: 0 auto;
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border-radius: 22px;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.bannerLeft { display:flex; flex-direction:column; gap:3px; min-width:0; }
+.bannerUnit { font-size:12px; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.8); text-transform:uppercase; }
+.bannerTitle { font-size:16px; font-weight:800; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.guidebookBtn {
+  display:flex; align-items:center; gap:8px; flex-shrink:0;
+  background:rgba(255,255,255,0.25); border:2px solid rgba(255,255,255,0.5);
+  border-radius: 999px; padding:12px 22px;
+  font-size:15px; font-weight:800; color:#fff; letter-spacing:0.5px;
+  transition:background 0.15s;
+  white-space: nowrap;
+}
+.guidebookBtn:hover { background:rgba(255,255,255,0.35); }
+
+/* Mobile */
+@media (max-width: 520px) {
+  .header { height: 64px; padding: 0 16px; }
+  .levelBanner { top: 64px; padding: 8px 12px; }
+  .bannerInner { padding: 12px 16px; border-radius: 16px; }
+  .bannerTitle { font-size: 14px; }
+  .bannerUnit { font-size: 11px; }
+  .guidebookBtn { padding: 9px 14px; font-size: 13px; gap: 5px; }
+
+  .logoName { display: none; }
+  .headerStats { gap: 10px; }
+  .streakNum, .heartNum, .xpNum { font-size: 15px; }
+  .heartTimer { display: none; }
+  .shopBtn { width: 36px; height: 36px; }
+
+  .pos_left  { padding-left: 24px; }
+  .pos_right { padding-right: 24px; }
+  .node { width: 76px; height: 76px; }
+  .nodeNum { font-size: 22px; }
+}
+
+/* Main */
+.main { max-width:640px; margin:0 auto; padding:24px 24px 100px; }
+
+/* Level section */
+.levelSection { margin-bottom:48px; }
+
+.levelDivider { display:flex; align-items:center; gap:12px; margin-bottom:32px; }
+.dividerLine { flex:1; height:2px; background:var(--border); border-radius:2px; }
+.dividerLabel { font-size:12px; font-weight:800; letter-spacing:1.5px; color:var(--text-dim); text-transform:uppercase; white-space:nowrap; }
+
+/* Lesson path - zigzag */
+.lessonPath { display:flex; flex-direction:column; align-items:center; gap:16px; position:relative; }
+
+.pathStep { display:flex; align-items:center; width:100%; position:relative; }
+.pos_center { justify-content:center; }
+.pos_left   { justify-content:flex-start; padding-left:60px; }
+.pos_right  { justify-content:flex-end;   padding-right:60px; }
+
+/* Node */
+.nodeWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* START speech bubble above current node */
+.startLabel {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border: 2px solid var(--border-hi);
+  border-radius: 10px;
+  padding: 4px 12px;
+  text-transform: uppercase;
+  position: relative;
+  /* Float animation runs on translateY; scale transition runs separately */
+  animation: floatBob 2s ease-in-out infinite;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  transform-origin: bottom center;
+}
+/* Tail pointing down toward the node */
+.startLabel::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--border-hi);
+}
+.startLabel::before {
+  content: '';
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--surface);
+  z-index: 1;
+}
+/* Hidden state — keeps layout space, plays scale-down */
+.startLabelHide {
+  opacity: 0;
+  transform: scale(0.6) translateY(6px);
+  pointer-events: none;
+  animation: none;
+}
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
+.node {
+  width: 96px; height: 96px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 5px solid var(--border);
+  background: var(--surface-hi);
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.nodeCurrent { background:var(--surface-hi); cursor:pointer; }
+.nodeCurrent:hover { transform:translateY(-4px); }
+.nodeComplete { cursor:pointer; }
+.nodeComplete:hover { transform:translateY(-4px); filter:brightness(1.1); }
+.nodeLocked { opacity:0.45; cursor:pointer; }
+
+.nodeCheck { display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; }
+.nodeNum { font-size:28px; font-weight:900; color:var(--text); }
+.lockIcon { display:flex; align-items:center; justify-content:center; }
+
+/* Tooltip — always below the node, arrow points up */
+.tooltip {
+  position: absolute; left:50%; transform:translateX(-50%);
+  top: calc(100% + 16px); z-index: 15;
+  background: var(--surface); border:3px solid var(--border-hi);
+  border-radius: var(--r); padding: 22px 20px;
+  min-width: 260px; text-align:center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  animation: tooltipPop 0.15s ease;
+}
+/* Arrow pointing up toward the node */
+.tooltip::after {
+  content:''; position:absolute; bottom:100%; left:50%; transform:translateX(-50%);
+  border:9px solid transparent; border-bottom-color:var(--border-hi);
+}
+
+/* Locked tooltip variant */
+.tooltipLocked {
+  border-color: var(--border);
+}
+.tooltipBtnLocked {
+  display:block; border-radius:var(--r2);
+  padding:14px; font-size:16px; font-weight:900; color:var(--text-dim);
+  background:var(--surface-hi); border:2px solid var(--border);
+  letter-spacing:0.5px; cursor:not-allowed; opacity:0.6;
+}
+
+@keyframes tooltipPop { from { opacity:0; transform:translateX(-50%) scale(0.9); } }
+
+.tooltipTitle { font-size:17px; font-weight:800; color:var(--text); margin-bottom:6px; }
+.tooltipSub { font-size:14px; color:var(--text-muted); font-weight:600; margin-bottom:16px; }
+.tooltipBtn {
+  display:block; border-radius:var(--r2);
+  padding:14px 10px; font-size:17px; font-weight:900; color:#fff;
+  letter-spacing:0.5px; transition:filter 0.15s, transform 0.1s;
+  border:none;
+}
+.tooltipBtn:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+/* Chest progress */
+/* Shop button */
+.shopBtn {
+  width:44px; height:44px; border-radius:50%;
+  background:var(--surface-hi); border:2px solid var(--border-hi);
+  font-size:18px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s, transform 0.1s;
+  flex-shrink:0;
+}
+.shopBtn:hover { background:var(--border); transform:scale(1.1); }
+
+/* Shop modal */
+.shopOverlay {
+  position:fixed; inset:0; z-index:100;
+  background:rgba(0,0,0,0.6);
+  display:flex; align-items:center; justify-content:center;
+  padding:24px;
+  animation:shopFade 0.15s ease;
+}
+@keyframes shopFade { from{opacity:0} to{opacity:1} }
+
+.shopCard {
+  background:var(--surface); border:2px solid var(--border-hi);
+  border-radius:24px; padding:40px 32px;
+  max-width:440px; width:100%; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:16px;
+  position:relative;
+  animation:shopPop 0.2s ease;
+}
+@keyframes shopPop { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
+
+.shopClose {
+  position:absolute; top:14px; right:14px;
+  width:34px; height:34px; border-radius:50%;
+  background:var(--surface-hi); border:2px solid var(--border);
+  color:var(--text-muted); font-size:15px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s;
+}
+.shopClose:hover { background:var(--border); color:var(--text); }
+
+.shopEmoji { font-size:56px; }
+.shopTitle { font-size:24px; font-weight:900; color:var(--text); margin:0; }
+.shopStats {
+  display:flex; gap:20px;
+  font-size:15px; font-weight:800; color:var(--text-muted);
+}
+
+.shopItem {
+  width:100%;
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--surface-hi); border:2px solid var(--border);
+  border-radius:var(--r); padding:16px 20px;
+}
+.shopItemInfo { display:flex; align-items:center; gap:14px; text-align:left; min-width:0; flex:1; }
+.shopItemIcon { font-size:28px; flex-shrink:0; }
+.shopItemName { font-size:16px; font-weight:800; color:var(--text); }
+.shopItemCost { font-size:13px; font-weight:700; color:var(--text-muted); }
+
+.shopBuyBtn {
+  padding:10px 20px; border-radius:var(--r2); border:2px solid transparent; cursor:pointer;
+  background:var(--red); color:#fff;
+  font-size:14px; font-weight:900; letter-spacing:0.3px;
+  box-shadow:0 3px 0 var(--red-press);
+  transition:transform 0.1s, box-shadow 0.1s, filter 0.15s;
+  white-space:nowrap; flex-shrink:0; min-width:90px; text-align:center;
+}
+.shopBuyBtn:hover:not(:disabled) { filter:brightness(1.1); transform:translateY(-1px); box-shadow:0 4px 0 var(--red-press); }
+.shopBuyBtn:disabled { background:var(--surface); color:var(--text-dim); border:2px solid var(--border); box-shadow:none; cursor:not-allowed; }
+
+.chestRow { display:flex; justify-content:center; margin-top:24px; }
+.chestBox {
+  display:flex; align-items:center; gap:12px;
+  background:var(--surface); border:2px solid var(--border);
+  border-radius:var(--r); padding:12px 20px;
+}
+.chestIcon { font-size:28px; }
+.chestProgress { display:flex; flex-direction:column; gap:5px; min-width:140px; }
+.chestBar { height:10px; background:var(--border); border-radius:100px; overflow:hidden; }
+.chestFill { height:100%; border-radius:100px; transition:width 0.4s ease; }
+.chestLabel { font-size:12px; font-weight:800; color:var(--text-muted); }

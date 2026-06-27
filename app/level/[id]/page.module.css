@@ -1,0 +1,49 @@
+.notFound { display:flex;align-items:center;justify-content:center;min-height:100vh;gap:12px;color:var(--text); }
+.notFound button { background:var(--surface);border:2px solid var(--border);color:var(--text);padding:8px 16px;border-radius:var(--r2);cursor:pointer;font-weight:700; }
+
+.page { min-height:100vh; background:var(--bg); }
+
+.topBar {
+  position:sticky;top:0;z-index:10;
+  background:var(--surface);
+  height:88px;padding:0 24px;
+  display:flex;align-items:center;
+}
+.topBarInner {
+  max-width:680px;width:100%;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.backBtn {
+  width:36px;height:36px;border-radius:50%;
+  background:var(--surface-hi);border:2px solid var(--border);
+  color:var(--text-muted);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;cursor:pointer;
+}
+.backBtn:hover { background:var(--border); }
+.topTitle { font-size:16px;font-weight:800;color:var(--text-muted);letter-spacing:0.3px; }
+
+.content { max-width:680px;margin:0 auto;padding:40px 24px 80px; }
+.levelChip { display:inline-block;padding:4px 14px;border-radius:100px;font-size:13px;font-weight:800;letter-spacing:0.5px;margin-bottom:10px; }
+.title { font-size:28px;font-weight:900;color:var(--text);margin-bottom:32px; }
+
+.notes { display:flex;flex-direction:column;gap:14px; }
+.h2 { font-size:20px;font-weight:800;color:var(--text);margin-top:8px;padding-bottom:8px;border-bottom:2px solid var(--border); }
+.h3 { font-size:16px;font-weight:800;color:var(--text-muted);margin-top:4px; }
+.p { font-size:15px;color:var(--text);line-height:1.7; }
+.ul { padding-left:22px;display:flex;flex-direction:column;gap:5px; }
+.ul li { font-size:15px;color:var(--text);line-height:1.6; }
+
+.table { width:100%;border-collapse:collapse;font-size:14px;border:2px solid var(--border);border-radius:var(--r2);overflow:hidden; }
+.table th { background:var(--surface-hi);color:var(--text-muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:10px 14px;text-align:left;border-bottom:2px solid var(--border); }
+.table td { padding:9px 14px;color:var(--text);border-bottom:1px solid var(--border); }
+.table tr:last-child td { border-bottom:none; }
+.table tr:nth-child(even) td { background:var(--surface); }
+
+@media (max-width: 520px) {
+  .topBar { height: 64px; padding: 0 16px; }
+  .content { padding: 24px 16px 60px; }
+  .title { font-size: 22px; }
+  .table { font-size: 12px; }
+  .table th, .table td { padding: 8px 10px; }
+}

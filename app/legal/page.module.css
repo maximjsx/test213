@@ -1,0 +1,94 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.back {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: color 0.15s;
+}
+.back:hover {
+  color: var(--text);
+}
+
+.main {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+  flex: 1;
+}
+
+.main h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.updated {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 36px;
+}
+
+.main section {
+  margin-bottom: 32px;
+}
+
+.main h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+  color: var(--green);
+}
+
+.main p,
+.main li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.main ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.main a {
+  color: var(--green);
+  text-decoration: underline;
+}
+.main a:hover {
+  opacity: 0.8;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 24px;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.footer a:hover {
+  color: var(--text);
+}

@@ -1,0 +1,44 @@
+.wordWrap {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+.word {
+  border-bottom: 2px dotted var(--blue);
+  padding-bottom: 1px;
+  transition: color 0.12s;
+}
+.wordWrap:hover .word { color: var(--blue); }
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--surface);
+  border: 2px solid var(--border-hi);
+  border-radius: 10px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  z-index: 200;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.wordWrap:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--border-hi);
+}
