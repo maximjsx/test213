@@ -11,6 +11,16 @@
   padding: 0 clamp(16px, 4vw, 48px);
   display: flex; align-items: center;
 }
+.betaBadge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  vertical-align: super;
+  margin-left: 4px;
+  line-height: 1;
+}
 .headerInner {
   width: 100%;
   display: flex; align-items: center; justify-content: space-between;
