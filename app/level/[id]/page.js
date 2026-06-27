@@ -17,9 +17,9 @@ function renderMd(text) {
     } else if (line.startsWith('### ')) {
       out.push(<h3 key={k++} className={styles.h3}>{line.slice(4)}</h3>)
       i++
-    } else if (line.startsWith('| ')) {
+    } else if (line.startsWith('|')) {
       const rows = []
-      while (i < lines.length && lines[i].startsWith('| ')) { rows.push(lines[i]); i++ }
+      while (i < lines.length && lines[i].startsWith('|')) { rows.push(lines[i]); i++ }
       const parse = r => r.split('|').map(c => c.trim()).filter(Boolean)
       const [hdr, , ...body] = rows
       out.push(
@@ -61,7 +61,7 @@ export default function LevelPage() {
     <div className={styles.page}>
       <div className={styles.topBar} style={{ borderBottom: `3px solid ${level.color}` }}>
         <div className={styles.topBarInner}>
-          <button className={styles.backBtn} onClick={() => router.back()}><img src="/icons/gray_x.png" alt="✕" width={14} height={14} /></button>
+          <button className={styles.backBtn} onClick={() => router.back()}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
           <span className={styles.topTitle}>Notes</span>
           <div style={{ width: 36 }} />
         </div>

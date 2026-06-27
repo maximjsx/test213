@@ -116,8 +116,9 @@
   display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
 
-.ok  { background:var(--green-bg); border-color:var(--green-press); }
-.bad { background:var(--red-bg);   border-color:var(--red-press); }
+.ok   { background:var(--green-bg); border-color:var(--green-press); }
+.bad  { background:var(--red-bg);   border-color:var(--red-press); }
+.skip { background:var(--surface-hi); border-color:var(--border); }
 
 .feedbackLeft { display:flex;align-items:center;gap:14px; }
 .feedbackIcon {
@@ -131,10 +132,13 @@
   60%  { transform:scale(1.25); }
   100% { transform:scale(1);   opacity:1; }
 }
-.iconBad { background:var(--red-press);color:#fff; }
+.iconBad  { background:var(--red-press);color:#fff; }
+.iconSkip { background:var(--border);color:var(--text-muted); }
 
 .feedbackTitle { font-size:16px;font-weight:900;color:var(--text); }
 .feedbackMsg   { font-size:14px;font-weight:600;color:var(--text-muted);margin-top:2px; }
+
+.feedbackBtnWrap { display:contents; }
 
 .continueBtn {
   flex-shrink:0;
@@ -148,6 +152,9 @@
 .continueBtnBad { background:var(--red);color:#fff;box-shadow:0 4px 0 var(--red-press); }
 .continueBtnBad:hover  { transform:translateY(-1px);box-shadow:0 5px 0 var(--red-press); }
 .continueBtnBad:active { transform:translateY(2px);box-shadow:0 1px 0 var(--red-press); }
+.continueBtnSkip { background:var(--border);color:var(--text);box-shadow:0 4px 0 var(--text-muted); }
+.continueBtnSkip:hover  { transform:translateY(-1px);box-shadow:0 5px 0 var(--text-muted); }
+.continueBtnSkip:active { transform:translateY(2px);box-shadow:0 1px 0 var(--text-muted); }
 
 /* Quit confirmation modal */
 .quitModalOverlay {
@@ -278,6 +285,17 @@
     flex-direction: column;
     align-items: stretch;
     gap: 14px;
+  }
+
+  /* Button wrapper: opaque background panel that blocks sliding feedbackLeft */
+  .feedbackBtnWrap {
+    display: block;
+    position: relative;
+    z-index: 2;
+    background: inherit;
+    /* bleed edge-to-edge and cover safe-area at bottom */
+    margin: 0 -16px calc(-38px - env(safe-area-inset-bottom, 0px));
+    padding: 10px 16px calc(38px + env(safe-area-inset-bottom, 0px));
   }
 
   .continueBtn {

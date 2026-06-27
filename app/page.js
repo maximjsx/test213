@@ -108,7 +108,7 @@ function ShopModal({ state, MAX_HEARTS, HEART_COST_XP, buyHearts, STREAK_FREEZE_
   return (
     <div className={styles.shopOverlay} onClick={onClose}>
       <div className={styles.shopCard} onClick={e => e.stopPropagation()}>
-        <button className={styles.shopClose} onClick={onClose}><img src="/icons/gray_x.png" alt="✕" width={14} height={14} /></button>
+        <button className={styles.shopClose} onClick={onClose}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
         <div className={styles.shopEmoji}><img src="/icons/gift_box.png" alt="shop" width={52} height={52} /></div>
         <h2 className={styles.shopTitle}>Shop</h2>
         <div className={styles.shopStats}>

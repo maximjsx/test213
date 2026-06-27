@@ -112,12 +112,16 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
 
   function handleSkip() {
     if (feedback) return
-    playWrong()
-    hapticWrong()
-    onLoseHeart()
-    setMistakes(m => [...m, exercise])
-    allMistakesRef.current = [...allMistakesRef.current, exercise]
-    setFeedback({ ok: false, message: `Correct answer: "${exercise?.answer || '?'}"` })
+    if (isAudioExercise) {
+      setFeedback({ ok: 'skip', message: 'No hearts lost' })
+    } else {
+      playWrong()
+      hapticWrong()
+      onLoseHeart()
+      setMistakes(m => [...m, exercise])
+      allMistakesRef.current = [...allMistakesRef.current, exercise]
+      setFeedback({ ok: false, message: `Correct answer: "${exercise?.answer || '?'}"` })
+    }
   }
 
   function handleNext() {
@@ -144,6 +148,8 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
 
   const ExComponent = EXERCISE_MAP[exercise?.type]
   const isSpeakExercise = exercise?.type === 'speak_sentence'
+  const isListenExercise = exercise?.type === 'listen_and_type' || exercise?.type === 'listen_translate'
+  const isAudioExercise = isSpeakExercise || isListenExercise
   const isIntroExercise = exercise?.type === 'introduce'
 
   function handleBuyHeart() {
@@ -194,7 +200,7 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
 
       <div className={styles.topBar}>
         <div className={styles.topBarInner}>
-          <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="✕" width={14} height={14} /></button>
+          <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
           <div className={styles.progressTrack}>
             <div className={styles.progressFill} style={{ width: `${progress * 100}%`, background: level.color }} />
           </div>
@@ -228,30 +234,32 @@ export default function ExerciseRunner({ lesson, level, exercises, hearts, maxHe
       </div>
 
       {feedback ? (
-        <div className={`${styles.feedbackBar} ${feedback.ok ? styles.ok : styles.bad}`}>
+        <div className={`${styles.feedbackBar} ${feedback.ok === true ? styles.ok : feedback.ok === 'skip' ? styles.skip : styles.bad}`}>
           <div className={styles.feedbackInner}>
             <div className={styles.feedbackLeft}>
-              <div className={`${styles.feedbackIcon} ${feedback.ok ? styles.iconOk : styles.iconBad}`}>
-                <img src={feedback.ok ? '/icons/green_checkmark.png' : '/icons/red_x.png'} alt={feedback.ok ? '✓' : '✗'} width={22} height={22} />
+              <div className={`${styles.feedbackIcon} ${feedback.ok === true ? styles.iconOk : feedback.ok === 'skip' ? styles.iconSkip : styles.iconBad}`}>
+                <img src={feedback.ok === true ? '/icons/green_checkmark.png' : '/icons/gray_x.png'} alt={feedback.ok === true ? '✓' : '✗'} width={22} height={22} />
               </div>
               <div>
-                <div className={styles.feedbackTitle}>{feedback.ok ? 'Correct!' : 'Incorrect'}</div>
+                <div className={styles.feedbackTitle}>{feedback.ok === true ? 'Correct!' : feedback.ok === 'skip' ? 'Skipped!' : 'Incorrect'}</div>
                 <div className={styles.feedbackMsg}>{feedback.message}</div>
               </div>
             </div>
-            <button
-              className={`${styles.continueBtn} ${feedback.ok ? styles.continueBtnOk : styles.continueBtnBad}`}
-              onClick={() => { hapticTap(); handleNext() }}
-            >
-              {current + 1 >= queue.length ? 'FINISH' : 'CONTINUE'}
-            </button>
+            <div className={styles.feedbackBtnWrap}>
+              <button
+                className={`${styles.continueBtn} ${feedback.ok === true ? styles.continueBtnOk : feedback.ok === 'skip' ? styles.continueBtnSkip : styles.continueBtnBad}`}
+                onClick={() => { hapticTap(); handleNext() }}
+              >
+                {current + 1 >= queue.length ? 'FINISH' : 'CONTINUE'}
+              </button>
+            </div>
           </div>
         </div>
       ) : exercise?.type !== 'match_pairs' ? (
         <div className={styles.checkBar}>
           <div className={styles.checkBarInner}>
             {!isIntroExercise && (
-              <button className={styles.skipBtn} onClick={handleSkip}>{isSpeakExercise ? "CAN'T SPEAK NOW" : 'SKIP'}</button>
+              <button className={styles.skipBtn} onClick={handleSkip}>{isSpeakExercise ? "CAN'T SPEAK NOW" : isListenExercise ? "CAN'T LISTEN NOW" : 'SKIP'}</button>
             )}
             {isWordBank && (
               <button

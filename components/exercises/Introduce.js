@@ -21,6 +21,7 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
   const lower = upper.toLowerCase()
   const isCyrillic = /[Ѐ-ӿ]/i.test(upper)
   const showBothCases = isCyrillic && upper.length <= 2 && upper !== lower
+  const isWord = upper.length > 2
 
   return (
     <div className={styles.wrap}>
@@ -34,7 +35,7 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
               <span className={styles.introduceLetterLower}>{lower}</span>
             </>
           ) : (
-            <span className={styles.introduceLetter}>{upper}</span>
+            <span className={isWord ? styles.introduceWord : styles.introduceLetter}>{upper}</span>
           )}
         </div>
 
