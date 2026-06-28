@@ -25,15 +25,18 @@
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text-muted); font-weight: 800; font-size: 14px;
   padding: 8px 16px; border-radius: var(--r2);
-  transition: border-color 0.15s, color 0.15s; white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s; white-space: nowrap;
 }
 .importBtn:hover { border-color: var(--border-hi); color: var(--text); }
+.importBtn:active { transform: translateY(1px); }
 .createBtn {
   background: var(--green); color: #fff; font-weight: 800; font-size: 14px;
   padding: 8px 18px; border-radius: var(--r2); border: none;
-  transition: filter 0.15s; white-space: nowrap;
+  box-shadow: 0 4px 0 var(--green-press);
+  transition: filter 0.1s, transform 0.1s, box-shadow 0.1s; white-space: nowrap;
 }
-.createBtn:hover { filter: brightness(1.1); }
+.createBtn:hover  { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 5px 0 var(--green-press); }
+.createBtn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--green-press); filter: brightness(0.96); }
 
 /* import panel */
 .importPanel {
@@ -56,26 +59,30 @@
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text-muted); font-weight: 700; font-size: 13px;
   padding: 9px 16px; border-radius: var(--r2); cursor: pointer;
-  transition: border-color 0.15s, color 0.15s; white-space: nowrap; flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s; white-space: nowrap; flex-shrink: 0;
 }
-.fileLabel:hover { border-color: var(--border-hi); color: var(--text); }
+.fileLabel:hover  { border-color: var(--border-hi); color: var(--text); }
+.fileLabel:active { transform: translateY(1px); }
 .fileInput { display: none; }
 .importError { font-size: 13px; color: var(--red); font-weight: 700; }
 .importActions { display: flex; gap: 8px; }
 .importSubmit {
   background: var(--blue); color: #fff; font-weight: 800; font-size: 14px;
   padding: 9px 20px; border-radius: var(--r2); border: none;
-  transition: filter 0.15s;
+  box-shadow: 0 4px 0 #1a6abf;
+  transition: filter 0.1s, transform 0.1s, box-shadow 0.1s;
 }
-.importSubmit:hover:not(:disabled) { filter: brightness(1.1); }
+.importSubmit:hover:not(:disabled)  { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 5px 0 #1a6abf; }
+.importSubmit:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #1a6abf; }
 .importSubmit:disabled { opacity: 0.4; cursor: not-allowed; }
 .importCancel {
   background: transparent; border: 2px solid var(--border);
   color: var(--text-muted); font-weight: 700; font-size: 14px;
   padding: 9px 16px; border-radius: var(--r2);
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.importCancel:hover { border-color: var(--border-hi); color: var(--text); }
+.importCancel:hover  { border-color: var(--border-hi); color: var(--text); }
+.importCancel:active { transform: translateY(1px); }
 
 .content { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
 
@@ -89,9 +96,12 @@
 .createBtnLg {
   margin-top: 8px; background: var(--green); color: #fff;
   font-weight: 800; font-size: 16px; padding: 14px 32px;
-  border-radius: var(--r); border: none; transition: filter 0.15s;
+  border-radius: var(--r); border: none;
+  box-shadow: 0 4px 0 var(--green-press);
+  transition: filter 0.1s, transform 0.1s, box-shadow 0.1s;
 }
-.createBtnLg:hover { filter: brightness(1.1); }
+.createBtnLg:hover  { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 5px 0 var(--green-press); }
+.createBtnLg:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--green-press); }
 
 .grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;
@@ -99,9 +109,11 @@
 .card {
   background: var(--surface); border: 2px solid var(--border);
   border-radius: var(--r); overflow: hidden;
-  transition: border-color 0.15s, transform 0.15s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  transition: border-color 0.12s, transform 0.12s ease, box-shadow 0.12s ease;
 }
-.card:hover { border-color: var(--border-hi); }
+.card:hover  { border-color: var(--border-hi); transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+.card:active { transform: translateY(3px); box-shadow: 0 0px 4px rgba(0,0,0,0.2); }
 .cardTop {
   height: 80px; display: flex; align-items: center; justify-content: center;
 }
@@ -116,30 +128,35 @@
   flex: 1; background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text); font-weight: 700; font-size: 13px;
   padding: 9px 12px; border-radius: var(--r2); text-align: center;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, transform 0.1s;
 }
-.editBtn:hover { border-color: var(--border-hi); }
+.editBtn:hover  { border-color: var(--border-hi); }
+.editBtn:active { transform: translateY(1px); }
 .playBtn {
   flex: 1; color: #fff; font-weight: 800; font-size: 13px;
   padding: 9px 12px; border-radius: var(--r2); text-align: center;
-  transition: filter 0.15s;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+  transition: filter 0.1s, transform 0.1s, box-shadow 0.1s;
 }
-.playBtn:hover { filter: brightness(1.1); }
+.playBtn:hover  { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 5px 0 rgba(0,0,0,0.2); }
+.playBtn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); filter: brightness(0.95); }
 .shareCardBtn {
   width: 38px; height: 38px; flex-shrink: 0; background: transparent; border: 2px solid var(--border);
   color: var(--text-muted); border-radius: var(--r2);
   display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.1s;
 }
-.shareCardBtn:hover { border-color: var(--blue); color: var(--blue); }
+.shareCardBtn:hover  { border-color: var(--blue); color: var(--blue); }
+.shareCardBtn:active { transform: translateY(1px); }
 .shareCardBtnFlash { border-color: var(--blue) !important; color: var(--blue) !important; background: var(--blue-bg) !important; }
 .deleteBtn {
   width: 38px; height: 38px; flex-shrink: 0; background: transparent; border: 2px solid var(--border);
   color: var(--text-muted); border-radius: var(--r2);
   display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.deleteBtn:hover { border-color: var(--red); color: var(--red); }
+.deleteBtn:hover  { border-color: var(--red); color: var(--red); }
+.deleteBtn:active { transform: translateY(1px); }
 
 .createBtnRow {
   display: block; margin: 24px auto 0; background: transparent;

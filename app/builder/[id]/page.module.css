@@ -132,27 +132,33 @@
 .addBtn {
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text); font-weight: 700; font-size: 13px;
-  padding: 8px 16px; border-radius: var(--r2); transition: all 0.15s;
-  white-space: nowrap;
+  padding: 8px 16px; border-radius: var(--r2); white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.addBtn:hover { border-color: var(--green); color: var(--green); }
+.addBtn:hover  { border-color: var(--green); color: var(--green); }
+.addBtn:active { transform: translateY(1px); }
 .addBtnInline {
   border-radius: 0; border-top: none; border-bottom: none; border-right: none;
   align-self: stretch; display: flex; align-items: center;
 }
+.addBtnInline:active { transform: none; }
 .addBtnDashed {
   display: block; width: 100%; margin: 12px 0 0;
   background: none; border: 2px dashed var(--border);
   color: var(--text-muted); font-weight: 700; font-size: 13px;
-  padding: 12px; border-radius: var(--r2); transition: all 0.15s;
+  padding: 12px; border-radius: var(--r2);
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.addBtnDashed:hover { border-color: var(--green); color: var(--green); }
+.addBtnDashed:hover  { border-color: var(--green); color: var(--green); }
+.addBtnDashed:active { transform: translateY(1px); }
 .cancelBtn {
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text-muted); font-weight: 700; font-size: 13px;
-  padding: 8px 16px; border-radius: var(--r2); transition: all 0.15s; margin-top: 8px;
+  padding: 8px 16px; border-radius: var(--r2); margin-top: 8px;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.cancelBtn:hover { border-color: var(--border-hi); color: var(--text); }
+.cancelBtn:hover  { border-color: var(--border-hi); color: var(--text); }
+.cancelBtn:active { transform: translateY(1px); }
 
 /* field rows */
 .fieldRow { display: flex; flex-direction: column; gap: 6px; }
@@ -197,16 +203,20 @@
   background: none; border: 2px solid var(--border);
   color: var(--text-dim); font-size: 12px; font-weight: 700;
   width: 32px; height: 36px; border-radius: var(--r2); flex-shrink: 0;
-  transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
+  display: flex; align-items: center; justify-content: center;
 }
-.removeBtn:hover { border-color: var(--red); color: var(--red); }
+.removeBtn:hover  { border-color: var(--red); color: var(--red); }
+.removeBtn:active { transform: translateY(1px); }
 
 .addSmallBtn {
   background: none; border: 2px dashed var(--border);
   color: var(--text-muted); font-size: 12px; font-weight: 700;
-  padding: 5px 12px; border-radius: var(--r2); transition: all 0.15s; align-self: flex-start;
+  padding: 5px 12px; border-radius: var(--r2); align-self: flex-start;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.addSmallBtn:hover { border-color: var(--border-hi); color: var(--text); }
+.addSmallBtn:hover  { border-color: var(--border-hi); color: var(--text); }
+.addSmallBtn:active { transform: translateY(1px); }
 
 /* multiple choice */
 .choiceRow { display: flex; gap: 6px; }
@@ -229,36 +239,40 @@
   color: var(--text-muted); font-size: 13px; font-weight: 700;
   width: 30px; height: 30px; border-radius: var(--r2);
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.iconBtn:hover:not(:disabled) { border-color: var(--border-hi); color: var(--text); }
+.iconBtn:hover:not(:disabled)  { border-color: var(--border-hi); color: var(--text); }
+.iconBtn:active:not(:disabled) { transform: translateY(1px); }
 .iconBtn:disabled { opacity: 0.3; cursor: not-allowed; }
 .iconBtnDanger {
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text-muted); font-size: 13px; font-weight: 700;
   width: 30px; height: 30px; border-radius: var(--r2);
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.iconBtnDanger:hover { border-color: var(--red); color: var(--red); }
+.iconBtnDanger:hover  { border-color: var(--red); color: var(--red); }
+.iconBtnDanger:active { transform: translateY(1px); }
 
 .iconBtnSm {
   background: none; border: 1px solid var(--border);
   color: var(--text-dim); font-size: 11px; font-weight: 700;
   width: 24px; height: 24px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.iconBtnSm:hover:not(:disabled) { border-color: var(--border-hi); color: var(--text); }
+.iconBtnSm:hover:not(:disabled)  { border-color: var(--border-hi); color: var(--text); }
+.iconBtnSm:active:not(:disabled) { transform: translateY(1px); }
 .iconBtnSm:disabled { opacity: 0.3; cursor: not-allowed; }
 .iconBtnSmDanger {
   background: none; border: 1px solid var(--border);
   color: var(--text-dim); font-size: 11px; font-weight: 700;
   width: 24px; height: 24px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
 }
-.iconBtnSmDanger:hover { border-color: var(--red); color: var(--red); }
+.iconBtnSmDanger:hover  { border-color: var(--red); color: var(--red); }
+.iconBtnSmDanger:active { transform: translateY(1px); }
 
 /* lesson card */
 .lessonCard {
@@ -317,9 +331,11 @@
   display: block; width: 100%; margin-top: 10px;
   background: none; border: 2px dashed var(--border-hi);
   color: var(--text-muted); font-weight: 800; font-size: 13px;
-  padding: 11px; border-radius: var(--r2); transition: all 0.15s;
+  padding: 11px; border-radius: var(--r2);
+  transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.1s;
 }
-.addExBtn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-bg); }
+.addExBtn:hover  { border-color: var(--blue); color: var(--blue); background: var(--blue-bg); }
+.addExBtn:active { transform: translateY(1px); }
 
 .addExPanel {
   margin-top: 10px; background: var(--bg); border: 2px solid var(--border);
