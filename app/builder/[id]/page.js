@@ -40,6 +40,8 @@ const EXERCISE_TYPES = [
   { type: 'speak_sentence',   label: 'Speak Sentence',     icon: '🎤', desc: 'Say the sentence aloud (speech recognition)' },
   { type: 'match_pairs',      label: 'Match Pairs',        icon: '🔗', desc: 'Connect each word to its translation' },
   { type: 'listen_translate', label: 'Listen & Translate', icon: '👂', desc: 'Hear audio and type the English meaning' },
+  { type: 'select_word',     label: 'Select the Word',   icon: '🎯', desc: 'Tap the correct word to fill the blank in a sentence' },
+  { type: 'dialog',          label: 'Dialog',             icon: '💬', desc: 'Watch a conversation play out, then answer a question about it' },
 ]
 
 function defaultExercise(type) {
@@ -55,6 +57,8 @@ function defaultExercise(type) {
     case 'speak_sentence':   return { type, id, tts: '' }
     case 'match_pairs':      return { type, id, instruction: 'Match each pair:', pairs: [{ left: '', right: '' }, { left: '', right: '' }] }
     case 'listen_translate': return { type, id, tts: '', answers: [''] }
+    case 'select_word':     return { type, id, sentence: '', choices: ['', '', ''], answer: '' }
+    case 'dialog':          return { type, id, speakerNames: { A: '', B: '' }, lines: [{ speaker: 'A', text: '', tts: '' }, { speaker: 'B', text: '', tts: '' }], prompt: '', answer: '', choices: [] }
     default: return { type, id }
   }
 }
@@ -75,6 +79,8 @@ function exerciseSummary(ex) {
     case 'speak_sentence':   return ex.tts || ''
     case 'match_pairs':      return ex.pairs?.map(p => p.left).filter(Boolean).join(', ') || ''
     case 'listen_translate': return ex.tts || ''
+    case 'select_word':     return ex.sentence || ''
+    case 'dialog':          return ex.lines?.map(l => l.text).filter(Boolean).join(' / ') || ''
     default: return '—'
   }
 }
@@ -345,6 +351,129 @@ function ExerciseEditor({ ex, onChange }) {
           onChange={v => set('answers', v)}
           placeholder="Hello"
         />
+      </>
+    )
+
+    case 'select_word': return (
+      <>
+        <FieldRow label="Sentence (use ___ for the blank)" hint="Example: Аз ___ студент.">
+          <input className={styles.input} value={ex.sentence || ''} placeholder="Аз ___ студент." onChange={e => set('sentence', e.target.value)} />
+        </FieldRow>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>
+            Choices
+            <span className={styles.fieldLabelHint}>click ✓ to mark correct</span>
+          </label>
+          <div className={styles.fieldInput}>
+            {(ex.choices || []).map((c, i) => (
+              <div key={i} className={styles.choiceRow}>
+                <input
+                  className={`${styles.input} ${c && c === ex.answer ? styles.inputCorrect : ''}`}
+                  value={c}
+                  placeholder={`Option ${i + 1}`}
+                  onChange={e => { const n = [...(ex.choices || [])]; n[i] = e.target.value; set('choices', n) }}
+                />
+                <button
+                  className={`${styles.correctBtn} ${c && c === ex.answer ? styles.correctBtnActive : ''}`}
+                  onClick={() => set('answer', c)}
+                  title="Mark as correct"
+                >✓</button>
+                {(ex.choices || []).length > 2 && (
+                  <button className={styles.removeBtn} onClick={() => { const n = (ex.choices || []).filter((_, j) => j !== i); set('choices', n); if (ex.answer === c) set('answer', '') }}>✕</button>
+                )}
+              </div>
+            ))}
+            <button className={styles.addSmallBtn} onClick={() => set('choices', [...(ex.choices || []), ''])}>+ Add choice</button>
+            {ex.answer && <div className={styles.correctHint}>✓ correct: <strong>{ex.answer}</strong></div>}
+          </div>
+        </div>
+        <FieldRow label="Optional prompt (shown above sentence)">
+          <input className={styles.input} value={ex.prompt || ''} placeholder="Optional context question" onChange={e => set('prompt', e.target.value)} />
+        </FieldRow>
+      </>
+    )
+
+    case 'dialog': return (
+      <>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>Speaker names</label>
+          <div className={styles.fieldInput}>
+            <div className={styles.pairRow}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-muted)', width: 20 }}>A:</span>
+              <input className={styles.input} value={ex.speakerNames?.A || ''} placeholder="e.g. Мария" onChange={e => set('speakerNames', { ...ex.speakerNames, A: e.target.value })} />
+              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-muted)', width: 20 }}>B:</span>
+              <input className={styles.input} value={ex.speakerNames?.B || ''} placeholder="e.g. Иван" onChange={e => set('speakerNames', { ...ex.speakerNames, B: e.target.value })} />
+            </div>
+            <div className={styles.fieldHint}>Shown in the avatar bubble. Leave blank to show A / B.</div>
+          </div>
+        </div>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>
+            Conversation lines
+            <span className={styles.fieldLabelHint}>speaker A or B · add TTS for Bulgarian lines</span>
+          </label>
+          <div className={styles.fieldInput}>
+            {(ex.lines || []).map((line, i) => (
+              <div key={i} className={styles.dialogLineRow}>
+                <select
+                  className={styles.selectSm}
+                  value={line.speaker || 'A'}
+                  onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], speaker: e.target.value }; set('lines', l) }}
+                >
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                </select>
+                <input
+                  className={styles.input}
+                  value={line.text || ''}
+                  placeholder="Line text (displayed)"
+                  onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], text: e.target.value }; set('lines', l) }}
+                />
+                <input
+                  className={styles.input}
+                  value={line.tts || ''}
+                  placeholder="TTS (Bulgarian, optional)"
+                  onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], tts: e.target.value }; set('lines', l) }}
+                />
+                {(ex.lines || []).length > 2 && (
+                  <button className={styles.removeBtn} onClick={() => set('lines', (ex.lines || []).filter((_, j) => j !== i))}>✕</button>
+                )}
+              </div>
+            ))}
+            <button className={styles.addSmallBtn} onClick={() => set('lines', [...(ex.lines || []), { speaker: 'A', text: '', tts: '' }])}>+ Add line</button>
+          </div>
+        </div>
+        <FieldRow label="Question / prompt shown after the dialog">
+          <input className={styles.input} value={ex.prompt || ''} placeholder="What does B say?" onChange={e => set('prompt', e.target.value)} />
+        </FieldRow>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>
+            Choices
+            <span className={styles.fieldLabelHint}>leave empty to use a typed text input instead</span>
+          </label>
+          <div className={styles.fieldInput}>
+            {(ex.choices || []).map((c, i) => (
+              <div key={i} className={styles.choiceRow}>
+                <input
+                  className={`${styles.input} ${c && c === ex.answer ? styles.inputCorrect : ''}`}
+                  value={c}
+                  placeholder={`Choice ${i + 1}`}
+                  onChange={e => { const n = [...(ex.choices || [])]; n[i] = e.target.value; set('choices', n) }}
+                />
+                <button
+                  className={`${styles.correctBtn} ${c && c === ex.answer ? styles.correctBtnActive : ''}`}
+                  onClick={() => set('answer', c)}
+                  title="Mark as correct"
+                >✓</button>
+                {(ex.choices || []).length > 0 && (
+                  <button className={styles.removeBtn} onClick={() => { const n = (ex.choices || []).filter((_, j) => j !== i); set('choices', n); if (ex.answer === c) set('answer', '') }}>✕</button>
+                )}
+              </div>
+            ))}
+            <button className={styles.addSmallBtn} onClick={() => set('choices', [...(ex.choices || []), ''])}>+ Add choice</button>
+            {ex.answer && <div className={styles.correctHint}>✓ correct: <strong>{ex.answer}</strong></div>}
+          </div>
+        </div>
       </>
     )
 

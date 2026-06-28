@@ -42,10 +42,28 @@ function FlyingWord({ word, fromX, fromY, toX, toY, width, height, chipStyle }) 
 }
 
 export default function WordBank({ exercise, onAnswer, onPendingChange, checkTrigger, disabled, useKeyboard }) {
-  const initialBank = useMemo(
-    () => shuffle(exercise.words).map((word, i) => ({ id: i, word })),
-    [exercise.id]
-  )
+  const initialBank = useMemo(() => {
+    // Count how many times each word appears in the primary answer
+    const primaryAnswer = Array.isArray(exercise.answers) ? exercise.answers[0] : exercise.answer
+    const needed = {}
+    if (primaryAnswer) {
+      primaryAnswer.split(/\s+/).forEach(w => {
+        const k = w.toLowerCase()
+        needed[k] = (needed[k] || 0) + 1
+      })
+    }
+    const words = [...exercise.words]
+    const have = {}
+    words.forEach(w => { const k = w.toLowerCase(); have[k] = (have[k] || 0) + 1 })
+    // Add extra copies of words the answer needs more of than the bank provides
+    for (const [k, count] of Object.entries(needed)) {
+      const extra = count - (have[k] || 0)
+      for (let i = 0; i < extra; i++) {
+        words.push(exercise.words.find(w => w.toLowerCase() === k) || k)
+      }
+    }
+    return shuffle(words).map((word, i) => ({ id: i, word }))
+  }, [exercise.id])
   const [answerWords, setAnswerWords] = useState([])
   const [bankItems, setBankItems] = useState(initialBank)
   const [textValue, setTextValue] = useState('')

@@ -10,6 +10,8 @@ import SpeakSentence from './exercises/SpeakSentence'
 import ListenAndType from './exercises/ListenAndType'
 import ListenTranslate from './exercises/ListenTranslate'
 import Introduce from './exercises/Introduce'
+import SelectWord from './exercises/SelectWord'
+import Dialog from './exercises/Dialog'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
@@ -24,6 +26,8 @@ const EXERCISE_MAP = {
   listen_and_type: ListenAndType,
   listen_translate: ListenTranslate,
   introduce: Introduce,
+  select_word: SelectWord,
+  dialog: Dialog,
 }
 
 export default function ExerciseRunner({ lesson, level, exercises, onComplete, onQuit }) {

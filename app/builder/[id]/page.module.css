@@ -233,6 +233,15 @@
 /* match pairs */
 .pairRow { display: flex; align-items: center; gap: 8px; }
 
+/* dialog line editor */
+.dialogLineRow { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.selectSm {
+  background: var(--surface); border: 2px solid var(--border-hi);
+  border-radius: var(--r2); color: var(--text);
+  font-size: 13px; font-weight: 700; padding: 6px 8px;
+  width: 60px; flex-shrink: 0; cursor: pointer;
+}
+
 /* icon buttons */
 .iconBtn {
   background: var(--surface-hi); border: 2px solid var(--border);
