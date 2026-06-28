@@ -47,8 +47,9 @@ function ImportPageInner() {
   }
 
   function playNow() {
-    const id = saveImported()
-    router.push('/builder/play/' + id)
+    const tempId = 'temp_' + Date.now()
+    try { localStorage.setItem('builder_temp_level', JSON.stringify({ ...level, id: tempId })) } catch {}
+    router.push('/builder/play/' + tempId)
   }
 
   if (done) return (

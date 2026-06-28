@@ -318,25 +318,54 @@ function ExerciseEditor({ ex, onChange }) {
   }
 }
 
+// ── icons ─────────────────────────────────────────────────────────────────────
+function ExpandIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 1h4v4" /><path d="M1 8v4h4" />
+      <line x1="12" y1="1" x2="7" y2="6" /><line x1="1" y1="12" x2="6" y2="7" />
+    </svg>
+  )
+}
+function CollapseIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 5H8V1" /><path d="M1 8h4v4" />
+      <line x1="8" y1="5" x2="13" y2="0" /><line x1="0" y1="13" x2="5" y2="8" />
+    </svg>
+  )
+}
+
 // ── main editor ───────────────────────────────────────────────────────────────
 export default function LevelEditor() {
   const { id } = useParams()
   const router = useRouter()
   const [level, setLevel] = useState(null)
   const [ready, setReady] = useState(false)
-  const [expandedLesson, setExpandedLesson] = useState(null)
+  const [expandedLessons, setExpandedLessons] = useState(new Set())
   const [expandedEx, setExpandedEx] = useState({}) // { [lessonIdx]: Set<exIdx> }
   const [addExLesson, setAddExLesson] = useState(null)
+  const [showLessons, setShowLessons] = useState(true)
+  const [confirmDelete, setConfirmDelete] = useState(null) // { type: 'lesson'|'level', li?, label }
   const [showSettings, setShowSettings] = useState(true)
+  const [maximized, setMaximized] = useState(null) // null | 'settings' | 'lessons'
   const [exportFlash, setExportFlash] = useState(false)
   const [shareFlash, setShareFlash] = useState(false)
+
+  useEffect(() => {
+    if (!maximized) { document.body.style.overflow = ''; return }
+    document.body.style.overflow = 'hidden'
+    const onKey = e => { if (e.key === 'Escape') setMaximized(null) }
+    window.addEventListener('keydown', onKey)
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [maximized])
 
   useEffect(() => {
     const levels = loadLevels()
     const found = levels.find(l => l.id === id)
     if (found) {
       setLevel(found)
-      if (found.lessons.length > 0) setExpandedLesson(0)
+      if (found.lessons.length > 0) setExpandedLessons(new Set([0]))
     }
     setReady(true)
   }, [id])
@@ -363,17 +392,29 @@ export default function LevelEditor() {
     const lesson = defaultLesson(id)
     updateLevel(prev => {
       const lessons = [...prev.lessons, lesson]
-      setTimeout(() => setExpandedLesson(lessons.length - 1), 0)
+      setTimeout(() => setExpandedLessons(prev => { const next = new Set(prev); next.add(lessons.length - 1); return next }), 0)
       return { ...prev, lessons }
     })
   }
   function deleteLesson(li) {
-    if (!confirm('Delete this lesson and all its exercises?')) return
     updateLevel(prev => {
       const lessons = prev.lessons.filter((_, i) => i !== li)
-      setExpandedLesson(v => v === li ? Math.max(0, li - 1) : v > li ? v - 1 : v)
+      setExpandedLessons(prev => {
+        const next = new Set()
+        for (const idx of prev) {
+          if (idx < li) next.add(idx)
+          else if (idx > li) next.add(idx - 1)
+        }
+        return next
+      })
       return { ...prev, lessons }
     })
+    setConfirmDelete(null)
+  }
+  function deleteLevelAndExit() {
+    const levels = loadLevels()
+    saveLevels(levels.filter(l => l.id !== id))
+    router.push('/builder')
   }
   function moveLesson(li, dir) {
     updateLevel(prev => {
@@ -381,7 +422,13 @@ export default function LevelEditor() {
       const j = li + dir
       if (j < 0 || j >= lessons.length) return prev;
       [lessons[li], lessons[j]] = [lessons[j], lessons[li]]
-      setExpandedLesson(j)
+      setExpandedLessons(prev => {
+        const next = new Set(prev)
+        const hadLi = next.has(li), hadJ = next.has(j)
+        if (hadLi) { next.delete(li); next.add(j) }
+        if (hadJ) { next.delete(j); next.add(li) }
+        return next
+      })
       return { ...prev, lessons }
     })
   }
@@ -481,6 +528,28 @@ export default function LevelEditor() {
   return (
     <div className={styles.page}>
 
+      {/* ── delete confirm modal ── */}
+      {confirmDelete && (
+        <div className={styles.modalOverlay} onClick={() => setConfirmDelete(null)}>
+          <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalEmoji}>🗑️</div>
+            <h3 className={styles.modalTitle}>
+              {confirmDelete.type === 'level' ? 'Delete level?' : 'Delete lesson?'}
+            </h3>
+            <p className={styles.modalText}>
+              {confirmDelete.type === 'level'
+                ? `"${confirmDelete.label}" and all its lessons will be permanently removed.`
+                : `"${confirmDelete.label}" and all its exercises will be permanently removed.`}
+            </p>
+            <button
+              className={styles.modalConfirmBtn}
+              onClick={() => confirmDelete.type === 'level' ? deleteLevelAndExit() : deleteLesson(confirmDelete.li)}
+            >DELETE</button>
+            <button className={styles.modalCancelBtn} onClick={() => setConfirmDelete(null)}>CANCEL</button>
+          </div>
+        </div>
+      )}
+
       {/* ── top bar ── */}
       <div className={styles.topBar}>
         <Link href="/builder" className={styles.backBtn} title="Back to Builder">
@@ -502,20 +571,29 @@ export default function LevelEditor() {
           <button className={`${styles.exportBtn} ${exportFlash ? styles.exportFlash : ''}`} onClick={exportJSON}>
             {exportFlash ? 'Exported!' : 'Export JSON'}
           </button>
+          <button className={styles.deleteTopBtn} onClick={() => setConfirmDelete({ type: 'level', label: level.title })} title="Delete level">
+            🗑️
+          </button>
         </div>
       </div>
 
       <div className={styles.editor}>
 
         {/* ── level settings ── */}
-        <div className={styles.section}>
-          <button className={styles.sectionToggle} onClick={() => setShowSettings(v => !v)}>
-            <span className={styles.sectionToggleLabel}>Level Settings</span>
-            <span className={`${styles.chevron} ${showSettings ? styles.chevronUp : ''}`} />
-          </button>
+        {maximized === 'settings' && <div className={styles.backdrop} onClick={() => setMaximized(null)} />}
+        <div className={maximized === 'settings' ? styles.sectionFull : styles.section}>
+          <div className={`${styles.sectionToggleRow} ${maximized === 'settings' ? styles.sectionFullHeader : ''}`}>
+            <button className={styles.sectionToggle} onClick={() => maximized !== 'settings' && setShowSettings(v => !v)}>
+              <span className={styles.sectionToggleLabel}>Level Settings</span>
+              <span className={`${styles.chevron} ${(showSettings || maximized === 'settings') ? styles.chevronUp : ''}`} />
+            </button>
+            <button className={styles.maximizeBtn} onClick={() => setMaximized(v => v === 'settings' ? null : 'settings')} title={maximized === 'settings' ? 'Minimize' : 'Expand'}>
+              {maximized === 'settings' ? <CollapseIcon /> : <ExpandIcon />}
+            </button>
+          </div>
 
-          {showSettings && (
-            <div className={styles.sectionBody}>
+          {(showSettings || maximized === 'settings') && (
+            <div className={maximized === 'settings' ? styles.sectionFullBody : styles.sectionBody}>
               <div className={styles.settingsGrid}>
                 <FieldRow label="Title">
                   <input className={styles.input} value={level.title} placeholder="Level title" onChange={e => updateLevel({ title: e.target.value })} />
@@ -547,23 +625,32 @@ export default function LevelEditor() {
         </div>
 
         {/* ── lessons ── */}
-        <div className={styles.section}>
-          <div className={styles.sectionRow}>
-            <span className={styles.sectionTitle}>Lessons <span className={styles.sectionCount}>({level.lessons.length})</span></span>
-            <button className={styles.addBtn} onClick={addLesson}>+ Add Lesson</button>
+        {maximized === 'lessons' && <div className={styles.backdrop} onClick={() => setMaximized(null)} />}
+        <div className={maximized === 'lessons' ? styles.sectionFull : styles.section}>
+          <div className={`${styles.sectionToggleRow} ${maximized === 'lessons' ? styles.sectionFullHeader : ''}`}>
+            <button className={styles.sectionToggle} onClick={() => maximized !== 'lessons' && setShowLessons(v => !v)}>
+              <span className={styles.sectionToggleLabel}>Lessons <span className={styles.sectionCount}>({level.lessons.length})</span></span>
+              <span className={`${styles.chevron} ${(showLessons || maximized === 'lessons') ? styles.chevronUp : ''}`} />
+            </button>
+            <button className={`${styles.addBtn} ${styles.addBtnInline}`} onClick={addLesson}>+ Add Lesson</button>
+            <button className={styles.maximizeBtn} onClick={() => setMaximized(v => v === 'lessons' ? null : 'lessons')} title={maximized === 'lessons' ? 'Minimize' : 'Expand'}>
+              {maximized === 'lessons' ? <CollapseIcon /> : <ExpandIcon />}
+            </button>
           </div>
 
+          {(showLessons || maximized === 'lessons') && (
+          <div className={maximized === 'lessons' ? styles.sectionFullBody : styles.noWrap}>
           {level.lessons.length === 0 && (
             <div className={styles.emptyHint}>No lessons yet. Add one to get started.</div>
           )}
 
           {level.lessons.map((lesson, li) => {
-            const isOpen = expandedLesson === li
+            const isOpen = expandedLessons.has(li)
             const exSet = expandedEx[li] || new Set()
             return (
               <div key={lesson.id} className={`${styles.lessonCard} ${isOpen ? styles.lessonCardOpen : ''}`}>
                 {/* lesson header */}
-                <div className={styles.lessonHeader} onClick={() => setExpandedLesson(isOpen ? null : li)}>
+                <div className={styles.lessonHeader} onClick={() => setExpandedLessons(prev => { const next = new Set(prev); if (next.has(li)) next.delete(li); else next.add(li); return next })}>
                   <div className={styles.lessonHeaderLeft}>
                     <span className={styles.lessonNumBadge}>{li + 1}</span>
                     <span className={styles.lessonTitle}>{lesson.title}</span>
@@ -572,7 +659,7 @@ export default function LevelEditor() {
                   <div className={styles.lessonHeaderRight} onClick={e => e.stopPropagation()}>
                     <button className={styles.iconBtn} onClick={() => moveLesson(li, -1)} disabled={li === 0} title="Move up">↑</button>
                     <button className={styles.iconBtn} onClick={() => moveLesson(li, 1)} disabled={li === level.lessons.length - 1} title="Move down">↓</button>
-                    <button className={styles.iconBtnDanger} onClick={() => deleteLesson(li)} title="Delete lesson">✕</button>
+                    <button className={styles.iconBtnDanger} onClick={() => setConfirmDelete({ li, label: lesson.title })} title="Delete lesson">✕</button>
                     <span className={`${styles.chevron} ${isOpen ? styles.chevronUp : ''}`} />
                   </div>
                 </div>
@@ -652,6 +739,8 @@ export default function LevelEditor() {
 
           {level.lessons.length > 0 && (
             <button className={styles.addBtnDashed} onClick={addLesson}>+ Add Another Lesson</button>
+          )}
+          </div>
           )}
         </div>
       </div>

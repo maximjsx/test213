@@ -8,7 +8,11 @@ import styles from './page.module.css'
 function loadLevel(id) {
   try {
     const levels = JSON.parse(localStorage.getItem('builder_levels') || '[]')
-    return levels.find(l => l.id === id) || null
+    const found = levels.find(l => l.id === id)
+    if (found) return found
+    const temp = JSON.parse(localStorage.getItem('builder_temp_level') || 'null')
+    if (temp?.id === id) return temp
+    return null
   } catch { return null }
 }
 

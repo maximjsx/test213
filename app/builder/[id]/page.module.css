@@ -26,34 +26,75 @@
 .topActions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .playBtn {
   color: #fff; font-weight: 800; font-size: 13px;
-  padding: 7px 14px; border-radius: var(--r2);
-  transition: filter 0.15s; white-space: nowrap;
+  padding: 7px 14px; border-radius: var(--r2); white-space: nowrap;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+  transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
 }
-.playBtn:hover { filter: brightness(1.1); }
+.playBtn:hover  { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 5px 0 rgba(0,0,0,0.2); }
+.playBtn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); filter: brightness(0.95); }
 .shareBtn {
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text-muted); font-weight: 700; font-size: 13px;
-  padding: 7px 14px; border-radius: var(--r2); transition: all 0.15s;
-  white-space: nowrap;
+  padding: 7px 14px; border-radius: var(--r2); white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.1s;
 }
-.shareBtn:hover { border-color: var(--border-hi); color: var(--text); }
+.shareBtn:hover  { border-color: var(--border-hi); color: var(--text); transform: translateY(-1px); }
+.shareBtn:active { transform: translateY(1px); }
 .shareBtnFlash { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); }
 .exportBtn {
   background: var(--surface-hi); border: 2px solid var(--border);
   color: var(--text-muted); font-weight: 700; font-size: 13px;
-  padding: 7px 14px; border-radius: var(--r2); transition: all 0.15s;
-  white-space: nowrap;
+  padding: 7px 14px; border-radius: var(--r2); white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.1s;
 }
-.exportBtn:hover { border-color: var(--border-hi); color: var(--text); }
+.exportBtn:hover  { border-color: var(--border-hi); color: var(--text); transform: translateY(-1px); }
+.exportBtn:active { transform: translateY(1px); }
 .exportFlash { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.deleteTopBtn {
+  width: 34px; height: 34px; border-radius: var(--r2); flex-shrink: 0;
+  background: var(--surface-hi); border: 2px solid var(--border);
+  font-size: 15px; display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.deleteTopBtn:hover  { border-color: var(--red); transform: translateY(-1px); }
+.deleteTopBtn:active { transform: translateY(1px); }
 
 /* editor body */
 .editor { max-width: 760px; margin: 0 auto; padding: 24px 20px 100px; display: flex; flex-direction: column; gap: 16px; }
 
 /* sections */
 .section { background: var(--surface); border: 2px solid var(--border); border-radius: var(--r); overflow: hidden; }
+
+.sectionFull {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--bg); overflow-y: auto;
+  animation: maximizeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.backdrop {
+  position: fixed; inset: 0; z-index: 199;
+  background: rgba(0,0,0,0.45);
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes maximizeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.97) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.sectionToggleRow {
+  display: flex; align-items: stretch; border-bottom: 2px solid transparent;
+}
 .sectionToggle {
-  width: 100%; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+  flex: 1; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
   background: none; border: none; cursor: pointer; transition: background 0.15s;
 }
 .sectionToggle:hover { background: var(--surface-hi); }
@@ -62,11 +103,30 @@
   padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   border-bottom: 2px solid var(--border);
 }
+.sectionRowActions { display: flex; align-items: center; gap: 8px; }
 .sectionTitle { font-size: 14px; font-weight: 800; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
 .sectionCount { color: var(--text-dim); font-weight: 700; }
 .sectionBody { padding: 20px; display: flex; flex-direction: column; gap: 14px; border-top: 2px solid var(--border); }
 .settingsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .emptyHint { padding: 20px; text-align: center; color: var(--text-muted); font-size: 14px; }
+
+/* fullscreen states */
+.sectionFullHeader {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--surface); border-bottom: 2px solid var(--border);
+}
+.sectionFullBody {
+  max-width: 780px; margin: 0 auto; padding: 24px 24px 80px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.noWrap { display: contents; }
+
+.maximizeBtn {
+  padding: 0 14px; background: none; border: none; border-left: 2px solid var(--border);
+  color: var(--text-dim); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s; flex-shrink: 0; align-self: stretch;
+}
+.maximizeBtn:hover { background: var(--surface-hi); color: var(--text); }
 
 /* add/action buttons */
 .addBtn {
@@ -76,6 +136,10 @@
   white-space: nowrap;
 }
 .addBtn:hover { border-color: var(--green); color: var(--green); }
+.addBtnInline {
+  border-radius: 0; border-top: none; border-bottom: none; border-right: none;
+  align-self: stretch; display: flex; align-items: center;
+}
 .addBtnDashed {
   display: block; width: 100%; margin: 12px 0 0;
   background: none; border: 2px dashed var(--border);
@@ -219,7 +283,7 @@
 .lessonTitle { font-size: 15px; font-weight: 800; color: var(--text); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lessonMeta { font-size: 12px; color: var(--text-dim); white-space: nowrap; flex-shrink: 0; }
 
-.lessonBody { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; }
+.lessonBody { padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; animation: popIn 0.14s ease; }
 .lessonFieldsRow { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding-top: 16px; }
 
 /* exercises */
@@ -245,7 +309,7 @@
   padding: 3px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0;
 }
 .exSummary { font-size: 13px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.exBody { padding: 14px; border-top: 2px solid var(--border); display: flex; flex-direction: column; gap: 12px; background: var(--surface-hi); }
+.exBody { padding: 14px; border-top: 2px solid var(--border); display: flex; flex-direction: column; gap: 12px; background: var(--surface-hi); animation: popIn 0.12s ease; }
 .exNote { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 
 /* add exercise panel */
@@ -259,7 +323,7 @@
 
 .addExPanel {
   margin-top: 10px; background: var(--bg); border: 2px solid var(--border);
-  border-radius: var(--r); padding: 16px;
+  border-radius: var(--r); padding: 16px; animation: popIn 0.14s ease;
 }
 .addExPanelTitle { font-size: 13px; font-weight: 800; color: var(--text-muted); letter-spacing: 0.3px; margin-bottom: 12px; }
 .addExGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 8px; }
@@ -269,7 +333,7 @@
   display: flex; flex-direction: column; gap: 4px;
   transition: all 0.15s; cursor: pointer;
 }
-.addExCard:hover { border-color: var(--blue); background: var(--blue-bg); transform: translateY(-1px); }
+.addExCard:hover { border-color: var(--blue); background: var(--blue-bg); }
 .addExIcon { font-size: 20px; }
 .addExLabel { font-size: 13px; font-weight: 800; color: var(--text); }
 .addExDesc { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
@@ -287,6 +351,40 @@
 .chevronUp { transform: rotate(-135deg); margin-bottom: -2px; }
 
 .pairArrow { color: var(--text-dim); font-size: 12px; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+
+/* delete confirm modal */
+.modalOverlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; animation: fadeIn 0.15s ease;
+}
+.modalCard {
+  background: var(--surface); border: 2px solid var(--border); border-radius: 20px;
+  padding: 36px 28px; max-width: 360px; width: 100%; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: modalPop 0.2s ease;
+}
+@keyframes modalPop { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+.modalEmoji { font-size: 48px; }
+.modalTitle { font-size: 20px; font-weight: 900; color: var(--text); margin: 0; }
+.modalText { font-size: 14px; color: var(--text-muted); font-weight: 600; line-height: 1.6; margin: 0; }
+.modalConfirmBtn {
+  width: 100%; padding: 14px; border-radius: var(--r); border: none; cursor: pointer;
+  background: var(--red); color: #fff;
+  font-size: 15px; font-weight: 900; letter-spacing: 0.5px;
+  box-shadow: 0 4px 0 var(--red-press);
+  transition: transform 0.1s, box-shadow 0.1s; margin-top: 6px;
+}
+.modalConfirmBtn:hover  { transform: translateY(-1px); box-shadow: 0 5px 0 var(--red-press); }
+.modalConfirmBtn:active { transform: translateY(2px);  box-shadow: 0 1px 0 var(--red-press); }
+.modalCancelBtn {
+  width: 100%; padding: 14px; border-radius: var(--r); cursor: pointer;
+  background: transparent; border: 2px solid var(--border-hi); color: var(--text);
+  font-size: 15px; font-weight: 900; letter-spacing: 0.5px;
+  transition: background 0.15s;
+}
+.modalCancelBtn:hover { background: var(--surface-hi); }
 
 @media (max-width: 520px) {
   .topBar { padding: 0 12px; gap: 8px; }
