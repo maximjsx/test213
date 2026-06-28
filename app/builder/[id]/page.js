@@ -432,7 +432,7 @@ function ExerciseEditor({ ex, onChange }) {
                 <input
                   className={styles.input}
                   value={line.tts || ''}
-                  placeholder="TTS (Bulgarian, optional)"
+                  placeholder="TTS override (leave blank to speak the text above)"
                   onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], tts: e.target.value }; set('lines', l) }}
                 />
                 {(ex.lines || []).length > 2 && (

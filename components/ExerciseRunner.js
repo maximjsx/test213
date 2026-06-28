@@ -12,7 +12,7 @@ import ListenTranslate from './exercises/ListenTranslate'
 import Introduce from './exercises/Introduce'
 import SelectWord from './exercises/SelectWord'
 import Dialog from './exercises/Dialog'
-import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong } from '../lib/audio'
+import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
 const EXERCISE_MAP = {
@@ -42,6 +42,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
   const [checkTrigger, setCheckTrigger] = useState(0)
   const [useKeyboard, setUseKeyboard] = useState(false)
   const [showQuitConfirm, setShowQuitConfirm] = useState(false)
+  const [ttsMuted, setTtsMuted] = useState(() => getTTSMuted())
   const [key, setKey] = useState(0)
   const feedbackSetAt = useRef(null)
 
@@ -163,6 +164,13 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
       <div className={styles.topBar}>
         <div className={styles.topBarInner}>
           <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
+          <button
+            className={`${styles.muteBtn} ${ttsMuted ? styles.muteBtnOff : ''}`}
+            onClick={() => { setTTSMuted(!ttsMuted); setTtsMuted(!ttsMuted) }}
+            title={ttsMuted ? 'Unmute audio' : 'Mute audio'}
+          >
+            {ttsMuted ? '🔇' : '🔊'}
+          </button>
           <div className={styles.progressTrack}>
             <div className={styles.progressFill} style={{ width: `${progress * 100}%`, background: level.color }} />
           </div>

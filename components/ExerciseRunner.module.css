@@ -22,6 +22,16 @@
 }
 .quitBtn:hover { background:var(--border); }
 
+.muteBtn {
+  flex-shrink:0; width:42px; height:42px; border-radius:50%;
+  background:var(--surface); border:2px solid var(--border);
+  font-size:18px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s, opacity 0.15s; cursor:pointer;
+}
+.muteBtn:hover { background:var(--border); }
+.muteBtnOff { opacity:0.4; }
+
 .progressTrack { flex:1;height:20px;background:var(--surface-hi);border-radius:100px;overflow:hidden; }
 .progressFill { height:100%;border-radius:100px;transition:width 0.35s ease; }
 

@@ -32,9 +32,10 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
         if (i > 0) setRevealed(i + 1)
 
         const line = lines[i]
-        let waitMs = 1200 // fallback if no TTS
-        if (line?.tts) {
-          const duration = await speakBulgarian(line.tts)
+        const ttsText = line?.tts || line?.text
+        let waitMs = 1200 // fallback if nothing to speak
+        if (ttsText) {
+          const duration = await speakBulgarian(ttsText)
           waitMs = (duration || 2000) + PAUSE_AFTER_LINE
         }
 
