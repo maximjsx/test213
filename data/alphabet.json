@@ -1,0 +1,150 @@
+{
+  "id": "alphabet",
+  "title": "The Alphabet",
+  "subtitle": "All 30 Cyrillic letters",
+  "color": "#1cb0f6",
+  "icon": "Аа",
+  "notes": "## The Bulgarian Cyrillic Alphabet\n\nBulgarian uses the Cyrillic alphabet with 30 letters. Each letter always makes the same sound.\n\n| Letter | Sound | Example |\n|--------|-------|---------|\n| А а | \"a\" as in bath | Аз (I) |\n| Б б | \"b\" as in bug | Баща (father) |\n| В в | \"v\" as in vet | Вода (water) |\n| Г г | \"g\" as in good | Град (city) |\n| Д д | \"d\" as in dog | Добре (fine) |\n| Е е | \"e\" as in best | Един (one) |\n| Ж ж | \"zh\" as in treasure | Жена (woman) |\n| З з | \"z\" as in zoo | Здравей (hello) |\n| И и | \"ee\" as in machine | Играя (I play) |\n| Й й | \"y\" as in yes (short) | Майка (mother) |\n| К к | \"k\" as in make | Котка (cat) |\n| Л л | \"l\" as in lend | Лимон (lemon) |\n| М м | \"m\" as in man | Майка (mother) |\n| Н н | \"n\" as in no | Нощ (night) |\n| О о | \"o\" as in order | Огън (fire) |\n| П п | \"p\" as in pet | Писмо (letter) |\n| Р р | trilled r | Риба (fish) |\n| С с | \"s\" as in sound | Супа (soup) |\n| Т т | \"t\" as in top | Такси (taxi) |\n| У у | \"oo\" as in tool | Учител (teacher) |\n| Ф ф | \"f\" as in food | Фен (fan) |\n| Х х | \"kh\" as in loch | Хляб (bread) |\n| Ц ц | \"ts\" as in fits | Цвете (flower) |\n| Ч ч | \"ch\" as in chip | Чай (tea) |\n| Ш ш | \"sh\" as in shot | Шоколад (chocolate) |\n| Щ щ | \"sht\" as in shtick | Щастие (happiness) |\n| Ъ ъ | \"u\" as in turn | Ъгъл (corner) |\n| Ь ь | soft sign (softens prev. consonant) | |\n| Ю ю | \"yu\" as in youth | Юли (July) |\n| Я я | \"ya\" as in yard | Яйце (egg) |\n\n## Tips\n- No silent letters - every letter is always pronounced\n- Cyrillic looks new but many sounds match English\n- А, Е, К, М, О, Т look like Latin letters but some have different sounds (В = v, Н = n, Р = r, С = s, У = oo, Х = kh)",
+  "lessons": [
+    {
+      "id": "alph-1",
+      "title": "А to Д",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "alph-1-i1", "label": "NEW LETTER", "display": "А", "sublabel": "\"a\" as in \"bath\"", "tts": "А" },
+        { "type": "multiple_choice", "id": "alph-1-mc1", "question": "What sound does А make?", "choices": ["\"a\" as in bath", "\"b\" as in bug", "\"g\" as in good"], "answer": "\"a\" as in bath", "tts": "А" },
+        { "type": "introduce", "id": "alph-1-i2", "label": "NEW LETTER", "display": "Б", "sublabel": "\"b\" as in \"bug\"", "tts": "Бъ" },
+        { "type": "multiple_choice", "id": "alph-1-mc2", "question": "Which letter makes the \"b\" sound?", "choices": ["Б", "А", "Г"], "answer": "Б", "tts": "Бъ" },
+        { "type": "introduce", "id": "alph-1-i3", "label": "NEW LETTER", "display": "В", "sublabel": "\"v\" as in \"vet\"", "tts": "Въ" },
+        { "type": "multiple_choice", "id": "alph-1-mc3", "question": "What sound does В make?", "choices": ["\"v\" as in vet", "\"b\" as in bug", "\"d\" as in dog"], "answer": "\"v\" as in vet", "tts": "Въ" },
+        { "type": "match_pairs", "id": "alph-1-mp0", "instruction": "Quick check: match the letters you just learned:", "pairs": [{ "left": "А", "right": "a" }, { "left": "Б", "right": "b" }, { "left": "В", "right": "v" }] },
+        { "type": "introduce", "id": "alph-1-i4", "label": "NEW LETTER", "display": "Г", "sublabel": "\"g\" as in \"good\"", "tts": "Гъ" },
+        { "type": "multiple_choice", "id": "alph-1-mc4", "question": "Which letter makes the \"g\" sound?", "choices": ["Г", "В", "Б"], "answer": "Г", "tts": "Гъ" },
+        { "type": "introduce", "id": "alph-1-i5", "label": "NEW LETTER", "display": "Д", "sublabel": "\"d\" as in \"dog\"", "tts": "Дъ" },
+        { "type": "multiple_choice", "id": "alph-1-mc5", "question": "What sound does Д make?", "choices": ["\"d\" as in dog", "\"g\" as in good", "\"v\" as in vet"], "answer": "\"d\" as in dog", "tts": "Дъ" },
+        { "type": "match_pairs", "id": "alph-1-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "А", "right": "a" }, { "left": "Б", "right": "b" }, { "left": "В", "right": "v" }, { "left": "Г", "right": "g" }] },
+        { "type": "listen_and_type", "id": "alph-1-lat1", "tts": "Баба", "answer": "Баба" },
+        { "type": "speak_sentence", "id": "alph-1-sp1", "tts": "Баща" }
+      ]
+    },
+    {
+      "id": "alph-2",
+      "title": "Е to Й",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "alph-2-i1", "label": "NEW LETTER", "display": "Е", "sublabel": "\"e\" as in \"best\"", "tts": "Е" },
+        { "type": "multiple_choice", "id": "alph-2-mc1", "question": "What sound does Е make?", "choices": ["\"e\" as in best", "\"ee\" as in machine", "\"a\" as in bath"], "answer": "\"e\" as in best", "tts": "Е" },
+        { "type": "introduce", "id": "alph-2-i2", "label": "NEW LETTER", "display": "Ж", "sublabel": "\"zh\" like the \"s\" in \"treasure\"", "tts": "Жъ" },
+        { "type": "multiple_choice", "id": "alph-2-mc2", "question": "Which letter makes the \"zh\" sound (like \"s\" in \"treasure\")?", "choices": ["Ж", "З", "Е"], "answer": "Ж", "tts": "Жъ" },
+        { "type": "introduce", "id": "alph-2-i3", "label": "NEW LETTER", "display": "З", "sublabel": "\"z\" as in \"zoo\"", "tts": "Зъ" },
+        { "type": "multiple_choice", "id": "alph-2-mc3", "question": "What sound does З make?", "choices": ["\"z\" as in zoo", "\"zh\" as in treasure", "\"s\" as in sound"], "answer": "\"z\" as in zoo", "tts": "Зъ" },
+        { "type": "match_pairs", "id": "alph-2-mp0", "instruction": "Quick check: match the letters you just learned:", "pairs": [{ "left": "Е", "right": "e" }, { "left": "Ж", "right": "zh" }, { "left": "З", "right": "z" }] },
+        { "type": "introduce", "id": "alph-2-i4", "label": "NEW LETTER", "display": "И", "sublabel": "\"ee\" as in \"machine\"", "tts": "И" },
+        { "type": "multiple_choice", "id": "alph-2-mc4", "question": "Which letter makes the \"ee\" sound?", "choices": ["И", "Е", "Й"], "answer": "И", "tts": "И" },
+        { "type": "introduce", "id": "alph-2-i5", "label": "NEW LETTER", "display": "Й", "sublabel": "\"y\" as in \"yes\" (a short glide)", "tts": "Йъ" },
+        { "type": "multiple_choice", "id": "alph-2-mc5", "question": "What sound does Й make?", "choices": ["\"y\" as in yes", "\"ee\" as in machine", "\"e\" as in best"], "answer": "\"y\" as in yes", "tts": "Йъ" },
+        { "type": "match_pairs", "id": "alph-2-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "Е", "right": "e" }, { "left": "Ж", "right": "zh" }, { "left": "З", "right": "z" }, { "left": "И", "right": "ee" }] },
+        { "type": "listen_and_type", "id": "alph-2-lat1", "tts": "Виза", "answer": "Виза" },
+        { "type": "multiple_choice", "id": "alph-2-word1", "question": "You can now read this word! What does ВИЗА mean?", "choices": ["visa", "vase", "jazz", "idea"], "answer": "visa", "tts": "Виза" },
+        { "type": "speak_sentence", "id": "alph-2-sp1", "tts": "Здравей" }
+      ]
+    },
+    {
+      "id": "alph-3",
+      "title": "К to О",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "alph-3-i1", "label": "NEW LETTER", "display": "К", "sublabel": "\"k\" as in \"make\"", "tts": "Къ" },
+        { "type": "multiple_choice", "id": "alph-3-mc1", "question": "Which letter makes the \"k\" sound?", "choices": ["К", "Г", "Д"], "answer": "К", "tts": "Къ" },
+        { "type": "introduce", "id": "alph-3-i2", "label": "NEW LETTER", "display": "Л", "sublabel": "\"l\" as in \"lend\"", "tts": "Лъ" },
+        { "type": "multiple_choice", "id": "alph-3-mc2", "question": "What sound does Л make?", "choices": ["\"l\" as in lend", "\"n\" as in no", "\"m\" as in man"], "answer": "\"l\" as in lend", "tts": "Лъ" },
+        { "type": "introduce", "id": "alph-3-i3", "label": "NEW LETTER", "display": "М", "sublabel": "\"m\" as in \"man\"", "tts": "Мъ" },
+        { "type": "multiple_choice", "id": "alph-3-mc3", "question": "Which letter makes the \"m\" sound?", "choices": ["М", "Н", "Л"], "answer": "М", "tts": "Мъ" },
+        { "type": "listen_and_type", "id": "alph-3-lat0", "tts": "Мама", "answer": "Мама" },
+        { "type": "introduce", "id": "alph-3-i4", "label": "NEW LETTER", "display": "Н", "sublabel": "\"n\" as in \"no\"", "tts": "Нъ" },
+        { "type": "multiple_choice", "id": "alph-3-mc4", "question": "What sound does Н make?", "choices": ["\"n\" as in no", "\"m\" as in man", "\"l\" as in lend"], "answer": "\"n\" as in no", "tts": "Нъ" },
+        { "type": "introduce", "id": "alph-3-i5", "label": "NEW LETTER", "display": "О", "sublabel": "\"o\" as in \"order\"", "tts": "О" },
+        { "type": "multiple_choice", "id": "alph-3-mc5", "question": "Which letter makes the \"o\" sound (as in \"order\")?", "choices": ["О", "У", "А"], "answer": "О", "tts": "О" },
+        { "type": "match_pairs", "id": "alph-3-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "К", "right": "k" }, { "left": "Л", "right": "l" }, { "left": "М", "right": "m" }, { "left": "Н", "right": "n" }] },
+        { "type": "listen_and_type", "id": "alph-3-lat1", "tts": "Банан", "answer": "Банан" },
+        { "type": "multiple_choice", "id": "alph-3-city1", "question": "You can read real city names now! What city is ЛОНДОН?", "choices": ["London", "Paris", "Berlin", "Rome"], "answer": "London", "tts": "Лондон" },
+        { "type": "multiple_choice", "id": "alph-3-city2", "question": "What country is КАНАДА?", "choices": ["Canada", "Kenya", "Ghana", "Albania"], "answer": "Canada", "tts": "Канада" },
+        { "type": "listen_and_type", "id": "alph-3-lat2", "tts": "Лондон", "answer": "Лондон" },
+        { "type": "speak_sentence", "id": "alph-3-sp1", "tts": "Лимон" }
+      ]
+    },
+    {
+      "id": "alph-4",
+      "title": "П to У",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "alph-4-i1", "label": "NEW LETTER", "display": "П", "sublabel": "\"p\" as in \"pet\"", "tts": "Пъ" },
+        { "type": "multiple_choice", "id": "alph-4-mc1", "question": "What sound does П make?", "choices": ["\"p\" as in pet", "\"b\" as in bug", "\"t\" as in top"], "answer": "\"p\" as in pet", "tts": "Пъ" },
+        { "type": "introduce", "id": "alph-4-i2", "label": "NEW LETTER", "display": "Р", "sublabel": "trilled \"r\" (like in Spanish)", "tts": "Ръ" },
+        { "type": "multiple_choice", "id": "alph-4-mc2", "question": "Р is a trilled \"r\". Which letter is it?", "choices": ["Р", "П", "С"], "answer": "Р", "tts": "Ръ" },
+        { "type": "introduce", "id": "alph-4-i3", "label": "NEW LETTER", "display": "С", "sublabel": "\"s\" as in \"sound\"", "tts": "Съ" },
+        { "type": "multiple_choice", "id": "alph-4-mc3", "question": "What sound does С make?", "choices": ["\"s\" as in sound", "\"z\" as in zoo", "\"sh\" as in shot"], "answer": "\"s\" as in sound", "tts": "Съ" },
+        { "type": "listen_and_type", "id": "alph-4-lat0", "tts": "Прага", "answer": "Прага" },
+        { "type": "introduce", "id": "alph-4-i4", "label": "NEW LETTER", "display": "Т", "sublabel": "\"t\" as in \"top\"", "tts": "Тъ" },
+        { "type": "multiple_choice", "id": "alph-4-mc4", "question": "Which letter makes the \"t\" sound?", "choices": ["Т", "Д", "С"], "answer": "Т", "tts": "Тъ" },
+        { "type": "introduce", "id": "alph-4-i5", "label": "NEW LETTER", "display": "У", "sublabel": "\"oo\" as in \"tool\"", "tts": "У" },
+        { "type": "multiple_choice", "id": "alph-4-mc5", "question": "What sound does У make?", "choices": ["\"oo\" as in tool", "\"o\" as in order", "\"u\" as in cup"], "answer": "\"oo\" as in tool", "tts": "У" },
+        { "type": "match_pairs", "id": "alph-4-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "П", "right": "p" }, { "left": "Р", "right": "r" }, { "left": "С", "right": "s" }, { "left": "Т", "right": "t" }] },
+        { "type": "multiple_choice", "id": "alph-4-city1", "question": "What city is ПАРИЖ?", "choices": ["Paris", "Prague", "Rome", "Berlin"], "answer": "Paris", "tts": "Париж" },
+        { "type": "multiple_choice", "id": "alph-4-city2", "question": "What city is ПРАГА?", "choices": ["Prague", "Paris", "Vienna", "Madrid"], "answer": "Prague", "tts": "Прага" },
+        { "type": "listen_and_type", "id": "alph-4-lat1", "tts": "Рим", "answer": "Рим" },
+        { "type": "listen_and_type", "id": "alph-4-lat2", "tts": "Берлин", "answer": "Берлин" },
+        { "type": "speak_sentence", "id": "alph-4-sp1", "tts": "Риба" }
+      ]
+    },
+    {
+      "id": "alph-5",
+      "title": "Ф to Ш",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "alph-5-i1", "label": "NEW LETTER", "display": "Ф", "sublabel": "\"f\" as in \"food\"", "tts": "Фъ" },
+        { "type": "multiple_choice", "id": "alph-5-mc1", "question": "Which letter makes the \"f\" sound?", "choices": ["Ф", "В", "Х"], "answer": "Ф", "tts": "Фъ" },
+        { "type": "introduce", "id": "alph-5-i2", "label": "NEW LETTER", "display": "Х", "sublabel": "\"kh\" like the \"ch\" in Scottish \"loch\"", "tts": "Хъ" },
+        { "type": "multiple_choice", "id": "alph-5-mc2", "question": "What sound does Х make?", "choices": ["\"kh\" as in loch", "\"f\" as in food", "\"h\" as in hat"], "answer": "\"kh\" as in loch", "tts": "Хъ" },
+        { "type": "introduce", "id": "alph-5-i3", "label": "NEW LETTER", "display": "Ц", "sublabel": "\"ts\" as in \"fits\"", "tts": "Цъ" },
+        { "type": "multiple_choice", "id": "alph-5-mc3", "question": "Which letter makes the \"ts\" sound (as in \"fits\")?", "choices": ["Ц", "Ч", "С"], "answer": "Ц", "tts": "Цъ" },
+        { "type": "listen_and_type", "id": "alph-5-lat0", "tts": "Хляб", "answer": "Хляб" },
+        { "type": "introduce", "id": "alph-5-i4", "label": "NEW LETTER", "display": "Ч", "sublabel": "\"ch\" as in \"chip\"", "tts": "Чъ" },
+        { "type": "multiple_choice", "id": "alph-5-mc4", "question": "What sound does Ч make?", "choices": ["\"ch\" as in chip", "\"ts\" as in fits", "\"sh\" as in shot"], "answer": "\"ch\" as in chip", "tts": "Чъ" },
+        { "type": "introduce", "id": "alph-5-i5", "label": "NEW LETTER", "display": "Ш", "sublabel": "\"sh\" as in \"shot\"", "tts": "Шъ" },
+        { "type": "multiple_choice", "id": "alph-5-mc5", "question": "Which letter makes the \"sh\" sound?", "choices": ["Ш", "Щ", "Ж"], "answer": "Ш", "tts": "Шъ" },
+        { "type": "match_pairs", "id": "alph-5-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "Ф", "right": "f" }, { "left": "Х", "right": "kh" }, { "left": "Ц", "right": "ts" }, { "left": "Ч", "right": "ch" }] },
+        { "type": "multiple_choice", "id": "alph-5-city1", "question": "What country is ФРАНЦИЯ?", "choices": ["France", "Finland", "Czech Republic", "Switzerland"], "answer": "France", "tts": "Франция" },
+        { "type": "multiple_choice", "id": "alph-5-city2", "question": "What country is ЧЕХИЯ?", "choices": ["Czech Republic", "Chile", "China", "Switzerland"], "answer": "Czech Republic", "tts": "Чехия" },
+        { "type": "listen_and_type", "id": "alph-5-lat1", "tts": "Чили", "answer": "Чили" },
+        { "type": "listen_and_type", "id": "alph-5-lat2", "tts": "Чай", "answer": "Чай" },
+        { "type": "speak_sentence", "id": "alph-5-sp1", "tts": "Хляб" }
+      ]
+    },
+    {
+      "id": "alph-6",
+      "title": "Щ to Я",
+      "xp": 15,
+      "exercises": [
+        { "type": "introduce", "id": "alph-6-i1", "label": "NEW LETTER", "display": "Щ", "sublabel": "\"sht\" as in \"shtick\"", "tts": "Щъ" },
+        { "type": "multiple_choice", "id": "alph-6-mc1", "question": "What sound does Щ make?", "choices": ["\"sht\" as in shtick", "\"sh\" as in shot", "\"ch\" as in chip"], "answer": "\"sht\" as in shtick", "tts": "Щъ" },
+        { "type": "introduce", "id": "alph-6-i2", "label": "NEW LETTER", "display": "Ъ", "sublabel": "\"u\" as in \"turn\" - short unstressed vowel", "tts": "Ъ" },
+        { "type": "multiple_choice", "id": "alph-6-mc2", "question": "Which letter makes the \"u as in turn\" sound?", "choices": ["Ъ", "У", "А"], "answer": "Ъ", "tts": "Ъ" },
+        { "type": "introduce", "id": "alph-6-i3", "label": "NEW LETTER", "display": "Ь", "sublabel": "soft sign - makes the consonant before it softer, no sound of its own", "tts": "Ьъ" },
+        { "type": "multiple_choice", "id": "alph-6-mc-soft", "question": "What does the soft sign Ь do?", "choices": ["Softens the consonant before it", "Makes a \"y\" sound", "Acts like a vowel"], "answer": "Softens the consonant before it" },
+        { "type": "match_pairs", "id": "alph-6-mp0", "instruction": "Quick check: these tricky letters all look similar. Match them:", "pairs": [{ "left": "Щ", "right": "sht" }, { "left": "Ш", "right": "sh" }, { "left": "Ж", "right": "zh" }, { "left": "Ъ", "right": "u (turn)" }] },
+        { "type": "introduce", "id": "alph-6-i4", "label": "NEW LETTER", "display": "Ю", "sublabel": "\"yu\" as in \"youth\"", "tts": "Ю" },
+        { "type": "multiple_choice", "id": "alph-6-mc3", "question": "What sound does Ю make?", "choices": ["\"yu\" as in youth", "\"ya\" as in yard", "\"y\" as in yes"], "answer": "\"yu\" as in youth", "tts": "Ю" },
+        { "type": "introduce", "id": "alph-6-i5", "label": "NEW LETTER", "display": "Я", "sublabel": "\"ya\" as in \"yard\"", "tts": "Я" },
+        { "type": "multiple_choice", "id": "alph-6-mc4", "question": "Which letter makes the \"ya\" sound?", "choices": ["Я", "Ю", "Й"], "answer": "Я", "tts": "Я" },
+        { "type": "match_pairs", "id": "alph-6-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "Щ", "right": "sht" }, { "left": "Ъ", "right": "u (turn)" }, { "left": "Ю", "right": "yu" }, { "left": "Я", "right": "ya" }] },
+        { "type": "multiple_choice", "id": "alph-6-city1", "question": "What country is ЯПОНИЯ?", "choices": ["Japan", "Jamaica", "Jordan", "Yemen"], "answer": "Japan", "tts": "Япония" },
+        { "type": "multiple_choice", "id": "alph-6-city2", "question": "What country is ЯМАЙКА?", "choices": ["Jamaica", "Japan", "Yemen", "Zambia"], "answer": "Jamaica", "tts": "Ямайка" },
+        { "type": "listen_and_type", "id": "alph-6-lat1", "tts": "Ямайка", "answer": "Ямайка" },
+        { "type": "listen_and_type", "id": "alph-6-lat2", "tts": "Яйце", "answer": "Яйце" },
+        { "type": "speak_sentence", "id": "alph-6-sp1", "tts": "Щастие" },
+        { "type": "match_pairs", "id": "alph-6-mp2", "instruction": "Grand review - tricky letters:", "pairs": [{ "left": "Ж", "right": "zh" }, { "left": "Ц", "right": "ts" }, { "left": "Щ", "right": "sht" }, { "left": "Й", "right": "y" }] }
+      ]
+    }
+  ]
+}

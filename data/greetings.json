@@ -1,0 +1,109 @@
+{
+  "id": "greetings",
+  "title": "Hello!",
+  "subtitle": "Greet people and introduce yourself",
+  "color": "#58cc02",
+  "icon": "Здр!",
+  "notes": "## Greetings\n\n| Bulgarian | English | When to use |\n|-----------|---------|-------------|\n| Здравей! | Hello! | informal, one person |\n| Здравейте! | Hello! | formal or plural |\n| Как си? | How are you? | informal |\n| Как сте? | How are you? | formal/plural |\n| Добре съм | I am fine | reply to \"how are you?\" |\n| Добро утро | Good morning | until about noon |\n| Добър ден | Good afternoon | midday onwards |\n| Добър вечер | Good evening | in the evening |\n| Лека нощ | Good night | before sleeping |\n| Довиждане | Goodbye | formal |\n| Чао | Bye | informal |\n\n## Introductions\n\n- **Как се казваш?** - What is your name? (informal)\n- **Казвам се...** - My name is...\n- **Приятно ми е** - Nice to meet you\n\n## Politeness\n\n- **Моля** - Please / You're welcome\n- **Благодаря** - Thank you\n- **Извинете** - Excuse me (formal)\n- **Съжалявам** - I'm sorry",
+  "lessons": [
+    {
+      "id": "greet-1",
+      "title": "First Hellos",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "greet-1-i1", "label": "NEW WORD", "display": "Здравей!", "sublabel": "informal hello to one person", "translation": "Hello!", "tts": "Здравей" },
+        { "type": "introduce", "id": "greet-1-i2", "label": "NEW WORD", "display": "Здравейте!", "sublabel": "formal hello, or to a group", "translation": "Hello!", "tts": "Здравейте" },
+        { "type": "multiple_choice", "id": "greet-1-mc1", "question": "Which is the informal hello to one person?", "choices": ["Здравей", "Здравейте", "Довиждане"], "answer": "Здравей", "tts": "Здравей" },
+        { "type": "introduce", "id": "greet-1-i3", "label": "NEW PHRASE", "display": "Как си?", "sublabel": "informal - ask one friend", "translation": "How are you?", "tts": "Как си" },
+        { "type": "introduce", "id": "greet-1-i4", "label": "NEW WORD", "display": "Добре", "sublabel": "used alone or as \"Добре съм\"", "translation": "Fine / Well", "tts": "Добре" },
+        { "type": "multiple_choice", "id": "greet-1-mc2", "question": "What does \"Добре\" mean?", "choices": ["Fine / Well", "Hello", "Goodbye", "Thank you"], "answer": "Fine / Well" },
+        { "type": "multiple_choice", "id": "greet-1-mc3", "question": "How do you reply to \"Как си?\"", "choices": ["Добре съм", "Лека нощ", "Довиждане", "Моля"], "answer": "Добре съм", "tts": "Добре съм" },
+        { "type": "word_bank", "id": "greet-1-wb1", "direction": "to_en", "prompt": "Добре съм", "tts": "Добре съм", "words": ["I", "am", "fine", "hello", "she", "bad", "not"], "answer": "I am fine" },
+        { "type": "word_bank", "id": "greet-1-wb2", "direction": "to_bg", "prompt": "I am fine", "words": ["Добре", "съм", "Здравей", "Как", "си", "Моля"], "answer": "Добре съм" },
+        { "type": "translate_to_en", "id": "greet-1-tr1", "prompt": "Добре съм", "answers": ["I am fine", "I am good", "I am well", "I'm fine", "I'm good", "I'm well"], "hint": "добре = fine, съм = I am", "tts": "Добре съм" },
+        { "type": "listen_and_type", "id": "greet-1-lat1", "tts": "Здравей", "answer": "Здравей" },
+        { "type": "speak_sentence", "id": "greet-1-sp1", "tts": "Добре съм" }
+      ]
+    },
+    {
+      "id": "greet-2",
+      "title": "Times of Day",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "greet-2-i1", "label": "NEW PHRASE", "display": "Добро утро", "sublabel": "said in the morning", "translation": "Good morning", "tts": "Добро утро" },
+        { "type": "introduce", "id": "greet-2-i2", "label": "NEW PHRASE", "display": "Добър ден", "sublabel": "said during the day", "translation": "Good day / Good afternoon", "tts": "Добър ден" },
+        { "type": "multiple_choice", "id": "greet-2-mc1", "question": "When would you say \"Добро утро\"?", "choices": ["In the morning", "At night", "In the evening", "At noon"], "answer": "In the morning" },
+        { "type": "introduce", "id": "greet-2-i3", "label": "NEW PHRASE", "display": "Добър вечер", "sublabel": "said in the evening", "translation": "Good evening", "tts": "Добър вечер" },
+        { "type": "introduce", "id": "greet-2-i4", "label": "NEW PHRASE", "display": "Лека нощ", "sublabel": "said before going to sleep", "translation": "Good night", "tts": "Лека нощ" },
+        { "type": "multiple_choice", "id": "greet-2-mc2", "question": "What does \"Добър вечер\" mean?", "choices": ["Good evening", "Good night", "Good morning", "Good afternoon"], "answer": "Good evening", "tts": "Добър вечер" },
+        { "type": "match_pairs", "id": "greet-2-mp1", "instruction": "Match each greeting to its meaning:", "pairs": [{ "left": "Добро утро", "right": "Good morning" }, { "left": "Добър ден", "right": "Good afternoon" }, { "left": "Добър вечер", "right": "Good evening" }, { "left": "Лека нощ", "right": "Good night" }] },
+        { "type": "word_bank", "id": "greet-2-wb1", "direction": "to_bg", "prompt": "Good morning", "words": ["Добро", "утро", "Добър", "ден", "вечер", "нощ", "Лека"], "answer": "Добро утро" },
+        { "type": "word_bank", "id": "greet-2-wb2", "direction": "to_en", "prompt": "Добър вечер", "tts": "Добър вечер", "words": ["Good", "evening", "morning", "night", "afternoon", "day"], "answer": "Good evening" },
+        { "type": "translate_to_en", "id": "greet-2-tr1", "prompt": "Добър вечер", "answers": ["Good evening"], "tts": "Добър вечер" },
+        { "type": "translate_to_en", "id": "greet-2-tr2", "prompt": "Лека нощ", "answers": ["Good night", "Goodnight"], "tts": "Лека нощ" },
+        { "type": "listen_and_type", "id": "greet-2-lat1", "tts": "Добър вечер", "answer": "Добър вечер" },
+        { "type": "speak_sentence", "id": "greet-2-sp1", "tts": "Лека нощ" }
+      ]
+    },
+    {
+      "id": "greet-3",
+      "title": "What Is Your Name?",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "greet-3-i1", "label": "NEW WORD", "display": "Довиждане", "sublabel": "formal goodbye", "translation": "Goodbye", "tts": "Довиждане" },
+        { "type": "introduce", "id": "greet-3-i2", "label": "NEW WORD", "display": "Чао", "sublabel": "informal bye (borrowed from Italian)", "translation": "Bye!", "tts": "Чао" },
+        { "type": "multiple_choice", "id": "greet-3-mc0", "question": "How do you say \"Goodbye\" formally?", "choices": ["Довиждане", "Чао", "Здравей", "Здравейте"], "answer": "Довиждане" },
+        { "type": "introduce", "id": "greet-3-i3", "label": "NEW PHRASE", "display": "Как се казваш?", "sublabel": "informal - ask one person", "translation": "What is your name?", "tts": "Как се казваш" },
+        { "type": "multiple_choice", "id": "greet-3-mc1", "question": "How do you ask someone's name informally?", "choices": ["Как се казваш?", "Как си?", "Имате ли?"], "answer": "Как се казваш?" },
+        { "type": "introduce", "id": "greet-3-i4", "label": "NEW PHRASE", "display": "Казвам се...", "sublabel": "complete with your name", "translation": "My name is...", "tts": "Казвам се" },
+        { "type": "introduce", "id": "greet-3-i5", "label": "NEW PHRASE", "display": "Приятно ми е", "sublabel": "said when meeting someone", "translation": "Nice to meet you", "tts": "Приятно ми е" },
+        { "type": "word_bank", "id": "greet-3-wb1", "direction": "to_en", "prompt": "Казвам се Иван", "tts": "Казвам се Иван", "words": ["My", "name", "is", "Ivan", "I", "am", "called", "she"], "answer": "My name is Ivan" },
+        { "type": "word_bank", "id": "greet-3-wb2", "direction": "to_bg", "prompt": "Nice to meet you", "words": ["Приятно", "ми", "е", "Казвам", "се", "Чао", "Моля"], "answer": "Приятно ми е" },
+        { "type": "translate_to_en", "id": "greet-3-tr1", "prompt": "Казвам се Мария", "answers": ["My name is Maria", "I am called Maria"], "tts": "Казвам се Мария" },
+        { "type": "fill_blank", "id": "greet-3-fb1", "sentence": "Казвам ___ Петър.", "answer": "се", "hint": "\"Казвам се\" = My name is" },
+        { "type": "translate_to_en", "id": "greet-3-tr2", "prompt": "Приятно ми е", "answers": ["Nice to meet you", "Pleased to meet you"], "tts": "Приятно ми е" },
+        { "type": "speak_sentence", "id": "greet-3-sp1", "tts": "Приятно ми е" },
+        { "type": "listen_and_type", "id": "greet-3-lat1", "tts": "Довиждане", "answer": "Довиждане" }
+      ]
+    },
+    {
+      "id": "greet-4",
+      "title": "Please and Thank You",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "greet-4-i1", "label": "NEW WORD", "display": "Моля", "sublabel": "\"Please\" when asking, \"You're welcome\" when replying", "translation": "Please / You're welcome", "tts": "Моля" },
+        { "type": "introduce", "id": "greet-4-i2", "label": "NEW WORD", "display": "Благодаря", "sublabel": "the standard \"thank you\"", "translation": "Thank you", "tts": "Благодаря" },
+        { "type": "multiple_choice", "id": "greet-4-mc1", "question": "What does \"Благодаря\" mean?", "choices": ["Thank you", "Sorry", "Please", "Goodbye"], "answer": "Thank you" },
+        { "type": "introduce", "id": "greet-4-i3", "label": "NEW WORD", "display": "Извинете", "sublabel": "formal - use with strangers", "translation": "Excuse me", "tts": "Извинете" },
+        { "type": "introduce", "id": "greet-4-i4", "label": "NEW WORD", "display": "Съжалявам", "sublabel": "when you did something wrong", "translation": "I'm sorry", "tts": "Съжалявам" },
+        { "type": "multiple_choice", "id": "greet-4-mc2", "question": "How do you say \"Excuse me\" formally?", "choices": ["Извинете", "Съжалявам", "Моля", "Благодаря"], "answer": "Извинете" },
+        { "type": "match_pairs", "id": "greet-4-mp1", "instruction": "Match each word to its meaning:", "pairs": [{ "left": "Моля", "right": "Please" }, { "left": "Благодаря", "right": "Thank you" }, { "left": "Извинете", "right": "Excuse me" }, { "left": "Съжалявам", "right": "I'm sorry" }] },
+        { "type": "word_bank", "id": "greet-4-wb1", "direction": "to_bg", "prompt": "Thank you", "words": ["Благодаря", "Моля", "Съжалявам", "Извинете", "Здравей", "Добре"], "answer": "Благодаря" },
+        { "type": "word_bank", "id": "greet-4-wb2", "direction": "to_bg", "prompt": "Excuse me", "words": ["Извинете", "Съжалявам", "Моля", "Благодаря", "Чао"], "answer": "Извинете" },
+        { "type": "translate_to_en", "id": "greet-4-tr1", "prompt": "Благодаря много", "answers": ["Thank you very much", "Thanks very much", "Thank you a lot", "Thanks a lot"], "hint": "много = very much / a lot", "tts": "Благодаря много" },
+        { "type": "listen_translate", "id": "greet-4-lt1", "tts": "Съжалявам", "answers": ["I am sorry", "I'm sorry", "Sorry"] },
+        { "type": "speak_sentence", "id": "greet-4-sp1", "tts": "Благодаря" }
+      ]
+    },
+    {
+      "id": "greet-5",
+      "title": "Putting It Together",
+      "xp": 15,
+      "exercises": [
+        { "type": "multiple_choice", "id": "greet-5-mc1", "question": "How do you say \"Good evening\"?", "choices": ["Добър вечер", "Добро утро", "Лека нощ", "Добър ден"], "answer": "Добър вечер", "tts": "Добър вечер" },
+        { "type": "match_pairs", "id": "greet-5-mp1", "instruction": "Match each phrase to its meaning:", "pairs": [{ "left": "Здравей", "right": "Hello (informal)" }, { "left": "Довиждане", "right": "Goodbye" }, { "left": "Моля", "right": "Please" }, { "left": "Благодаря", "right": "Thank you" }] },
+        { "type": "word_bank", "id": "greet-5-wb1", "direction": "to_en", "prompt": "Казвам се Анна", "tts": "Казвам се Анна", "words": ["My", "name", "is", "Anna", "I", "am", "hello", "she"], "answer": "My name is Anna" },
+        { "type": "word_bank", "id": "greet-5-wb2", "direction": "to_en", "prompt": "Здравей, как си?", "tts": "Здравей как си", "words": ["Hello", "how", "are", "you", "good", "fine", "I", "morning"], "answer": "Hello how are you" },
+        { "type": "word_bank", "id": "greet-5-wb3", "direction": "to_bg", "prompt": "Good morning", "words": ["Добро", "утро", "Добър", "вечер", "Лека", "нощ", "ден"], "answer": "Добро утро" },
+        { "type": "translate_to_en", "id": "greet-5-tr1", "prompt": "Здравей, как си?", "answers": ["Hello how are you", "Hi how are you"], "tts": "Здравей как си" },
+        { "type": "translate_to_en", "id": "greet-5-tr2", "prompt": "Приятно ми е", "answers": ["Nice to meet you", "Pleased to meet you"], "tts": "Приятно ми е" },
+        { "type": "translate_to_bg", "id": "greet-5-tb1", "prompt": "Good morning", "answer": "Добро утро" },
+        { "type": "translate_to_bg", "id": "greet-5-tb2", "prompt": "I am sorry", "answer": "Съжалявам" },
+        { "type": "fill_blank", "id": "greet-5-fb1", "sentence": "Казвам ___ Иван.", "answer": "се", "hint": "\"Казвам се\" = My name is" },
+        { "type": "listen_translate", "id": "greet-5-lt1", "tts": "Благодаря", "answers": ["Thank you", "Thanks"] },
+        { "type": "listen_translate", "id": "greet-5-lt2", "tts": "Добро утро", "answers": ["Good morning"] },
+        { "type": "speak_sentence", "id": "greet-5-sp1", "tts": "Здравейте" }
+      ]
+    }
+  ]
+}

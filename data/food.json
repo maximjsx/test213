@@ -1,0 +1,104 @@
+{
+  "id": "food",
+  "title": "At the Table",
+  "subtitle": "Order food and drinks",
+  "color": "#ff4b4b",
+  "icon": "🍽",
+  "notes": "## Drinks\n\n| Bulgarian | English |\n|-----------|---------|\n| вода | water |\n| кафе | coffee |\n| чай | tea |\n| бира | beer |\n| вино | wine |\n| сок | juice |\n\n## Food\n\n| Bulgarian | English |\n|-----------|---------|\n| хляб | bread |\n| месо | meat |\n| риба | fish |\n| салата | salad |\n| супа | soup |\n| десерт | dessert |\n\n## Numbers 1-10\n\nедно, две, три, четири, пет, шест, седем, осем, девет, десет\n\n## Ordering Phrases\n\n- **Искам...** - I want...\n- **Бих искал/а...** - I would like... (m/f)\n- **Сметката, моля** - The bill, please\n- **Вкусно е!** - It is delicious!\n- **Още едно, моля** - One more, please",
+  "lessons": [
+    {
+      "id": "food-1",
+      "title": "Drinks",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "food-1-i1", "label": "NEW WORD", "display": "вода", "sublabel": "feminine noun (ends in -а)", "translation": "water", "tts": "вода" },
+        { "type": "introduce", "id": "food-1-i2", "label": "NEW WORD", "display": "кафе", "sublabel": "neuter noun (ends in -е)", "translation": "coffee", "tts": "кафе" },
+        { "type": "multiple_choice", "id": "food-1-mc1", "question": "What does \"вода\" mean?", "choices": ["water", "wine", "coffee", "juice"], "answer": "water" },
+        { "type": "listen_and_type", "id": "food-1-lat0", "tts": "кафе", "answer": "кафе" },
+        { "type": "introduce", "id": "food-1-i3", "label": "NEW WORD", "display": "чай", "sublabel": "masculine noun", "translation": "tea", "tts": "чай" },
+        { "type": "multiple_choice", "id": "food-1-mc2", "question": "How do you say \"tea\"?", "choices": ["чай", "кафе", "бира", "сок"], "answer": "чай" },
+        { "type": "introduce", "id": "food-1-i4", "label": "NEW WORD", "display": "бира", "sublabel": "feminine noun (ends in -а)", "translation": "beer", "tts": "бира" },
+        { "type": "introduce", "id": "food-1-i5", "label": "NEW WORD", "display": "вино", "sublabel": "neuter noun (ends in -о)", "translation": "wine", "tts": "вино" },
+        { "type": "translate_to_en", "id": "food-1-tr1", "prompt": "Искам вода, моля", "answer": "I want water, please", "hint": "Искам = I want, моля = please", "tts": "Искам вода, моля" },
+        { "type": "match_pairs", "id": "food-1-mp1", "instruction": "Match the drink to its meaning:", "pairs": [{ "left": "вода", "right": "water" }, { "left": "кафе", "right": "coffee" }, { "left": "бира", "right": "beer" }, { "left": "вино", "right": "wine" }] },
+        { "type": "word_bank", "id": "food-1-wb1", "direction": "to_bg", "prompt": "I want tea, please", "words": ["Искам", "чай", "моля", "вода", "кафе", "бира", "вино"], "answer": "Искам чай моля" },
+        { "type": "listen_and_type", "id": "food-1-lat1", "tts": "кафе", "answer": "кафе" },
+        { "type": "speak_sentence", "id": "food-1-sp1", "tts": "Искам вода моля" }
+      ]
+    },
+    {
+      "id": "food-2",
+      "title": "Food",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "food-2-i1", "label": "NEW WORD", "display": "хляб", "sublabel": "masculine noun", "translation": "bread", "tts": "хляб" },
+        { "type": "introduce", "id": "food-2-i2", "label": "NEW WORD", "display": "месо", "sublabel": "neuter noun (ends in -о)", "translation": "meat", "tts": "месо" },
+        { "type": "multiple_choice", "id": "food-2-mc1", "question": "What does \"хляб\" mean?", "choices": ["bread", "meat", "fish", "soup"], "answer": "bread" },
+        { "type": "introduce", "id": "food-2-i3", "label": "NEW WORD", "display": "риба", "sublabel": "feminine noun (ends in -а)", "translation": "fish", "tts": "риба" },
+        { "type": "multiple_choice", "id": "food-2-mc2", "question": "How do you say \"fish\"?", "choices": ["риба", "месо", "хляб", "салата"], "answer": "риба" },
+        { "type": "introduce", "id": "food-2-i4", "label": "NEW WORD", "display": "салата", "sublabel": "feminine noun (ends in -а)", "translation": "salad", "tts": "салата" },
+        { "type": "introduce", "id": "food-2-i5", "label": "NEW WORD", "display": "супа", "sublabel": "feminine noun (ends in -а)", "translation": "soup", "tts": "супа" },
+        { "type": "translate_to_en", "id": "food-2-tr1", "prompt": "Искам супа и салата", "answer": "I want soup and salad", "hint": "и = and", "tts": "Искам супа и салата" },
+        { "type": "match_pairs", "id": "food-2-mp1", "instruction": "Match the food to its meaning:", "pairs": [{ "left": "хляб", "right": "bread" }, { "left": "месо", "right": "meat" }, { "left": "риба", "right": "fish" }, { "left": "супа", "right": "soup" }] },
+        { "type": "word_bank", "id": "food-2-wb1", "direction": "to_en", "prompt": "Искам месо и хляб", "tts": "Искам месо и хляб", "words": ["I", "want", "meat", "and", "bread", "fish", "salad", "soup"], "answer": "I want meat and bread" },
+        { "type": "listen_and_type", "id": "food-2-lat1", "tts": "салата", "answer": "салата" },
+        { "type": "speak_sentence", "id": "food-2-sp1", "tts": "Искам риба и салата" }
+      ]
+    },
+    {
+      "id": "food-3",
+      "title": "Numbers 1-10",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "food-3-i1", "label": "NEW NUMBERS", "display": "едно, две, три", "sublabel": "1, 2, 3", "tts": "едно две три" },
+        { "type": "introduce", "id": "food-3-i2", "label": "NEW NUMBERS", "display": "четири, пет, шест", "sublabel": "4, 5, 6", "tts": "четири пет шест" },
+        { "type": "multiple_choice", "id": "food-3-mc1", "question": "Which word means \"3\"?", "choices": ["три", "две", "пет", "едно"], "answer": "три" },
+        { "type": "introduce", "id": "food-3-i3", "label": "NEW NUMBERS", "display": "седем, осем, девет, десет", "sublabel": "7, 8, 9, 10", "tts": "седем осем девет десет" },
+        { "type": "multiple_choice", "id": "food-3-mc2", "question": "Which word means \"10\"?", "choices": ["десет", "девет", "осем", "шест"], "answer": "десет" },
+        { "type": "multiple_choice", "id": "food-3-mc3", "question": "What number is \"пет\"?", "choices": ["5", "4", "6", "3"], "answer": "5" },
+        { "type": "multiple_choice", "id": "food-3-mc4", "question": "What number is \"осем\"?", "choices": ["8", "7", "9", "6"], "answer": "8" },
+        { "type": "match_pairs", "id": "food-3-mp1", "instruction": "Match number to word:", "pairs": [{ "left": "едно", "right": "1" }, { "left": "три", "right": "3" }, { "left": "пет", "right": "5" }, { "left": "десет", "right": "10" }] },
+        { "type": "translate_to_en", "id": "food-3-tr1", "prompt": "Три кафета, моля", "answer": "Three coffees, please", "hint": "кафета = coffees (plural)", "tts": "Три кафета моля" },
+        { "type": "listen_and_type", "id": "food-3-lat1", "tts": "седем", "answer": "седем" },
+        { "type": "fill_blank", "id": "food-3-fb1", "sentence": "едно, две, ___, четири, пет", "answer": "три", "hint": "Count in order" },
+        { "type": "speak_sentence", "id": "food-3-sp1", "tts": "едно две три четири пет" }
+      ]
+    },
+    {
+      "id": "food-4",
+      "title": "Ordering",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "food-4-i1", "label": "NEW PHRASE", "display": "Искам...", "sublabel": "direct way to order", "translation": "I want...", "tts": "Искам" },
+        { "type": "introduce", "id": "food-4-i2", "label": "NEW PHRASE", "display": "Бих искал...", "sublabel": "more polite (used by men)", "translation": "I would like...", "tts": "Бих искал" },
+        { "type": "multiple_choice", "id": "food-4-mc0", "question": "What does \"Искам\" mean?", "choices": ["I want", "I would like", "The bill, please", "It is delicious"], "answer": "I want" },
+        { "type": "introduce", "id": "food-4-i3", "label": "NEW PHRASE", "display": "Сметката, моля", "sublabel": "say this to pay and leave", "translation": "The bill, please", "tts": "Сметката моля" },
+        { "type": "introduce", "id": "food-4-i4", "label": "NEW PHRASE", "display": "Вкусно е!", "sublabel": "compliment the food", "translation": "It is delicious!", "tts": "Вкусно е" },
+        { "type": "multiple_choice", "id": "food-4-mc1", "question": "What does \"Сметката, моля\" mean?", "choices": ["The bill, please", "One more, please", "I want coffee", "It is delicious"], "answer": "The bill, please" },
+        { "type": "translate_to_en", "id": "food-4-tr1", "prompt": "Бих искал супа, моля", "answer": "I would like soup, please", "tts": "Бих искал супа моля" },
+        { "type": "translate_to_en", "id": "food-4-tr2", "prompt": "Вкусно е!", "answers": ["It is delicious", "It's delicious", "Delicious"], "tts": "Вкусно е" },
+        { "type": "word_bank", "id": "food-4-wb1", "direction": "to_bg", "prompt": "The bill, please", "words": ["Сметката", "моля", "Искам", "вода", "Вкусно", "е", "Бих", "искал"], "answer": "Сметката моля" },
+        { "type": "fill_blank", "id": "food-4-fb1", "sentence": "___ е! (The food is delicious)", "answer": "Вкусно", "hint": "delicious = ??" },
+        { "type": "listen_translate", "id": "food-4-lt1", "tts": "Вкусно е", "answers": ["It is delicious", "It's delicious", "Delicious"] },
+        { "type": "speak_sentence", "id": "food-4-sp1", "tts": "Сметката моля" }
+      ]
+    },
+    {
+      "id": "food-5",
+      "title": "Bon Appetit Review",
+      "xp": 15,
+      "exercises": [
+        { "type": "multiple_choice", "id": "food-5-mc1", "question": "How do you ask for the bill?", "choices": ["Сметката, моля", "Искам вода", "Вкусно е", "Три кафета"], "answer": "Сметката, моля" },
+        { "type": "translate_to_en", "id": "food-5-tr1", "prompt": "Искам риба, хляб и вино", "answer": "I want fish, bread and wine", "tts": "Искам риба хляб и вино" },
+        { "type": "translate_to_bg", "id": "food-5-tb1", "prompt": "Two teas, please", "answer": "Две чайа моля" },
+        { "type": "match_pairs", "id": "food-5-mp1", "instruction": "Match the food and drink:", "pairs": [{ "left": "вода", "right": "water" }, { "left": "хляб", "right": "bread" }, { "left": "риба", "right": "fish" }, { "left": "вино", "right": "wine" }] },
+        { "type": "multiple_choice", "id": "food-5-mc2", "question": "What number is \"седем\"?", "choices": ["7", "6", "8", "9"], "answer": "7" },
+        { "type": "word_bank", "id": "food-5-wb1", "direction": "to_en", "prompt": "Бих искал салата и вода", "tts": "Бих искал салата и вода", "words": ["I", "would", "like", "salad", "and", "water", "soup", "fish"], "answer": "I would like salad and water" },
+        { "type": "fill_blank", "id": "food-5-fb1", "sentence": "Три, четири, ___, шест", "answer": "пет", "hint": "Count in order" },
+        { "type": "listen_translate", "id": "food-5-lt1", "tts": "Искам кафе и хляб", "answer": "I want coffee and bread" },
+        { "type": "listen_translate", "id": "food-5-lt2", "tts": "Сметката моля", "answer": "The bill please" },
+        { "type": "speak_sentence", "id": "food-5-sp1", "tts": "Бих искал риба и вино моля" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "family",
+  "title": "My Family",
+  "subtitle": "Family members and descriptions",
+  "color": "#ce82ff",
+  "icon": "Сем",
+  "notes": "## Family Members\n\n| Bulgarian | English | Gender |\n|-----------|---------|--------|\n| майка | mother | Fem |\n| баща | father | Masc |\n| брат | brother | Masc |\n| сестра | sister | Fem |\n| дете / деца | child / children | Neut |\n| дядо | grandfather | Masc |\n| баба | grandmother | Fem |\n| съпруг | husband | Masc |\n| съпруга | wife | Fem |\n| семейство | family | Neut |\n\n## Adjectives\n\nAdjectives agree with the noun's gender:\n\n| Masculine | Feminine | Neuter | English |\n|-----------|----------|--------|---------|\n| голям | голяма | голямо | big |\n| малък | малка | малко | small |\n| стар | стара | старо | old |\n| млад | млада | младо | young |\n| хубав | хубава | хубаво | nice / beautiful |\n\n## Talking About Family\n\n- **Имам...** - I have...\n- **Нямам...** - I don't have...\n- **Моят баща** - my father (masculine)\n- **Моята майка** - my mother (feminine)",
+  "lessons": [
+    {
+      "id": "fam-1",
+      "title": "Close Family",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "fam-1-i1", "label": "NEW WORD", "display": "майка", "sublabel": "feminine noun (ends in -а)", "translation": "mother", "tts": "майка" },
+        { "type": "introduce", "id": "fam-1-i2", "label": "NEW WORD", "display": "баща", "sublabel": "masculine noun (ends in -а, exception)", "translation": "father", "tts": "баща" },
+        { "type": "multiple_choice", "id": "fam-1-mc1", "question": "What does \"майка\" mean?", "choices": ["mother", "father", "sister", "grandmother"], "answer": "mother" },
+        { "type": "listen_and_type", "id": "fam-1-lat0", "tts": "баща", "answer": "баща" },
+        { "type": "introduce", "id": "fam-1-i3", "label": "NEW WORD", "display": "брат", "sublabel": "masculine noun", "translation": "brother", "tts": "брат" },
+        { "type": "introduce", "id": "fam-1-i4", "label": "NEW WORD", "display": "сестра", "sublabel": "feminine noun (ends in -а)", "translation": "sister", "tts": "сестра" },
+        { "type": "multiple_choice", "id": "fam-1-mc2", "question": "How do you say \"brother\"?", "choices": ["брат", "баща", "дядо", "съпруг"], "answer": "брат" },
+        { "type": "translate_to_en", "id": "fam-1-tr1", "prompt": "Имам брат и сестра", "answer": "I have a brother and a sister", "hint": "Имам = I have, и = and", "tts": "Имам брат и сестра" },
+        { "type": "match_pairs", "id": "fam-1-mp1", "instruction": "Match the family word:", "pairs": [{ "left": "майка", "right": "mother" }, { "left": "баща", "right": "father" }, { "left": "брат", "right": "brother" }, { "left": "сестра", "right": "sister" }] },
+        { "type": "word_bank", "id": "fam-1-wb1", "direction": "to_en", "prompt": "Имам майка и баща", "tts": "Имам майка и баща", "words": ["I", "have", "a", "mother", "and", "father", "sister", "brother"], "answer": "I have a mother and a father" },
+        { "type": "listen_and_type", "id": "fam-1-lat1", "tts": "майка", "answer": "майка" },
+        { "type": "speak_sentence", "id": "fam-1-sp1", "tts": "Имам брат и сестра" }
+      ]
+    },
+    {
+      "id": "fam-2",
+      "title": "Extended Family",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "fam-2-i1", "label": "NEW WORD", "display": "дядо", "sublabel": "masculine noun", "translation": "grandfather", "tts": "дядо" },
+        { "type": "introduce", "id": "fam-2-i2", "label": "NEW WORD", "display": "баба", "sublabel": "feminine noun (ends in -а)", "translation": "grandmother", "tts": "баба" },
+        { "type": "multiple_choice", "id": "fam-2-mc1", "question": "What does \"баба\" mean?", "choices": ["grandmother", "grandfather", "mother", "aunt"], "answer": "grandmother" },
+        { "type": "introduce", "id": "fam-2-i3", "label": "NEW WORD", "display": "съпруг", "sublabel": "masculine noun", "translation": "husband", "tts": "съпруг" },
+        { "type": "introduce", "id": "fam-2-i4", "label": "NEW WORD", "display": "съпруга", "sublabel": "feminine noun (ends in -а)", "translation": "wife", "tts": "съпруга" },
+        { "type": "multiple_choice", "id": "fam-2-mc2", "question": "How do you say \"husband\"?", "choices": ["съпруг", "съпруга", "дядо", "баща"], "answer": "съпруг" },
+        { "type": "introduce", "id": "fam-2-i5", "label": "NEW WORD", "display": "семейство", "sublabel": "neuter noun (ends in -о)", "translation": "family", "tts": "семейство" },
+        { "type": "translate_to_en", "id": "fam-2-tr1", "prompt": "Имам голямо семейство", "answers": ["I have a big family", "I have a large family"], "hint": "голямо = big (neuter)", "tts": "Имам голямо семейство" },
+        { "type": "match_pairs", "id": "fam-2-mp1", "instruction": "Match the family word:", "pairs": [{ "left": "дядо", "right": "grandfather" }, { "left": "баба", "right": "grandmother" }, { "left": "съпруг", "right": "husband" }, { "left": "съпруга", "right": "wife" }] },
+        { "type": "word_bank", "id": "fam-2-wb1", "direction": "to_bg", "prompt": "I have a grandmother and a grandfather", "words": ["Имам", "баба", "и", "дядо", "семейство", "майка", "баща", "нямам"], "answer": "Имам баба и дядо" },
+        { "type": "listen_translate", "id": "fam-2-lt1", "tts": "Имам голямо семейство", "answers": ["I have a big family", "I have a large family"] },
+        { "type": "speak_sentence", "id": "fam-2-sp1", "tts": "Моята баба е хубава" }
+      ]
+    },
+    {
+      "id": "fam-3",
+      "title": "Describing People",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "fam-3-i1", "label": "NEW WORD", "display": "голям / голяма", "sublabel": "masc / fem forms", "translation": "big / large", "tts": "голям" },
+        { "type": "introduce", "id": "fam-3-i2", "label": "NEW WORD", "display": "малък / малка", "sublabel": "masc / fem forms", "translation": "small / little", "tts": "малък" },
+        { "type": "multiple_choice", "id": "fam-3-mc1", "question": "What does \"голяма\" mean (feminine form)?", "choices": ["big", "small", "old", "young"], "answer": "big" },
+        { "type": "introduce", "id": "fam-3-i3", "label": "NEW WORD", "display": "стар / стара", "sublabel": "masc / fem forms", "translation": "old", "tts": "стар" },
+        { "type": "introduce", "id": "fam-3-i4", "label": "NEW WORD", "display": "млад / млада", "sublabel": "masc / fem forms", "translation": "young", "tts": "млад" },
+        { "type": "multiple_choice", "id": "fam-3-mc2", "question": "What is the opposite of \"стар\" (old)?", "choices": ["млад", "хубав", "голям", "малък"], "answer": "млад" },
+        { "type": "introduce", "id": "fam-3-i5", "label": "NEW WORD", "display": "хубав / хубава", "sublabel": "masc / fem forms", "translation": "nice / beautiful", "tts": "хубав" },
+        { "type": "translate_to_en", "id": "fam-3-tr1", "prompt": "Моята сестра е млада и хубава", "answer": "My sister is young and beautiful", "hint": "Моята = my (fem), млада/хубава = fem forms", "tts": "Моята сестра е млада и хубава" },
+        { "type": "translate_to_en", "id": "fam-3-tr2", "prompt": "Моят баща е стар", "answer": "My father is old", "hint": "Моят = my (masc)", "tts": "Моят баща е стар" },
+        { "type": "match_pairs", "id": "fam-3-mp1", "instruction": "Match the adjective to its meaning:", "pairs": [{ "left": "голям", "right": "big" }, { "left": "малък", "right": "small" }, { "left": "стар", "right": "old" }, { "left": "млад", "right": "young" }] },
+        { "type": "word_bank", "id": "fam-3-wb1", "direction": "to_en", "prompt": "Моят брат е млад и голям", "tts": "Моят брат е млад и голям", "words": ["My", "brother", "is", "young", "and", "big", "old", "small"], "answer": "My brother is young and big" },
+        { "type": "speak_sentence", "id": "fam-3-sp1", "tts": "Моята майка е хубава" }
+      ]
+    },
+    {
+      "id": "fam-4",
+      "title": "I Have / I Don't Have",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "fam-4-i1", "label": "NEW PHRASE", "display": "Имам...", "sublabel": "I have (something)", "translation": "I have...", "tts": "Имам" },
+        { "type": "introduce", "id": "fam-4-i2", "label": "NEW PHRASE", "display": "Нямам...", "sublabel": "\"не + имам\" = the opposite", "translation": "I don't have...", "tts": "Нямам" },
+        { "type": "multiple_choice", "id": "fam-4-mc1", "question": "What does \"Нямам брат\" mean?", "choices": ["I don't have a brother", "I have a brother", "My brother is here", "I want a brother"], "answer": "I don't have a brother" },
+        { "type": "translate_to_en", "id": "fam-4-tr1", "prompt": "Имам две сестри", "answer": "I have two sisters", "hint": "две = two, сестри = sisters (plural)", "tts": "Имам две сестри" },
+        { "type": "translate_to_en", "id": "fam-4-tr2", "prompt": "Нямам деца", "answers": ["I don't have children", "I have no children"], "hint": "деца = children", "tts": "Нямам деца" },
+        { "type": "multiple_choice", "id": "fam-4-mc2", "question": "How do you say \"I have a young sister\"?", "choices": ["Имам млада сестра", "Нямам млада сестра", "Сестра ми е стара", "Имам малък брат"], "answer": "Имам млада сестра" },
+        { "type": "word_bank", "id": "fam-4-wb1", "direction": "to_en", "prompt": "Нямам брат, но имам сестра", "tts": "Нямам брат но имам сестра", "words": ["I", "don't", "have", "a", "brother", "but", "I", "have", "sister"], "answer": "I don't have a brother but I have a sister" },
+        { "type": "fill_blank", "id": "fam-4-fb1", "sentence": "___ брат, но имам сестра.", "answer": "Нямам", "hint": "I don't have = ??" },
+        { "type": "translate_to_bg", "id": "fam-4-tb1", "prompt": "I have a big family", "answer": "Имам голямо семейство" },
+        { "type": "listen_translate", "id": "fam-4-lt1", "tts": "Нямам деца", "answers": ["I don't have children", "I have no children"] },
+        { "type": "speak_sentence", "id": "fam-4-sp1", "tts": "Имам голямо семейство" }
+      ]
+    },
+    {
+      "id": "fam-5",
+      "title": "Family Review",
+      "xp": 15,
+      "exercises": [
+        { "type": "multiple_choice", "id": "fam-5-mc1", "question": "Which word means \"grandmother\"?", "choices": ["баба", "майка", "сестра", "съпруга"], "answer": "баба" },
+        { "type": "translate_to_en", "id": "fam-5-tr1", "prompt": "Моят дядо е стар, но хубав", "answer": "My grandfather is old but nice", "hint": "но = but", "tts": "Моят дядо е стар но хубав" },
+        { "type": "translate_to_bg", "id": "fam-5-tb1", "prompt": "I have a young wife", "answer": "Имам млада съпруга" },
+        { "type": "match_pairs", "id": "fam-5-mp1", "instruction": "Match the family member:", "pairs": [{ "left": "дядо", "right": "grandfather" }, { "left": "съпруг", "right": "husband" }, { "left": "сестра", "right": "sister" }, { "left": "баща", "right": "father" }] },
+        { "type": "fill_blank", "id": "fam-5-fb1", "sentence": "Моята сестра е ___ и хубава.", "answer": "млада", "hint": "young (feminine) = ??" },
+        { "type": "word_bank", "id": "fam-5-wb1", "direction": "to_en", "prompt": "Имам малко семейство", "tts": "Имам малко семейство", "words": ["I", "have", "a", "small", "big", "family", "old", "young"], "answer": "I have a small family" },
+        { "type": "translate_to_en", "id": "fam-5-tr2", "prompt": "Нямам брат, само сестра", "answer": "I don't have a brother, only a sister", "hint": "само = only", "tts": "Нямам брат само сестра" },
+        { "type": "listen_translate", "id": "fam-5-lt1", "tts": "Моята майка е хубава и млада", "answer": "My mother is beautiful and young" },
+        { "type": "listen_translate", "id": "fam-5-lt2", "tts": "Имам брат и две сестри", "answer": "I have a brother and two sisters" },
+        { "type": "speak_sentence", "id": "fam-5-sp1", "tts": "Нямам брат но имам сестра" }
+      ]
+    }
+  ]
+}

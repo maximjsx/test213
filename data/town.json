@@ -1,0 +1,102 @@
+{
+  "id": "town",
+  "title": "Around Town",
+  "subtitle": "Places, transport and directions",
+  "color": "#ff9600",
+  "icon": "🏙",
+  "notes": "## Places in the City\n\n| Bulgarian | English |\n|-----------|---------|\n| хотел | hotel |\n| ресторант | restaurant |\n| магазин | shop / store |\n| аптека | pharmacy |\n| болница | hospital |\n| банка | bank |\n| гара | train station |\n\n## Transport\n\n| Bulgarian | English |\n|-----------|---------|\n| автобус | bus |\n| метро | metro / subway |\n| такси | taxi |\n| спирка | stop (bus/tram) |\n| билет | ticket |\n\n## Directions\n\n- **вляво** - to the left\n- **вдясно** - to the right\n- **направо** - straight ahead\n- **близо** - near / close\n- **далеч** - far\n\n## Useful Phrases\n\n- **Извинете, къде е...?** - Excuse me, where is...?\n- **Как да стигна до...?** - How do I get to...?\n- **Колко струва?** - How much does it cost?\n- **Имате ли...?** - Do you have...?",
+  "lessons": [
+    {
+      "id": "town-1",
+      "title": "Places in the City",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "town-1-i1", "label": "NEW WORD", "display": "хотел", "sublabel": "masculine noun", "translation": "hotel", "tts": "хотел" },
+        { "type": "introduce", "id": "town-1-i2", "label": "NEW WORD", "display": "ресторант", "sublabel": "masculine noun", "translation": "restaurant", "tts": "ресторант" },
+        { "type": "multiple_choice", "id": "town-1-mc1", "question": "What does \"ресторант\" mean?", "choices": ["restaurant", "hotel", "pharmacy", "shop"], "answer": "restaurant" },
+        { "type": "listen_and_type", "id": "town-1-lat0", "tts": "хотел", "answer": "хотел" },
+        { "type": "introduce", "id": "town-1-i3", "label": "NEW WORD", "display": "магазин", "sublabel": "masculine noun", "translation": "shop / store", "tts": "магазин" },
+        { "type": "introduce", "id": "town-1-i4", "label": "NEW WORD", "display": "аптека", "sublabel": "feminine noun (ends in -а)", "translation": "pharmacy", "tts": "аптека" },
+        { "type": "multiple_choice", "id": "town-1-mc2", "question": "You need medicine. Where do you go?", "choices": ["аптека", "болница", "хотел", "ресторант"], "answer": "аптека" },
+        { "type": "introduce", "id": "town-1-i5", "label": "NEW WORD", "display": "болница", "sublabel": "feminine noun (ends in -а)", "translation": "hospital", "tts": "болница" },
+        { "type": "translate_to_en", "id": "town-1-tr1", "prompt": "Това е болница", "answer": "This is a hospital", "hint": "това = this, е = is", "tts": "Това е болница" },
+        { "type": "translate_to_en", "id": "town-1-tr2", "prompt": "Има ли хотел тук?", "answer": "Is there a hotel here?", "hint": "Има ли = Is there, тук = here", "tts": "Има ли хотел тук" },
+        { "type": "match_pairs", "id": "town-1-mp1", "instruction": "Match the word to its meaning:", "pairs": [{ "left": "хотел", "right": "hotel" }, { "left": "магазин", "right": "shop" }, { "left": "аптека", "right": "pharmacy" }, { "left": "болница", "right": "hospital" }] },
+        { "type": "speak_sentence", "id": "town-1-sp1", "tts": "Има ли аптека тук" },
+        { "type": "listen_and_type", "id": "town-1-lat1", "tts": "ресторант", "answer": "ресторант" }
+      ]
+    },
+    {
+      "id": "town-2",
+      "title": "Getting Around",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "town-2-i1", "label": "NEW WORD", "display": "автобус", "sublabel": "masculine noun", "translation": "bus", "tts": "автобус" },
+        { "type": "introduce", "id": "town-2-i2", "label": "NEW WORD", "display": "метро", "sublabel": "neuter noun (ends in -о)", "translation": "metro / subway", "tts": "метро" },
+        { "type": "multiple_choice", "id": "town-2-mc0", "question": "What does \"автобус\" mean?", "choices": ["bus", "metro", "taxi", "stop"], "answer": "bus", "tts": "автобус" },
+        { "type": "introduce", "id": "town-2-i3", "label": "NEW WORD", "display": "спирка", "sublabel": "feminine noun - where you wait for the bus", "translation": "stop (bus/tram)", "tts": "спирка" },
+        { "type": "multiple_choice", "id": "town-2-mc1", "question": "What does \"спирка\" mean?", "choices": ["stop / bus stop", "ticket", "bus", "metro"], "answer": "stop / bus stop" },
+        { "type": "introduce", "id": "town-2-i4", "label": "NEW WORD", "display": "билет", "sublabel": "masculine noun", "translation": "ticket", "tts": "билет" },
+        { "type": "translate_to_en", "id": "town-2-tr1", "prompt": "Искам билет за автобус", "answer": "I want a bus ticket", "hint": "Искам = I want, за = for", "tts": "Искам билет за автобус" },
+        { "type": "multiple_choice", "id": "town-2-mc2", "question": "How do you say \"ticket\"?", "choices": ["билет", "спирка", "метро", "автобус"], "answer": "билет" },
+        { "type": "match_pairs", "id": "town-2-mp1", "instruction": "Match the transport word:", "pairs": [{ "left": "автобус", "right": "bus" }, { "left": "метро", "right": "metro" }, { "left": "такси", "right": "taxi" }, { "left": "билет", "right": "ticket" }] },
+        { "type": "word_bank", "id": "town-2-wb1", "direction": "to_en", "prompt": "Искам билет за метро", "tts": "Искам билет за метро", "words": ["I", "want", "a", "metro", "ticket", "bus", "taxi", "for"], "answer": "I want a metro ticket" },
+        { "type": "listen_and_type", "id": "town-2-lat1", "tts": "автобус", "answer": "автобус" },
+        { "type": "speak_sentence", "id": "town-2-sp1", "tts": "Искам билет за метро" }
+      ]
+    },
+    {
+      "id": "town-3",
+      "title": "Directions",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "town-3-i1", "label": "NEW WORD", "display": "вляво", "sublabel": "turn or go this way", "translation": "to the left", "tts": "вляво" },
+        { "type": "introduce", "id": "town-3-i2", "label": "NEW WORD", "display": "вдясно", "sublabel": "opposite of вляво", "translation": "to the right", "tts": "вдясно" },
+        { "type": "multiple_choice", "id": "town-3-mc1", "question": "What does \"вдясно\" mean?", "choices": ["to the right", "to the left", "straight ahead", "near"], "answer": "to the right" },
+        { "type": "introduce", "id": "town-3-i3", "label": "NEW WORD", "display": "направо", "sublabel": "keep going without turning", "translation": "straight ahead", "tts": "направо" },
+        { "type": "multiple_choice", "id": "town-3-mc2", "question": "Which word means \"straight ahead\"?", "choices": ["направо", "вляво", "вдясно", "близо"], "answer": "направо" },
+        { "type": "introduce", "id": "town-3-i4", "label": "NEW WORD", "display": "близо", "sublabel": "not far away", "translation": "near / close", "tts": "близо" },
+        { "type": "introduce", "id": "town-3-i5", "label": "NEW WORD", "display": "далеч", "sublabel": "opposite of близо", "translation": "far", "tts": "далеч" },
+        { "type": "translate_to_en", "id": "town-3-tr1", "prompt": "Хотелът е близо", "answer": "The hotel is near", "hint": "Хотелът = the hotel, е = is", "tts": "Хотелът е близо" },
+        { "type": "match_pairs", "id": "town-3-mp1", "instruction": "Match the direction word:", "pairs": [{ "left": "вляво", "right": "left" }, { "left": "вдясно", "right": "right" }, { "left": "направо", "right": "straight" }, { "left": "близо", "right": "near" }] },
+        { "type": "word_bank", "id": "town-3-wb1", "direction": "to_bg", "prompt": "The pharmacy is to the right", "words": ["Аптеката", "е", "вдясно", "вляво", "далеч", "болница", "близо"], "answer": "Аптеката е вдясно" },
+        { "type": "speak_sentence", "id": "town-3-sp1", "tts": "Направо, след това вляво" }
+      ]
+    },
+    {
+      "id": "town-4",
+      "title": "Asking for Help",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "town-4-i1", "label": "NEW PHRASE", "display": "Извинете, къде е...?", "sublabel": "start with \"Извинете\" to be polite", "translation": "Excuse me, where is...?", "tts": "Извинете, къде е ресторантът" },
+        { "type": "introduce", "id": "town-4-i2", "label": "NEW PHRASE", "display": "Как да стигна до...?", "sublabel": "ask for step-by-step directions", "translation": "How do I get to...?", "tts": "Как да стигна до хотела" },
+        { "type": "multiple_choice", "id": "town-4-mc1", "question": "What does \"Как да стигна до...?\" mean?", "choices": ["How do I get to...?", "Where is...?", "How much does it cost?", "Do you have...?"], "answer": "How do I get to...?" },
+        { "type": "introduce", "id": "town-4-i3", "label": "NEW PHRASE", "display": "Колко струва?", "sublabel": "ask about price", "translation": "How much does it cost?", "tts": "Колко струва" },
+        { "type": "introduce", "id": "town-4-i4", "label": "NEW PHRASE", "display": "Имате ли...?", "sublabel": "ask if something is available", "translation": "Do you have...?", "tts": "Имате ли билети" },
+        { "type": "translate_to_en", "id": "town-4-tr1", "prompt": "Колко струва билетът?", "answer": "How much does the ticket cost?", "hint": "Колко = how much, струва = costs, билетът = the ticket", "tts": "Колко струва билетът" },
+        { "type": "multiple_choice", "id": "town-4-mc2", "question": "You want to know the price. What do you ask?", "choices": ["Колко струва?", "Извинете, къде е?", "Имате ли?", "Как да стигна?"], "answer": "Колко струва?" },
+        { "type": "translate_to_en", "id": "town-4-tr2", "prompt": "Извинете, къде е аптеката?", "answer": "Excuse me, where is the pharmacy?", "hint": "аптеката = the pharmacy", "tts": "Извинете, къде е аптеката" },
+        { "type": "word_bank", "id": "town-4-wb1", "direction": "to_en", "prompt": "Имате ли билети?", "tts": "Имате ли билети", "words": ["Do", "you", "have", "tickets", "a", "ticket", "the", "where"], "answer": "Do you have tickets" },
+        { "type": "listen_translate", "id": "town-4-lt1", "tts": "Колко струва", "answer": "How much does it cost" },
+        { "type": "speak_sentence", "id": "town-4-sp1", "tts": "Извинете, къде е хотелът" }
+      ]
+    },
+    {
+      "id": "town-5",
+      "title": "City Review",
+      "xp": 15,
+      "exercises": [
+        { "type": "multiple_choice", "id": "town-5-mc1", "question": "Where do you buy medicine?", "choices": ["аптека", "болница", "хотел", "магазин"], "answer": "аптека" },
+        { "type": "translate_to_en", "id": "town-5-tr1", "prompt": "Автобусът е далеч", "answer": "The bus is far", "hint": "Автобусът = the bus", "tts": "Автобусът е далеч" },
+        { "type": "translate_to_bg", "id": "town-5-tb1", "prompt": "The restaurant is straight ahead", "answer": "Ресторантът е направо" },
+        { "type": "match_pairs", "id": "town-5-mp1", "instruction": "Match the place to its meaning:", "pairs": [{ "left": "хотел", "right": "hotel" }, { "left": "болница", "right": "hospital" }, { "left": "гара", "right": "station" }, { "left": "магазин", "right": "shop" }] },
+        { "type": "word_bank", "id": "town-5-wb1", "direction": "to_en", "prompt": "Извинете, къде е метрото?", "tts": "Извинете, къде е метрото", "words": ["Excuse", "me", "where", "is", "the", "metro", "bus", "taxi"], "answer": "Excuse me where is the metro" },
+        { "type": "fill_blank", "id": "town-5-fb1", "sentence": "Хотелът е ___, не далеч.", "answer": "близо", "hint": "near = ??" },
+        { "type": "listen_translate", "id": "town-5-lt1", "tts": "Как да стигна до болницата", "answer": "How do I get to the hospital" },
+        { "type": "translate_to_en", "id": "town-5-tr2", "prompt": "Вземете автобус вдясно", "answer": "Take the bus to the right", "hint": "Вземете = take", "tts": "Вземете автобус вдясно" },
+        { "type": "listen_translate", "id": "town-5-lt2", "tts": "Имате ли билети", "answer": "Do you have tickets" },
+        { "type": "speak_sentence", "id": "town-5-sp1", "tts": "Колко струва билетът" }
+      ]
+    }
+  ]
+}

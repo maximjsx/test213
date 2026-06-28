@@ -1,0 +1,102 @@
+{
+  "id": "school",
+  "title": "School Days",
+  "subtitle": "School, supplies and the week",
+  "color": "#ffa500",
+  "icon": "Учи",
+  "notes": "## People at School\n\n| Bulgarian | English |\n|-----------|---------|\n| училище | school |\n| клас | class / classroom |\n| учител | teacher (male) |\n| учителка | teacher (female) |\n| ученик | student (male) |\n| ученичка | student (female) |\n\n## School Supplies\n\n| Bulgarian | English |\n|-----------|---------|\n| книга | book |\n| тетрадка | notebook |\n| молив | pencil |\n| химикал | pen |\n| раница | backpack |\n| дъска | blackboard |\n\n## Classroom Phrases\n\n- **Разбирам** - I understand\n- **Не разбирам** - I don't understand\n- **Повторете, моля** - Please repeat\n- **Помощ!** - Help!\n- **Мога ли да попитам?** - May I ask a question?\n\n## Days of the Week\n\n| Bulgarian | English |\n|-----------|---------|\n| понеделник | Monday |\n| вторник | Tuesday |\n| сряда | Wednesday |\n| четвъртък | Thursday |\n| петък | Friday |\n| събота | Saturday |\n| неделя | Sunday |",
+  "lessons": [
+    {
+      "id": "sch-1",
+      "title": "People at School",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "sch-1-i1", "label": "NEW WORD", "display": "училище", "sublabel": "neuter noun (ends in -е)", "translation": "school", "tts": "училище" },
+        { "type": "introduce", "id": "sch-1-i2", "label": "NEW WORD", "display": "учител", "sublabel": "masculine noun", "translation": "teacher (male)", "tts": "учител" },
+        { "type": "multiple_choice", "id": "sch-1-mc2", "question": "How do you say \"school\"?", "choices": ["училище", "учител", "ученик", "клас"], "answer": "училище" },
+        { "type": "introduce", "id": "sch-1-i3", "label": "NEW WORD", "display": "учителка", "sublabel": "feminine noun (ends in -а)", "translation": "teacher (female)", "tts": "учителка" },
+        { "type": "multiple_choice", "id": "sch-1-mc1", "question": "What does \"учителка\" mean?", "choices": ["female teacher", "male teacher", "student", "school"], "answer": "female teacher" },
+        { "type": "introduce", "id": "sch-1-i4", "label": "NEW WORD", "display": "ученик", "sublabel": "masculine noun", "translation": "student (male)", "tts": "ученик" },
+        { "type": "introduce", "id": "sch-1-i5", "label": "NEW WORD", "display": "ученичка", "sublabel": "feminine noun (ends in -а)", "translation": "student (female)", "tts": "ученичка" },
+        { "type": "translate_to_en", "id": "sch-1-tr1", "prompt": "Учителката е в клас", "answer": "The teacher is in class", "hint": "в = in, клас = class", "tts": "Учителката е в клас" },
+        { "type": "match_pairs", "id": "sch-1-mp1", "instruction": "Match the school word:", "pairs": [{ "left": "училище", "right": "school" }, { "left": "учител", "right": "teacher (m)" }, { "left": "ученик", "right": "student (m)" }, { "left": "учителка", "right": "teacher (f)" }] },
+        { "type": "word_bank", "id": "sch-1-wb1", "direction": "to_en", "prompt": "Аз съм ученик в училище", "tts": "Аз съм ученик в училище", "words": ["I", "am", "a", "student", "teacher", "in", "school", "class"], "answer": "I am a student in school" },
+        { "type": "listen_and_type", "id": "sch-1-lat1", "tts": "учител", "answer": "учител" },
+        { "type": "speak_sentence", "id": "sch-1-sp1", "tts": "Аз съм ученичка" }
+      ]
+    },
+    {
+      "id": "sch-2",
+      "title": "School Supplies",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "sch-2-i1", "label": "NEW WORD", "display": "книга", "sublabel": "feminine noun (ends in -а)", "translation": "book", "tts": "книга" },
+        { "type": "introduce", "id": "sch-2-i2", "label": "NEW WORD", "display": "тетрадка", "sublabel": "feminine noun (ends in -а)", "translation": "notebook", "tts": "тетрадка" },
+        { "type": "multiple_choice", "id": "sch-2-mc0", "question": "What does \"книга\" mean?", "choices": ["book", "notebook", "pencil", "backpack"], "answer": "book" },
+        { "type": "introduce", "id": "sch-2-i3", "label": "NEW WORD", "display": "молив", "sublabel": "masculine noun", "translation": "pencil", "tts": "молив" },
+        { "type": "multiple_choice", "id": "sch-2-mc1", "question": "What does \"молив\" mean?", "choices": ["pencil", "pen", "book", "notebook"], "answer": "pencil" },
+        { "type": "introduce", "id": "sch-2-i4", "label": "NEW WORD", "display": "химикал", "sublabel": "masculine noun", "translation": "pen", "tts": "химикал" },
+        { "type": "introduce", "id": "sch-2-i5", "label": "NEW WORD", "display": "раница", "sublabel": "feminine noun (ends in -а)", "translation": "backpack", "tts": "раница" },
+        { "type": "multiple_choice", "id": "sch-2-mc2", "question": "You write with ink. Which tool do you use?", "choices": ["химикал", "молив", "книга", "тетрадка"], "answer": "химикал" },
+        { "type": "translate_to_en", "id": "sch-2-tr1", "prompt": "Имам книга и тетрадка в раницата", "answer": "I have a book and a notebook in the backpack", "hint": "в раницата = in the backpack", "tts": "Имам книга и тетрадка в раницата" },
+        { "type": "match_pairs", "id": "sch-2-mp1", "instruction": "Match the school supply:", "pairs": [{ "left": "книга", "right": "book" }, { "left": "тетрадка", "right": "notebook" }, { "left": "молив", "right": "pencil" }, { "left": "раница", "right": "backpack" }] },
+        { "type": "word_bank", "id": "sch-2-wb1", "direction": "to_bg", "prompt": "I have a pencil and a pen", "words": ["Имам", "молив", "и", "химикал", "книга", "раница", "тетрадка", "нямам"], "answer": "Имам молив и химикал" },
+        { "type": "listen_and_type", "id": "sch-2-lat1", "tts": "тетрадка", "answer": "тетрадка" },
+        { "type": "speak_sentence", "id": "sch-2-sp1", "tts": "Имам раница с книги" }
+      ]
+    },
+    {
+      "id": "sch-3",
+      "title": "In the Classroom",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "sch-3-i1", "label": "NEW PHRASE", "display": "Разбирам", "sublabel": "use when you follow the lesson", "translation": "I understand", "tts": "Разбирам" },
+        { "type": "introduce", "id": "sch-3-i2", "label": "NEW PHRASE", "display": "Не разбирам", "sublabel": "не = not, so \"I not understand\"", "translation": "I don't understand", "tts": "Не разбирам" },
+        { "type": "multiple_choice", "id": "sch-3-mc1", "question": "What does \"Не разбирам\" mean?", "choices": ["I don't understand", "I understand", "I don't know", "Please repeat"], "answer": "I don't understand" },
+        { "type": "introduce", "id": "sch-3-i3", "label": "NEW PHRASE", "display": "Повторете, моля", "sublabel": "ask the teacher to say it again", "translation": "Please repeat", "tts": "Повторете моля" },
+        { "type": "introduce", "id": "sch-3-i4", "label": "NEW WORD", "display": "Помощ!", "sublabel": "shout this when you are stuck", "translation": "Help!", "tts": "Помощ" },
+        { "type": "multiple_choice", "id": "sch-3-mc2", "question": "You didn't catch what the teacher said. What do you say?", "choices": ["Повторете, моля", "Помощ", "Разбирам", "Нямам"], "answer": "Повторете, моля" },
+        { "type": "translate_to_en", "id": "sch-3-tr1", "prompt": "Не разбирам урока", "answer": "I don't understand the lesson", "hint": "урока = the lesson", "tts": "Не разбирам урока" },
+        { "type": "match_pairs", "id": "sch-3-mp1", "instruction": "Match the phrase:", "pairs": [{ "left": "Разбирам", "right": "I understand" }, { "left": "Не разбирам", "right": "I don't understand" }, { "left": "Повторете", "right": "Please repeat" }, { "left": "Помощ!", "right": "Help!" }] },
+        { "type": "fill_blank", "id": "sch-3-fb1", "sentence": "Не ___. Повторете, моля.", "answer": "разбирам", "hint": "I don't understand = Не ???" },
+        { "type": "listen_translate", "id": "sch-3-lt1", "tts": "Повторете моля", "answer": "Please repeat" },
+        { "type": "speak_sentence", "id": "sch-3-sp1", "tts": "Не разбирам моля повторете" }
+      ]
+    },
+    {
+      "id": "sch-4",
+      "title": "Days of the Week",
+      "xp": 10,
+      "exercises": [
+        { "type": "introduce", "id": "sch-4-i1", "label": "NEW WORDS", "display": "понеделник, вторник", "sublabel": "the week begins with Monday", "translation": "Monday, Tuesday", "tts": "понеделник вторник" },
+        { "type": "introduce", "id": "sch-4-i2", "label": "NEW WORDS", "display": "сряда, четвъртък", "sublabel": "middle of the week", "translation": "Wednesday, Thursday", "tts": "сряда четвъртък" },
+        { "type": "multiple_choice", "id": "sch-4-mc1", "question": "Which day comes after \"вторник\" (Tuesday)?", "choices": ["сряда", "четвъртък", "петък", "понеделник"], "answer": "сряда" },
+        { "type": "introduce", "id": "sch-4-i3", "label": "NEW WORDS", "display": "петък, събота, неделя", "sublabel": "end of the week", "translation": "Friday, Saturday, Sunday", "tts": "петък събота неделя" },
+        { "type": "multiple_choice", "id": "sch-4-mc2", "question": "What is \"Saturday\" in Bulgarian?", "choices": ["събота", "неделя", "петък", "сряда"], "answer": "събота" },
+        { "type": "multiple_choice", "id": "sch-4-mc3", "question": "What is \"Monday\" in Bulgarian?", "choices": ["понеделник", "вторник", "четвъртък", "петък"], "answer": "понеделник" },
+        { "type": "match_pairs", "id": "sch-4-mp1", "instruction": "Match the day of the week:", "pairs": [{ "left": "понеделник", "right": "Monday" }, { "left": "сряда", "right": "Wednesday" }, { "left": "петък", "right": "Friday" }, { "left": "неделя", "right": "Sunday" }] },
+        { "type": "translate_to_en", "id": "sch-4-tr1", "prompt": "В понеделник имам клас", "answer": "On Monday I have class", "hint": "В = on (for days)", "tts": "В понеделник имам клас" },
+        { "type": "fill_blank", "id": "sch-4-fb1", "sentence": "понеделник, вторник, ___, четвъртък", "answer": "сряда", "hint": "What comes between Tuesday and Thursday?" },
+        { "type": "listen_and_type", "id": "sch-4-lat1", "tts": "четвъртък", "answer": "четвъртък" },
+        { "type": "speak_sentence", "id": "sch-4-sp1", "tts": "В петък нямам клас" }
+      ]
+    },
+    {
+      "id": "sch-5",
+      "title": "School Review",
+      "xp": 15,
+      "exercises": [
+        { "type": "multiple_choice", "id": "sch-5-mc1", "question": "What day comes after \"събота\" (Saturday)?", "choices": ["неделя", "петък", "понеделник", "сряда"], "answer": "неделя" },
+        { "type": "translate_to_en", "id": "sch-5-tr1", "prompt": "Учителката дава книга на ученика", "answer": "The teacher gives a book to the student", "hint": "дава = gives, на = to", "tts": "Учителката дава книга на ученика" },
+        { "type": "translate_to_bg", "id": "sch-5-tb1", "prompt": "I don't understand. Please repeat.", "answer": "Не разбирам. Повторете, моля." },
+        { "type": "match_pairs", "id": "sch-5-mp1", "instruction": "Match the school word:", "pairs": [{ "left": "книга", "right": "book" }, { "left": "раница", "right": "backpack" }, { "left": "молив", "right": "pencil" }, { "left": "учителка", "right": "teacher (f)" }] },
+        { "type": "fill_blank", "id": "sch-5-fb1", "sentence": "В ___ имам клас по математика.", "answer": "сряда", "hint": "Wednesday = ??" },
+        { "type": "word_bank", "id": "sch-5-wb1", "direction": "to_en", "prompt": "Имам химикал и молив в раницата", "tts": "Имам химикал и молив в раницата", "words": ["I", "have", "a", "pen", "and", "pencil", "in", "the", "backpack"], "answer": "I have a pen and pencil in the backpack" },
+        { "type": "listen_translate", "id": "sch-5-lt1", "tts": "В четвъртък имам клас", "answer": "On Thursday I have class" },
+        { "type": "listen_translate", "id": "sch-5-lt2", "tts": "Не разбирам урока", "answer": "I don't understand the lesson" },
+        { "type": "translate_to_en", "id": "sch-5-tr2", "prompt": "В събота и неделя нямам клас", "answer": "On Saturday and Sunday I don't have class", "tts": "В събота и неделя нямам клас" },
+        { "type": "speak_sentence", "id": "sch-5-sp1", "tts": "Разбирам учителката много добре" }
+      ]
+    }
+  ]
+}
