@@ -4,14 +4,7 @@ import { checkAnswer, shuffle } from '../../lib/checker'
 import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
-// Estimate how long a line will take to read aloud before auto-advancing.
-// ~120ms/char for Bulgarian TTS at 0.85x rate, 600ms base pause between lines.
-// First line gets extra time (1200ms) since TTS fetch hasn't been cached yet.
-function lineDelay(line, isFirst) {
-  const len = (line?.tts || line?.text || '').length
-  const base = isFirst ? 1200 : 600
-  return Math.max(isFirst ? 2200 : 1600, len * 120 + base)
-}
+const PAUSE_AFTER_LINE = 500 // ms of silence between lines
 
 export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigger, disabled }) {
   const [revealed, setRevealed] = useState(1)
@@ -21,7 +14,6 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
   const checkedRef = useRef(false)
   const selectedRef = useRef(null)
   const textRef = useRef('')
-  const ttsStartedRef = useRef(false)
 
   const lines = exercise.lines || []
   const names = exercise.speakerNames || {}
@@ -29,30 +21,34 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
   const shuffledChoices = useMemo(() => hasChoices ? shuffle(exercise.choices) : [], [exercise.id])
   const done = revealed >= lines.length
 
-  // Play first line on mount — ref guard prevents Strict Mode double-invoke
+  // Play lines one by one, waiting for actual audio duration each time
   useEffect(() => {
-    if (!ttsStartedRef.current) {
-      ttsStartedRef.current = true
-      if (lines[0]?.tts) speakBulgarian(lines[0].tts)
-    }
+    let cancelled = false
     onPendingChange(false)
+
+    async function runDialog() {
+      for (let i = 0; i < lines.length; i++) {
+        if (cancelled) return
+        if (i > 0) setRevealed(i + 1)
+
+        const line = lines[i]
+        let waitMs = 1200 // fallback if no TTS
+        if (line?.tts) {
+          const duration = await speakBulgarian(line.tts)
+          waitMs = (duration || 2000) + PAUSE_AFTER_LINE
+        }
+
+        if (cancelled) return
+        await new Promise(r => setTimeout(r, waitMs))
+      }
+      if (!cancelled) setRevealed(lines.length) // ensure done
+    }
+
+    runDialog()
+    return () => { cancelled = true }
   }, []) // eslint-disable-line
 
-  // Auto-advance each time a new line is revealed (until all lines shown)
-  useEffect(() => {
-    if (done) return
-    const next = revealed + 1
-    const timer = setTimeout(() => {
-      if (next <= lines.length) {
-        const nextLine = lines[next - 1]
-        if (nextLine?.tts) speakBulgarian(nextLine.tts)
-      }
-      setRevealed(next)
-    }, lineDelay(lines[revealed - 1], revealed === 1))
-    return () => clearTimeout(timer)
-  }, [revealed]) // eslint-disable-line
-
-  // Once all lines revealed, let text-mode users start typing
+  // Once all lines revealed, text mode needs pending state wired up
   useEffect(() => {
     if (done && !hasChoices) onPendingChange(textRef.current.trim().length > 0)
   }, [done]) // eslint-disable-line
@@ -126,7 +122,7 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
                   key={c}
                   className={choiceClass(c)}
                   onClick={() => selectChoice(c)}
-                  disabled={disabled || !!selected}
+                  disabled={disabled || checked}
                 >
                   {c}
                 </button>
