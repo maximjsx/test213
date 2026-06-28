@@ -6,6 +6,23 @@ import styles from './Exercise.module.css'
 
 const PAUSE_AFTER_LINE = 500 // ms of silence between lines
 
+// Build a lookup map from speaker id → { name, voice }
+// Supports new `speakers` array and legacy `speakerNames` / `speakerVoices` fields
+function buildSpeakerMap(exercise) {
+  const map = {}
+  for (const s of (exercise.speakers || [])) {
+    map[s.id] = { name: s.name || s.id, voice: s.voice || null }
+  }
+  // legacy fallback
+  if (exercise.speakerNames) {
+    for (const [id, name] of Object.entries(exercise.speakerNames)) {
+      if (!map[id]) map[id] = { name: name || id, voice: null }
+      else if (name) map[id].name = name
+    }
+  }
+  return map
+}
+
 export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigger, disabled }) {
   const [revealed, setRevealed] = useState(1)
   const [selected, setSelected] = useState(null)
@@ -16,7 +33,7 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
   const textRef = useRef('')
 
   const lines = exercise.lines || []
-  const names = exercise.speakerNames || {}
+  const speakerMap = useMemo(() => buildSpeakerMap(exercise), [exercise])
   const hasChoices = Array.isArray(exercise.choices) && exercise.choices.length > 0
   const shuffledChoices = useMemo(() => hasChoices ? shuffle(exercise.choices) : [], [exercise.id])
   const done = revealed >= lines.length
@@ -33,9 +50,10 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
 
         const line = lines[i]
         const ttsText = line?.tts || line?.text
+        const voice = speakerMap[line?.speaker]?.voice || undefined
         let waitMs = 1200 // fallback if nothing to speak
         if (ttsText) {
-          const duration = await speakBulgarian(ttsText)
+          const duration = await speakBulgarian(ttsText, voice)
           waitMs = (duration || 2000) + PAUSE_AFTER_LINE
         }
 
@@ -91,18 +109,24 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
       <p className={styles.label}>COMPLETE THE CONVERSATION</p>
 
       <div className={styles.dialogLines}>
-        {lines.slice(0, revealed).map((line, i) => (
+        {lines.slice(0, revealed).map((line, i) => {
+          const speakerIds = [...new Set((exercise.speakers || []).map(s => s.id))]
+          const idx = speakerIds.indexOf(line.speaker)
+          const isRight = idx % 2 === 1
+          return (
           <div
             key={i}
-            className={`${styles.dialogLine} ${line.speaker === 'A' ? styles.dialogLineA : styles.dialogLineB}`}
+            className={`${styles.dialogLine} ${isRight ? styles.dialogLineB : styles.dialogLineA}`}
           >
-            <div className={styles.dialogAvatar}>{names[line.speaker] || line.speaker}</div>
+            <div className={styles.dialogAvatar}>{speakerMap[line.speaker]?.name || line.speaker}</div>
             <div className={styles.dialogBubble}>{line.text}</div>
           </div>
-        ))}
+          )
+        })}
         {!done && (() => {
           const nextSpeaker = lines[revealed]?.speaker
-          const isRight = nextSpeaker === 'B'
+          const speakerIds = [...new Set((exercise.speakers || []).map(s => s.id))]
+          const isRight = speakerIds.indexOf(nextSpeaker) % 2 === 1
           return (
             <div className={`${styles.dialogTyping} ${isRight ? styles.dialogTypingRight : ''}`}>
               <span /><span /><span />

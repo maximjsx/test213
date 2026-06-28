@@ -9,14 +9,15 @@ function currentMonth() {
 // POST { text: string } — check quota, call Google TTS, return audioContent
 export async function POST(req) {
   try {
-    const { text } = await req.json()
+    const { text, voice } = await req.json()
     if (!text) return Response.json({ error: 'no text' }, { status: 400 })
+    const voiceName = voice || 'bg-BG-Chirp3-HD-Aoede'
 
     const client = await getClientPromise()
     const db = client.db('bulgario')
 
     // Cache hit — skip quota increment and Google TTS call entirely
-    const cached = await db.collection('tts_cache').findOne({ text }, { projection: { audio: 1 } })
+    const cached = await db.collection('tts_cache').findOne({ text, voice: voiceName }, { projection: { audio: 1 } })
     if (cached?.audio) {
       return Response.json({ audioContent: cached.audio })
     }
@@ -43,7 +44,7 @@ export async function POST(req) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           input: { text },
-          voice: { languageCode: 'bg-BG', name: 'bg-BG-Chirp3-HD-Aoede' },
+          voice: { languageCode: 'bg-BG', name: voiceName },
           audioConfig: { audioEncoding: 'MP3', speakingRate: 0.85 },
         }),
       }
@@ -57,7 +58,7 @@ export async function POST(req) {
 
     // Cache audio for future requests (fire-and-forget — don't delay response)
     db.collection('tts_cache')
-      .updateOne({ text }, { $set: { text, audio: ttsData.audioContent } }, { upsert: true })
+      .updateOne({ text, voice: voiceName }, { $set: { text, voice: voiceName, audio: ttsData.audioContent } }, { upsert: true })
       .catch(() => {})
 
     return Response.json({ audioContent: ttsData.audioContent, used: result.chars })

@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { getTTSMuted, setTTSMuted } from '../../../lib/audio'
+import { BG_VOICES, DEFAULT_VOICE } from '../../../lib/voices'
 import Link from 'next/link'
 import styles from './page.module.css'
 
@@ -59,7 +60,7 @@ function defaultExercise(type) {
     case 'match_pairs':      return { type, id, instruction: 'Match each pair:', pairs: [{ left: '', right: '' }, { left: '', right: '' }] }
     case 'listen_translate': return { type, id, tts: '', answers: [''] }
     case 'select_word':     return { type, id, sentence: '', choices: ['', '', ''], answer: '' }
-    case 'dialog':          return { type, id, speakerNames: { A: '', B: '' }, lines: [{ speaker: 'A', text: '', tts: '' }, { speaker: 'B', text: '', tts: '' }], prompt: '', answer: '', choices: [] }
+    case 'dialog':          return { type, id, speakers: [{ id: 'A', name: '', voice: DEFAULT_VOICE }, { id: 'B', name: '', voice: DEFAULT_VOICE }], lines: [{ speaker: 'A', text: '', tts: '' }, { speaker: 'B', text: '', tts: '' }], prompt: '', answer: '', choices: [] }
     default: return { type, id }
   }
 }
@@ -397,15 +398,41 @@ function ExerciseEditor({ ex, onChange }) {
     case 'dialog': return (
       <>
         <div className={styles.fieldRow}>
-          <label className={styles.fieldLabel}>Speaker names</label>
+          <label className={styles.fieldLabel}>
+            Speakers
+            <span className={styles.fieldLabelHint}>name · voice per person</span>
+          </label>
           <div className={styles.fieldInput}>
-            <div className={styles.pairRow}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-muted)', width: 20 }}>A:</span>
-              <input className={styles.input} value={ex.speakerNames?.A || ''} placeholder="e.g. Мария" onChange={e => set('speakerNames', { ...ex.speakerNames, A: e.target.value })} />
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-muted)', width: 20 }}>B:</span>
-              <input className={styles.input} value={ex.speakerNames?.B || ''} placeholder="e.g. Иван" onChange={e => set('speakerNames', { ...ex.speakerNames, B: e.target.value })} />
-            </div>
-            <div className={styles.fieldHint}>Shown in the avatar bubble. Leave blank to show A / B.</div>
+            {(ex.speakers || []).map((sp, si) => (
+              <div key={sp.id} className={styles.dialogLineRow}>
+                <span style={{ fontSize: 13, fontWeight: 900, color: 'var(--text-muted)', width: 18, flexShrink: 0 }}>{sp.id}</span>
+                <input
+                  className={styles.input}
+                  value={sp.name || ''}
+                  placeholder="Display name (optional)"
+                  onChange={e => { const s = [...(ex.speakers || [])]; s[si] = { ...s[si], name: e.target.value }; set('speakers', s) }}
+                />
+                <select
+                  className={styles.selectSm}
+                  style={{ width: 120 }}
+                  value={sp.voice || DEFAULT_VOICE}
+                  onChange={e => { const s = [...(ex.speakers || [])]; s[si] = { ...s[si], voice: e.target.value }; set('speakers', s) }}
+                >
+                  {BG_VOICES.map(v => (
+                    <option key={v.id} value={v.id}>{v.gender} {v.label}</option>
+                  ))}
+                </select>
+                {(ex.speakers || []).length > 2 && (
+                  <button className={styles.removeBtn} onClick={() => set('speakers', (ex.speakers || []).filter((_, j) => j !== si))}>✕</button>
+                )}
+              </div>
+            ))}
+            <button className={styles.addSmallBtn} onClick={() => {
+              const ids = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+              const used = new Set((ex.speakers || []).map(s => s.id))
+              const nextId = ids.split('').find(c => !used.has(c)) || `S${(ex.speakers || []).length + 1}`
+              set('speakers', [...(ex.speakers || []), { id: nextId, name: '', voice: DEFAULT_VOICE }])
+            }}>+ Add speaker</button>
           </div>
         </div>
         <div className={styles.fieldRow}>
@@ -418,11 +445,12 @@ function ExerciseEditor({ ex, onChange }) {
               <div key={i} className={styles.dialogLineRow}>
                 <select
                   className={styles.selectSm}
-                  value={line.speaker || 'A'}
+                  value={line.speaker || (ex.speakers?.[0]?.id ?? 'A')}
                   onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], speaker: e.target.value }; set('lines', l) }}
                 >
-                  <option value="A">A</option>
-                  <option value="B">B</option>
+                  {(ex.speakers || [{ id: 'A' }, { id: 'B' }]).map(s => (
+                    <option key={s.id} value={s.id}>{s.id}{s.name ? ` (${s.name})` : ''}</option>
+                  ))}
                 </select>
                 <input
                   className={styles.input}
