@@ -79,6 +79,40 @@ function exerciseSummary(ex) {
   }
 }
 
+// ── markdown renderer (same logic as /level/[id]/page.js) ────────────────────
+function renderMd(text) {
+  const lines = (text || '').trim().split('\n')
+  const out = []; let i = 0, k = 0
+  while (i < lines.length) {
+    const line = lines[i]
+    if (line.startsWith('## '))  { out.push(<h2 key={k++} className={styles.mdH2}>{line.slice(3)}</h2>); i++ }
+    else if (line.startsWith('### ')) { out.push(<h3 key={k++} className={styles.mdH3}>{line.slice(4)}</h3>); i++ }
+    else if (line.startsWith('|')) {
+      const rows = []
+      while (i < lines.length && lines[i].startsWith('|')) { rows.push(lines[i]); i++ }
+      const parse = r => r.split('|').map(c => c.trim()).filter(Boolean)
+      const [hdr,, ...body] = rows
+      out.push(<table key={k++} className={styles.mdTable}>
+        <thead><tr>{parse(hdr).map((c,j)=><th key={j}>{mdInline(c)}</th>)}</tr></thead>
+        <tbody>{body.map((r,ri)=><tr key={ri}>{parse(r).map((c,j)=><td key={j}>{mdInline(c)}</td>)}</tr>)}</tbody>
+      </table>)
+    } else if (line.startsWith('- ')) {
+      const items = []
+      while (i < lines.length && lines[i].startsWith('- ')) { items.push(lines[i].slice(2)); i++ }
+      out.push(<ul key={k++} className={styles.mdUl}>{items.map((t,j)=><li key={j}>{mdInline(t)}</li>)}</ul>)
+    } else if (line.trim() === '') { i++ }
+    else { out.push(<p key={k++} className={styles.mdP}>{mdInline(line)}</p>); i++ }
+  }
+  return out
+}
+function mdInline(text) {
+  return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/).map((p, i) => {
+    if (p.startsWith('**') && p.endsWith('**')) return <strong key={i}>{p.slice(2,-2)}</strong>
+    if (p.startsWith('*') && p.endsWith('*')) return <em key={i}>{p.slice(1,-1)}</em>
+    return p
+  })
+}
+
 // ── small reusable pieces ─────────────────────────────────────────────────────
 function FieldRow({ label, children, hint }) {
   return (
@@ -346,6 +380,7 @@ export default function LevelEditor() {
   const [expandedEx, setExpandedEx] = useState({}) // { [lessonIdx]: Set<exIdx> }
   const [addExLesson, setAddExLesson] = useState(null)
   const [showLessons, setShowLessons] = useState(true)
+  const [notesTab, setNotesTab] = useState('edit') // 'edit' | 'preview'
   const [confirmDelete, setConfirmDelete] = useState(null) // { type: 'lesson'|'level', li?, label }
   const [showSettings, setShowSettings] = useState(true)
   const [maximized, setMaximized] = useState(null) // null | 'settings' | 'lessons'
@@ -611,15 +646,29 @@ export default function LevelEditor() {
                   <input className={styles.input} style={{ width: 90 }} value={level.icon} placeholder="★" maxLength={6} onChange={e => updateLevel({ icon: e.target.value })} />
                 </FieldRow>
               </div>
-              <FieldRow label="Notes (Markdown)" hint="Shown in the level Notes page. Supports ## headings, | tables |, - lists, **bold**">
-                <textarea
-                  className={styles.textarea}
-                  value={level.notes}
-                  rows={10}
-                  placeholder={'## Vocabulary\n\n| Bulgarian | English |\n|-----------|--------|\n| Здравей | Hello |\n\n- **Здравей** - informal greeting'}
-                  onChange={e => updateLevel({ notes: e.target.value })}
-                />
-              </FieldRow>
+              <div className={styles.fieldRow}>
+                <div className={styles.notesTabRow}>
+                  <label className={styles.fieldLabel}>Notes (Markdown)</label>
+                  <div className={styles.tabToggle}>
+                    <button className={`${styles.tabBtn} ${notesTab === 'edit' ? styles.tabBtnActive : ''}`} onClick={() => setNotesTab('edit')}>Edit</button>
+                    <button className={`${styles.tabBtn} ${notesTab === 'preview' ? styles.tabBtnActive : ''}`} onClick={() => setNotesTab('preview')}>Preview</button>
+                  </div>
+                </div>
+                {notesTab === 'edit' ? (
+                  <textarea
+                    className={styles.textarea}
+                    value={level.notes}
+                    rows={10}
+                    placeholder={'## Vocabulary\n\n| Bulgarian | English |\n|-----------|--------|\n| Здравей | Hello |\n\n- **Здравей** - informal greeting'}
+                    onChange={e => updateLevel({ notes: e.target.value })}
+                  />
+                ) : (
+                  <div className={styles.notesPreview}>
+                    {level.notes?.trim() ? renderMd(level.notes) : <p className={styles.notesEmpty}>Nothing to preview yet.</p>}
+                  </div>
+                )}
+                <div className={styles.fieldHint}>Shown in the level Notes page. Supports ## headings, | tables |, - lists, **bold**</div>
+              </div>
             </div>
           )}
         </div>
