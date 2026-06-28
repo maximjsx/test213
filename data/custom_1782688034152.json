@@ -77,6 +77,18 @@
             "Because a gypsy was hiding in the trash",
             "He forgot to put the trash out",
             "A gypsy stole his wallet"
+          ],
+          "speakers": [
+            {
+              "id": "A",
+              "name": "Стоян стоянов",
+              "voice": "bg-BG-Chirp3-HD-Orus"
+            },
+            {
+              "id": "B",
+              "name": "Циганин",
+              "voice": "bg-BG-Chirp3-HD-Fenrir"
+            }
           ]
         },
         {
