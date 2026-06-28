@@ -1,0 +1,129 @@
+{
+  "id": "custom_1782688034152",
+  "title": "The gypsies",
+  "subtitle": "Ежедневието",
+  "color": "#58cc02",
+  "icon": "★",
+  "notes": "## Notes\n\nWrite your level notes here.",
+  "lessons": [
+    {
+      "id": "custom_1782688034152_l1782688052668",
+      "title": "In the trash bin",
+      "xp": 10,
+      "exercises": [
+        {
+          "type": "introduce",
+          "id": "ex_1782688079041_5qq5q",
+          "label": "NEW WORD",
+          "display": "Циганин",
+          "sublabel": "a male gypsy",
+          "translation": "Gypsy",
+          "tts": "Циганин"
+        },
+        {
+          "type": "word_bank",
+          "id": "ex_1782688168129_dgh2e",
+          "direction": "to_bg",
+          "prompt": "He is a gypsy",
+          "tts": "",
+          "words": [
+            "циганин",
+            "е",
+            "Той",
+            "тя",
+            "боклук",
+            "бяга"
+          ],
+          "answer": "Той е циганин"
+        },
+        {
+          "type": "dialog",
+          "id": "ex_1782688255309_11efk",
+          "speakerNames": {
+            "A": "Стоян стоянов",
+            "B": "Циганин"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "text": "Ей циганче! Що ровиш в боклука бе?",
+              "tts": ""
+            },
+            {
+              "speaker": "B",
+              "text": "Търся си дюнер кебап господине",
+              "tts": ""
+            },
+            {
+              "speaker": "A",
+              "text": "Я се махай веднага шибаняк!",
+              "tts": ""
+            },
+            {
+              "speaker": "A",
+              "text": "Викам полицията вече!!",
+              "tts": ""
+            },
+            {
+              "speaker": "B",
+              "text": "Добре добре айде стига бе господине! Ниш не правам, какво имате проблем за мене бе а?",
+              "tts": ""
+            }
+          ],
+          "prompt": "Why is Стоян стоянов mad?",
+          "answer": "Because a gypsy was hiding in the trash",
+          "choices": [
+            "Because his wife had her nails done for 300€",
+            "Because a gypsy was hiding in the trash",
+            "He forgot to put the trash out",
+            "A gypsy stole his wallet"
+          ]
+        },
+        {
+          "type": "speak_sentence",
+          "id": "ex_1782688979612_81sth",
+          "tts": "Какво правиш в боклука?"
+        },
+        {
+          "type": "match_pairs",
+          "id": "ex_1782688995262_9pnad",
+          "instruction": "Match each pair:",
+          "pairs": [
+            {
+              "left": "Trash",
+              "right": "Боклук"
+            },
+            {
+              "left": "Gypsy",
+              "right": "Циганин"
+            },
+            {
+              "left": "Police",
+              "right": "Полиция"
+            },
+            {
+              "left": "Doner",
+              "right": "Дюнер"
+            },
+            {
+              "left": "Problem",
+              "right": "Проблем"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "id": "ex_1782689148788_01hnt",
+          "question": "They are gypsies",
+          "choices": [
+            "Той е циганин",
+            "Тя е циганка",
+            "Те са цигани"
+          ],
+          "answer": "Те са цигани",
+          "tts": ""
+        }
+      ]
+    }
+  ]
+}

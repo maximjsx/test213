@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { getTTSMuted, setTTSMuted } from '../../../lib/audio'
 import Link from 'next/link'
 import styles from './page.module.css'
 
@@ -515,6 +516,7 @@ export default function LevelEditor() {
   const [maximized, setMaximized] = useState(null) // null | 'settings' | 'lessons'
   const [exportFlash, setExportFlash] = useState(false)
   const [shareFlash, setShareFlash] = useState(false)
+  const [ttsMuted, setTtsMuted] = useState(() => getTTSMuted())
 
   useEffect(() => {
     if (!maximized) { document.body.style.overflow = ''; return }
@@ -729,6 +731,11 @@ export default function LevelEditor() {
               ▶ Play
             </Link>
           )}
+          <button
+            className={`${styles.muteBtn} ${ttsMuted ? styles.muteBtnOff : ''}`}
+            onClick={() => { setTTSMuted(!ttsMuted); setTtsMuted(!ttsMuted) }}
+            title={ttsMuted ? 'Unmute TTS' : 'Mute TTS'}
+          >{ttsMuted ? '🔇' : '🔊'}</button>
           <button className={`${styles.shareBtn} ${shareFlash ? styles.shareBtnFlash : ''}`} onClick={shareLevel}>
             {shareFlash ? 'Link copied!' : 'Share'}
           </button>

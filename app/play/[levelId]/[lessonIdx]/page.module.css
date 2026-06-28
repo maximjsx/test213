@@ -1,0 +1,30 @@
+.done {
+  min-height: 100vh; background: var(--bg);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  font-family: 'Nunito', sans-serif;
+}
+.doneInner {
+  text-align: center; max-width: 400px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.doneEmoji { font-size: 72px; }
+.doneTitle { font-size: 32px; font-weight: 900; color: var(--text); margin: 0; }
+.doneSub { font-size: 15px; color: var(--text-muted); margin: 0; }
+.xpBadge {
+  border: 3px solid; font-size: 22px; font-weight: 900;
+  padding: 8px 24px; border-radius: 100px; margin: 8px 0;
+}
+.doneActions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; }
+.doneBack {
+  background: var(--surface-hi); border: 2px solid var(--border);
+  color: var(--text); font-weight: 800; font-size: 14px;
+  padding: 12px 22px; border-radius: var(--r); cursor: pointer;
+  transition: border-color 0.15s;
+}
+.doneBack:hover { border-color: var(--border-hi); }
+.doneAgain {
+  background: none; border: 2px solid; font-weight: 800; font-size: 14px;
+  padding: 12px 22px; border-radius: var(--r); cursor: pointer;
+  transition: filter 0.15s;
+}
+.doneAgain:hover { filter: brightness(1.2); }
