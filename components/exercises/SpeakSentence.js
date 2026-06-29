@@ -10,15 +10,33 @@ function normalizeSpeech(str) {
     .trim()
 }
 
+function editDistance(a, b) {
+  const m = a.length, n = b.length
+  const dp = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)])
+  for (let j = 0; j <= n; j++) dp[0][j] = j
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
+  return dp[m][n]
+}
+
+function fuzzyWordMatch(a, b) {
+  if (a === b) return true
+  const maxLen = Math.max(a.length, b.length)
+  const threshold = maxLen <= 3 ? 0 : maxLen <= 6 ? 1 : 2
+  return editDistance(a, b) <= threshold
+}
+
 function speechMatches(spoken, target) {
   const a = normalizeSpeech(spoken)
   const b = normalizeSpeech(target)
   if (a === b) return true
   const aWords = a.split(' ')
   const bWords = b.split(' ')
-  const bSet = new Set(bWords)
-  const overlap = aWords.filter(w => bSet.has(w)).length
-  return overlap / bWords.length >= 0.7
+  const matched = bWords.filter(bw => aWords.some(aw => fuzzyWordMatch(aw, bw))).length
+  return matched / bWords.length >= 0.7
 }
 
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
@@ -70,6 +88,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         const blob = new Blob(chunksRef.current, { type: mimeType })
         const form = new FormData()
         form.append('audio', blob, `recording.${ext}`)
+        form.append('target', target)
         try {
           const res = await fetch('/api/stt', { method: 'POST', body: form })
           const { transcript } = await res.json()

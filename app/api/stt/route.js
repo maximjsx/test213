@@ -5,6 +5,7 @@ export async function POST(req) {
   try {
     const formData = await req.formData()
     const audio = formData.get('audio')
+    const target = formData.get('target') || ''
     if (!audio) return Response.json({ error: 'no audio' }, { status: 400 })
 
     const groqForm = new FormData()
@@ -12,6 +13,8 @@ export async function POST(req) {
     groqForm.append('model', 'whisper-large-v3')
     groqForm.append('language', 'bg')
     groqForm.append('response_format', 'json')
+    if (target) groqForm.append('prompt', target)
+    groqForm.append('temperature', '0')
 
     const res = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
       method: 'POST',

@@ -13,6 +13,11 @@
       "exercises": [
         {
           "type": "speak_sentence",
+          "id": "ex_1782729546268_qyp3b",
+          "tts": "еба си мамата"
+        },
+        {
+          "type": "speak_sentence",
           "id": "ex_1782729163834_33p45",
           "tts": "Баща"
         },
