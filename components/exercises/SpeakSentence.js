@@ -23,22 +23,19 @@ function editDistance(a, b) {
   return dp[m][n]
 }
 
-function speechMatches(spoken, target) {
-  // Transliterate first in case Whisper mixed in Latin characters
+function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
   const translitSpoken = transliterateInput(spoken)
   const a = normalizeSpeech(translitSpoken)
   const b = normalizeSpeech(target)
   if (a === b) return true
 
-  // Collapse spaces before comparing — "ебаси мамата" == "еба си мамата" etc.
+  // Collapse spaces — "ебаси мамата" == "еба си мамата"
   const ca = a.replace(/\s/g, '')
   const cb = b.replace(/\s/g, '')
   if (ca === cb) return true
 
-  // 60% char-level similarity: allows phonetic near-misses (баща/башта)
-  // but rejects clearly wrong sentences (ела с майката vs еба си мамата)
   const similarity = 1 - editDistance(ca, cb) / Math.max(ca.length, cb.length)
-  return similarity >= 0.65
+  return similarity >= threshold
 }
 
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
@@ -59,15 +56,44 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   useEffect(() => {
     if (target) speakBulgarian(target)
 
-    // webkitSpeechRecognition doesn't support bg-BG on iOS or Android.
-    // Use MediaRecorder + Groq Whisper API instead for all mobile devices.
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    if (isMobile) {
+
+    if (!SR || isMobile) {
       setUseApiStt(true)
       setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
-    } else {
-      setIsSpeechSupported(!!(window.SpeechRecognition || window.webkitSpeechRecognition))
+      return
     }
+
+    // Silently probe whether bg-BG is actually supported.
+    // language-not-supported fires immediately before any mic prompt.
+    // Any other outcome (onstart, not-allowed, etc.) means the language works.
+    const probe = new SR()
+    probe.lang = 'bg-BG'
+    let done = false
+    const finish = (supported) => {
+      if (done) return
+      done = true
+      try { probe.abort() } catch {}
+      if (supported) {
+        setIsSpeechSupported(true)
+      } else {
+        setUseApiStt(true)
+        setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
+      }
+    }
+    probe.onstart = () => finish(true)
+    probe.onend = () => finish(true)
+    probe.onerror = (e) => {
+      if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') {
+        finish(false)
+      } else {
+        finish(true) // not-allowed / audio-capture etc — language is fine, just no mic yet
+      }
+    }
+    try { probe.start() } catch { finish(false) }
+    const fallback = setTimeout(() => finish(true), 1000)
+    return () => { clearTimeout(fallback); done = true; try { probe.abort() } catch {} }
   }, []) // eslint-disable-line
 
   function stopVad() {
@@ -110,7 +136,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
           setConfidence(conf ?? null)
           if (transcript) {
             setLastSpoken(transcript)
-            if (speechMatches(transcript, target)) {
+            if (speechMatches(transcript, target, { threshold: 0.65 })) {
               setSucceeded(true)
               onAnswer(true)
             } else {
@@ -223,10 +249,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
       {failed && (
         <p className={styles.speakRetryMsg}>
           {useApiStt
-            ? "Didn't catch that — try again!"
+            ? "Didn't catch that, try again!"
             : lastSpoken
-              ? <>Heard: &ldquo;{lastSpoken}&rdquo; — try again!</>
-              : "Didn't catch that — try again!"}
+              ? <>Heard: &ldquo;{lastSpoken}&rdquo;, try again!</>
+              : "Didn't catch that, try again!"}
         </p>
       )}
 
