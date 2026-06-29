@@ -9,7 +9,7 @@ export async function POST(req) {
 
     const groqForm = new FormData()
     groqForm.append('file', audio, audio.name || 'recording.mp4')
-    groqForm.append('model', 'whisper-large-v3-turbo')
+    groqForm.append('model', 'whisper-large-v3')
     groqForm.append('language', 'bg')
     groqForm.append('response_format', 'json')
 
