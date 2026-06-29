@@ -12,15 +12,17 @@ export async function POST(req) {
     const headers = { Authorization: `Bearer ${key}` }
 
     const audioBuffer = await audio.arrayBuffer()
-    const audioType = audio.type || 'audio/mp4'
+    const rawType = audio.type || 'audio/mp4'
+    // Strip codec params — Speechmatics rejects "audio/webm; codecs=opus", needs plain "audio/webm"
+    const audioType = rawType.split(';')[0].trim()
     const fileName = audio.name || 'recording.mp4'
 
-    // Use File so Node.js fetch sets content-type correctly in the multipart body
     const audioFile = new File([audioBuffer], fileName, { type: audioType })
 
     const debug = {
       fileName,
       audioType,
+      rawType,
       audioSize: audioBuffer.byteLength,
     }
 
