@@ -138,38 +138,48 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         stopVad()
         stream.getTracks().forEach(t => t.stop())
         setPhase('processing')
-        const ext = mimeType.includes('webm') ? 'webm' : 'mp4'
-        const blob = new Blob(chunksRef.current, { type: mimeType })
-        const form = new FormData()
-        form.append('audio', blob, `recording.${ext}`)
-        form.append('target', target)
+        const actualMime = recorder.mimeType || mimeType
+        const ext = actualMime.includes('webm') ? 'webm' : 'mp4'
+        const blob = new Blob(chunksRef.current, { type: actualMime })
+
+        async function callApi(ep) {
+          const form = new FormData()
+          form.append('audio', blob, `recording.${ext}`)
+          form.append('target', target)
+          const res = await fetch(ep, { method: 'POST', body: form })
+          if (!res.ok) throw new Error(`${ep} returned ${res.status}`)
+          return res.json()
+        }
+
         try {
-          const res = await fetch(endpoint, { method: 'POST', body: form })
-          if (!res.ok) throw new Error('api error')
-          const { transcript } = await res.json()
+          let transcript = null
+          let usedThreshold = threshold
+
+          try {
+            const data = await callApi(endpoint)
+            transcript = data.transcript ?? null
+          } catch {
+            // Reuse the same blob — no re-recording needed
+            if (endpoint !== '/api/stt') {
+              setSttMode('whisper')
+              usedThreshold = 0.65
+              const data = await callApi('/api/stt')
+              transcript = data.transcript ?? null
+            }
+          }
+
           if (transcript) {
             setLastSpoken(transcript)
-            if (speechMatches(transcript, target, { threshold })) {
+            if (speechMatches(transcript, target, { threshold: usedThreshold })) {
               setSucceeded(true)
               onAnswer(true)
             } else {
               setFailed(true)
             }
           } else {
-            // Speechmatics failed — fall back to Whisper
-            if (endpoint !== '/api/stt') {
-              setSttMode('whisper')
-              handleRecordAndTranscribe('/api/stt', 0.65)
-              return
-            }
             setFailed(true)
           }
         } catch {
-          if (endpoint !== '/api/stt') {
-            setSttMode('whisper')
-            handleRecordAndTranscribe('/api/stt', 0.65)
-            return
-          }
           setFailed(true)
         } finally {
           setPhase('idle')
@@ -254,7 +264,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     : failed ? 'TRY AGAIN'
     : 'CLICK TO SPEAK'
 
-  const showHeard = sttMode !== 'whisper'
+  const sttLabel = sttMode === 'native' ? 'Browser (bg-BG)' : sttMode === 'speechmatics' ? 'Speechmatics' : 'Whisper'
 
   return (
     <div className={styles.wrap}>
@@ -273,12 +283,13 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </div>
       </div>
 
-      {failed && (
+      {lastSpoken && !succeeded && (
         <p className={styles.speakRetryMsg}>
-          {showHeard && lastSpoken
-            ? <>Heard: &ldquo;{lastSpoken}&rdquo;, try again!</>
-            : "Didn't catch that, try again!"}
+          [{sttLabel}] &ldquo;{lastSpoken}&rdquo;{failed ? ', try again!' : ''}
         </p>
+      )}
+      {failed && !lastSpoken && (
+        <p className={styles.speakRetryMsg}>[{sttLabel}] Didn&apos;t catch that, try again!</p>
       )}
 
       {isSpeechSupported ? (
@@ -295,6 +306,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
           Speech recognition is not supported in this browser. Use &ldquo;Can&apos;t speak now&rdquo; to skip.
         </p>
       )}
+
+      <p style={{ fontSize: '0.7rem', opacity: 0.4, marginTop: '0.5rem' }}>STT: {sttLabel}</p>
     </div>
   )
 }

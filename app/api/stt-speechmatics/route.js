@@ -9,17 +9,23 @@ export async function POST(req) {
     const key = process.env.SPEECHMATICS_API_KEY
     const headers = { Authorization: `Bearer ${key}` }
 
+    // Re-buffer the audio to ensure clean bytes and correct content-type
+    const audioBuffer = await audio.arrayBuffer()
+    const audioBlob = new Blob([audioBuffer], { type: audio.type || 'audio/mp4' })
+    const fileName = audio.name || 'recording.mp4'
+
     // 1. Submit job
     const jobForm = new FormData()
-    jobForm.append('data_file', audio, audio.name || 'recording.mp4')
+    jobForm.append('data_file', audioBlob, fileName)
     jobForm.append('config', JSON.stringify({
       type: 'transcription',
-      transcription_config: { language: 'bg', operating_point: 'enhanced' },
+      transcription_config: { language: 'bg' },
     }))
 
     const submitRes = await fetch(`${BASE}/jobs/`, { method: 'POST', headers, body: jobForm })
     if (!submitRes.ok) {
-      console.error('Speechmatics submit error:', submitRes.status, await submitRes.text().catch(() => ''))
+      const errBody = await submitRes.text().catch(() => '')
+      console.error('Speechmatics submit error:', submitRes.status, errBody)
       return Response.json({ error: 'submit_failed' }, { status: 502 })
     }
     const { id: jobId } = await submitRes.json()
@@ -42,7 +48,6 @@ export async function POST(req) {
     if (!txRes.ok) return Response.json({ error: 'transcript_failed' }, { status: 502 })
 
     const tx = await txRes.json()
-    // results array contains words and punctuation; grab words only
     const words = (tx.results ?? [])
       .filter(r => r.type === 'word')
       .map(r => r.alternatives?.[0]?.content ?? '')
