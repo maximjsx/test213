@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { speakBulgarian, startSpeechRecognition } from '../../lib/audio'
+import { transliterateInput } from '../../lib/checker'
 import styles from './Exercise.module.css'
 
 function normalizeSpeech(str) {
@@ -22,21 +23,22 @@ function editDistance(a, b) {
   return dp[m][n]
 }
 
-function fuzzyWordMatch(a, b) {
-  if (a === b) return true
-  const maxLen = Math.max(a.length, b.length)
-  const threshold = maxLen <= 3 ? 0 : maxLen <= 6 ? 1 : 2
-  return editDistance(a, b) <= threshold
-}
-
 function speechMatches(spoken, target) {
-  const a = normalizeSpeech(spoken)
+  // Transliterate first in case Whisper mixed in Latin characters
+  const translitSpoken = transliterateInput(spoken)
+  const a = normalizeSpeech(translitSpoken)
   const b = normalizeSpeech(target)
   if (a === b) return true
-  const aWords = a.split(' ')
-  const bWords = b.split(' ')
-  const matched = bWords.filter(bw => aWords.some(aw => fuzzyWordMatch(aw, bw))).length
-  return matched / bWords.length >= 0.7
+
+  // Collapse spaces before comparing — "ебаси мамата" == "еба си мамата" etc.
+  const ca = a.replace(/\s/g, '')
+  const cb = b.replace(/\s/g, '')
+  if (ca === cb) return true
+
+  // 60% char-level similarity: allows phonetic near-misses (баща/башта)
+  // but rejects clearly wrong sentences (ела с майката vs еба си мамата)
+  const similarity = 1 - editDistance(ca, cb) / Math.max(ca.length, cb.length)
+  return similarity >= 0.60
 }
 
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
