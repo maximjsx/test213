@@ -1,0 +1,41 @@
+{
+  "id": "custom_1782729137624",
+  "title": "testins speech to text and text to speech",
+  "subtitle": "testt",
+  "color": "#58cc02",
+  "icon": "★",
+  "notes": "## Notes\n\nWrite your level notes here.",
+  "lessons": [
+    {
+      "id": "custom_1782729137624_l1782729152914",
+      "title": "stt",
+      "xp": 10,
+      "exercises": [
+        {
+          "type": "speak_sentence",
+          "id": "ex_1782729163834_33p45",
+          "tts": "Баща"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "ex_1782729169922_kmk8l",
+          "tts": "Какво става"
+        },
+        {
+          "type": "introduce",
+          "id": "ex_1782729183647_pvkgy",
+          "label": "NEW WORD",
+          "display": "Добър ден",
+          "sublabel": "Добър ден",
+          "translation": "Добър ден",
+          "tts": "Добър ден"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "ex_1782729207117_onsfi",
+          "tts": "Карам мерджан"
+        }
+      ]
+    }
+  ]
+}
