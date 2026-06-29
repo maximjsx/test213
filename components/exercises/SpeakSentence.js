@@ -57,6 +57,7 @@ function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [phase, setPhase] = useState('idle')
   const [lastSpoken, setLastSpoken] = useState(null)
+  const [livePreview, setLivePreview] = useState('')
   const [failed, setFailed] = useState(false)
   const [succeeded, setSucceeded] = useState(false)
   const [isSpeechSupported, setIsSpeechSupported] = useState(false)
@@ -67,6 +68,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const audioCtxRef = useRef(null)
   const vadTimerRef = useRef(null)
   const stopCaptureRef = useRef(null)
+  const wsRef = useRef(null)
 
   const target = exercise.tts || exercise.answer
 
@@ -107,7 +109,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     if (vadTimerRef.current) { clearInterval(vadTimerRef.current); vadTimerRef.current = null }
   }
 
-  async function handleRecordAndTranscribe(endpoint, threshold) {
+  // Speechmatics Realtime: browser connects directly using a short-lived token.
+  // Audio flows: AudioWorklet → browser WebSocket → Speechmatics RT API
+  // Partials stream back live; final transcript used for matching.
+  async function handleSpeechmaticsRT(threshold) {
     const isActive = phase === 'waiting' || phase === 'speaking'
     if (phase === 'processing' || disabled || succeeded) return
     if (isActive) {
@@ -117,183 +122,212 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     }
     setFailed(false)
     setLastSpoken(null)
+    setLivePreview('')
+
     try {
+      // 1. Get a 60-second temp token (keeps API key server-side)
+      const tokenRes = await fetch('/api/stt-token')
+      if (!tokenRes.ok) throw new Error('token_failed')
+      const { key: tempKey } = await tokenRes.json()
+      if (!tempKey) throw new Error('no_token')
+
+      // 2. Open mic + AudioWorklet
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const AudioCtx = window.AudioContext || window.webkitAudioContext
       const audioCtx = new AudioCtx()
       audioCtxRef.current = audioCtx
       const sampleRate = audioCtx.sampleRate
 
-      // Try AudioWorklet PCM path for Speechmatics
       let workletLoaded = false
-      if (endpoint !== '/api/stt') {
-        try { await audioCtx.audioWorklet.addModule('/pcm-worklet.js'); workletLoaded = true } catch {}
+      try { await audioCtx.audioWorklet.addModule('/pcm-worklet.js'); workletLoaded = true } catch {}
+
+      // 3. Open WebSocket directly to Speechmatics
+      const ws = new WebSocket(`wss://eu.rt.speechmatics.com/v2?jwt=${tempKey}`)
+      wsRef.current = ws
+      ws.binaryType = 'arraybuffer'
+
+      let stopped = false, seqNo = 0, finalTranscript = ''
+
+      function cleanup() {
+        if (stopped) return
+        stopped = true
+        stopVad()
+        try { ws.close() } catch {}
+        wsRef.current = null
+        stream.getTracks().forEach(t => t.stop())
+        audioCtx.close().catch(() => {}); audioCtxRef.current = null
       }
 
-      if (workletLoaded) {
-        // --- AudioWorklet path: raw PCM S16LE ---
-        const source = audioCtx.createMediaStreamSource(stream)
-        const workletNode = new AudioWorkletNode(audioCtx, 'pcm-processor')
-        pcmChunksRef.current = []
-        workletNode.port.onmessage = (e) => { pcmChunksRef.current.push(new Int16Array(e.data)) }
+      stopCaptureRef.current = () => {
+        if (stopped) return
+        // Signal end of audio to Speechmatics, let EndOfTranscript close everything
+        try { ws.send(JSON.stringify({ message: 'EndOfStream', last_seq_no: seqNo })) } catch {}
+        stopVad()
+        stream.getTracks().forEach(t => t.stop())
+        audioCtx.close().catch(() => {}); audioCtxRef.current = null
+        stopped = true
+      }
 
-        // Silent sink keeps the graph active without speaker output
-        const silencer = audioCtx.createGain()
-        silencer.gain.value = 0
-        source.connect(workletNode)
-        workletNode.connect(silencer)
-        silencer.connect(audioCtx.destination)
+      ws.onopen = () => {
+        ws.send(JSON.stringify({
+          message: 'StartRecognition',
+          audio_format: { type: 'raw', encoding: 'pcm_s16le', sample_rate: sampleRate },
+          transcription_config: {
+            language: 'bg',
+            max_delay: 1.0,
+            max_delay_mode: 'flexible',
+            enable_partials: true,
+          },
+        }))
+      }
 
-        const analyser = audioCtx.createAnalyser()
-        analyser.fftSize = 512
-        source.connect(analyser)
-        const buf = new Uint8Array(analyser.frequencyBinCount)
-        let speechStarted = false, silenceStart = null
-        const startTime = Date.now()
-        let stopped = false
+      ws.onmessage = (e) => {
+        let msg; try { msg = JSON.parse(e.data) } catch { return }
 
-        async function processWorklet() {
-          setPhase('processing')
-          const chunks = pcmChunksRef.current
-          const total = chunks.reduce((s, c) => s + c.length, 0)
-          const pcm = new Int16Array(total)
-          let off = 0
-          for (const c of chunks) { pcm.set(c, off); off += c.length }
+        if (msg.message === 'RecognitionStarted') {
+          // Start streaming PCM from AudioWorklet once Speechmatics is ready
+          if (workletLoaded) {
+            const source = audioCtx.createMediaStreamSource(stream)
+            const workletNode = new AudioWorkletNode(audioCtx, 'pcm-processor')
+            const silencer = audioCtx.createGain(); silencer.gain.value = 0
+            source.connect(workletNode); workletNode.connect(silencer); silencer.connect(audioCtx.destination)
 
-          try {
-            let transcript = null, usedThreshold = threshold
-            try {
-              const form = new FormData()
-              form.append('audio', new Blob([pcm.buffer], { type: 'application/octet-stream' }), 'audio.pcm')
-              form.append('sample_rate', String(sampleRate))
-              form.append('target', target)
-              const res = await fetch(endpoint, { method: 'POST', body: form })
-              if (!res.ok) throw new Error(`${endpoint} ${res.status}`)
-              const data = await res.json()
-              transcript = data.transcript ?? null
-            } catch {
-              setSttMode('whisper')
-              usedThreshold = 0.65
-              const wav = pcmToWav(pcm, sampleRate)
-              const form = new FormData()
-              form.append('audio', new Blob([wav], { type: 'audio/wav' }), 'recording.wav')
-              form.append('target', target)
-              const res = await fetch('/api/stt', { method: 'POST', body: form })
-              if (!res.ok) throw new Error(`/api/stt ${res.status}`)
-              const data = await res.json()
-              transcript = data.transcript ?? null
+            // VAD analyser
+            const analyser = audioCtx.createAnalyser(); analyser.fftSize = 512
+            source.connect(analyser)
+            const buf = new Uint8Array(analyser.frequencyBinCount)
+            let speechStarted = false, silenceStart = null
+            const startTime = Date.now()
+
+            workletNode.port.onmessage = (ev) => {
+              if (stopped || ws.readyState !== WebSocket.OPEN) return
+              ws.send(ev.data)
+              seqNo++
             }
-            if (transcript) {
-              setLastSpoken(transcript)
-              if (speechMatches(transcript, target, { threshold: usedThreshold })) { setSucceeded(true); onAnswer(true) }
-              else setFailed(true)
-            } else { setFailed(true) }
-          } catch { setFailed(true) }
-          finally { setPhase('idle') }
-        }
 
-        function stopCapture() {
-          if (stopped) return
-          stopped = true
-          stopVad()
-          try { workletNode.disconnect() } catch {}
-          try { source.disconnect() } catch {}
-          stream.getTracks().forEach(t => t.stop())
-          audioCtx.close().catch(() => {})
-          audioCtxRef.current = null
-          processWorklet()
-        }
-        stopCaptureRef.current = stopCapture
-
-        setPhase('waiting')
-        vadTimerRef.current = setInterval(() => {
-          if (stopped) return
-          if (Date.now() - startTime > 8000) { stopCapture(); return }
-          analyser.getByteTimeDomainData(buf)
-          let sum = 0
-          for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
-          const rms = Math.sqrt(sum / buf.length)
-          if (rms > 0.02) { if (!speechStarted) { speechStarted = true; setPhase('speaking') } silenceStart = null }
-          else if (speechStarted) {
-            if (!silenceStart) silenceStart = Date.now()
-            else if (Date.now() - silenceStart > 1500) stopCapture()
-          }
-        }, 100)
-
-      } else {
-        // --- MediaRecorder fallback path ---
-        const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
-        const recorder = new MediaRecorder(stream, { mimeType })
-        chunksRef.current = []
-        recorder.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data) }
-
-        recorder.onstop = async () => {
-          stopVad()
-          stream.getTracks().forEach(t => t.stop())
-          audioCtx.close().catch(() => {}); audioCtxRef.current = null
-          setPhase('processing')
-          const actualMime = recorder.mimeType || mimeType
-          const ext = actualMime.includes('webm') ? 'webm' : 'mp4'
-          const blob = new Blob(chunksRef.current, { type: actualMime })
-          try {
-            let transcript = null, usedThreshold = threshold
-            try {
-              const form = new FormData()
-              form.append('audio', blob, `recording.${ext}`)
-              form.append('target', target)
-              const res = await fetch(endpoint, { method: 'POST', body: form })
-              if (!res.ok) throw new Error(`${endpoint} ${res.status}`)
-              const data = await res.json()
-              transcript = data.transcript ?? null
-            } catch {
-              if (endpoint !== '/api/stt') {
-                setSttMode('whisper')
-                usedThreshold = 0.65
-                const form = new FormData()
-                form.append('audio', blob, `recording.${ext}`)
-                form.append('target', target)
-                const res = await fetch('/api/stt', { method: 'POST', body: form })
-                if (!res.ok) throw new Error(`/api/stt ${res.status}`)
-                const data = await res.json()
-                transcript = data.transcript ?? null
+            setPhase('waiting')
+            vadTimerRef.current = setInterval(() => {
+              if (stopped) return
+              if (Date.now() - startTime > 8000) { stopCaptureRef.current?.(); stopCaptureRef.current = null; return }
+              analyser.getByteTimeDomainData(buf)
+              let sum = 0
+              for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
+              const rms = Math.sqrt(sum / buf.length)
+              if (rms > 0.02) {
+                if (!speechStarted) { speechStarted = true; setPhase('speaking') }
+                silenceStart = null
+              } else if (speechStarted) {
+                if (!silenceStart) silenceStart = Date.now()
+                else if (Date.now() - silenceStart > 1500) { stopCaptureRef.current?.(); stopCaptureRef.current = null }
               }
-            }
-            if (transcript) {
-              setLastSpoken(transcript)
-              if (speechMatches(transcript, target, { threshold: usedThreshold })) { setSucceeded(true); onAnswer(true) }
-              else setFailed(true)
-            } else { setFailed(true) }
-          } catch { setFailed(true) }
-          finally { setPhase('idle') }
+            }, 100)
+          }
         }
 
-        recorderRef.current = recorder
-        stopCaptureRef.current = () => { if (recorder.state === 'recording') recorder.stop() }
-        recorder.start()
-        setPhase('waiting')
+        if (msg.message === 'AddPartial' && msg.metadata?.transcript) {
+          setLivePreview(msg.metadata.transcript.trim())
+        }
 
-        const source = audioCtx.createMediaStreamSource(stream)
-        const analyser = audioCtx.createAnalyser()
-        analyser.fftSize = 512
-        source.connect(analyser)
-        const buf = new Uint8Array(analyser.frequencyBinCount)
-        let speechStarted = false, silenceStart = null
-        const startTime = Date.now()
+        if (msg.message === 'AddTranscript' && msg.metadata?.transcript) {
+          finalTranscript += (finalTranscript ? ' ' : '') + msg.metadata.transcript.trim()
+          setLivePreview('')
+        }
 
-        vadTimerRef.current = setInterval(() => {
-          if (recorder.state !== 'recording') { stopVad(); return }
-          if (Date.now() - startTime > 8000) { recorder.stop(); return }
-          analyser.getByteTimeDomainData(buf)
-          let sum = 0
-          for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
-          const rms = Math.sqrt(sum / buf.length)
-          if (rms > 0.02) { if (!speechStarted) { speechStarted = true; setPhase('speaking') } silenceStart = null }
-          else if (speechStarted) {
-            if (!silenceStart) silenceStart = Date.now()
-            else if (Date.now() - silenceStart > 1500) recorder.stop()
-          }
-        }, 100)
+        if (msg.message === 'EndOfTranscript') {
+          cleanup()
+          setPhase('processing')
+          const transcript = finalTranscript.trim()
+          setLivePreview('')
+          if (transcript) {
+            setLastSpoken(transcript)
+            if (speechMatches(transcript, target, { threshold })) { setSucceeded(true); onAnswer(true) }
+            else setFailed(true)
+          } else { setFailed(true) }
+          setPhase('idle')
+        }
+
+        if (msg.message === 'Error') {
+          cleanup()
+          setFailed(true); setPhase('idle')
+        }
       }
+
+      ws.onerror = () => { cleanup(); setFailed(true); setPhase('idle') }
+      ws.onclose = () => {
+        if (!stopped) { cleanup(); if (!finalTranscript) { setFailed(true); setPhase('idle') } }
+      }
+
+      // If AudioWorklet not available, fallback to MediaRecorder batch send
+      if (!workletLoaded) {
+        ws.close()
+        await handleMediaRecorderFallback('/api/stt', 0.65)
+      }
+
+    } catch { setFailed(true); setPhase('idle') }
+  }
+
+  async function handleMediaRecorderFallback(endpoint, threshold) {
+    setFailed(false); setLastSpoken(null); setLivePreview('')
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const AudioCtx = window.AudioContext || window.webkitAudioContext
+      const audioCtx = new AudioCtx()
+      audioCtxRef.current = audioCtx
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
+      const recorder = new MediaRecorder(stream, { mimeType })
+      chunksRef.current = []
+      recorder.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data) }
+
+      recorder.onstop = async () => {
+        stopVad()
+        stream.getTracks().forEach(t => t.stop())
+        audioCtx.close().catch(() => {}); audioCtxRef.current = null
+        setPhase('processing')
+        const actualMime = recorder.mimeType || mimeType
+        const ext = actualMime.includes('webm') ? 'webm' : 'mp4'
+        const blob = new Blob(chunksRef.current, { type: actualMime })
+        try {
+          const form = new FormData()
+          form.append('audio', blob, `recording.${ext}`)
+          form.append('target', target)
+          const res = await fetch(endpoint, { method: 'POST', body: form })
+          if (!res.ok) throw new Error(`${endpoint} ${res.status}`)
+          const data = await res.json()
+          const transcript = data.transcript ?? null
+          if (transcript) {
+            setLastSpoken(transcript)
+            if (speechMatches(transcript, target, { threshold })) { setSucceeded(true); onAnswer(true) }
+            else setFailed(true)
+          } else { setFailed(true) }
+        } catch { setFailed(true) }
+        finally { setPhase('idle') }
+      }
+
+      recorderRef.current = recorder
+      stopCaptureRef.current = () => { if (recorder.state === 'recording') recorder.stop() }
+      recorder.start()
+      setPhase('waiting')
+
+      const source = audioCtx.createMediaStreamSource(stream)
+      const analyser = audioCtx.createAnalyser(); analyser.fftSize = 512
+      source.connect(analyser)
+      const buf = new Uint8Array(analyser.frequencyBinCount)
+      let speechStarted = false, silenceStart = null
+      const startTime = Date.now()
+
+      vadTimerRef.current = setInterval(() => {
+        if (recorder.state !== 'recording') { stopVad(); return }
+        if (Date.now() - startTime > 8000) { recorder.stop(); return }
+        analyser.getByteTimeDomainData(buf)
+        let sum = 0
+        for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
+        const rms = Math.sqrt(sum / buf.length)
+        if (rms > 0.02) { if (!speechStarted) { speechStarted = true; setPhase('speaking') } silenceStart = null }
+        else if (speechStarted) {
+          if (!silenceStart) silenceStart = Date.now()
+          else if (Date.now() - silenceStart > 1500) recorder.stop()
+        }
+      }, 100)
     } catch { setFailed(true); setPhase('idle') }
   }
 
@@ -316,8 +350,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
 
   function handleSpeak() {
     if (sttMode === 'native') handleWebSpeech()
-    else if (sttMode === 'speechmatics') handleRecordAndTranscribe('/api/stt-speechmatics', 0.80)
-    else handleRecordAndTranscribe('/api/stt', 0.65)
+    else if (sttMode === 'speechmatics') handleSpeechmaticsRT(0.80)
+    else handleMediaRecorderFallback('/api/stt', 0.65)
   }
 
   const btnLabel = phase === 'processing' ? 'PROCESSING…'
@@ -339,6 +373,9 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </div>
       </div>
 
+      {livePreview && !lastSpoken && (
+        <p className={styles.speakRetryMsg} style={{ opacity: 0.5 }}>{livePreview}</p>
+      )}
       {lastSpoken && (
         <p className={styles.speakRetryMsg}>
           Heard: &ldquo;{lastSpoken}&rdquo;{failed ? ', try again!' : ''}
