@@ -30,6 +30,7 @@ function wordSim(a, b) {
   return 1 - editDistance(a, b) / Math.max(a.length, b.length)
 }
 
+// threshold: 0.80 for native/speechmatics (accurate), 0.65 for whisper (lenient)
 function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
   const a = normalizeSpeech(transliterateInput(spoken))
   const b = normalizeSpeech(target)
@@ -50,15 +51,16 @@ function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
   return 1 - editDistance(ca, cb) / Math.max(ca.length, cb.length) >= threshold
 }
 
+// sttMode: 'native' = browser Web Speech bg-BG
+//          'speechmatics' = Speechmatics API (accurate, show words)
+//          'whisper' = Groq Whisper (fallback, don't show words)
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [phase, setPhase] = useState('idle') // idle | waiting | speaking | processing
   const [lastSpoken, setLastSpoken] = useState(null)
-  const [confidence, setConfidence] = useState(null)
   const [failed, setFailed] = useState(false)
   const [succeeded, setSucceeded] = useState(false)
   const [isSpeechSupported, setIsSpeechSupported] = useState(false)
-  const [useApiStt, setUseApiStt] = useState(false)
-  const [sttLang, setSttLang] = useState('bg-BG')
+  const [sttMode, setSttMode] = useState('native') // native | speechmatics | whisper
   const chunksRef = useRef([])
   const recorderRef = useRef(null)
   const audioCtxRef = useRef(null)
@@ -73,53 +75,38 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
     if (!SR || isMobile) {
-      setUseApiStt(true)
+      setSttMode('speechmatics')
       setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
       return
     }
 
+    // Probe whether bg-BG is actually supported — language-not-supported fires
+    // before any mic prompt so this is invisible to the user.
     let done = false
     let timer = null
 
-    function probeLang(lang, onSupported, onUnsupported) {
-      const p = new SR()
-      p.lang = lang
-      p.onstart = () => { try { p.abort() } catch {} onSupported() }
-      p.onend = () => onSupported()
-      p.onerror = (e) => {
-        if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') {
-          onUnsupported()
-        } else {
-          onSupported() // not-allowed / audio-capture — language fine, just no mic yet
-        }
-      }
-      try { p.start() } catch { onUnsupported() }
-    }
-
-    function finish(lang) {
+    const finish = (mode) => {
       if (done) return
       done = true
       clearTimeout(timer)
-      if (lang) {
-        setSttLang(lang)
-        setIsSpeechSupported(true)
-      } else {
-        setUseApiStt(true)
-        setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
-      }
+      setSttMode(mode)
+      setIsSpeechSupported(mode === 'native' || !!navigator.mediaDevices?.getUserMedia)
     }
 
-    // Cascade: bg-BG → ru-RU → Whisper
-    probeLang('bg-BG',
-      () => finish('bg-BG'),
-      () => probeLang('ru-RU',
-        () => finish('ru-RU'),
-        () => finish(null)
-      )
-    )
-
-    timer = setTimeout(() => finish('bg-BG'), 1500)
-    return () => { done = true; clearTimeout(timer) }
+    const probe = new SR()
+    probe.lang = 'bg-BG'
+    probe.onstart = () => { try { probe.abort() } catch {} finish('native') }
+    probe.onend = () => finish('native')
+    probe.onerror = (e) => {
+      if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') {
+        finish('speechmatics')
+      } else {
+        finish('native') // not-allowed / audio-capture — language works, just no mic yet
+      }
+    }
+    try { probe.start() } catch { finish('speechmatics') }
+    timer = setTimeout(() => finish('native'), 1500)
+    return () => { done = true; clearTimeout(timer); try { probe.abort() } catch {} }
   }, []) // eslint-disable-line
 
   function stopVad() {
@@ -127,7 +114,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     if (audioCtxRef.current) { audioCtxRef.current.close(); audioCtxRef.current = null }
   }
 
-  async function handleApiRecord() {
+  async function handleRecordAndTranscribe(endpoint, threshold) {
     const isActive = phase === 'waiting' || phase === 'speaking'
     if (phase === 'processing' || disabled || succeeded) return
     if (isActive) {
@@ -157,21 +144,32 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         form.append('audio', blob, `recording.${ext}`)
         form.append('target', target)
         try {
-          const res = await fetch('/api/stt', { method: 'POST', body: form })
-          const { transcript, confidence: conf } = await res.json()
-          setConfidence(conf ?? null)
+          const res = await fetch(endpoint, { method: 'POST', body: form })
+          if (!res.ok) throw new Error('api error')
+          const { transcript } = await res.json()
           if (transcript) {
             setLastSpoken(transcript)
-            if (speechMatches(transcript, target, { threshold: 0.65 })) {
+            if (speechMatches(transcript, target, { threshold })) {
               setSucceeded(true)
               onAnswer(true)
             } else {
               setFailed(true)
             }
           } else {
+            // Speechmatics failed — fall back to Whisper
+            if (endpoint !== '/api/stt') {
+              setSttMode('whisper')
+              handleRecordAndTranscribe('/api/stt', 0.65)
+              return
+            }
             setFailed(true)
           }
         } catch {
+          if (endpoint !== '/api/stt') {
+            setSttMode('whisper')
+            handleRecordAndTranscribe('/api/stt', 0.65)
+            return
+          }
           setFailed(true)
         } finally {
           setPhase('idle')
@@ -239,15 +237,15 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         }
       },
       () => setPhase('idle'),
-      () => { setPhase('idle'); setFailed(true) },
-      sttLang
+      () => { setPhase('idle'); setFailed(true) }
     )
-    if (!rec) setListening(false)
+    if (!rec) setPhase('idle')
   }
 
   function handleSpeak() {
-    if (useApiStt) handleApiRecord()
-    else handleWebSpeech()
+    if (sttMode === 'native') handleWebSpeech()
+    else if (sttMode === 'speechmatics') handleRecordAndTranscribe('/api/stt-speechmatics', 0.80)
+    else handleRecordAndTranscribe('/api/stt', 0.65)
   }
 
   const btnLabel = phase === 'processing' ? 'PROCESSING…'
@@ -255,6 +253,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     : phase === 'waiting' ? 'SPEAK NOW…'
     : failed ? 'TRY AGAIN'
     : 'CLICK TO SPEAK'
+
+  const showHeard = sttMode !== 'whisper'
 
   return (
     <div className={styles.wrap}>
@@ -275,14 +275,9 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
 
       {failed && (
         <p className={styles.speakRetryMsg}>
-          {useApiStt
-            ? "Didn't catch that, try again!"
-            : lastSpoken
-              ? <>
-                  {sttLang === 'ru-RU' && <>[ru-RU] </>}
-                  Heard: &ldquo;{lastSpoken}&rdquo;, try again!
-                </>
-              : "Didn't catch that, try again!"}
+          {showHeard && lastSpoken
+            ? <>Heard: &ldquo;{lastSpoken}&rdquo;, try again!</>
+            : "Didn't catch that, try again!"}
         </p>
       )}
 
