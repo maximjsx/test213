@@ -57,6 +57,7 @@ function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [phase, setPhase] = useState('idle') // idle | waiting | speaking | processing
   const [lastSpoken, setLastSpoken] = useState(null)
+  const [sttError, setSttError] = useState(null)
   const [failed, setFailed] = useState(false)
   const [succeeded, setSucceeded] = useState(false)
   const [isSpeechSupported, setIsSpeechSupported] = useState(false)
@@ -234,9 +235,11 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     if (phase !== 'idle' || disabled || succeeded) return
     setPhase('speaking')
     setLastSpoken(null)
+    setSttError(null)
     setFailed(false)
     const rec = startSpeechRecognition(
       (transcript, all) => {
+        setSttError(null)
         setLastSpoken(transcript)
         const matched = (all || [transcript]).some(t => speechMatches(t, target))
         if (matched) {
@@ -247,7 +250,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         }
       },
       () => setPhase('idle'),
-      () => { setPhase('idle'); setFailed(true) }
+      (errType) => { setPhase('idle'); setFailed(true); setSttError(errType || 'unknown') }
     )
     if (!rec) setPhase('idle')
   }
@@ -283,13 +286,15 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </div>
       </div>
 
-      {lastSpoken && !succeeded && (
+      {lastSpoken && (
         <p className={styles.speakRetryMsg}>
           [{sttLabel}] &ldquo;{lastSpoken}&rdquo;{failed ? ', try again!' : ''}
         </p>
       )}
       {failed && !lastSpoken && (
-        <p className={styles.speakRetryMsg}>[{sttLabel}] Didn&apos;t catch that, try again!</p>
+        <p className={styles.speakRetryMsg}>
+          [{sttLabel}] {sttError ? `Error: ${sttError}` : "Didn't catch that"}, try again!
+        </p>
       )}
 
       {isSpeechSupported ? (
