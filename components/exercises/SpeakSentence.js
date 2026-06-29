@@ -38,7 +38,7 @@ function speechMatches(spoken, target) {
   // 60% char-level similarity: allows phonetic near-misses (баща/башта)
   // but rejects clearly wrong sentences (ела с майката vs еба си мамата)
   const similarity = 1 - editDistance(ca, cb) / Math.max(ca.length, cb.length)
-  return similarity >= 0.60
+  return similarity >= 0.65
 }
 
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
@@ -220,15 +220,14 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </div>
       </div>
 
-      {failed && lastSpoken && (
+      {failed && (
         <p className={styles.speakRetryMsg}>
-          Heard: &ldquo;{lastSpoken}&rdquo;
-          {confidence != null ? ` (${Math.round(confidence * 100)}% confident)` : ''}
-          , didn&apos;t quite match. Try again!
+          {useApiStt
+            ? "Didn't catch that — try again!"
+            : lastSpoken
+              ? <>Heard: &ldquo;{lastSpoken}&rdquo; — try again!</>
+              : "Didn't catch that — try again!"}
         </p>
-      )}
-      {failed && !lastSpoken && (
-        <p className={styles.speakRetryMsg}>Couldn&apos;t hear you clearly. Try again!</p>
       )}
 
       {isSpeechSupported ? (
