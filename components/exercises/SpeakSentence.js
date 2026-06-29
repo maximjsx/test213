@@ -79,7 +79,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
     if (!SR || isMobile) {
-      setSttMode('speechmatics')
+      setSttMode('whisper')
       setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
       return
     }
@@ -97,10 +97,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     probe.onstart = () => { try { probe.abort() } catch {} finish('native') }
     probe.onend = () => finish('native')
     probe.onerror = (e) => {
-      if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') finish('speechmatics')
+      if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') finish('whisper')
       else finish('native')
     }
-    try { probe.start() } catch { finish('speechmatics') }
+    try { probe.start() } catch { finish('whisper') }
     timer = setTimeout(() => finish('native'), 1500)
     return () => { done = true; clearTimeout(timer); try { probe.abort() } catch {} }
   }, []) // eslint-disable-line
@@ -208,7 +208,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
             setPhase('waiting')
             vadTimerRef.current = setInterval(() => {
               if (stopped) return
-              if (Date.now() - startTime > 8000) { stopCaptureRef.current?.(); stopCaptureRef.current = null; return }
+              if (Date.now() - startTime > 15000) { stopCaptureRef.current?.(); stopCaptureRef.current = null; return }
               analyser.getByteTimeDomainData(buf)
               let sum = 0
               for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
@@ -218,7 +218,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
                 silenceStart = null
               } else if (speechStarted) {
                 if (!silenceStart) silenceStart = Date.now()
-                else if (Date.now() - silenceStart > 1500) { stopCaptureRef.current?.(); stopCaptureRef.current = null }
+                else if (Date.now() - silenceStart > 2500) { stopCaptureRef.current?.(); stopCaptureRef.current = null }
               }
             }, 100)
           }
@@ -317,7 +317,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
 
       vadTimerRef.current = setInterval(() => {
         if (recorder.state !== 'recording') { stopVad(); return }
-        if (Date.now() - startTime > 8000) { recorder.stop(); return }
+        if (Date.now() - startTime > 15000) { recorder.stop(); return }
         analyser.getByteTimeDomainData(buf)
         let sum = 0
         for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
@@ -325,33 +325,81 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         if (rms > 0.02) { if (!speechStarted) { speechStarted = true; setPhase('speaking') } silenceStart = null }
         else if (speechStarted) {
           if (!silenceStart) silenceStart = Date.now()
-          else if (Date.now() - silenceStart > 1500) recorder.stop()
+          else if (Date.now() - silenceStart > 2500) recorder.stop()
         }
       }, 100)
     } catch { setFailed(true); setPhase('idle') }
   }
 
   function handleWebSpeech() {
-    if (phase !== 'idle' || disabled || succeeded) return
-    setPhase('speaking')
+    const isActive = phase === 'waiting' || phase === 'speaking'
+    if (phase === 'processing' || disabled || succeeded) return
+    if (isActive) { stopCaptureRef.current?.(); stopCaptureRef.current = null; return }
+
+    setPhase('waiting')
     setLastSpoken(null)
     setFailed(false)
-    const rec = startSpeechRecognition(
-      (transcript, all) => {
+    setLivePreview('')
+
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition
+    const rec = new SR()
+    rec.lang = 'bg-BG'
+    rec.continuous = true
+    rec.interimResults = true
+    rec.maxAlternatives = 1
+
+    let finalTranscript = ''
+    let silenceTimer = null
+    let speechStarted = false
+    let done = false
+
+    function finish() {
+      if (done) return
+      done = true
+      clearTimeout(silenceTimer)
+      clearTimeout(maxTimer)
+      try { rec.abort() } catch {}
+    }
+
+    function process() {
+      finish()
+      setLivePreview('')
+      const transcript = finalTranscript.trim()
+      if (transcript) {
         setLastSpoken(transcript)
-        if ((all || [transcript]).some(t => speechMatches(t, target))) { setSucceeded(true); onAnswer(true) }
+        if (speechMatches(transcript, target)) { setSucceeded(true); onAnswer(true) }
         else setFailed(true)
-      },
-      () => setPhase('idle'),
-      () => { setPhase('idle'); setFailed(true) }
-    )
-    if (!rec) setPhase('idle')
+      } else if (speechStarted) {
+        setFailed(true)
+      }
+      setPhase('idle')
+    }
+
+    const maxTimer = setTimeout(process, 15000)
+
+    rec.onresult = (e) => {
+      if (!speechStarted) { speechStarted = true; setPhase('speaking') }
+      clearTimeout(silenceTimer)
+      let interim = ''
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) finalTranscript += e.results[i][0].transcript + ' '
+        else interim += e.results[i][0].transcript
+      }
+      setLivePreview((finalTranscript + interim).trim())
+      silenceTimer = setTimeout(process, 2500)
+    }
+
+    rec.onend = () => { if (!done) process() }
+    rec.onerror = () => { finish(); if (speechStarted) setFailed(true); setPhase('idle') }
+
+    stopCaptureRef.current = process
+    try { rec.start() } catch { finish(); setPhase('idle') }
   }
 
   function handleSpeak() {
     if (sttMode === 'native') handleWebSpeech()
-    else if (sttMode === 'speechmatics') handleSpeechmaticsRT(0.80)
-    else handleMediaRecorderFallback('/api/stt', 0.65)
+    else if (sttMode === 'whisper') handleMediaRecorderFallback('/api/stt', 0.65)
+    else handleSpeechmaticsRT(0.80)
   }
 
   const btnLabel = phase === 'processing' ? 'PROCESSING…'
@@ -376,13 +424,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
       {livePreview && !lastSpoken && (
         <p className={styles.speakRetryMsg} style={{ opacity: 0.5 }}>{livePreview}</p>
       )}
-      {lastSpoken && (
-        <p className={styles.speakRetryMsg}>
-          Heard: &ldquo;{lastSpoken}&rdquo;{failed ? ', try again!' : ''}
-        </p>
-      )}
-      {failed && !lastSpoken && (
-        <p className={styles.speakRetryMsg}>Didn&apos;t catch that, try again!</p>
+      {failed && (
+        <p className={styles.speakRetryMsg}>Try again!</p>
       )}
 
       {isSpeechSupported ? (
