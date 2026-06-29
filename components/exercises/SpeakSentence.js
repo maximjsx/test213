@@ -40,8 +40,7 @@ function speechMatches(spoken, target) {
 }
 
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
-  const [listening, setListening] = useState(false)
-  const [processing, setProcessing] = useState(false)
+  const [phase, setPhase] = useState('idle') // idle | waiting | speaking | processing
   const [lastSpoken, setLastSpoken] = useState(null)
   const [failed, setFailed] = useState(false)
   const [succeeded, setSucceeded] = useState(false)
@@ -49,6 +48,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [useApiStt, setUseApiStt] = useState(false)
   const chunksRef = useRef([])
   const recorderRef = useRef(null)
+  const audioCtxRef = useRef(null)
+  const vadTimerRef = useRef(null)
 
   const target = exercise.tts || exercise.answer
 
@@ -66,8 +67,19 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     }
   }, []) // eslint-disable-line
 
+  function stopVad() {
+    if (vadTimerRef.current) { clearInterval(vadTimerRef.current); vadTimerRef.current = null }
+    if (audioCtxRef.current) { audioCtxRef.current.close(); audioCtxRef.current = null }
+  }
+
   async function handleApiRecord() {
-    if (listening || processing || disabled || succeeded) return
+    const isActive = phase === 'waiting' || phase === 'speaking'
+    if (phase === 'processing' || disabled || succeeded) return
+    if (isActive) {
+      stopVad()
+      if (recorderRef.current?.state === 'recording') recorderRef.current.stop()
+      return
+    }
     setFailed(false)
     setLastSpoken(null)
     try {
@@ -81,9 +93,9 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
       }
 
       recorder.onstop = async () => {
+        stopVad()
         stream.getTracks().forEach(t => t.stop())
-        setListening(false)
-        setProcessing(true)
+        setPhase('processing')
         const ext = mimeType.includes('webm') ? 'webm' : 'mp4'
         const blob = new Blob(chunksRef.current, { type: mimeType })
         const form = new FormData()
@@ -106,24 +118,57 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         } catch {
           setFailed(true)
         } finally {
-          setProcessing(false)
+          setPhase('idle')
         }
       }
 
       recorderRef.current = recorder
-      setListening(true)
       recorder.start()
-      // Auto-stop after 5 seconds
-      setTimeout(() => { if (recorder.state === 'recording') recorder.stop() }, 5000)
+      setPhase('waiting')
+
+      // VAD: detect speech start/end via amplitude
+      const audioCtx = new AudioContext()
+      audioCtxRef.current = audioCtx
+      const source = audioCtx.createMediaStreamSource(stream)
+      const analyser = audioCtx.createAnalyser()
+      analyser.fftSize = 512
+      source.connect(analyser)
+      const buf = new Uint8Array(analyser.frequencyBinCount)
+
+      let speechStarted = false
+      let silenceStart = null
+      const SPEECH_THRESHOLD = 0.02
+      const SILENCE_MS = 1500
+      const MAX_MS = 8000
+      const startTime = Date.now()
+
+      vadTimerRef.current = setInterval(() => {
+        if (recorder.state !== 'recording') { stopVad(); return }
+        if (Date.now() - startTime > MAX_MS) { recorder.stop(); return }
+
+        analyser.getByteTimeDomainData(buf)
+        let sum = 0
+        for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
+        const rms = Math.sqrt(sum / buf.length)
+
+        if (rms > SPEECH_THRESHOLD) {
+          if (!speechStarted) { speechStarted = true; setPhase('speaking') }
+          silenceStart = null
+        } else if (speechStarted) {
+          if (!silenceStart) silenceStart = Date.now()
+          else if (Date.now() - silenceStart > SILENCE_MS) recorder.stop()
+        }
+      }, 100)
+
     } catch {
       setFailed(true)
-      setListening(false)
+      setPhase('idle')
     }
   }
 
   function handleWebSpeech() {
-    if (listening || disabled || succeeded) return
-    setListening(true)
+    if (phase !== 'idle' || disabled || succeeded) return
+    setPhase('speaking')
     setLastSpoken(null)
     setFailed(false)
     const rec = startSpeechRecognition(
@@ -137,8 +182,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
           setFailed(true)
         }
       },
-      () => setListening(false),
-      () => { setListening(false); setFailed(true) }
+      () => setPhase('idle'),
+      () => { setPhase('idle'); setFailed(true) }
     )
     if (!rec) setListening(false)
   }
@@ -148,7 +193,9 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     else handleWebSpeech()
   }
 
-  const btnLabel = listening || processing ? 'LISTENING…'
+  const btnLabel = phase === 'processing' ? 'PROCESSING…'
+    : phase === 'speaking' ? 'LISTENING…'
+    : phase === 'waiting' ? 'SPEAK NOW…'
     : failed ? 'TRY AGAIN'
     : 'CLICK TO SPEAK'
 
@@ -177,9 +224,9 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
 
       {isSpeechSupported ? (
         <button
-          className={`${styles.speakMicBtn} ${listening || processing ? styles.speakMicListening : ''} ${succeeded ? styles.speakMicOk : ''}`}
+          className={`${styles.speakMicBtn} ${phase !== 'idle' ? styles.speakMicListening : ''} ${succeeded ? styles.speakMicOk : ''}`}
           onClick={handleSpeak}
-          disabled={disabled || listening || processing || succeeded}
+          disabled={disabled || phase === 'processing' || succeeded}
         >
           <img src="/icons/microphone.png" alt="🎤" width={24} height={24} />
           <span>{btnLabel}</span>
