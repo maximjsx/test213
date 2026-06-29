@@ -218,7 +218,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
                 silenceStart = null
               } else if (speechStarted) {
                 if (!silenceStart) silenceStart = Date.now()
-                else if (Date.now() - silenceStart > 2500) { stopCaptureRef.current?.(); stopCaptureRef.current = null }
+                else if (Date.now() - silenceStart > 1500) { stopCaptureRef.current?.(); stopCaptureRef.current = null }
               }
             }, 100)
           }
@@ -325,7 +325,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         if (rms > 0.02) { if (!speechStarted) { speechStarted = true; setPhase('speaking') } silenceStart = null }
         else if (speechStarted) {
           if (!silenceStart) silenceStart = Date.now()
-          else if (Date.now() - silenceStart > 2500) recorder.stop()
+          else if (Date.now() - silenceStart > 1500) recorder.stop()
         }
       }, 100)
     } catch { setFailed(true); setPhase('idle') }
@@ -386,7 +386,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         else interim += e.results[i][0].transcript
       }
       setLivePreview((finalTranscript + interim).trim())
-      silenceTimer = setTimeout(process, 2500)
+      silenceTimer = setTimeout(process, 1500)
     }
 
     rec.onend = () => { if (!done) process() }
