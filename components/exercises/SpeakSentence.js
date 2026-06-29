@@ -42,6 +42,7 @@ function speechMatches(spoken, target) {
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [phase, setPhase] = useState('idle') // idle | waiting | speaking | processing
   const [lastSpoken, setLastSpoken] = useState(null)
+  const [confidence, setConfidence] = useState(null)
   const [failed, setFailed] = useState(false)
   const [succeeded, setSucceeded] = useState(false)
   const [isSpeechSupported, setIsSpeechSupported] = useState(false)
@@ -103,7 +104,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         form.append('target', target)
         try {
           const res = await fetch('/api/stt', { method: 'POST', body: form })
-          const { transcript } = await res.json()
+          const { transcript, confidence: conf } = await res.json()
+          setConfidence(conf ?? null)
           if (transcript) {
             setLastSpoken(transcript)
             if (speechMatches(transcript, target)) {
@@ -218,8 +220,13 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
 
       {failed && lastSpoken && (
         <p className={styles.speakRetryMsg}>
-          Heard: &ldquo;{lastSpoken}&rdquo;, didn&apos;t quite match. Try again!
+          Heard: &ldquo;{lastSpoken}&rdquo;
+          {confidence != null ? ` (${Math.round(confidence * 100)}% confident)` : ''}
+          , didn&apos;t quite match. Try again!
         </p>
+      )}
+      {failed && !lastSpoken && (
+        <p className={styles.speakRetryMsg}>Couldn&apos;t hear you clearly. Try again!</p>
       )}
 
       {isSpeechSupported ? (
