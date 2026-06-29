@@ -7,6 +7,8 @@ import styles from './Exercise.module.css'
 function normalizeSpeech(str) {
   return str.toLowerCase()
     .replace(/[.,!?;:'"«»„""()\[\]-]/g, '')
+    // щ and шт are the same sound in Bulgarian — Whisper often spells one as the other
+    .replace(/шт/g, 'щ')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -23,9 +25,13 @@ function editDistance(a, b) {
   return dp[m][n]
 }
 
+function wordSim(a, b) {
+  if (a === b) return 1
+  return 1 - editDistance(a, b) / Math.max(a.length, b.length)
+}
+
 function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
-  const translitSpoken = transliterateInput(spoken)
-  const a = normalizeSpeech(translitSpoken)
+  const a = normalizeSpeech(transliterateInput(spoken))
   const b = normalizeSpeech(target)
   if (a === b) return true
 
@@ -34,8 +40,14 @@ function speechMatches(spoken, target, { threshold = 0.80 } = {}) {
   const cb = b.replace(/\s/g, '')
   if (ca === cb) return true
 
-  const similarity = 1 - editDistance(ca, cb) / Math.max(ca.length, cb.length)
-  return similarity >= threshold
+  // Bag-of-words: every target word must appear at least once in what was spoken.
+  // Order and repetitions don't matter — only that each word was pronounced.
+  const spokenWords = a.split(' ')
+  const targetWords = b.split(' ')
+  if (targetWords.every(tw => spokenWords.some(sw => wordSim(sw, tw) >= threshold))) return true
+
+  // Fallback: overall char-level similarity
+  return 1 - editDistance(ca, cb) / Math.max(ca.length, cb.length) >= threshold
 }
 
 export default function SpeakSentence({ exercise, onAnswer, disabled }) {
@@ -46,6 +58,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const [succeeded, setSucceeded] = useState(false)
   const [isSpeechSupported, setIsSpeechSupported] = useState(false)
   const [useApiStt, setUseApiStt] = useState(false)
+  const [sttLang, setSttLang] = useState('bg-BG')
   const chunksRef = useRef([])
   const recorderRef = useRef(null)
   const audioCtxRef = useRef(null)
@@ -65,35 +78,48 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
       return
     }
 
-    // Silently probe whether bg-BG is actually supported.
-    // language-not-supported fires immediately before any mic prompt.
-    // Any other outcome (onstart, not-allowed, etc.) means the language works.
-    const probe = new SR()
-    probe.lang = 'bg-BG'
     let done = false
-    const finish = (supported) => {
+    let timer = null
+
+    function probeLang(lang, onSupported, onUnsupported) {
+      const p = new SR()
+      p.lang = lang
+      p.onstart = () => { try { p.abort() } catch {} onSupported() }
+      p.onend = () => onSupported()
+      p.onerror = (e) => {
+        if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') {
+          onUnsupported()
+        } else {
+          onSupported() // not-allowed / audio-capture — language fine, just no mic yet
+        }
+      }
+      try { p.start() } catch { onUnsupported() }
+    }
+
+    function finish(lang) {
       if (done) return
       done = true
-      try { probe.abort() } catch {}
-      if (supported) {
+      clearTimeout(timer)
+      if (lang) {
+        setSttLang(lang)
         setIsSpeechSupported(true)
       } else {
         setUseApiStt(true)
         setIsSpeechSupported(!!navigator.mediaDevices?.getUserMedia)
       }
     }
-    probe.onstart = () => finish(true)
-    probe.onend = () => finish(true)
-    probe.onerror = (e) => {
-      if (e.error === 'language-not-supported' || e.error === 'service-not-allowed') {
-        finish(false)
-      } else {
-        finish(true) // not-allowed / audio-capture etc — language is fine, just no mic yet
-      }
-    }
-    try { probe.start() } catch { finish(false) }
-    const fallback = setTimeout(() => finish(true), 1000)
-    return () => { clearTimeout(fallback); done = true; try { probe.abort() } catch {} }
+
+    // Cascade: bg-BG → ru-RU → Whisper
+    probeLang('bg-BG',
+      () => finish('bg-BG'),
+      () => probeLang('ru-RU',
+        () => finish('ru-RU'),
+        () => finish(null)
+      )
+    )
+
+    timer = setTimeout(() => finish('bg-BG'), 1500)
+    return () => { done = true; clearTimeout(timer) }
   }, []) // eslint-disable-line
 
   function stopVad() {
@@ -213,7 +239,8 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         }
       },
       () => setPhase('idle'),
-      () => { setPhase('idle'); setFailed(true) }
+      () => { setPhase('idle'); setFailed(true) },
+      sttLang
     )
     if (!rec) setListening(false)
   }
@@ -251,7 +278,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
           {useApiStt
             ? "Didn't catch that, try again!"
             : lastSpoken
-              ? <>Heard: &ldquo;{lastSpoken}&rdquo;, try again!</>
+              ? <>
+                  {sttLang === 'ru-RU' && <>[ru-RU] </>}
+                  Heard: &ldquo;{lastSpoken}&rdquo;, try again!
+                </>
               : "Didn't catch that, try again!"}
         </p>
       )}
