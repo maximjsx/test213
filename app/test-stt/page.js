@@ -141,9 +141,12 @@ export default function TestSttPage() {
           addLog(`${engineName} responded in ${elapsed}ms — HTTP ${res.status}`)
 
           if (!res.ok) {
-            const body = await res.text().catch(() => '')
-            addLog(`${engineName} error body: ${body}`, 'error')
-            setAttempts(prev => [...prev, { engine: engineName, error: `HTTP ${res.status}: ${body}`, transcript: null }])
+            const data = await res.json().catch(() => ({}))
+            const detail = data.speechmatics_error ? JSON.stringify(data.speechmatics_error) : data.error || '?'
+            addLog(`${engineName} HTTP ${res.status} — our error: ${data.error}`, 'error')
+            addLog(`  Speechmatics said: ${detail}`, 'error')
+            if (data.debug) addLog(`  Audio: ${data.debug.fileName}, ${data.debug.audioSize} bytes, type: ${data.debug.audioType}`)
+            setAttempts(prev => [...prev, { engine: engineName, error: `${data.error}: ${detail}`, transcript: null }])
 
             // Auto-fallback to Whisper if not already on it
             if (endpoint !== '/api/stt') {
@@ -155,6 +158,7 @@ export default function TestSttPage() {
             const data = await res.json()
             const transcript = data.transcript ?? ''
             addLog(`${engineName} transcript: "${transcript}"`, transcript ? 'success' : 'warn')
+            if (data.debug) addLog(`  Audio sent: ${data.debug.fileName}, ${data.debug.audioSize} bytes, type: ${data.debug.audioType}, jobId: ${data.debug.jobId}`)
             if (data.confidence != null) addLog(`${engineName} confidence: ${(data.confidence * 100).toFixed(1)}%`)
             const details = matchDetails(transcript || '', target, thresh)
             addLog(`Match check (threshold ${thresh}):`)
