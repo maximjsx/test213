@@ -55,9 +55,11 @@ export default function TestSttPage() {
   const [attempts, setAttempts] = useState([])
   const [phase, setPhase] = useState('idle')
   const chunksRef = useRef([])
+  const pcmChunksRef = useRef([])
   const recorderRef = useRef(null)
   const audioCtxRef = useRef(null)
   const vadTimerRef = useRef(null)
+  const stopCaptureRef = useRef(null)
 
   const addLog = (msg, type = 'info') => setLog(prev => [...prev, { time: ts(), msg, type }])
 
@@ -107,125 +109,34 @@ export default function TestSttPage() {
 
   function stopVad() {
     if (vadTimerRef.current) { clearInterval(vadTimerRef.current); vadTimerRef.current = null }
-    if (audioCtxRef.current) { audioCtxRef.current.close(); audioCtxRef.current = null }
   }
 
-  async function recordAndSend(endpoint, engineName, thresh) {
-    addLog(`Recording for ${engineName}...`, 'step')
-    setPhase('waiting')
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
-      addLog(`MediaRecorder mimeType: ${mimeType}`)
-      const recorder = new MediaRecorder(stream, { mimeType })
-      chunksRef.current = []
-      recorder.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data) }
-
-      recorder.onstop = async () => {
-        stopVad()
-        stream.getTracks().forEach(t => t.stop())
-        const actualMime = recorder.mimeType || mimeType
-        const ext = actualMime.includes('webm') ? 'webm' : 'mp4'
-        const blob = new Blob(chunksRef.current, { type: actualMime })
-        addLog(`Recording stopped — blob size: ${blob.size} bytes, type: ${actualMime}`)
-        setPhase('processing')
-
-        addLog(`Sending to ${engineName} (${endpoint})...`, 'step')
-        try {
-          const form = new FormData()
-          form.append('audio', blob, `recording.${ext}`)
-          form.append('target', target)
-          const t0 = Date.now()
-          const res = await fetch(endpoint, { method: 'POST', body: form })
-          const elapsed = Date.now() - t0
-          addLog(`${engineName} responded in ${elapsed}ms — HTTP ${res.status}`)
-
-          if (!res.ok) {
-            const data = await res.json().catch(() => ({}))
-            const detail = data.speechmatics_error ? JSON.stringify(data.speechmatics_error) : data.error || '?'
-            addLog(`${engineName} HTTP ${res.status} — our error: ${data.error}`, 'error')
-            addLog(`  Speechmatics said: ${detail}`, 'error')
-            if (data.debug) addLog(`  Audio: ${data.debug.fileName}, ${data.debug.audioSize} bytes, type: ${data.debug.audioType}`)
-            setAttempts(prev => [...prev, { engine: engineName, error: `${data.error}: ${detail}`, transcript: null }])
-
-            // Auto-fallback to Whisper if not already on it
-            if (endpoint !== '/api/stt') {
-              addLog(`Falling back to Whisper with same audio blob...`, 'decision')
-              setSttMode('whisper')
-              await sendToWhisper(blob, ext, thresh)
-            }
-          } else {
-            const data = await res.json()
-            const transcript = data.transcript ?? ''
-            addLog(`${engineName} transcript: "${transcript}"`, transcript ? 'success' : 'warn')
-            if (data.debug) addLog(`  Audio sent: ${data.debug.fileName}, ${data.debug.audioSize} bytes, type: ${data.debug.audioType}, jobId: ${data.debug.jobId}`)
-            if (data.confidence != null) addLog(`${engineName} confidence: ${(data.confidence * 100).toFixed(1)}%`)
-            const details = matchDetails(transcript || '', target, thresh)
-            addLog(`Match check (threshold ${thresh}):`)
-            addLog(`  normalized spoken: "${details.normalized.spoken}"`)
-            addLog(`  normalized target: "${details.normalized.target}"`)
-            addLog(`  exact match: ${details.exact} | collapsed: ${details.collapsed} | char sim: ${(details.charSim * 100).toFixed(1)}%`)
-            details.wordResults.forEach(w => addLog(`  word "${w.word}": sim ${(w.sim * 100).toFixed(1)}% → ${w.pass ? 'PASS' : 'FAIL'}`))
-            addLog(`  OVERALL: ${details.pass ? '✓ PASS' : '✗ FAIL'}`, details.pass ? 'success' : 'error')
-            setAttempts(prev => [...prev, { engine: engineName, transcript, details, elapsed }])
-
-            if (!transcript && endpoint !== '/api/stt') {
-              addLog(`Empty transcript — falling back to Whisper with same blob...`, 'decision')
-              setSttMode('whisper')
-              await sendToWhisper(blob, ext, thresh)
-            }
-          }
-        } catch (err) {
-          addLog(`${engineName} threw: ${err.message}`, 'error')
-          setAttempts(prev => [...prev, { engine: engineName, error: err.message, transcript: null }])
-          if (endpoint !== '/api/stt') {
-            addLog(`Exception — falling back to Whisper with same blob...`, 'decision')
-            setSttMode('whisper')
-            await sendToWhisper(blob, ext, thresh)
-          }
-        }
-        setPhase('idle')
-      }
-
-      recorderRef.current = recorder
-      recorder.start()
-
-      const audioCtx = new AudioContext()
-      audioCtxRef.current = audioCtx
-      const source = audioCtx.createMediaStreamSource(stream)
-      const analyser = audioCtx.createAnalyser()
-      analyser.fftSize = 512
-      source.connect(analyser)
-      const buf = new Uint8Array(analyser.frequencyBinCount)
-      let speechStarted = false, silenceStart = null
-      const startTime = Date.now()
-
-      vadTimerRef.current = setInterval(() => {
-        if (recorder.state !== 'recording') { stopVad(); return }
-        if (Date.now() - startTime > 8000) { addLog('VAD: 8s max reached → stopping', 'warn'); recorder.stop(); return }
-        analyser.getByteTimeDomainData(buf)
-        let sum = 0
-        for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
-        const rms = Math.sqrt(sum / buf.length)
-        if (rms > 0.02) {
-          if (!speechStarted) { speechStarted = true; setPhase('speaking'); addLog(`VAD: speech detected (RMS ${rms.toFixed(4)})`) }
-          silenceStart = null
-        } else if (speechStarted) {
-          if (!silenceStart) silenceStart = Date.now()
-          else if (Date.now() - silenceStart > 1500) { addLog('VAD: 1.5s silence → stopping'); recorder.stop() }
-        }
-      }, 100)
-    } catch (err) {
-      addLog(`getUserMedia failed: ${err.message}`, 'error')
-      setPhase('idle')
-    }
+  function pcmToWav(pcm, sampleRate) {
+    const dataSize = pcm.byteLength
+    const buf = new ArrayBuffer(44 + dataSize)
+    const v = new DataView(buf)
+    const s = (o, str) => { for (let i = 0; i < str.length; i++) v.setUint8(o + i, str.charCodeAt(i)) }
+    s(0, 'RIFF'); v.setUint32(4, 36 + dataSize, true); s(8, 'WAVE')
+    s(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true)
+    v.setUint32(24, sampleRate, true); v.setUint32(28, sampleRate * 2, true)
+    v.setUint16(32, 2, true); v.setUint16(34, 16, true)
+    s(36, 'data'); v.setUint32(40, dataSize, true)
+    new Int16Array(buf, 44).set(pcm)
+    return buf
   }
 
-  async function sendToWhisper(blob, ext, thresh) {
+  async function sendToWhisper(audioSource, thresh) {
     addLog('Sending to Whisper (/api/stt)...', 'step')
     try {
       const form = new FormData()
-      form.append('audio', blob, `recording.${ext}`)
+      if (audioSource instanceof Blob) {
+        const ext = audioSource.type.includes('webm') ? 'webm' : 'mp4'
+        form.append('audio', audioSource, `recording.${ext}`)
+      } else {
+        // audioSource = { pcm: Int16Array, sampleRate: number }
+        const wav = pcmToWav(audioSource.pcm, audioSource.sampleRate)
+        form.append('audio', new Blob([wav], { type: 'audio/wav' }), 'recording.wav')
+      }
       form.append('target', target)
       const t0 = Date.now()
       const res = await fetch('/api/stt', { method: 'POST', body: form })
@@ -246,6 +157,218 @@ export default function TestSttPage() {
       }
     } catch (err) {
       addLog(`Whisper threw: ${err.message}`, 'error')
+    }
+  }
+
+  async function recordAndSend(endpoint, engineName, thresh) {
+    if (phase !== 'idle') {
+      stopVad()
+      if (stopCaptureRef.current) { stopCaptureRef.current(); stopCaptureRef.current = null }
+      return
+    }
+    addLog(`Recording for ${engineName}...`, 'step')
+    setPhase('waiting')
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const AudioCtx = window.AudioContext || window.webkitAudioContext
+      const audioCtx = new AudioCtx()
+      audioCtxRef.current = audioCtx
+      const sampleRate = audioCtx.sampleRate
+
+      // Try AudioWorklet PCM path for Speechmatics
+      let workletLoaded = false
+      if (endpoint !== '/api/stt') {
+        try { await audioCtx.audioWorklet.addModule('/pcm-worklet.js'); workletLoaded = true; addLog(`AudioWorklet loaded (sampleRate: ${sampleRate})`) }
+        catch (e) { addLog(`AudioWorklet unavailable: ${e.message} — using MediaRecorder`, 'warn') }
+      }
+
+      if (workletLoaded) {
+        // --- AudioWorklet PCM path ---
+        const source = audioCtx.createMediaStreamSource(stream)
+        const workletNode = new AudioWorkletNode(audioCtx, 'pcm-processor')
+        pcmChunksRef.current = []
+        workletNode.port.onmessage = (e) => { pcmChunksRef.current.push(new Int16Array(e.data)) }
+
+        const silencer = audioCtx.createGain()
+        silencer.gain.value = 0
+        source.connect(workletNode)
+        workletNode.connect(silencer)
+        silencer.connect(audioCtx.destination)
+
+        const analyser = audioCtx.createAnalyser()
+        analyser.fftSize = 512
+        source.connect(analyser)
+        const buf = new Uint8Array(analyser.frequencyBinCount)
+        let speechStarted = false, silenceStart = null
+        const startTime = Date.now()
+        let stopped = false
+
+        async function processWorklet() {
+          setPhase('processing')
+          const chunks = pcmChunksRef.current
+          const total = chunks.reduce((s, c) => s + c.length, 0)
+          const pcm = new Int16Array(total)
+          let off = 0
+          for (const c of chunks) { pcm.set(c, off); off += c.length }
+          addLog(`PCM captured: ${pcm.byteLength} bytes at ${sampleRate}Hz`)
+
+          addLog(`Sending to ${engineName} (${endpoint})...`, 'step')
+          try {
+            const form = new FormData()
+            form.append('audio', new Blob([pcm.buffer], { type: 'application/octet-stream' }), 'audio.pcm')
+            form.append('sample_rate', String(sampleRate))
+            form.append('target', target)
+            const t0 = Date.now()
+            const res = await fetch(endpoint, { method: 'POST', body: form })
+            const elapsed = Date.now() - t0
+            addLog(`${engineName} responded in ${elapsed}ms — HTTP ${res.status}`)
+
+            if (!res.ok) {
+              const data = await res.json().catch(() => ({}))
+              addLog(`${engineName} error: ${data.error || res.status}`, 'error')
+              setAttempts(prev => [...prev, { engine: engineName, error: data.error || `HTTP ${res.status}`, transcript: null }])
+              addLog('Falling back to Whisper with PCM→WAV...', 'decision')
+              setSttMode('whisper')
+              await sendToWhisper({ pcm, sampleRate }, thresh)
+            } else {
+              const data = await res.json()
+              const transcript = data.transcript ?? ''
+              addLog(`${engineName} transcript: "${transcript}"`, transcript ? 'success' : 'warn')
+              const details = matchDetails(transcript || '', target, thresh)
+              addLog(`Match check (threshold ${thresh}):`)
+              addLog(`  normalized spoken: "${details.normalized.spoken}"`)
+              addLog(`  normalized target: "${details.normalized.target}"`)
+              addLog(`  exact: ${details.exact} | collapsed: ${details.collapsed} | charSim: ${(details.charSim * 100).toFixed(1)}%`)
+              details.wordResults.forEach(w => addLog(`  word "${w.word}": ${(w.sim * 100).toFixed(1)}% → ${w.pass ? 'PASS' : 'FAIL'}`))
+              addLog(`  OVERALL: ${details.pass ? '✓ PASS' : '✗ FAIL'}`, details.pass ? 'success' : 'error')
+              setAttempts(prev => [...prev, { engine: engineName, transcript, details, elapsed }])
+              if (!transcript) {
+                addLog('Empty transcript — falling back to Whisper...', 'decision')
+                setSttMode('whisper')
+                await sendToWhisper({ pcm, sampleRate }, thresh)
+              }
+            }
+          } catch (err) {
+            addLog(`${engineName} threw: ${err.message}`, 'error')
+            setAttempts(prev => [...prev, { engine: engineName, error: err.message, transcript: null }])
+            addLog('Exception — falling back to Whisper...', 'decision')
+            setSttMode('whisper')
+            await sendToWhisper({ pcm, sampleRate }, thresh)
+          }
+          setPhase('idle')
+        }
+
+        function stopCapture() {
+          if (stopped) return
+          stopped = true
+          stopVad()
+          try { workletNode.disconnect() } catch {}
+          try { source.disconnect() } catch {}
+          stream.getTracks().forEach(t => t.stop())
+          audioCtx.close().catch(() => {}); audioCtxRef.current = null
+          processWorklet()
+        }
+        stopCaptureRef.current = stopCapture
+
+        vadTimerRef.current = setInterval(() => {
+          if (stopped) return
+          if (Date.now() - startTime > 8000) { addLog('VAD: 8s max reached → stopping', 'warn'); stopCapture(); return }
+          analyser.getByteTimeDomainData(buf)
+          let sum = 0
+          for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
+          const rms = Math.sqrt(sum / buf.length)
+          if (rms > 0.02) {
+            if (!speechStarted) { speechStarted = true; setPhase('speaking'); addLog(`VAD: speech detected (RMS ${rms.toFixed(4)})`) }
+            silenceStart = null
+          } else if (speechStarted) {
+            if (!silenceStart) silenceStart = Date.now()
+            else if (Date.now() - silenceStart > 1500) { addLog('VAD: 1.5s silence → stopping'); stopCapture() }
+          }
+        }, 100)
+
+      } else {
+        // --- MediaRecorder fallback path ---
+        const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
+        addLog(`MediaRecorder mimeType: ${mimeType}`)
+        const recorder = new MediaRecorder(stream, { mimeType })
+        chunksRef.current = []
+        recorder.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data) }
+
+        recorder.onstop = async () => {
+          stopVad()
+          stream.getTracks().forEach(t => t.stop())
+          audioCtx.close().catch(() => {}); audioCtxRef.current = null
+          const actualMime = recorder.mimeType || mimeType
+          const ext = actualMime.includes('webm') ? 'webm' : 'mp4'
+          const blob = new Blob(chunksRef.current, { type: actualMime })
+          addLog(`Recording stopped — blob size: ${blob.size} bytes, type: ${actualMime}`)
+          setPhase('processing')
+
+          addLog(`Sending to ${engineName} (${endpoint})...`, 'step')
+          try {
+            const form = new FormData()
+            form.append('audio', blob, `recording.${ext}`)
+            form.append('target', target)
+            const t0 = Date.now()
+            const res = await fetch(endpoint, { method: 'POST', body: form })
+            const elapsed = Date.now() - t0
+            addLog(`${engineName} responded in ${elapsed}ms — HTTP ${res.status}`)
+            if (!res.ok) {
+              const data = await res.json().catch(() => ({}))
+              addLog(`${engineName} error: ${data.error || res.status}`, 'error')
+              setAttempts(prev => [...prev, { engine: engineName, error: data.error || `HTTP ${res.status}`, transcript: null }])
+              if (endpoint !== '/api/stt') { addLog('Falling back to Whisper...', 'decision'); setSttMode('whisper'); await sendToWhisper(blob, thresh) }
+            } else {
+              const data = await res.json()
+              const transcript = data.transcript ?? ''
+              addLog(`${engineName} transcript: "${transcript}"`, transcript ? 'success' : 'warn')
+              if (data.confidence != null) addLog(`${engineName} confidence: ${(data.confidence * 100).toFixed(1)}%`)
+              const details = matchDetails(transcript || '', target, thresh)
+              addLog(`Match check (threshold ${thresh}):`)
+              addLog(`  normalized: "${details.normalized.spoken}" vs "${details.normalized.target}"`)
+              addLog(`  charSim: ${(details.charSim * 100).toFixed(1)}% | OVERALL: ${details.pass ? '✓ PASS' : '✗ FAIL'}`, details.pass ? 'success' : 'error')
+              setAttempts(prev => [...prev, { engine: engineName, transcript, details, elapsed }])
+              if (!transcript && endpoint !== '/api/stt') { addLog('Empty — falling back to Whisper...', 'decision'); setSttMode('whisper'); await sendToWhisper(blob, thresh) }
+            }
+          } catch (err) {
+            addLog(`${engineName} threw: ${err.message}`, 'error')
+            setAttempts(prev => [...prev, { engine: engineName, error: err.message, transcript: null }])
+            if (endpoint !== '/api/stt') { addLog('Exception — falling back to Whisper...', 'decision'); setSttMode('whisper'); await sendToWhisper(blob, thresh) }
+          }
+          setPhase('idle')
+        }
+
+        recorderRef.current = recorder
+        stopCaptureRef.current = () => { if (recorder.state === 'recording') recorder.stop() }
+        recorder.start()
+
+        const source = audioCtx.createMediaStreamSource(stream)
+        const analyser = audioCtx.createAnalyser()
+        analyser.fftSize = 512
+        source.connect(analyser)
+        const buf = new Uint8Array(analyser.frequencyBinCount)
+        let speechStarted = false, silenceStart = null
+        const startTime = Date.now()
+
+        vadTimerRef.current = setInterval(() => {
+          if (recorder.state !== 'recording') { stopVad(); return }
+          if (Date.now() - startTime > 8000) { addLog('VAD: 8s max reached → stopping', 'warn'); recorder.stop(); return }
+          analyser.getByteTimeDomainData(buf)
+          let sum = 0
+          for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v }
+          const rms = Math.sqrt(sum / buf.length)
+          if (rms > 0.02) {
+            if (!speechStarted) { speechStarted = true; setPhase('speaking'); addLog(`VAD: speech detected (RMS ${rms.toFixed(4)})`) }
+            silenceStart = null
+          } else if (speechStarted) {
+            if (!silenceStart) silenceStart = Date.now()
+            else if (Date.now() - silenceStart > 1500) { addLog('VAD: 1.5s silence → stopping'); recorder.stop() }
+          }
+        }, 100)
+      }
+    } catch (err) {
+      addLog(`getUserMedia failed: ${err.message}`, 'error')
+      setPhase('idle')
     }
   }
 

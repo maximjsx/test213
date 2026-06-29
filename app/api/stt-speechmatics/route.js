@@ -1,4 +1,8 @@
-const BASE = 'https://asr.api.speechmatics.com/v2'
+import { WebSocket } from 'ws'
+
+export const runtime = 'nodejs'
+
+const RT_URL = 'wss://eu.rt.speechmatics.com/v2'
 
 export async function POST(req) {
   try {
@@ -9,85 +13,83 @@ export async function POST(req) {
     const key = process.env.SPEECHMATICS_API_KEY
     if (!key) return Response.json({ error: 'SPEECHMATICS_API_KEY not set' }, { status: 500 })
 
-    const headers = { Authorization: `Bearer ${key}` }
+    const sampleRate = parseInt(formData.get('sample_rate') || '44100')
+    const pcmBuffer = Buffer.from(await audio.arrayBuffer())
 
-    const audioBuffer = await audio.arrayBuffer()
-    const rawType = audio.type || 'audio/mp4'
-    // Strip codec params — Speechmatics rejects "audio/webm; codecs=opus", needs plain "audio/webm"
-    const audioType = rawType.split(';')[0].trim()
-    const fileName = audio.name || 'recording.mp4'
+    return new Promise((resolve) => {
+      const ws = new WebSocket(RT_URL, { headers: { Authorization: `Bearer ${key}` } })
 
-    const audioFile = new File([audioBuffer], fileName, { type: audioType })
+      let transcript = ''
+      let seqNo = 0
+      let settled = false
 
-    const debug = {
-      fileName,
-      audioType,
-      rawType,
-      audioSize: audioBuffer.byteLength,
-    }
-
-    // 1. Submit job
-    const jobForm = new FormData()
-    jobForm.append('data_file', audioFile, fileName)
-    jobForm.append('config', JSON.stringify({
-      type: 'transcription',
-      transcription_config: { language: 'bg' },
-    }))
-
-    const submitRes = await fetch(`${BASE}/jobs/`, { method: 'POST', headers, body: jobForm })
-    if (!submitRes.ok) {
-      const errBody = await submitRes.text().catch(() => '')
-      let errParsed
-      try { errParsed = JSON.parse(errBody) } catch { errParsed = errBody }
-      console.error('Speechmatics submit error:', submitRes.status, errBody)
-      return Response.json({
-        error: 'submit_failed',
-        speechmatics_status: submitRes.status,
-        speechmatics_error: errParsed,
-        debug,
-      }, { status: 502 })
-    }
-
-    const submitData = await submitRes.json()
-    const jobId = submitData.id
-    debug.jobId = jobId
-
-    // 2. Poll until done (max 20s)
-    const deadline = Date.now() + 20_000
-    let lastStatus = null
-    while (Date.now() < deadline) {
-      await new Promise(r => setTimeout(r, 700))
-      const statusRes = await fetch(`${BASE}/jobs/${jobId}`, { headers })
-      if (!statusRes.ok) break
-      const { job } = await statusRes.json()
-      lastStatus = job.status
-      if (job.status === 'done') break
-      if (job.status === 'rejected' || job.status === 'deleted') {
-        return Response.json({ error: 'job_failed', job_status: job.status, debug }, { status: 502 })
+      function finish(res) {
+        if (settled) return
+        settled = true
+        try { ws.close() } catch {}
+        resolve(res)
       }
-    }
 
-    if (lastStatus !== 'done') {
-      return Response.json({ error: 'timeout', last_status: lastStatus, debug }, { status: 502 })
-    }
+      const timeout = setTimeout(() => {
+        finish(Response.json({ transcript: transcript.trim(), warning: 'timeout' }))
+      }, 20000)
 
-    // 3. Fetch transcript
-    const txRes = await fetch(`${BASE}/jobs/${jobId}/transcript?format=json-v2`, { headers })
-    if (!txRes.ok) {
-      const errBody = await txRes.text().catch(() => '')
-      return Response.json({ error: 'transcript_failed', speechmatics_status: txRes.status, speechmatics_error: errBody, debug }, { status: 502 })
-    }
+      ws.on('open', () => {
+        ws.send(JSON.stringify({
+          message: 'StartRecognition',
+          audio_format: { type: 'raw', encoding: 'pcm_s16le', sample_rate: sampleRate },
+          transcription_config: {
+            language: 'bg',
+            max_delay: 2.0,
+            max_delay_mode: 'flexible',
+            enable_partials: false,
+          },
+        }))
+      })
 
-    const tx = await txRes.json()
-    const words = (tx.results ?? [])
-      .filter(r => r.type === 'word')
-      .map(r => r.alternatives?.[0]?.content ?? '')
-      .filter(Boolean)
+      ws.on('message', (data) => {
+        let msg
+        try { msg = JSON.parse(data.toString()) } catch { return }
 
-    const transcript = words.join(' ')
-    return Response.json({ transcript, debug })
+        if (msg.message === 'RecognitionStarted') {
+          // Stream PCM in 8KB chunks
+          const CHUNK = 8192
+          let offset = 0
+          while (offset < pcmBuffer.length) {
+            ws.send(pcmBuffer.slice(offset, offset + CHUNK))
+            offset += CHUNK
+            seqNo++
+          }
+          ws.send(JSON.stringify({ message: 'EndOfStream', last_seq_no: seqNo }))
+        }
+
+        if (msg.message === 'AddTranscript' && msg.metadata?.transcript) {
+          transcript += (transcript ? ' ' : '') + msg.metadata.transcript.trim()
+        }
+
+        if (msg.message === 'EndOfTranscript') {
+          clearTimeout(timeout)
+          finish(Response.json({ transcript: transcript.trim() }))
+        }
+
+        if (msg.message === 'Error') {
+          clearTimeout(timeout)
+          finish(Response.json({ error: msg.reason || 'speechmatics_error', detail: msg }, { status: 502 }))
+        }
+      })
+
+      ws.on('error', (err) => {
+        clearTimeout(timeout)
+        finish(Response.json({ error: 'websocket_error', message: err.message }, { status: 502 }))
+      })
+
+      ws.on('close', () => {
+        clearTimeout(timeout)
+        finish(Response.json({ transcript: transcript.trim() }))
+      })
+    })
   } catch (e) {
-    console.error('Speechmatics route error:', e)
+    console.error('Speechmatics RT error:', e)
     return Response.json({ error: 'internal_error', message: e.message }, { status: 500 })
   }
 }
