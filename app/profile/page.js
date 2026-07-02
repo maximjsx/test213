@@ -19,6 +19,7 @@ function ProfileInner() {
   const params = useSearchParams()
 
   const [serverProgress, setServerProgress] = useState(undefined)
+  const [friendsData, setFriendsData] = useState(null)
   const [nameEdit, setNameEdit] = useState(null)
   const [nameError, setNameError] = useState('')
   const [saving, setSaving] = useState(false)
@@ -37,6 +38,23 @@ function ProfileInner() {
       .then(d => setServerProgress(d.progress ?? null))
       .catch(() => setServerProgress(null))
   }, [user])
+
+  function loadFriends() {
+    fetch('/api/friends')
+      .then(r => r.ok ? r.json() : null)
+      .then(setFriendsData)
+      .catch(() => {})
+  }
+  useEffect(() => { if (user) loadFriends() }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  async function friendAction(username, action) {
+    await fetch('/api/friends', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, action }),
+    }).catch(() => {})
+    loadFriends()
+  }
 
   // Returning users (account already has progress) are already converted,
   // fresh users with nothing local have nothing to convert: enable auto-sync
@@ -272,6 +290,69 @@ function ProfileInner() {
                 <div className={styles.statLbl}>Freezes</div>
               </div>
             </div>
+
+            {friendsData && (friendsData.incoming.length > 0 || friendsData.friends.length > 0 || friendsData.outgoing.length > 0) && (
+              <div className={styles.friendsSection}>
+                {friendsData.incoming.length > 0 && (
+                  <>
+                    <div className={styles.friendsLabel}>Friend requests</div>
+                    {friendsData.incoming.map(f => (
+                      <div key={f.username} className={styles.friendRow}>
+                        <Link href={`/u/${f.username}`} className={styles.friendInfo}>
+                          {f.avatarUrl
+                            ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
+                            : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
+                          <span className={styles.friendName}>{f.username}</span>
+                        </Link>
+                        <div className={styles.friendBtns}>
+                          <button className={styles.acceptBtn} onClick={() => friendAction(f.username, 'accept')}>ACCEPT</button>
+                          <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'decline')}>
+                            <img src="/icons/gray_x.png" alt="decline" width={14} height={14} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+                {friendsData.friends.length > 0 && (
+                  <>
+                    <div className={styles.friendsLabel}>Friends · {friendsData.friends.length}</div>
+                    {friendsData.friends.map(f => (
+                      <Link key={f.username} href={`/u/${f.username}`} className={styles.friendRow}>
+                        <span className={styles.friendInfo}>
+                          {f.avatarUrl
+                            ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
+                            : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
+                          <span className={styles.friendName}>{f.username}</span>
+                          {f.streak >= 3 && (
+                            <span className={styles.friendStreak}><img src="/icons/fire.png" alt="" width={13} height={13} />{f.streak}</span>
+                          )}
+                        </span>
+                        <span className={styles.friendXp}>{f.xp} XP</span>
+                      </Link>
+                    ))}
+                  </>
+                )}
+                {friendsData.outgoing.length > 0 && (
+                  <>
+                    <div className={styles.friendsLabel}>Sent requests</div>
+                    {friendsData.outgoing.map(f => (
+                      <div key={f.username} className={styles.friendRow}>
+                        <Link href={`/u/${f.username}`} className={styles.friendInfo}>
+                          {f.avatarUrl
+                            ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
+                            : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
+                          <span className={styles.friendName}>{f.username}</span>
+                        </Link>
+                        <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'cancel')} title="Cancel request">
+                          <img src="/icons/gray_x.png" alt="cancel" width={14} height={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            )}
 
             {outOfSync && (
               <div className={styles.syncBox}>

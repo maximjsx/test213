@@ -6,16 +6,24 @@ import Chevron from '../../components/Chevron'
 import styles from './page.module.css'
 
 const MEDALS = ['🥇', '🥈', '🥉']
+const PERIODS = [
+  { id: 'week',  label: 'THIS WEEK' },
+  { id: 'month', label: 'THIS MONTH' },
+  { id: 'all',   label: 'ALL TIME' },
+]
 
 export default function LeaderboardPage() {
-  const [data, setData] = useState(undefined)
+  const [period, setPeriod] = useState('week')
+  const [cache, setCache] = useState({})
+  const data = cache[period]
 
   useEffect(() => {
-    fetch('/api/leaderboard')
+    if (cache[period]) return
+    fetch(`/api/leaderboard?period=${period}`)
       .then(r => r.json())
-      .then(setData)
-      .catch(() => setData({ top: [], me: null }))
-  }, [])
+      .then(d => setCache(c => ({ ...c, [period]: d })))
+      .catch(() => setCache(c => ({ ...c, [period]: { top: [], me: null } })))
+  }, [period]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={styles.page}>
@@ -27,7 +35,19 @@ export default function LeaderboardPage() {
       <div className={styles.head}>
         <img src="/icons/trophy_with_star.png" alt="" width={56} height={56} />
         <h1 className={styles.title}>Leaderboard</h1>
-        <p className={styles.sub}>Top XP earners of all time</p>
+        <p className={styles.sub}>Top XP earners</p>
+      </div>
+
+      <div className={styles.tabs}>
+        {PERIODS.map(p => (
+          <button
+            key={p.id}
+            className={`${styles.tab} ${period === p.id ? styles.tabActive : ''}`}
+            onClick={() => setPeriod(p.id)}
+          >
+            {p.label}
+          </button>
+        ))}
       </div>
 
       {data === undefined ? (
@@ -35,12 +55,16 @@ export default function LeaderboardPage() {
       ) : data.top.length === 0 ? (
         <div className={styles.empty}>
           <Bear mood="happy" size={90} />
-          <p>No one on the board yet. Sign in on your profile and be the first!</p>
+          <p>
+            {period === 'all'
+              ? 'No one on the board yet. Sign in on your profile and be the first!'
+              : 'No XP earned in this period yet. Finish a lesson and take the top spot!'}
+          </p>
         </div>
       ) : (
         <div className={styles.list}>
           {data.top.map(row => (
-            <div key={row.rank} className={`${styles.row} ${row.isMe ? styles.rowMe : ''}`}>
+            <Link key={row.rank} href={`/u/${row.username}`} className={`${styles.row} ${row.isMe ? styles.rowMe : ''}`}>
               <span className={styles.rank}>{row.rank <= 3 ? MEDALS[row.rank - 1] : row.rank}</span>
               {row.avatarUrl
                 ? <img src={row.avatarUrl} alt="" className={styles.rowAvatar} width={38} height={38} />
@@ -52,7 +76,7 @@ export default function LeaderboardPage() {
                 </span>
               )}
               <span className={styles.rowXp}>{row.xp} XP</span>
-            </div>
+            </Link>
           ))}
         </div>
       )}

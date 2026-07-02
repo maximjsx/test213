@@ -32,6 +32,7 @@ function defaultState() {
     wrongExercises: {},
     skippedLevels: {},
     activeDays: {},
+    xpByDay: {},
     quests: null,
     startedAt: null,
   }
@@ -76,6 +77,7 @@ function applySession(prev, xp, meta = {}) {
     lastActiveDay: today,
     startedAt: prev.startedAt || Date.now(),
     activeDays: { ...(prev.activeDays || {}), [dayKey()]: true },
+    xpByDay: { ...(prev.xpByDay || {}), [dayKey()]: ((prev.xpByDay || {})[dayKey()] || 0) + xp },
     quests: applySessionToQuests(withQuests.quests, { ...meta, xpEarned: xp }),
   }
 }
@@ -141,9 +143,13 @@ export function useProgress() {
       if (!items) return prev
       const q = items.find(x => x.id === questId)
       if (!q || q.claimed || q.progress < q.goal) return prev
+      const isXp = q.reward.type === 'xp'
       const next = {
         ...prev,
-        xp: q.reward.type === 'xp' ? prev.xp + q.reward.amount : prev.xp,
+        xp: isXp ? prev.xp + q.reward.amount : prev.xp,
+        xpByDay: isXp
+          ? { ...(prev.xpByDay || {}), [dayKey()]: ((prev.xpByDay || {})[dayKey()] || 0) + q.reward.amount }
+          : (prev.xpByDay || {}),
         streakFreezes: q.reward.type === 'freeze' ? (prev.streakFreezes || 0) + q.reward.amount : (prev.streakFreezes || 0),
         quests: { ...prev.quests, items: items.map(x => x.id === questId ? { ...x, claimed: true } : x) },
       }
