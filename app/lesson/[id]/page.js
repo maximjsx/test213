@@ -6,6 +6,7 @@ import { useProgress } from '../../../hooks/useProgress'
 import { shuffle } from '../../../lib/checker'
 import ExerciseRunner from '../../../components/ExerciseRunner'
 import LessonComplete from '../../../components/LessonComplete'
+import Chevron from '../../../components/Chevron'
 import styles from './page.module.css'
 
 function findLesson(id) {
@@ -58,7 +59,9 @@ function LessonPageInner() {
   if (!found) return (
     <div className={styles.err}>
       <p>Lesson not found.</p>
-      <button onClick={() => router.push('/')}>← Back to course</button>
+      <button onClick={() => router.push('/')} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <Chevron /> Back to course
+      </button>
     </div>
   )
 
@@ -76,7 +79,11 @@ function LessonPageInner() {
     let earned = perfect ? Math.round(baseXP * 1.5) : pct >= 0.8 ? Math.round(baseXP * 1.2) : baseXP
 
     setXpEarned(earned)
-    completeLessonWithXP(lesson.id, earned)
+    completeLessonWithXP(lesson.id, earned, {
+      accuracyPct: Math.round(pct * 100),
+      maxCombo: finalScore.maxCombo || 0,
+      perfect,
+    })
     recordMistakes((finalScore.mistakes || []).map(m => m.id).filter(Boolean))
     setPhase('complete')
   }

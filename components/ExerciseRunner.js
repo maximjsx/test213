@@ -44,6 +44,8 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
   const [showQuitConfirm, setShowQuitConfirm] = useState(false)
   const [ttsMuted, setTtsMuted] = useState(() => getTTSMuted())
   const [key, setKey] = useState(0)
+  const [combo, setCombo] = useState(0)
+  const maxComboRef = useRef(0)
   const feedbackSetAt = useRef(null)
 
   const exercise = queue[current]
@@ -88,10 +90,18 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
       playCorrect()
       hapticCorrect()
       setCorrect(c => c + 1)
+      if (exercise?.type !== 'introduce') {
+        setCombo(c => {
+          const n = c + 1
+          if (n > maxComboRef.current) maxComboRef.current = n
+          return n
+        })
+      }
       setFeedback({ ok: true, message: 'Great!' })
     } else {
       playWrong()
       hapticWrong()
+      setCombo(0)
       setMistakes(m => [...m, exercise])
       allMistakesRef.current = [...allMistakesRef.current, exercise]
       setFeedback({ ok: false, message: message || `Correct answer: "${exercise.answer}"` })
@@ -111,6 +121,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
     } else {
       playWrong()
       hapticWrong()
+      setCombo(0)
       setMistakes(m => [...m, exercise])
       allMistakesRef.current = [...allMistakesRef.current, exercise]
       setFeedback({ ok: false, message: `Correct answer: "${exercise?.answer || '?'}"` })
@@ -131,7 +142,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
       } else {
         const everMistakes = allMistakesRef.current
         const uniqueErrors = everMistakes.filter((m, i) => everMistakes.findIndex(x => x.id === m.id) === i).length
-        onComplete({ correct: exercises.length - uniqueErrors, total: exercises.length, mistakes: everMistakes })
+        onComplete({ correct: exercises.length - uniqueErrors, total: exercises.length, mistakes: everMistakes, maxCombo: maxComboRef.current })
       }
     } else {
       setCurrent(c => c + 1)
@@ -174,6 +185,12 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
           <div className={styles.progressTrack}>
             <div className={styles.progressFill} style={{ width: `${progress * 100}%`, background: level.color }} />
           </div>
+          {combo >= 3 && (
+            <div key={combo} className={`${styles.comboPill} ${combo >= 5 ? styles.comboPillHot : ''}`}>
+              <img src="/icons/fire.png" alt="" width={16} height={16} />
+              <span>{combo}</span>
+            </div>
+          )}
         </div>
       </div>
 

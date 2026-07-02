@@ -1,7 +1,28 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { playLevelComplete, playPerfect } from '../lib/audio'
+import Bear from './Bear'
 import styles from './LessonComplete.module.css'
+
+// Counts up from 0 to the earned XP over ~0.9s with an ease-out
+function useCountUp(target) {
+  const [value, setValue] = useState(0)
+  useEffect(() => {
+    if (!target) return
+    let raf
+    const start = performance.now()
+    const dur = 900
+    const tick = (now) => {
+      const t = Math.min((now - start) / dur, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setValue(Math.round(target * eased))
+      if (t < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [target])
+  return value
+}
 
 function getExerciseDisplay(ex) {
   if (!ex) return { q: '—', a: '—' }
@@ -26,6 +47,7 @@ export default function LessonComplete({ lesson, level, score, xpEarned, onConti
   const perfect = score.total > 0 && score.correct === score.total
 
   const uniqueMistakes = mistakes.filter((m, i) => mistakes.findIndex(x => x.id === m.id) === i)
+  const shownXp = useCountUp(xpEarned ?? lesson.xp)
 
   useEffect(() => {
     if (perfect) playPerfect()
@@ -38,19 +60,21 @@ export default function LessonComplete({ lesson, level, score, xpEarned, onConti
         {perfect && <div className={styles.perfectBanner}><img src="/icons/star.png" alt="⭐" width={18} height={18} style={{ verticalAlign: 'middle' }} /> PERFECT LESSON <img src="/icons/star.png" alt="⭐" width={18} height={18} style={{ verticalAlign: 'middle' }} /></div>}
 
         <div className={styles.emoji}>
-          {perfect
-            ? <img src="/icons/trophy_with_star.png" alt="🏆" width={80} height={80} />
-            : pct >= 60
-              ? <img src="/icons/party_popper.png" alt="🎉" width={80} height={80} />
-              : <img src="/icons/sweaty_smile.png" alt="😅" width={80} height={80} />}
+          <Bear mood={perfect ? 'cheer' : pct >= 60 ? 'happy' : 'sad'} size={96} />
         </div>
         <h1 className={styles.title}>
           {perfect ? 'Flawless!' : pct >= 60 ? 'Lesson Complete!' : 'Keep Practicing!'}
         </h1>
 
         <div className={styles.xpBadge} style={{ background: level.color }}>
-          +{xpEarned ?? lesson.xp} XP
+          +{shownXp} XP
         </div>
+
+        {(score.maxCombo ?? 0) >= 5 && (
+          <div className={styles.comboBadge}>
+            <img src="/icons/fire.png" alt="" width={16} height={16} /> Best run: {score.maxCombo} in a row
+          </div>
+        )}
 
         <div className={styles.stats}>
           <div className={styles.stat}>

@@ -349,6 +349,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     rec.maxAlternatives = 1
 
     let finalTranscript = ''
+    let lastInterim = ''
     let silenceTimer = null
     let speechStarted = false
     let done = false
@@ -364,10 +365,12 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
     function process() {
       finish()
       setLivePreview('')
-      const transcript = finalTranscript.trim()
+      // Recognition may never flag a result as final before the silence
+      // timeout fires, so fall back to the last interim transcript
+      const transcript = (finalTranscript.trim() || lastInterim.trim())
       if (transcript) {
         setLastSpoken(transcript)
-        if (speechMatches(transcript, target)) { setSucceeded(true); onAnswer(true) }
+        if (speechMatches(transcript, target)) { setFailed(false); setSucceeded(true); onAnswer(true) }
         else setFailed(true)
       } else if (speechStarted) {
         setFailed(true)
@@ -385,12 +388,14 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         if (e.results[i].isFinal) finalTranscript += e.results[i][0].transcript + ' '
         else interim += e.results[i][0].transcript
       }
+      if (interim) lastInterim = interim
       setLivePreview((finalTranscript + interim).trim())
       silenceTimer = setTimeout(process, 1500)
     }
 
     rec.onend = () => { if (!done) process() }
-    rec.onerror = () => { finish(); if (speechStarted) setFailed(true); setPhase('idle') }
+    // abort() after grading also fires onerror; done means we already graded
+    rec.onerror = () => { if (done) return; finish(); if (speechStarted) setFailed(true); setPhase('idle') }
 
     stopCaptureRef.current = process
     try { rec.start() } catch { finish(); setPhase('idle') }
@@ -405,6 +410,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
   const btnLabel = phase === 'processing' ? 'PROCESSING…'
     : phase === 'speaking' ? 'LISTENING…'
     : phase === 'waiting' ? 'SPEAK NOW…'
+    : succeeded ? 'CORRECT!'
     : failed ? 'TRY AGAIN'
     : 'CLICK TO SPEAK'
 

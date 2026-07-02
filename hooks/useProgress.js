@@ -1,7 +1,10 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
+import { ensureQuests, applySessionToQuests } from '../lib/quests'
 
 const KEY = 'bulgarolearn'
+const AUTH_FLAG = 'bulgario_authed'
+const SYNC_FLAG = 'bulgario_synced'
 const STREAK_FREEZE_COST_XP = 20
 
 function load() {
@@ -28,6 +31,9 @@ function defaultState() {
     specialUnlocks: {},
     wrongExercises: {},
     skippedLevels: {},
+    activeDays: {},
+    quests: null,
+    startedAt: null,
   }
 }
 
@@ -41,9 +47,37 @@ function calcStreakBreak(state) {
   if (diffDays <= 1) return state
   if ((state.streakFreezes || 0) > 0) {
     const yesterday = new Date(todayMidnight - 86400000)
-    return { ...state, streakFreezes: state.streakFreezes - 1, lastActiveDay: yesterday.toDateString() }
+    const frozenDay = yesterday.toDateString()
+    return {
+      ...state,
+      streakFreezes: state.streakFreezes - 1,
+      lastActiveDay: frozenDay,
+      activeDays: { ...(state.activeDays || {}), [dayKey(yesterday)]: 'frozen' },
+    }
   }
   return { ...state, streak: 0 }
+}
+
+// "2026-07-03" style key, local time
+export function dayKey(d = new Date()) {
+  const p = n => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`
+}
+
+// Marks today active, bumps streak once per day, applies session results to quests
+function applySession(prev, xp, meta = {}) {
+  const today = new Date().toDateString()
+  const wasToday = prev.lastActiveDay === today
+  const withQuests = ensureQuests(prev)
+  return {
+    ...withQuests,
+    xp: prev.xp + xp,
+    streak: wasToday ? prev.streak : prev.streak + 1,
+    lastActiveDay: today,
+    startedAt: prev.startedAt || Date.now(),
+    activeDays: { ...(prev.activeDays || {}), [dayKey()]: true },
+    quests: applySessionToQuests(withQuests.quests, { ...meta, xpEarned: xp }),
+  }
 }
 
 export function useProgress() {
@@ -53,24 +87,65 @@ export function useProgress() {
   useEffect(() => {
     const raw = load()
     if (raw) {
-      const s = calcStreakBreak(raw)
+      let s = calcStreakBreak({ ...defaultState(), ...raw })
+      s = ensureQuests(s)
       if (s !== raw) save(s)
       setState(s)
     }
     setHydrated(true)
   }, [])
 
-  const completeLessonWithXP = useCallback((lessonId, xp) => {
+  // Background sync to account (only when signed in AND the user has
+  // explicitly converted/linked progress on the profile page, debounced)
+  useEffect(() => {
+    if (!hydrated) return
+    if (typeof window === 'undefined') return
+    if (localStorage.getItem(AUTH_FLAG) !== '1') return
+    if (localStorage.getItem(SYNC_FLAG) !== '1') return
+    const t = setTimeout(() => {
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ progress: state }),
+      }).catch(() => {})
+    }, 3000)
+    return () => clearTimeout(t)
+  }, [state, hydrated])
+
+  const completeLessonWithXP = useCallback((lessonId, xp, meta = {}) => {
     setState(prev => {
-      const today = new Date().toDateString()
-      const wasToday = prev.lastActiveDay === today
-      const newStreak = wasToday ? prev.streak : prev.streak + 1
+      const next = {
+        ...applySession(prev, xp, { ...meta, isLesson: true }),
+        lessons: { ...prev.lessons, [lessonId]: { completed: true, completedAt: Date.now() } },
+      }
+      save(next)
+      return next
+    })
+  }, [])
+
+  // Mistake practice session: clears fixed mistakes, keeps repeated ones
+  const completePractice = useCallback((xp, meta = {}, correctIds = [], wrongIds = []) => {
+    setState(prev => {
+      const wrongExercises = { ...prev.wrongExercises }
+      correctIds.forEach(id => { delete wrongExercises[id] })
+      wrongIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
+      const next = { ...applySession(prev, xp, { ...meta, isLesson: false }), wrongExercises }
+      save(next)
+      return next
+    })
+  }, [])
+
+  const claimQuest = useCallback((questId) => {
+    setState(prev => {
+      const items = prev.quests?.items
+      if (!items) return prev
+      const q = items.find(x => x.id === questId)
+      if (!q || q.claimed || q.progress < q.goal) return prev
       const next = {
         ...prev,
-        lessons: { ...prev.lessons, [lessonId]: { completed: true, completedAt: Date.now() } },
-        xp: prev.xp + xp,
-        streak: newStreak,
-        lastActiveDay: today,
+        xp: q.reward.type === 'xp' ? prev.xp + q.reward.amount : prev.xp,
+        streakFreezes: q.reward.type === 'freeze' ? (prev.streakFreezes || 0) + q.reward.amount : (prev.streakFreezes || 0),
+        quests: { ...prev.quests, items: items.map(x => x.id === questId ? { ...x, claimed: true } : x) },
       }
       save(next)
       return next
@@ -154,12 +229,20 @@ export function useProgress() {
     setState(fresh)
   }, [])
 
+  // Replace local state with a server copy (after "load account progress")
+  const replaceState = useCallback((serverState) => {
+    const merged = ensureQuests(calcStreakBreak({ ...defaultState(), ...serverState }))
+    save(merged)
+    setState(merged)
+  }, [])
+
   return {
     state, hydrated,
     buyStreakFreeze, STREAK_FREEZE_COST_XP,
     unlockPack,
-    recordMistakes, completeLessonWithXP,
+    recordMistakes, completeLessonWithXP, completePractice,
+    claimQuest,
     isLessonComplete, isLessonUnlocked, levelProgress,
-    skipLevel, unskipLevel, resetProgress,
+    skipLevel, unskipLevel, resetProgress, replaceState,
   }
 }

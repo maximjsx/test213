@@ -3,7 +3,12 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { COURSE } from '../data/course'
 import { useProgress } from '../hooks/useProgress'
+import { useAuth } from '../hooks/useAuth'
+import { claimableQuestCount } from '../lib/quests'
 import { hapticTap, unlockAudio } from '../lib/audio'
+import QuestsModal from '../components/QuestsModal'
+import StreakModal from '../components/StreakModal'
+import Bear from '../components/Bear'
 import styles from './page.module.css'
 
 const SPECIAL_PACKS = [
@@ -11,7 +16,7 @@ const SPECIAL_PACKS = [
   { id: 'street_slang', name: 'Street Slang', icon: '😎', costXP: 150, desc: 'Informal expressions locals actually use' },
 ]
 
-function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, levelId, isLast, levelIndex }) {
+function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, levelId, isLast, levelIndex, pos }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
   const nodeRef = useRef(null)
@@ -36,6 +41,11 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
     <div className={styles.nodeWrap} ref={nodeRef}>
       {isCurrent && (
         <div className={`${styles.startLabel} ${showTooltip ? styles.startLabelHide : ''}`}>START</div>
+      )}
+      {isCurrent && (
+        <div className={`${styles.pathBear} ${pos === 'left' ? styles.pathBearRight : styles.pathBearLeft}`}>
+          <Bear mood="idle" size={58} />
+        </div>
       )}
       <button
         data-lesson-node
@@ -197,9 +207,13 @@ function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, 
 }
 
 export default function HomePage() {
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, skipLevel, unskipLevel } = useProgress()
+  const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, skipLevel, unskipLevel, claimQuest } = useProgress()
+  const { user } = useAuth()
   const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
+  const [showQuests, setShowQuests] = useState(false)
+  const [showStreak, setShowStreak] = useState(false)
+  const [showJump, setShowJump] = useState(false)
   const levelRefs = useRef([])
   const currentLessonRef = useRef(null)
 
@@ -215,10 +229,23 @@ export default function HomePage() {
         }
       })
       setVisibleLevel(current)
+
+      const node = currentLessonRef.current
+      if (node) {
+        const r = node.getBoundingClientRect()
+        setShowJump(r.bottom < 80 || r.top > window.innerHeight - 40)
+      }
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [hydrated])
+
+  function jumpToCurrent() {
+    const el = currentLessonRef.current
+    if (!el) return
+    const top = el.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: Math.max(0, top - window.innerHeight / 2 + 60), behavior: 'smooth' })
+  }
 
   useEffect(() => {
     if (!hydrated) return
@@ -230,6 +257,8 @@ export default function HomePage() {
 
   const currentLevel = COURSE.levels[visibleLevel]
   const streakAtRisk = hydrated && state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
+  const claimable = claimableQuestCount(state.quests)
+  const mistakeCount = Object.keys(state.wrongExercises || {}).length
 
   if (!hydrated) return <div className={styles.loading}>Loading…</div>
 
@@ -244,6 +273,12 @@ export default function HomePage() {
           onClose={() => setShowShop(false)}
         />
       )}
+      {showQuests && (
+        <QuestsModal quests={state.quests} claimQuest={claimQuest} onClose={() => setShowQuests(false)} />
+      )}
+      {showStreak && (
+        <StreakModal state={state} onClose={() => setShowStreak(false)} />
+      )}
 
       {/* ── Header ── */}
       <header className={styles.header}>
@@ -256,17 +291,35 @@ export default function HomePage() {
             </span>
           </div>
           <div className={styles.headerStats}>
-            <div className={`${styles.streak} ${streakAtRisk ? styles.streakAtRisk : ''}`}>
+            <button className={`${styles.streak} ${styles.statBtn} ${streakAtRisk ? styles.streakAtRisk : ''}`} onClick={() => setShowStreak(true)} title="Streak calendar">
               <span className={styles.streakFlame}><img src="/icons/fire.png" alt="🔥" width={26} height={26} /></span>
               <span className={styles.streakNum}>{state.streak}</span>
-            </div>
+            </button>
             <div className={styles.xp}>
               <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="⚡" width={24} height={24} /></span>
               <span className={styles.xpNum}>{state.xp} XP</span>
             </div>
+            <button className={styles.shopBtn} onClick={() => setShowQuests(true)} title="Daily quests">
+              <img src="/icons/another_star.png" alt="quests" width={26} height={26} />
+              {claimable > 0 && <span className={styles.questBadge}>{claimable}</span>}
+            </button>
             <button className={styles.shopBtn} onClick={() => setShowShop(true)} title="Shop">
               <img src="/icons/gift_box.png" alt="🎁" width={28} height={28} />
             </button>
+            <Link href="/leaderboard" className={styles.shopBtn} title="Leaderboard">
+              <img src="/icons/trophy.png" alt="leaderboard" width={26} height={26} />
+            </Link>
+            {user ? (
+              <Link href="/profile" className={styles.shopBtn} title={user.username}>
+                {user.avatarUrl
+                  ? <img src={user.avatarUrl} alt="" width={30} height={30} style={{ borderRadius: '50%' }} />
+                  : <Bear mood="idle" size={30} />}
+              </Link>
+            ) : (
+              <Link href="/profile" className={styles.claimBtn} title="Sign in with Discord">
+                CLAIM ACCOUNT
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -341,6 +394,7 @@ export default function HomePage() {
                         levelId={level.id}
                         isLast={idx === level.lessons.length - 1}
                         levelIndex={li}
+                        pos={pos}
                       />
                     </div>
                   )
@@ -382,6 +436,21 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
+      {/* ── Floating actions ── */}
+      <div className={styles.fabStack}>
+        {mistakeCount > 0 && (
+          <Link href="/practice" className={styles.practiceFab} title="Practice your mistakes">
+            <img src="/icons/broken_heart.png" alt="" width={26} height={26} />
+            <span className={styles.practiceFabCount}>{mistakeCount}</span>
+          </Link>
+        )}
+        {showJump && (
+          <button className={styles.jumpFab} onClick={jumpToCurrent} title="Back to current lesson">
+            <img src="/icons/lightning.png" alt="" width={22} height={22} />
+          </button>
+        )}
+      </div>
     </div>
   )
 }
