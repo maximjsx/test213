@@ -27,6 +27,14 @@ export function peekLocalProgress() {
   return load()
 }
 
+// Called once the "convert to account" flow has uploaded local progress —
+// it now lives on the account, so the local copy is cleared to avoid a
+// stale duplicate sitting in this browser's storage.
+export function clearLocalProgress() {
+  if (typeof window === 'undefined') return
+  localStorage.removeItem(KEY)
+}
+
 function defaultState() {
   return {
     lessons: {},

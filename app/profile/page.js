@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { useProgress, peekLocalProgress } from '../../hooks/useProgress'
+import { useProgress, peekLocalProgress, clearLocalProgress } from '../../hooks/useProgress'
 import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
@@ -87,6 +87,8 @@ function ProfileInner() {
         if (!res.ok) throw new Error('upload failed')
         setConvertPct(100)
         adoptAsAccount(state)
+        clearLocalProgress()
+        setLocalSnapshot(null)
         setTimeout(() => { setServerProgress(state); setConvertPhase('done') }, 350)
       })
       .catch(() => {
