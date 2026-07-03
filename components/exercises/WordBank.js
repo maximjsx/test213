@@ -2,7 +2,7 @@
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { flushSync } from 'react-dom'
 import { shuffle, checkAnswer } from '../../lib/checker'
-import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
+import { playClip, speakText, hapticTap } from '../../lib/audio'
 import BulgarianSentence, { parseWordHints } from './BulgarianSentence'
 import styles from './Exercise.module.css'
 
@@ -85,7 +85,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
   useEffect(() => { answerRef.current = answerWords }, [answerWords])
   useEffect(() => { textRef.current = textValue }, [textValue])
 
-  useEffect(() => { if (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts)) speakBulgarian(exercise.tts) }, []) // eslint-disable-line
+  useEffect(() => { if (exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) playClip({ audio: exercise.audio, text: exercise.tts }) }, []) // eslint-disable-line
 
   // Re-report pending state when keyboard mode toggles
   useEffect(() => {
@@ -222,7 +222,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
       allowTranslit: isToBg,
       translitMap: exercise.translitMap || {},
     })
-    if (result.correct) onAnswer(true)
+    if (result.correct) onAnswer(true, result.message)
     else if (result.close && useKeyboard) onAnswer(false, result.message)
     else {
       const shown = Array.isArray(answerField) ? answerField[0] : answerField
@@ -241,8 +241,8 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
             ? <BulgarianSentence text={exercise.prompt} wordMap={parseWordHints(exercise.hint)} />
             : exercise.prompt}
         </h2>
-        {exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts) && (
-          <button className={styles.ttsInline} onClick={() => speakBulgarian(exercise.tts)} title="Listen">
+        {(exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) && (
+          <button className={styles.ttsInline} onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })} title="Listen">
             <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
           </button>
         )}

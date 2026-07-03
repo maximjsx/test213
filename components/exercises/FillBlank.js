@@ -26,7 +26,7 @@ export default function FillBlank({ exercise, onAnswer, onPendingChange, checkTr
       allowTranslit: isBgAnswer,
       translitMap: exercise.translitMap || {},
     })
-    if (result.correct) onAnswer(true)
+    if (result.correct) onAnswer(true, result.message)
     else if (result.close) onAnswer(false, result.message)
     else onAnswer(false, `Correct answer: "${exercise.answer}"`)
   }

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
-import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
+import { playClip, speakText, hapticTap } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 export default function MultipleChoice({ exercise, onAnswer, onPendingChange, checkTrigger, disabled, levelColor }) {
@@ -51,8 +51,8 @@ export default function MultipleChoice({ exercise, onAnswer, onPendingChange, ch
     <div className={styles.wrap}>
       <p className={styles.label}>SELECT THE CORRECT ANSWER</p>
       <div className={styles.promptRow}>
-        {exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts) && (
-          <button className={styles.ttsInline} onClick={() => speakBulgarian(exercise.tts)} title="Listen">
+        {(exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) && (
+          <button className={styles.ttsInline} onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })} title="Listen">
             <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
           </button>
         )}

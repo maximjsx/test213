@@ -12,6 +12,10 @@ import ListenTranslate from './exercises/ListenTranslate'
 import Introduce from './exercises/Introduce'
 import SelectWord from './exercises/SelectWord'
 import Dialog from './exercises/Dialog'
+import ImageSelect from './exercises/ImageSelect'
+import ImageMatch from './exercises/ImageMatch'
+import ImageName from './exercises/ImageName'
+import ImageMultipleChoice from './exercises/ImageMultipleChoice'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
@@ -28,7 +32,14 @@ const EXERCISE_MAP = {
   introduce: Introduce,
   select_word: SelectWord,
   dialog: Dialog,
+  image_select: ImageSelect,
+  image_match: ImageMatch,
+  image_name: ImageName,
+  image_mc: ImageMultipleChoice,
 }
+
+// Exercises that self-complete on interaction and have no CHECK button
+const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
 
 export default function ExerciseRunner({ lesson, level, exercises, onComplete, onQuit }) {
   const [queue, setQueue] = useState(exercises)
@@ -97,7 +108,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
           return n
         })
       }
-      setFeedback({ ok: true, message: 'Great!' })
+      setFeedback({ ok: true, message: message || 'Great!' })
     } else {
       playWrong()
       hapticWrong()
@@ -238,7 +249,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
             </div>
           </div>
         </div>
-      ) : exercise?.type !== 'match_pairs' ? (
+      ) : !NO_CHECK_TYPES.has(exercise?.type) ? (
         <div className={styles.checkBar}>
           <div className={styles.checkBarInner}>
             {!isIntroExercise && (

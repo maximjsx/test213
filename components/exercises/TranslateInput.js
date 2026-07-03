@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { checkAnswer } from '../../lib/checker'
-import { speakBulgarian, startSpeechRecognition } from '../../lib/audio'
+import { playClip, startSpeechRecognition } from '../../lib/audio'
 import BulgarianSentence, { parseWordHints } from './BulgarianSentence'
 import styles from './Exercise.module.css'
 
@@ -14,7 +14,7 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
 
   const isToBg = exercise.type === 'translate_to_bg'
 
-  useEffect(() => { if (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts)) speakBulgarian(exercise.tts) }, []) // eslint-disable-line
+  useEffect(() => { if (exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) playClip({ audio: exercise.audio, text: exercise.tts }) }, []) // eslint-disable-line
 
   function handleChange(e) {
     setValue(e.target.value)
@@ -31,7 +31,7 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
       allowTranslit: isToBg,
       translitMap: exercise.translitMap || {},
     })
-    if (result.correct) onAnswer(true)
+    if (result.correct) onAnswer(true, result.message)
     else if (result.close) onAnswer(false, result.message)
     else {
       const shown = Array.isArray(answerField) ? answerField[0] : answerField
@@ -72,8 +72,8 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
             ? <BulgarianSentence text={exercise.prompt} wordMap={parseWordHints(exercise.hint)} />
             : exercise.prompt}
         </h2>
-        {exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts) && (
-          <button className={styles.ttsInline} onClick={() => speakBulgarian(exercise.tts)} title="Listen">
+        {(exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) && (
+          <button className={styles.ttsInline} onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })} title="Listen">
             <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
           </button>
         )}

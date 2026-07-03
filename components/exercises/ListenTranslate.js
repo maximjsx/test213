@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { checkAnswer } from '../../lib/checker'
-import { speakBulgarian } from '../../lib/audio'
+import { playClip } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 export default function ListenTranslate({ exercise, onAnswer, onPendingChange, checkTrigger, disabled }) {
@@ -9,9 +9,10 @@ export default function ListenTranslate({ exercise, onAnswer, onPendingChange, c
   const [submitted, setSubmitted] = useState(false)
   const valueRef = useRef('')
   const submittedRef = useRef(false)
+  const play = () => playClip({ audio: exercise.audio, text: exercise.tts })
 
   useEffect(() => {
-    if (exercise.tts) speakBulgarian(exercise.tts)
+    if (exercise.tts || exercise.audio?.url) play()
   }, []) // eslint-disable-line
 
   function handleChange(e) {
@@ -26,7 +27,7 @@ export default function ListenTranslate({ exercise, onAnswer, onPendingChange, c
     setSubmitted(true)
     const answerField = exercise.answers ?? exercise.answer
     const result = checkAnswer(valueRef.current, answerField, { allowTranslit: false })
-    if (result.correct) onAnswer(true)
+    if (result.correct) onAnswer(true, result.message)
     else if (result.close) onAnswer(false, result.message)
     else {
       const shown = Array.isArray(answerField) ? answerField[0] : answerField
@@ -49,7 +50,7 @@ export default function ListenTranslate({ exercise, onAnswer, onPendingChange, c
       <div className={styles.listenCenter}>
         <button
           className={styles.listenBigBtn}
-          onClick={() => speakBulgarian(exercise.tts)}
+          onClick={play}
           title="Listen again"
           disabled={disabled}
         >

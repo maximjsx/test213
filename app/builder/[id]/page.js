@@ -3,8 +3,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { getTTSMuted, setTTSMuted } from '../../../lib/audio'
 import { BG_VOICES, DEFAULT_VOICE } from '../../../lib/voices'
+import { AudioField, ImageField } from '../../../components/builder/MediaControls'
+import BuilderGate from '../../../components/builder/BuilderGate'
 import Link from 'next/link'
 import styles from './page.module.css'
+
+const uid = () => Math.random().toString(36).slice(2, 9)
 
 // ── storage ───────────────────────────────────────────────────────────────────
 function loadLevels() {
@@ -44,6 +48,10 @@ const EXERCISE_TYPES = [
   { type: 'listen_translate', label: 'Listen & Translate', icon: '👂', desc: 'Hear audio and type the English meaning' },
   { type: 'select_word',     label: 'Select the Word',   icon: '🎯', desc: 'Tap the correct word to fill the blank in a sentence' },
   { type: 'dialog',          label: 'Dialog',             icon: '💬', desc: 'Watch a conversation play out, then answer a question about it' },
+  { type: 'image_select',    label: 'Pick the Image',     icon: '🖼️', desc: 'Hear a Bulgarian word, tap the matching picture' },
+  { type: 'image_match',     label: 'Match Images',       icon: '🧩', desc: 'Connect each picture to its Bulgarian word' },
+  { type: 'image_name',      label: 'Name the Picture',   icon: '📷', desc: 'Show a picture, learner types the Bulgarian word' },
+  { type: 'image_mc',        label: 'Image Multiple Choice', icon: '🏞️', desc: 'Show a picture, pick the correct Bulgarian word' },
 ]
 
 function defaultExercise(type) {
@@ -53,14 +61,18 @@ function defaultExercise(type) {
     case 'multiple_choice':  return { type, id, question: '', choices: ['', '', ''], answer: '', tts: '' }
     case 'word_bank':        return { type, id, direction: 'to_bg', prompt: '', tts: '', words: ['', '', '', ''], answer: '' }
     case 'translate_to_en':  return { type, id, prompt: '', answers: [''], hint: '', tts: '' }
-    case 'translate_to_bg':  return { type, id, prompt: '', answer: '' }
+    case 'translate_to_bg':  return { type, id, prompt: '', answers: [''] }
     case 'fill_blank':       return { type, id, sentence: '', answer: '', hint: '' }
     case 'listen_and_type':  return { type, id, tts: '', answer: '' }
     case 'speak_sentence':   return { type, id, tts: '' }
     case 'match_pairs':      return { type, id, instruction: 'Match each pair:', pairs: [{ left: '', right: '' }, { left: '', right: '' }] }
     case 'listen_translate': return { type, id, tts: '', answers: [''] }
     case 'select_word':     return { type, id, sentence: '', choices: ['', '', ''], answer: '' }
-    case 'dialog':          return { type, id, speakers: [{ id: 'A', name: '', voice: DEFAULT_VOICE }, { id: 'B', name: '', voice: DEFAULT_VOICE }], lines: [{ speaker: 'A', text: '', tts: '' }, { speaker: 'B', text: '', tts: '' }], prompt: '', answer: '', choices: [] }
+    case 'dialog':          return { type, id, speakers: [{ id: 'A', name: '', voice: DEFAULT_VOICE }, { id: 'B', name: '', voice: DEFAULT_VOICE }], lines: [{ speaker: 'A', text: '', tts: '', audio: null }, { speaker: 'B', text: '', tts: '', audio: null }], prompt: '', answer: '', choices: [] }
+    case 'image_select':    return { type, id, prompt: '', tts: '', audio: null, options: [{ key: uid(), image: null }, { key: uid(), image: null }], answer: 0 }
+    case 'image_match':     return { type, id, instruction: 'Match each picture to its word:', pairs: [{ key: uid(), word: '', image: null }, { key: uid(), word: '', image: null }] }
+    case 'image_name':      return { type, id, image: null, answers: [''], tts: '', audio: null, hint: '' }
+    case 'image_mc':        return { type, id, image: null, question: '', choices: ['', '', ''], answer: '', tts: '', audio: null }
     default: return { type, id }
   }
 }
@@ -83,6 +95,10 @@ function exerciseSummary(ex) {
     case 'listen_translate': return ex.tts || ''
     case 'select_word':     return ex.sentence || ''
     case 'dialog':          return ex.lines?.map(l => l.text).filter(Boolean).join(' / ') || ''
+    case 'image_select':    return ex.prompt || ex.tts || ''
+    case 'image_match':     return ex.pairs?.map(p => p.word).filter(Boolean).join(', ') || ''
+    case 'image_name':      return (ex.answers && ex.answers[0]) || ''
+    case 'image_mc':        return ex.question || ex.answer || ''
     default: return '—'
   }
 }
@@ -162,9 +178,13 @@ function StringList({ label, values, onChange, placeholder = 'Add item…', minI
 function ExerciseEditor({ ex, onChange }) {
   const set = (field, val) => onChange({ ...ex, [field]: val })
   const ttsField = (
-    <FieldRow label="TTS (Bulgarian text)" hint="Used for audio playback via text-to-speech">
-      <input className={styles.input} value={ex.tts || ''} placeholder="Здравей" onChange={e => set('tts', e.target.value)} />
-    </FieldRow>
+    <div className={styles.fieldRow}>
+      <label className={styles.fieldLabel}>Audio (Bulgarian)</label>
+      <div className={styles.fieldInput}>
+        <input className={styles.input} value={ex.tts || ''} placeholder="Здравей" onChange={e => set('tts', e.target.value)} />
+        <AudioField audio={ex.audio || null} onChange={a => set('audio', a)} />
+      </div>
+    </div>
   )
 
   switch (ex.type) {
@@ -244,6 +264,9 @@ function ExerciseEditor({ ex, onChange }) {
           placeholder="Word…"
           minItems={2}
         />
+        <FieldRow label="Word hints (optional)" hint="Per-word glosses, e.g. добре = fine, съм = I am. Used to colour/annotate the Bulgarian prompt.">
+          <input className={styles.input} value={ex.hint || ''} placeholder="добре = fine, съм = I am" onChange={e => set('hint', e.target.value)} />
+        </FieldRow>
         {ttsField}
       </>
     )
@@ -259,6 +282,7 @@ function ExerciseEditor({ ex, onChange }) {
           onChange={v => set('answers', v)}
           placeholder="I am fine"
         />
+        <div className={styles.exNote}>Typos, contractions ("I'm" / "I am"), and common global synonyms ("nice / pleased / glad to meet you") are accepted automatically.</div>
         <FieldRow label="Hint (optional, shown if wrong)">
           <input className={styles.input} value={ex.hint || ''} placeholder="добре = fine, съм = I am" onChange={e => set('hint', e.target.value)} />
         </FieldRow>
@@ -271,9 +295,13 @@ function ExerciseEditor({ ex, onChange }) {
         <FieldRow label="English prompt (shown to learner)">
           <input className={styles.input} value={ex.prompt || ''} placeholder="Good morning" onChange={e => set('prompt', e.target.value)} />
         </FieldRow>
-        <FieldRow label="Bulgarian answer">
-          <input className={styles.input} value={ex.answer || ''} placeholder="Добро утро" onChange={e => set('answer', e.target.value)} />
-        </FieldRow>
+        <StringList
+          label="Accepted Bulgarian answers (add all valid forms)"
+          values={ex.answers || (ex.answer ? [ex.answer] : [''])}
+          onChange={v => { const next = { ...ex, answers: v }; delete next.answer; onChange(next) }}
+          placeholder="Добро утро"
+        />
+        <div className={styles.exNote}>Roman-letter typing (e.g. "dobro utro") and common global synonyms are accepted automatically. You only need to add genuinely different phrasings.</div>
       </>
     )
 
@@ -442,31 +470,38 @@ function ExerciseEditor({ ex, onChange }) {
           </label>
           <div className={styles.fieldInput}>
             {(ex.lines || []).map((line, i) => (
-              <div key={i} className={styles.dialogLineRow}>
-                <select
-                  className={styles.selectSm}
-                  value={line.speaker || (ex.speakers?.[0]?.id ?? 'A')}
-                  onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], speaker: e.target.value }; set('lines', l) }}
-                >
-                  {(ex.speakers || [{ id: 'A' }, { id: 'B' }]).map(s => (
-                    <option key={s.id} value={s.id}>{s.id}{s.name ? ` (${s.name})` : ''}</option>
-                  ))}
-                </select>
-                <input
-                  className={styles.input}
-                  value={line.text || ''}
-                  placeholder="Line text (displayed)"
-                  onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], text: e.target.value }; set('lines', l) }}
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingBottom: 8, marginBottom: 8, borderBottom: '1px dashed var(--border-hi, #ddd)' }}>
+                <div className={styles.dialogLineRow}>
+                  <select
+                    className={styles.selectSm}
+                    value={line.speaker || (ex.speakers?.[0]?.id ?? 'A')}
+                    onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], speaker: e.target.value }; set('lines', l) }}
+                  >
+                    {(ex.speakers || [{ id: 'A' }, { id: 'B' }]).map(s => (
+                      <option key={s.id} value={s.id}>{s.id}{s.name ? ` (${s.name})` : ''}</option>
+                    ))}
+                  </select>
+                  <input
+                    className={styles.input}
+                    value={line.text || ''}
+                    placeholder="Line text (displayed)"
+                    onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], text: e.target.value }; set('lines', l) }}
+                  />
+                  <input
+                    className={styles.input}
+                    value={line.tts || ''}
+                    placeholder="TTS override (leave blank to speak the text above)"
+                    onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], tts: e.target.value }; set('lines', l) }}
+                  />
+                  {(ex.lines || []).length > 2 && (
+                    <button className={styles.removeBtn} onClick={() => set('lines', (ex.lines || []).filter((_, j) => j !== i))}>✕</button>
+                  )}
+                </div>
+                <AudioField
+                  audio={line.audio || null}
+                  onChange={a => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], audio: a }; set('lines', l) }}
+                  hint="Custom audio for this line. Leave empty to speak the text/TTS above."
                 />
-                <input
-                  className={styles.input}
-                  value={line.tts || ''}
-                  placeholder="TTS override (leave blank to speak the text above)"
-                  onChange={e => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], tts: e.target.value }; set('lines', l) }}
-                />
-                {(ex.lines || []).length > 2 && (
-                  <button className={styles.removeBtn} onClick={() => set('lines', (ex.lines || []).filter((_, j) => j !== i))}>✕</button>
-                )}
               </div>
             ))}
             <button className={styles.addSmallBtn} onClick={() => set('lines', [...(ex.lines || []), { speaker: 'A', text: '', tts: '' }])}>+ Add line</button>
@@ -503,6 +538,152 @@ function ExerciseEditor({ ex, onChange }) {
             {ex.answer && <div className={styles.correctHint}>✓ correct: <strong>{ex.answer}</strong></div>}
           </div>
         </div>
+      </>
+    )
+
+    case 'image_select': {
+      const options = ex.options || []
+      return (
+        <>
+          <FieldRow label="Word shown / spoken (Bulgarian)" hint="Displayed above the pictures and used for the audio prompt">
+            <input className={styles.input} value={ex.prompt || ''} placeholder="куче" onChange={e => set('prompt', e.target.value)} />
+          </FieldRow>
+          {ttsField}
+          <div className={styles.fieldRow}>
+            <label className={styles.fieldLabel}>
+              Picture options
+              <span className={styles.fieldLabelHint}>click ✓ to mark the correct picture</span>
+            </label>
+            <div className={styles.fieldInput}>
+              {options.map((opt, i) => (
+                <div key={opt.key || i} className={styles.choiceRow} style={{ alignItems: 'flex-start' }}>
+                  <div style={{ flex: 1 }}>
+                    <ImageField image={opt.image || null} onChange={img => { const o = [...options]; o[i] = { ...o[i], image: img }; set('options', o) }} label={`Option ${i + 1}`} />
+                  </div>
+                  <button
+                    className={`${styles.correctBtn} ${ex.answer === i ? styles.correctBtnActive : ''}`}
+                    onClick={() => set('answer', i)}
+                    title="Mark as correct"
+                  >✓</button>
+                  {options.length > 2 && (
+                    <button className={styles.removeBtn} onClick={() => {
+                      const o = options.filter((_, j) => j !== i)
+                      set('options', o)
+                      if (ex.answer === i) set('answer', 0)
+                      else if (ex.answer > i) set('answer', ex.answer - 1)
+                    }}>✕</button>
+                  )}
+                </div>
+              ))}
+              {options.length < 4 && (
+                <button className={styles.addSmallBtn} onClick={() => set('options', [...options, { key: uid(), image: null }])}>+ Add picture</button>
+              )}
+            </div>
+          </div>
+        </>
+      )
+    }
+
+    case 'image_match': {
+      const pairs = ex.pairs || []
+      return (
+        <>
+          <FieldRow label="Instruction text">
+            <input className={styles.input} value={ex.instruction || ''} placeholder="Match each picture to its word:" onChange={e => set('instruction', e.target.value)} />
+          </FieldRow>
+          <div className={styles.fieldRow}>
+            <label className={styles.fieldLabel}>
+              Pairs
+              <span className={styles.fieldLabelHint}>picture + its Bulgarian word</span>
+            </label>
+            <div className={styles.fieldInput}>
+              {pairs.map((pair, i) => (
+                <div key={pair.key || i} className={styles.pairRow} style={{ alignItems: 'flex-start' }}>
+                  <div style={{ flex: 1 }}>
+                    <ImageField image={pair.image || null} onChange={img => { const p = [...pairs]; p[i] = { ...p[i], image: img }; set('pairs', p) }} label={`Pair ${i + 1}`} />
+                  </div>
+                  <input
+                    className={styles.input}
+                    value={pair.word || ''}
+                    placeholder="куче"
+                    onChange={e => { const p = [...pairs]; p[i] = { ...p[i], word: e.target.value }; set('pairs', p) }}
+                  />
+                  {pairs.length > 2 && (
+                    <button className={styles.removeBtn} onClick={() => set('pairs', pairs.filter((_, j) => j !== i))}>✕</button>
+                  )}
+                </div>
+              ))}
+              {pairs.length < 6 && (
+                <button className={styles.addSmallBtn} onClick={() => set('pairs', [...pairs, { key: uid(), word: '', image: null }])}>+ Add pair</button>
+              )}
+            </div>
+          </div>
+        </>
+      )
+    }
+
+    case 'image_name': return (
+      <>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>Picture</label>
+          <div className={styles.fieldInput}>
+            <ImageField image={ex.image || null} onChange={img => set('image', img)} label="Picture" />
+          </div>
+        </div>
+        <StringList
+          label="Accepted Bulgarian answers"
+          values={ex.answers || ['']}
+          onChange={v => set('answers', v)}
+          placeholder="куче"
+        />
+        <div className={styles.exNote}>Roman-letter typing (e.g. "kuche") and small typos are accepted automatically.</div>
+        <FieldRow label="Hint (optional, shown if wrong)">
+          <input className={styles.input} value={ex.hint || ''} placeholder="a common pet" onChange={e => set('hint', e.target.value)} />
+        </FieldRow>
+        {ttsField}
+      </>
+    )
+
+    case 'image_mc': return (
+      <>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>Picture</label>
+          <div className={styles.fieldInput}>
+            <ImageField image={ex.image || null} onChange={img => set('image', img)} label="Picture" />
+          </div>
+        </div>
+        <FieldRow label="Question (optional)">
+          <input className={styles.input} value={ex.question || ''} placeholder="What is this?" onChange={e => set('question', e.target.value)} />
+        </FieldRow>
+        <div className={styles.fieldRow}>
+          <label className={styles.fieldLabel}>
+            Choices
+            <span className={styles.fieldLabelHint}>click ✓ to mark correct</span>
+          </label>
+          <div className={styles.fieldInput}>
+            {(ex.choices || []).map((c, i) => (
+              <div key={i} className={styles.choiceRow}>
+                <input
+                  className={`${styles.input} ${c && c === ex.answer ? styles.inputCorrect : ''}`}
+                  value={c}
+                  placeholder={`Option ${i + 1}`}
+                  onChange={e => { const n = [...(ex.choices || [])]; n[i] = e.target.value; set('choices', n) }}
+                />
+                <button
+                  className={`${styles.correctBtn} ${c && c === ex.answer ? styles.correctBtnActive : ''}`}
+                  onClick={() => set('answer', c)}
+                  title="Mark as correct"
+                >✓</button>
+                {(ex.choices || []).length > 2 && (
+                  <button className={styles.removeBtn} onClick={() => { const n = (ex.choices || []).filter((_, j) => j !== i); set('choices', n); if (ex.answer === c) set('answer', '') }}>✕</button>
+                )}
+              </div>
+            ))}
+            <button className={styles.addSmallBtn} onClick={() => set('choices', [...(ex.choices || []), ''])}>+ Add choice</button>
+            {ex.answer && <div className={styles.correctHint}>✓ correct: <strong>{ex.answer}</strong></div>}
+          </div>
+        </div>
+        {ttsField}
       </>
     )
 
@@ -720,6 +901,7 @@ export default function LevelEditor() {
   )
 
   return (
+    <BuilderGate>
     <div className={styles.page}>
 
       {/* ── delete confirm modal ── */}
@@ -958,5 +1140,6 @@ export default function LevelEditor() {
         </div>
       </div>
     </div>
+    </BuilderGate>
   )
 }

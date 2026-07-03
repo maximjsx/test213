@@ -362,6 +362,46 @@
   0%,60%,100% { transform:translateY(0); opacity:0.4; }
   30%          { transform:translateY(-5px); opacity:1; }
 }
+/* ── Image exercises ─────────────────────────────────────── */
+.imageListenRow { display:flex; justify-content:center; margin-bottom:8px; }
+
+.imageGrid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:8px;
+}
+.imageCard {
+  background:var(--surface); border:3px solid var(--border-hi);
+  border-radius:var(--r); overflow:hidden; cursor:pointer; padding:0;
+  transition:border-color 0.12s, background 0.12s, transform 0.1s;
+  display:flex; align-items:center; justify-content:center;
+}
+.imageCard:hover:not(:disabled) { border-color:var(--text-muted); transform:translateY(-2px); }
+.imageCard:disabled { cursor:default; }
+.imageCard img {
+  width:100%; aspect-ratio:1/1; object-fit:cover; display:block;
+}
+.imagePlaceholder {
+  width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  font-size:38px; font-weight:800; color:var(--text-dim);
+}
+
+/* Big single image (name the picture / image multiple choice) */
+.imageBig {
+  display:block; width:100%; max-width:300px; margin:0 auto 28px;
+  aspect-ratio:4/3; object-fit:cover;
+  border-radius:var(--r); border:3px solid var(--border-hi);
+}
+
+/* Image chip inside a match column */
+.imageMatchChip {
+  background:var(--surface); border:3px solid var(--border-hi);
+  border-radius:var(--r); overflow:hidden; cursor:pointer; padding:0;
+  transition:border-color 0.12s, background 0.12s, transform 0.1s;
+  display:flex; align-items:center; justify-content:center;
+}
+.imageMatchChip:hover:not(:disabled) { border-color:var(--text-muted); transform:translateY(-2px); }
+.imageMatchChip:disabled { cursor:default; }
+.imageMatchChip img { width:100%; height:96px; object-fit:cover; display:block; }
+
 .dialogAnswerArea { margin-top:4px; }
 .dialogPrompt {
   font-size:14px; font-weight:700; color:var(--text-muted);

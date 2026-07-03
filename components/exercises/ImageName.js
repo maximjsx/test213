@@ -4,18 +4,15 @@ import { checkAnswer } from '../../lib/checker'
 import { playClip } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
-export default function ListenAndType({ exercise, onAnswer, onPendingChange, checkTrigger, disabled }) {
+// Show a picture, learner types the Bulgarian word for it.
+export default function ImageName({ exercise, onAnswer, onPendingChange, checkTrigger, disabled }) {
   const [value, setValue] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const valueRef = useRef('')
   const submittedRef = useRef(false)
 
-  const ttsText = exercise.tts || exercise.answer
-  const play = () => playClip({ audio: exercise.audio, text: ttsText })
-
-  useEffect(() => {
-    if (ttsText || exercise.audio?.url) play()
-  }, []) // eslint-disable-line
+  const answerField = exercise.answers ?? exercise.answer
+  const primary = Array.isArray(answerField) ? answerField[0] : answerField
 
   function handleChange(e) {
     setValue(e.target.value)
@@ -27,43 +24,35 @@ export default function ListenAndType({ exercise, onAnswer, onPendingChange, che
     if (!valueRef.current.trim() || submittedRef.current) return
     submittedRef.current = true
     setSubmitted(true)
-    const result = checkAnswer(valueRef.current, exercise.answer, {
+    const result = checkAnswer(valueRef.current, answerField, {
       allowTranslit: true,
       translitMap: exercise.translitMap || {},
     })
+    // Reinforce with audio on the correct word
+    playClip({ audio: exercise.audio, text: exercise.tts || primary })
     if (result.correct) onAnswer(true, result.message)
     else if (result.close) onAnswer(false, result.message)
-    else onAnswer(false, `Correct answer: "${exercise.answer}"`)
+    else onAnswer(false, `Correct answer: "${primary}"`)
   }
 
   useEffect(() => {
     if (checkTrigger === 0 || submittedRef.current) return
     submit()
-  }, [checkTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [checkTrigger]) // eslint-disable-line
 
-  const resultState = submitted
-    ? (checkAnswer(value, exercise.answer, { allowTranslit: true, translitMap: exercise.translitMap || {} }).correct ? 'ok' : 'bad')
+  const state = submitted
+    ? (checkAnswer(value, answerField, { allowTranslit: true, translitMap: exercise.translitMap || {} }).correct ? 'ok' : 'bad')
     : ''
 
   return (
     <div className={styles.wrap}>
-      <p className={styles.label}>TYPE WHAT YOU HEAR</p>
-
-      <div className={styles.listenCenter}>
-        <button
-          className={styles.listenBigBtn}
-          onClick={play}
-          title="Listen again"
-          disabled={disabled}
-        >
-          <img src="/icons/speaker.png" alt="🔊" width={36} height={36} />
-        </button>
-        <p className={styles.listenHint}>Tap to listen again</p>
-      </div>
-
+      <p className={styles.label}>NAME THE PICTURE</p>
+      {exercise.image?.url && (
+        <img src={exercise.image.url} alt="" className={styles.imageBig} />
+      )}
       <div className={styles.inputRow}>
         <input
-          className={`${styles.input} ${resultState === 'ok' ? styles.inputOk : resultState === 'bad' ? styles.inputBad : ''}`}
+          className={`${styles.input} ${state === 'ok' ? styles.inputOk : state === 'bad' ? styles.inputBad : ''}`}
           type="text"
           value={value}
           onChange={handleChange}
@@ -75,6 +64,7 @@ export default function ListenAndType({ exercise, onAnswer, onPendingChange, che
           spellCheck="false"
         />
       </div>
+      {exercise.hint && !submitted && <p className={styles.hint}>💡 {exercise.hint}</p>}
     </div>
   )
 }

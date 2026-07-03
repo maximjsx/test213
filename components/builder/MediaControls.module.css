@@ -1,0 +1,90 @@
+.audioField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--surface, #f7f7f7);
+  border: 1px dashed var(--border-hi, #ccc);
+  border-radius: 12px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.status {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted, #777);
+}
+.statusCustom { color: var(--green, #58cc02); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid var(--border-hi, #ccc);
+  background: var(--surface, #fff);
+  color: var(--text, #222);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, transform 0.1s;
+}
+.btn:hover:not(:disabled) { background: var(--surface-hi, #eee); transform: translateY(-1px); }
+.btn:disabled { opacity: 0.55; cursor: default; }
+
+.btnRec { border-color: var(--blue, #1cb0f6); color: var(--blue, #1cb0f6); }
+.btnRecActive {
+  border-color: var(--red, #ff4b4b) !important;
+  color: var(--red, #ff4b4b) !important;
+  background: var(--red-bg, #ffecec) !important;
+  animation: recpulse 0.9s infinite;
+}
+@keyframes recpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+.btnDanger { border-color: var(--red, #ff4b4b); color: var(--red, #ff4b4b); }
+
+.icon { width: 16px; height: 16px; object-fit: contain; }
+
+.error { font-size: 12px; font-weight: 700; color: var(--red, #ff4b4b); }
+
+.hint { font-size: 11.5px; color: var(--text-dim, #999); line-height: 1.4; }
+
+/* ── image field ── */
+.imageField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.thumbRow { display: flex; align-items: center; gap: 12px; }
+.thumb {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--border-hi, #ccc);
+  background: var(--surface, #f0f0f0);
+  flex-shrink: 0;
+}
+.thumbEmpty {
+  width: 84px;
+  height: 84px;
+  border-radius: 12px;
+  border: 2px dashed var(--border-hi, #ccc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: var(--text-dim, #bbb);
+  flex-shrink: 0;
+}
+.hiddenInput { display: none; }

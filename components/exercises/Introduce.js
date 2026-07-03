@@ -1,14 +1,14 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { speakBulgarian } from '../../lib/audio'
+import { playClip } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 export default function Introduce({ exercise, onPendingChange, checkTrigger, onAnswer }) {
   const hasPlayed = useRef(false)
   useEffect(() => {
-    if (exercise.tts && !hasPlayed.current) {
+    if ((exercise.tts || exercise.audio?.url) && !hasPlayed.current) {
       hasPlayed.current = true
-      speakBulgarian(exercise.tts)
+      playClip({ audio: exercise.audio, text: exercise.tts })
     }
   }, []) // eslint-disable-line
 
@@ -46,10 +46,10 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
           <p className={styles.introduceTranslation}>{exercise.translation}</p>
         )}
 
-        {exercise.tts && (
+        {(exercise.tts || exercise.audio?.url) && (
           <button
             className={styles.introduceAudioBtn}
-            onClick={() => speakBulgarian(exercise.tts)}
+            onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })}
             title="Listen again"
           >
             <img src="/icons/speaker.png" alt="🔊" width={22} height={22} />

@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { checkAnswer, shuffle } from '../../lib/checker'
-import { speakBulgarian, speakText, hapticTap } from '../../lib/audio'
+import { playClip, speakText, hapticTap } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 const PAUSE_AFTER_LINE = 500 // ms of silence between lines
@@ -52,8 +52,8 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
         const ttsText = line?.tts || line?.text
         const voice = speakerMap[line?.speaker]?.voice || undefined
         let waitMs = 1200 // fallback if nothing to speak
-        if (ttsText) {
-          const duration = await speakBulgarian(ttsText, voice)
+        if (ttsText || line?.audio?.url) {
+          const duration = await playClip({ audio: line?.audio, text: ttsText, voice })
           waitMs = (duration || 2000) + PAUSE_AFTER_LINE
         }
 

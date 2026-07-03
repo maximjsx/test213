@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import BuilderGate from '../../components/builder/BuilderGate'
+import AdminUsersPanel from '../../components/builder/AdminUsersPanel'
 import styles from './page.module.css'
 
 function loadLevels() {
@@ -140,6 +142,7 @@ export default function BuilderDashboard() {
   if (!ready) return <div className={styles.loading}>Loading…</div>
 
   return (
+    <BuilderGate>
     <div className={styles.page}>
       {confirmDeleteLevel && (
         <div className={styles.modalOverlay} onClick={() => setConfirmDeleteLevel(null)}>
@@ -198,6 +201,7 @@ export default function BuilderDashboard() {
       )}
 
       <div className={styles.content}>
+        <AdminUsersPanel />
         {levels.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.emptyEmoji}>🏗️</div>
@@ -257,5 +261,6 @@ export default function BuilderDashboard() {
         )}
       </div>
     </div>
+    </BuilderGate>
   )
 }

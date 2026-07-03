@@ -1,0 +1,42 @@
+import { uploadFile, storageConfigured } from '@/lib/storage'
+import { currentBuilderStatus } from '@/lib/builderAccess'
+
+// POST /api/storage/upload?kind=audio|image
+// Body: raw file bytes, with the file's Content-Type header.
+// Proxies to the storage-api service (keeping the key server-side), asks it to
+// compress, and returns the stored file JSON ({ id, url, ... }).
+export async function POST(req) {
+  try {
+    const status = await currentBuilderStatus()
+    if (!status.allowed) return Response.json({ error: 'forbidden' }, { status: 403 })
+
+    if (!storageConfigured()) {
+      return Response.json({ error: 'storage_not_configured' }, { status: 503 })
+    }
+
+    const { searchParams } = new URL(req.url)
+    const kind = searchParams.get('kind') || 'other'
+    const mime = req.headers.get('content-type') || 'application/octet-stream'
+    const filename = searchParams.get('filename') || undefined
+
+    const buf = await req.arrayBuffer()
+    if (!buf.byteLength) return Response.json({ error: 'empty_body' }, { status: 400 })
+
+    // Compression defaults per kind.
+    let opts = { compress: true, filename }
+    if (kind === 'audio') {
+      opts = { ...opts, bitrate: '64k' }
+    } else if (kind === 'image') {
+      opts = { ...opts, format: 'webp', quality: 80, maxWidth: 900 }
+    }
+
+    const file = await uploadFile(Buffer.from(buf), mime, opts)
+    return Response.json(file)
+  } catch (e) {
+    console.error('storage upload error:', e)
+    return Response.json({ error: 'upload_failed', detail: e.message }, { status: 502 })
+  }
+}
+
+// Uploads can be large-ish audio/image blobs; allow a bigger body than the default.
+export const maxDuration = 60
