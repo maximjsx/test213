@@ -306,11 +306,11 @@ export default function HomePage() {
             <button className={styles.shopBtn} onClick={() => setShowShop(true)} title="Shop">
               <img src="/icons/gift_box.png" alt="🎁" width={28} height={28} />
             </button>
-            <Link href="/leaderboard" className={styles.shopBtn} title="Leaderboard">
+            <Link href="/leaderboard" className={`${styles.shopBtn} ${styles.leaderboardLink}`} title="Leaderboard">
               <img src="/icons/trophy.png" alt="leaderboard" width={26} height={26} />
             </Link>
             {user ? (
-              <Link href="/profile" className={styles.shopBtn} title={user.username}>
+              <Link href="/profile" className={`${styles.shopBtn} ${styles.profileLink}`} title={user.username}>
                 {user.avatarUrl
                   ? <img src={user.avatarUrl} alt="" width={30} height={30} style={{ borderRadius: '50%' }} />
                   : <Bear mood="idle" size={30} />}

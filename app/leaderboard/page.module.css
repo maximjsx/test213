@@ -3,6 +3,10 @@
   font-family:'Nunito', sans-serif;
 }
 
+@media (max-width: 680px) {
+  .page { padding-bottom: calc(60px + 58px + env(safe-area-inset-bottom)); }
+}
+
 .topRow {
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:10px;

@@ -27,6 +27,8 @@ function ProfileInner() {
   const [convertPhase, setConvertPhase] = useState('idle') // idle | running | done
   const [convertPct, setConvertPct] = useState(0)
   const [convertSkipped, setConvertSkipped] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   const oauthError = params.get('error')
 
@@ -123,6 +125,20 @@ function ProfileInner() {
     replaceState(serverProgress)
     localStorage.setItem('bulgario_synced', '1')
     setSyncMsg('Account progress loaded on this device')
+  }
+
+  async function deleteAccount() {
+    setDeleting(true)
+    try {
+      const res = await fetch('/api/account', { method: 'DELETE' })
+      if (res.ok) {
+        localStorage.removeItem('bulgario_synced')
+        window.location.href = '/'
+        return
+      }
+    } finally {
+      setDeleting(false)
+    }
   }
 
   async function saveUsername() {
@@ -369,6 +385,24 @@ function ProfileInner() {
             {syncMsg && <div className={styles.syncMsg}>{syncMsg}</div>}
 
             <button className={styles.logoutBtn} onClick={logout}>SIGN OUT</button>
+
+            <div className={styles.dangerZone}>
+              {!confirmDelete ? (
+                <button className={styles.deleteBtn} onClick={() => setConfirmDelete(true)}>Delete account</button>
+              ) : (
+                <div className={styles.deleteConfirm}>
+                  <div className={styles.deleteConfirmText}>
+                    This permanently deletes your account, progress, and friends. This cannot be undone.
+                  </div>
+                  <div className={styles.deleteConfirmBtns}>
+                    <button className={styles.deleteConfirmBtn} onClick={deleteAccount} disabled={deleting}>
+                      {deleting ? 'DELETING…' : 'YES, DELETE'}
+                    </button>
+                    <button className={styles.deleteCancelBtn} onClick={() => setConfirmDelete(false)} disabled={deleting}>Cancel</button>
+                  </div>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>

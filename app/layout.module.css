@@ -1,0 +1,27 @@
+.appShell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.content { flex: 1 0 auto; }
+
+.footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+  padding: 20px 24px;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-family: 'Nunito', sans-serif;
+}
+.footerLink {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+@media (max-width: 680px) {
+  .footer { padding-bottom: calc(20px + 58px + env(safe-area-inset-bottom)); }
+}

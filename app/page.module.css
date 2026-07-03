@@ -92,25 +92,31 @@
 
 /* Mobile */
 @media (max-width: 520px) {
-  .header { height: 64px; padding: 0 16px; }
-  .levelBanner { top: 64px; padding: 8px 12px; }
+  .header { height: 60px; padding: 0 14px; }
+  .levelBanner { top: 60px; padding: 8px 12px; }
   .bannerInner { padding: 12px 16px; border-radius: 16px; }
   .bannerTitle { font-size: 14px; }
   .bannerUnit { font-size: 11px; }
   .guidebookBtn { padding: 9px 14px; font-size: 13px; gap: 5px; }
 
   .logoName { display: none; }
-  .headerStats { gap: 7px; }
-  .streakNum, .xpNum { font-size: 15px; }
-  .shopBtn { width: 36px; height: 36px; }
+  .headerStats { gap: 6px; }
+  .streakNum, .xpNum { font-size: 14px; }
+  .shopBtn { width: 34px; height: 34px; }
   .statBtn { padding: 4px 5px; }
   .pathBear { display: none; }
-  .claimBtn { font-size: 10.5px; padding: 9px 11px; }
+
+  /* Navigation moves to the bottom tab bar on mobile */
+  .leaderboardLink, .claimBtn, .profileLink { display: none; }
 
   .pos_left  { padding-left: 20px; }
   .pos_right { padding-right: 20px; }
   .node { width: 68px; height: 68px; border-radius: 16px; }
   .nodeNum { font-size: 20px; }
+}
+
+@media (max-width: 680px) {
+  .fabStack { bottom: calc(22px + 58px + env(safe-area-inset-bottom)); }
 }
 
 /* Main */
