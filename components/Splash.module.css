@@ -48,6 +48,28 @@
     bearSway 1.5s ease-in-out 0.55s infinite;
 }
 
+/* On exit: the bear hops up then shrinks away, and the text scales down, all
+   while the circle closes in around them */
+.out .bear {
+  animation: bearOut 0.95s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+.out .title, .out .tagline {
+  animation: contentOut 0.55s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+.out .flag {
+  animation: contentOut 0.45s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+
+@keyframes bearOut {
+  0%   { transform: translateY(0) scale(1) rotate(0); }
+  30%  { transform: translateY(-34px) scale(1.12) rotate(-4deg); } /* little jump */
+  100% { transform: translateY(24px) scale(0) rotate(6deg); opacity: 0; }
+}
+@keyframes contentOut {
+  0%   { transform: scale(1) translateY(0); opacity: 1; }
+  100% { transform: scale(0.4) translateY(8px); opacity: 0; }
+}
+
 .title {
   margin-top: 6px;
   font-size: 26px;
@@ -89,5 +111,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flag, .bear, .title, .tagline { animation: none; opacity: 1; }
+  .flag, .bear, .title, .tagline,
+  .out .flag, .out .bear, .out .title, .out .tagline { animation: none; }
+  .out .flag, .out .bear, .out .title, .out .tagline { opacity: 0; }
+  .flag, .bear, .title, .tagline { opacity: 1; }
 }
