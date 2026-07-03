@@ -32,9 +32,14 @@ export default function BottomNav() {
   const pathname = usePathname()
   const { user } = useAuth()
 
-  // Only the homepage has a slimmed header that needs the bottom tab bar;
-  // other pages already show back/nav links inline
-  if (pathname !== '/') return null
+  // Show the tab bar on the three tab destinations (plus public profiles,
+  // which are the same section as You). Anywhere else, especially inside a
+  // lesson, it would just steal space and invite mid-exercise navigation.
+  const showOn = pathname === '/'
+    || pathname.startsWith('/leaderboard')
+    || pathname.startsWith('/profile')
+    || pathname.startsWith('/u/')
+  if (!showOn) return null
 
   return (
     <nav className={styles.nav}>
@@ -47,7 +52,7 @@ export default function BottomNav() {
           </Link>
         )
       })}
-      <Link href="/profile" className={`${styles.item} ${pathname.startsWith('/profile') ? styles.active : ''}`}>
+      <Link href="/profile" className={`${styles.item} ${pathname.startsWith('/profile') || pathname.startsWith('/u/') ? styles.active : ''}`}>
         {user?.avatarUrl
           ? <img src={user.avatarUrl} alt="" width={24} height={24} className={styles.avatar} />
           : <Bear mood="idle" size={24} />}
