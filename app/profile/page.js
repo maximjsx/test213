@@ -7,12 +7,31 @@ import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
 import InstallButton from '../../components/InstallButton'
-import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
 function fmtDate(d) {
   if (!d) return '?'
   return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+}
+
+// Shown instead of the mascot loader while the profile settles. A skeleton keeps
+// the tab feeling instant on switches rather than flashing a full-screen loader.
+function ProfileSkeleton() {
+  return (
+    <div className={styles.page}>
+      <div className={styles.hero}>
+        <div className={`${styles.skel} ${styles.skelAvatar}`} />
+        <div className={`${styles.skel} ${styles.skelName}`} />
+        <div className={`${styles.skel} ${styles.skelJoined}`} />
+        <div className={styles.skelStatsHead}>
+          <div className={`${styles.skel} ${styles.skelLabel}`} />
+        </div>
+        <div className={styles.stats}>
+          {[0, 1, 2, 3].map(i => <div key={i} className={`${styles.skel} ${styles.skelStat}`} />)}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 function ProfileInner() {
@@ -135,7 +154,7 @@ function ProfileInner() {
   // Signed in but the account copy hasn't arrived yet: keep loading, otherwise
   // the normal profile flashes before the convert screen can show
   if (!hydrated || loading || (user && serverProgress === undefined)) {
-    return <LoadingBear />
+    return <ProfileSkeleton />
   }
 
   const lessonsDone = Object.keys(state.lessons).length
@@ -418,7 +437,7 @@ function ProfileInner() {
 
 export default function ProfilePage() {
   return (
-    <Suspense fallback={<LoadingBear />}>
+    <Suspense fallback={<ProfileSkeleton />}>
       <ProfileInner />
     </Suspense>
   )

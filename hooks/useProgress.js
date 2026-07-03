@@ -100,10 +100,18 @@ function applySession(prev, xp, meta = {}) {
   }
 }
 
+// Module-level cache of the last hydrated progress. Switching tabs remounts
+// this hook; without the cache, `hydrated` would drop back to false (and for
+// signed-in users wait on a fresh /api/progress fetch) every time, flashing the
+// mascot loader. Instead we start from the last known state and refresh in the
+// background, so only a genuine first load shows the loader.
+let cachedState = null
+let cachedHydrated = false
+
 export function useProgress() {
   const { user, loading: authLoading } = useAuth()
-  const [state, setState] = useState(defaultState)
-  const [hydrated, setHydrated] = useState(false)
+  const [state, setState] = useState(() => cachedState ?? defaultState())
+  const [hydrated, setHydrated] = useState(cachedHydrated)
   // 'local'   -> plain localStorage, exactly like a signed-out guest
   // 'account' -> this account already has its own server progress; that
   //              progress is authoritative and local storage is left alone
@@ -141,6 +149,11 @@ export function useProgress() {
     hydrate()
     return () => { cancelled = true }
   }, [user, authLoading])
+
+  // Mirror the latest values into the module cache so the next mount (a tab
+  // switch) can start from them instead of the loading state.
+  useEffect(() => { cachedState = state }, [state])
+  useEffect(() => { if (hydrated) cachedHydrated = true }, [hydrated])
 
   const persist = useCallback((next) => {
     if (modeRef.current === 'account') {
