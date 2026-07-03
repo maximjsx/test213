@@ -1,14 +1,16 @@
 'use client'
 import { useRef, useState } from 'react'
 import { uploadMedia, deleteMedia } from '../../lib/media'
+import AudioTrimmer from './AudioTrimmer'
 import styles from './MediaControls.module.css'
 
 // ── Audio: record or upload a custom clip. Falls back to TTS when empty. ──
 // `audio` is { id, url } | null. onChange receives the new value (or null).
-export function AudioField({ audio, onChange, hint = 'Record or upload a clip to override TTS. Leave empty to use text-to-speech.' }) {
+export function AudioField({ audio, onChange, courseId, hint = 'Record or upload a clip to override TTS. Leave empty to use text-to-speech.' }) {
   const [recording, setRecording] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [pendingClip, setPendingClip] = useState(null) // recorded blob awaiting trim
   const recorderRef = useRef(null)
   const chunksRef = useRef([])
   const fileRef = useRef(null)
@@ -17,7 +19,7 @@ export function AudioField({ audio, onChange, hint = 'Record or upload a clip to
     setBusy(true); setError('')
     const oldId = audio?.id
     try {
-      const uploaded = await uploadMedia(blob, 'audio', filename)
+      const uploaded = await uploadMedia(blob, 'audio', { filename, courseId })
       onChange(uploaded)
       if (oldId && oldId !== uploaded.id) deleteMedia(oldId)
     } catch (e) {
@@ -38,8 +40,8 @@ export function AudioField({ audio, onChange, hint = 'Record or upload a clip to
       rec.onstop = () => {
         stream.getTracks().forEach(t => t.stop())
         const blob = new Blob(chunksRef.current, { type: rec.mimeType || mime })
-        const ext = (rec.mimeType || mime).includes('webm') ? 'webm' : 'mp4'
-        storeBlob(blob, `clip.${ext}`)
+        // Hand off to the trimmer instead of uploading straight away.
+        setPendingClip(blob)
       }
       recorderRef.current = rec
       rec.start()
@@ -84,7 +86,7 @@ export function AudioField({ audio, onChange, hint = 'Record or upload a clip to
         )}
 
         {!recording ? (
-          <button type="button" className={`${styles.btn} ${styles.btnRec}`} onClick={startRec} disabled={busy}>
+          <button type="button" className={`${styles.btn} ${styles.btnRec}`} onClick={startRec} disabled={busy || !!pendingClip}>
             <img src="/icons/microphone.png" alt="" className={styles.icon} />
             {audio?.url ? 'Re-record' : 'Record'}
           </button>
@@ -94,7 +96,7 @@ export function AudioField({ audio, onChange, hint = 'Record or upload a clip to
           </button>
         )}
 
-        <button type="button" className={styles.btn} onClick={() => fileRef.current?.click()} disabled={busy || recording}>
+        <button type="button" className={styles.btn} onClick={() => fileRef.current?.click()} disabled={busy || recording || !!pendingClip}>
           Upload file
         </button>
         <input ref={fileRef} type="file" accept="audio/*" className={styles.hiddenInput} onChange={onPickFile} />
@@ -105,6 +107,15 @@ export function AudioField({ audio, onChange, hint = 'Record or upload a clip to
           </button>
         )}
       </div>
+
+      {pendingClip && (
+        <AudioTrimmer
+          blob={pendingClip}
+          onConfirm={(trimmed) => { setPendingClip(null); storeBlob(trimmed, 'clip.wav') }}
+          onCancel={() => setPendingClip(null)}
+        />
+      )}
+
       {error && <div className={styles.error}>{error}</div>}
       {hint && <div className={styles.hint}>{hint}</div>}
     </div>
@@ -112,7 +123,7 @@ export function AudioField({ audio, onChange, hint = 'Record or upload a clip to
 }
 
 // ── Image: upload a picture for image-based exercises. `image` is { id, url } | null ──
-export function ImageField({ image, onChange, label = 'Image' }) {
+export function ImageField({ image, onChange, courseId, label = 'Image' }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const fileRef = useRef(null)
@@ -124,7 +135,7 @@ export function ImageField({ image, onChange, label = 'Image' }) {
     setBusy(true); setError('')
     const oldId = image?.id
     try {
-      const uploaded = await uploadMedia(file, 'image', file.name)
+      const uploaded = await uploadMedia(file, 'image', { filename: file.name, courseId })
       onChange(uploaded)
       if (oldId && oldId !== uploaded.id) deleteMedia(oldId)
     } catch (err) {

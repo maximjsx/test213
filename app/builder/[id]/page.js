@@ -175,14 +175,14 @@ function StringList({ label, values, onChange, placeholder = 'Add item…', minI
 }
 
 // ── exercise-specific editors ─────────────────────────────────────────────────
-function ExerciseEditor({ ex, onChange }) {
+function ExerciseEditor({ ex, onChange, courseId }) {
   const set = (field, val) => onChange({ ...ex, [field]: val })
   const ttsField = (
     <div className={styles.fieldRow}>
       <label className={styles.fieldLabel}>Audio (Bulgarian)</label>
       <div className={styles.fieldInput}>
         <input className={styles.input} value={ex.tts || ''} placeholder="Здравей" onChange={e => set('tts', e.target.value)} />
-        <AudioField audio={ex.audio || null} onChange={a => set('audio', a)} />
+        <AudioField audio={ex.audio || null} onChange={a => set('audio', a)} courseId={courseId} />
       </div>
     </div>
   )
@@ -500,6 +500,7 @@ function ExerciseEditor({ ex, onChange }) {
                 <AudioField
                   audio={line.audio || null}
                   onChange={a => { const l = [...(ex.lines || [])]; l[i] = { ...l[i], audio: a }; set('lines', l) }}
+                  courseId={courseId}
                   hint="Custom audio for this line. Leave empty to speak the text/TTS above."
                 />
               </div>
@@ -558,7 +559,7 @@ function ExerciseEditor({ ex, onChange }) {
               {options.map((opt, i) => (
                 <div key={opt.key || i} className={styles.choiceRow} style={{ alignItems: 'flex-start' }}>
                   <div style={{ flex: 1 }}>
-                    <ImageField image={opt.image || null} onChange={img => { const o = [...options]; o[i] = { ...o[i], image: img }; set('options', o) }} label={`Option ${i + 1}`} />
+                    <ImageField image={opt.image || null} onChange={img => { const o = [...options]; o[i] = { ...o[i], image: img }; set('options', o) }} courseId={courseId} label={`Option ${i + 1}`} />
                   </div>
                   <button
                     className={`${styles.correctBtn} ${ex.answer === i ? styles.correctBtnActive : ''}`}
@@ -600,7 +601,7 @@ function ExerciseEditor({ ex, onChange }) {
               {pairs.map((pair, i) => (
                 <div key={pair.key || i} className={styles.pairRow} style={{ alignItems: 'flex-start' }}>
                   <div style={{ flex: 1 }}>
-                    <ImageField image={pair.image || null} onChange={img => { const p = [...pairs]; p[i] = { ...p[i], image: img }; set('pairs', p) }} label={`Pair ${i + 1}`} />
+                    <ImageField image={pair.image || null} onChange={img => { const p = [...pairs]; p[i] = { ...p[i], image: img }; set('pairs', p) }} courseId={courseId} label={`Pair ${i + 1}`} />
                   </div>
                   <input
                     className={styles.input}
@@ -627,7 +628,7 @@ function ExerciseEditor({ ex, onChange }) {
         <div className={styles.fieldRow}>
           <label className={styles.fieldLabel}>Picture</label>
           <div className={styles.fieldInput}>
-            <ImageField image={ex.image || null} onChange={img => set('image', img)} label="Picture" />
+            <ImageField image={ex.image || null} onChange={img => set('image', img)} courseId={courseId} label="Picture" />
           </div>
         </div>
         <StringList
@@ -649,7 +650,7 @@ function ExerciseEditor({ ex, onChange }) {
         <div className={styles.fieldRow}>
           <label className={styles.fieldLabel}>Picture</label>
           <div className={styles.fieldInput}>
-            <ImageField image={ex.image || null} onChange={img => set('image', img)} label="Picture" />
+            <ImageField image={ex.image || null} onChange={img => set('image', img)} courseId={courseId} label="Picture" />
           </div>
         </div>
         <FieldRow label="Question (optional)">
@@ -1099,7 +1100,7 @@ export default function LevelEditor() {
 
                           {isExOpen && (
                             <div className={styles.exBody}>
-                              <ExerciseEditor ex={ex} onChange={updated => updateExercise(li, ei, updated)} />
+                              <ExerciseEditor ex={ex} onChange={updated => updateExercise(li, ei, updated)} courseId={id} />
                             </div>
                           )}
                         </div>

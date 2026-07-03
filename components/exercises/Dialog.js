@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { checkAnswer, shuffle } from '../../lib/checker'
-import { playClip, speakText, hapticTap } from '../../lib/audio'
+import { playClipBlocking, speakText, hapticTap } from '../../lib/audio'
 import styles from './Exercise.module.css'
 
 const PAUSE_AFTER_LINE = 500 // ms of silence between lines
@@ -51,10 +51,12 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
         const line = lines[i]
         const ttsText = line?.tts || line?.text
         const voice = speakerMap[line?.speaker]?.voice || undefined
-        let waitMs = 1200 // fallback if nothing to speak
+        let waitMs = 1200 // fallback if nothing was played (muted / no audio)
         if (ttsText || line?.audio?.url) {
-          const duration = await playClip({ audio: line?.audio, text: ttsText, voice })
-          waitMs = (duration || 2000) + PAUSE_AFTER_LINE
+          // Blocks until the clip actually finishes, so custom recordings of any
+          // length play in full before the next line.
+          const elapsed = await playClipBlocking({ audio: line?.audio, text: ttsText, voice })
+          waitMs = elapsed > 0 ? PAUSE_AFTER_LINE : 1200
         }
 
         if (cancelled) return

@@ -88,3 +88,48 @@
   flex-shrink: 0;
 }
 .hiddenInput { display: none; }
+
+/* ── audio trimmer ── */
+.trimmer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface, #fff);
+  border: 2px solid var(--blue, #1cb0f6);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+.trimTitle { font-size: 12px; font-weight: 800; color: var(--text-muted, #777); letter-spacing: 0.3px; }
+.wavewrap {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  background: var(--surface-hi, #f0f4f8);
+  border-radius: 8px;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+.wavecanvas { display: block; width: 100%; height: 100%; }
+.trimMask {
+  position: absolute; top: 0; bottom: 0;
+  background: rgba(0,0,0,0.32);
+  pointer-events: none;
+}
+.trimHandle {
+  position: absolute; top: 0; bottom: 0; width: 12px;
+  background: var(--blue, #1cb0f6);
+  cursor: ew-resize;
+  display: flex; align-items: center; justify-content: center;
+}
+.trimHandle::after { content: ''; width: 2px; height: 40%; background: #fff; border-radius: 2px; }
+.trimRegion {
+  position: absolute; top: 0; bottom: 0;
+  border-top: 2px solid var(--blue, #1cb0f6);
+  border-bottom: 2px solid var(--blue, #1cb0f6);
+  pointer-events: none;
+}
+.trimTimes { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-dim, #999); }
+.trimBtns { display: flex; flex-wrap: wrap; gap: 8px; }
+

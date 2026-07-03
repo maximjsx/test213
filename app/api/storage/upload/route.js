@@ -17,7 +17,14 @@ export async function POST(req) {
     const { searchParams } = new URL(req.url)
     const kind = searchParams.get('kind') || 'other'
     const mime = req.headers.get('content-type') || 'application/octet-stream'
-    const filename = searchParams.get('filename') || undefined
+    const rawName = searchParams.get('filename') || kind
+    // Tag the stored filename with the owning course id so the admin file browser
+    // can group / bulk-delete by course (the storage service has no course concept).
+    // Format must survive the service's safeName() sanitizer, which keeps only
+    // [A-Za-z0-9_.- ]. Course ids are `custom_<digits>` (no hyphens), so a `--`
+    // delimiter parses unambiguously: crs-<courseId>--<originalName>.
+    const course = (searchParams.get('course') || '').trim().replace(/[^\w]/g, '')
+    const filename = course ? `crs-${course}--${rawName}` : rawName
 
     const buf = await req.arrayBuffer()
     if (!buf.byteLength) return Response.json({ error: 'empty_body' }, { status: 400 })

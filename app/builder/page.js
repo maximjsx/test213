@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import BuilderGate from '../../components/builder/BuilderGate'
 import AdminUsersPanel from '../../components/builder/AdminUsersPanel'
+import AdminFilesPanel from '../../components/builder/AdminFilesPanel'
 import styles from './page.module.css'
 
 function loadLevels() {
@@ -202,6 +203,7 @@ export default function BuilderDashboard() {
 
       <div className={styles.content}>
         <AdminUsersPanel />
+        <AdminFilesPanel />
         {levels.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.emptyEmoji}>🏗️</div>
