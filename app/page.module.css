@@ -113,6 +113,14 @@
   .pos_right { padding-right: 20px; }
   .node { width: 68px; height: 68px; border-radius: 16px; }
   .nodeNum { font-size: 20px; }
+
+  /* Tooltip is centered on the node by default, which overflows the
+     screen edge when the node itself sits near that edge (zigzag layout) */
+  .tooltip { min-width: 0; width: max-content; max-width: calc(100vw - 40px); padding: 18px 16px; }
+  .pos_left .tooltip { left: 0; transform: none; }
+  .pos_left .tooltip::after, .pos_left .tooltip::before { left: 34px; transform: translateX(-50%); }
+  .pos_right .tooltip { left: auto; right: 0; transform: none; }
+  .pos_right .tooltip::after, .pos_right .tooltip::before { left: auto; right: 34px; transform: translateX(50%); }
 }
 
 @media (max-width: 680px) {

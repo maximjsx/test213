@@ -32,6 +32,10 @@ export default function BottomNav() {
   const pathname = usePathname()
   const { user } = useAuth()
 
+  // Only the homepage has a slimmed header that needs the bottom tab bar;
+  // other pages already show back/nav links inline
+  if (pathname !== '/') return null
+
   return (
     <nav className={styles.nav}>
       {ITEMS.map(it => {

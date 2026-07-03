@@ -1,10 +1,9 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { ensureQuests, applySessionToQuests } from '../lib/quests'
+import { useAuth } from './useAuth'
 
 const KEY = 'bulgarolearn'
-const AUTH_FLAG = 'bulgario_authed'
-const SYNC_FLAG = 'bulgario_synced'
 const STREAK_FREEZE_COST_XP = 20
 
 function load() {
@@ -19,6 +18,13 @@ function save(data) {
   } catch (e) {
     console.warn('Could not save progress (storage full?):', e)
   }
+}
+
+// Read-only peek at this browser's local progress, independent of whether
+// an account is signed in. Used purely for the informational note on the
+// profile page — never merged or written back automatically.
+export function peekLocalProgress() {
+  return load()
 }
 
 function defaultState() {
@@ -36,6 +42,10 @@ function defaultState() {
     quests: null,
     startedAt: null,
   }
+}
+
+function normalize(raw) {
+  return ensureQuests(calcStreakBreak({ ...defaultState(), ...raw }))
 }
 
 function calcStreakBreak(state) {
@@ -83,36 +93,58 @@ function applySession(prev, xp, meta = {}) {
 }
 
 export function useProgress() {
+  const { user, loading: authLoading } = useAuth()
   const [state, setState] = useState(defaultState)
   const [hydrated, setHydrated] = useState(false)
+  // 'local'   -> plain localStorage, exactly like a signed-out guest
+  // 'account' -> this account already has its own server progress; that
+  //              progress is authoritative and local storage is left alone
+  const modeRef = useRef('local')
 
+  // Decide the source of truth once auth is known. Local storage and the
+  // account are never auto-merged: an account only ever starts using local
+  // data through the explicit "convert" flow on the profile page (which
+  // only offers itself while the account has no progress of its own yet).
   useEffect(() => {
-    const raw = load()
-    if (raw) {
-      let s = calcStreakBreak({ ...defaultState(), ...raw })
-      s = ensureQuests(s)
-      if (s !== raw) save(s)
-      setState(s)
+    if (authLoading) return
+    let cancelled = false
+    async function hydrate() {
+      if (user) {
+        try {
+          const res = await fetch('/api/progress')
+          const d = await res.json()
+          if (cancelled) return
+          if (d.progress) {
+            modeRef.current = 'account'
+            setState(normalize(d.progress))
+            setHydrated(true)
+            return
+          }
+        } catch {
+          // fall through to local below
+        }
+      }
+      if (cancelled) return
+      modeRef.current = 'local'
+      const raw = load()
+      if (raw) setState(normalize(raw))
+      setHydrated(true)
     }
-    setHydrated(true)
-  }, [])
+    hydrate()
+    return () => { cancelled = true }
+  }, [user, authLoading])
 
-  // Background sync to account (only when signed in AND the user has
-  // explicitly converted/linked progress on the profile page, debounced)
-  useEffect(() => {
-    if (!hydrated) return
-    if (typeof window === 'undefined') return
-    if (localStorage.getItem(AUTH_FLAG) !== '1') return
-    if (localStorage.getItem(SYNC_FLAG) !== '1') return
-    const t = setTimeout(() => {
+  const persist = useCallback((next) => {
+    if (modeRef.current === 'account') {
       fetch('/api/progress', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress: state }),
+        body: JSON.stringify({ progress: next }),
       }).catch(() => {})
-    }, 3000)
-    return () => clearTimeout(t)
-  }, [state, hydrated])
+    } else {
+      save(next)
+    }
+  }, [])
 
   const completeLessonWithXP = useCallback((lessonId, xp, meta = {}) => {
     setState(prev => {
@@ -120,10 +152,10 @@ export function useProgress() {
         ...applySession(prev, xp, { ...meta, isLesson: true }),
         lessons: { ...prev.lessons, [lessonId]: { completed: true, completedAt: Date.now() } },
       }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   // Mistake practice session: clears fixed mistakes, keeps repeated ones
   const completePractice = useCallback((xp, meta = {}, correctIds = [], wrongIds = []) => {
@@ -132,10 +164,10 @@ export function useProgress() {
       correctIds.forEach(id => { delete wrongExercises[id] })
       wrongIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
       const next = { ...applySession(prev, xp, { ...meta, isLesson: false }), wrongExercises }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const claimQuest = useCallback((questId) => {
     setState(prev => {
@@ -153,10 +185,10 @@ export function useProgress() {
         streakFreezes: q.reward.type === 'freeze' ? (prev.streakFreezes || 0) + q.reward.amount : (prev.streakFreezes || 0),
         quests: { ...prev.quests, items: items.map(x => x.id === questId ? { ...x, claimed: true } : x) },
       }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const recordMistakes = useCallback((exerciseIds) => {
     if (!exerciseIds?.length) return
@@ -164,10 +196,10 @@ export function useProgress() {
       const wrongExercises = { ...prev.wrongExercises }
       exerciseIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
       const next = { ...prev, wrongExercises }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const buyStreakFreeze = useCallback(() => {
     setState(prev => {
@@ -177,10 +209,10 @@ export function useProgress() {
         xp: prev.xp - STREAK_FREEZE_COST_XP,
         streakFreezes: (prev.streakFreezes || 0) + 1,
       }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const unlockPack = useCallback((packId, costXP) => {
     setState(prev => {
@@ -190,30 +222,30 @@ export function useProgress() {
         xp: prev.xp - costXP,
         specialUnlocks: { ...(prev.specialUnlocks || {}), [packId]: true },
       }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const isLessonComplete = useCallback((id) => !!state.lessons[id]?.completed, [state])
 
   const skipLevel = useCallback((levelId) => {
     setState(prev => {
       const next = { ...prev, skippedLevels: { ...(prev.skippedLevels || {}), [levelId]: true } }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const unskipLevel = useCallback((levelId) => {
     setState(prev => {
       const skippedLevels = { ...(prev.skippedLevels || {}) }
       delete skippedLevels[levelId]
       const next = { ...prev, skippedLevels }
-      save(next)
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
   const isLessonUnlocked = useCallback((levelLessons, idx, prevLevelLessons = null, prevLevelId = null) => {
     if (idx === 0) {
@@ -231,15 +263,16 @@ export function useProgress() {
 
   const resetProgress = useCallback(() => {
     const fresh = defaultState()
-    save(fresh)
+    persist(fresh)
     setState(fresh)
-  }, [])
+  }, [persist])
 
-  // Replace local state with a server copy (after "load account progress")
-  const replaceState = useCallback((serverState) => {
-    const merged = ensureQuests(calcStreakBreak({ ...defaultState(), ...serverState }))
-    save(merged)
-    setState(merged)
+  // Used by the one-time "convert local progress to account" flow: uploads
+  // the given (local) state to become the account's progress and switches
+  // this session to account mode from then on.
+  const adoptAsAccount = useCallback((nextState) => {
+    modeRef.current = 'account'
+    setState(nextState)
   }, [])
 
   return {
@@ -249,6 +282,6 @@ export function useProgress() {
     recordMistakes, completeLessonWithXP, completePractice,
     claimQuest,
     isLessonComplete, isLessonUnlocked, levelProgress,
-    skipLevel, unskipLevel, resetProgress, replaceState,
+    skipLevel, unskipLevel, resetProgress, adoptAsAccount,
   }
 }

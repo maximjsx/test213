@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { useProgress } from '../../hooks/useProgress'
+import { useProgress, peekLocalProgress } from '../../hooks/useProgress'
 import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
@@ -14,16 +14,16 @@ function fmtDate(d) {
 }
 
 function ProfileInner() {
-  const { state, hydrated, replaceState } = useProgress()
+  const { state, hydrated, adoptAsAccount } = useProgress()
   const { user, loading, refresh, logout } = useAuth()
   const params = useSearchParams()
 
   const [serverProgress, setServerProgress] = useState(undefined)
+  const [localSnapshot, setLocalSnapshot] = useState(null)
   const [friendsData, setFriendsData] = useState(null)
   const [nameEdit, setNameEdit] = useState(null)
   const [nameError, setNameError] = useState('')
   const [saving, setSaving] = useState(false)
-  const [syncMsg, setSyncMsg] = useState('')
   const [convertPhase, setConvertPhase] = useState('idle') // idle | running | done
   const [convertPct, setConvertPct] = useState(0)
   const [convertSkipped, setConvertSkipped] = useState(false)
@@ -32,7 +32,9 @@ function ProfileInner() {
 
   const oauthError = params.get('error')
 
-  // Fetch the account copy of progress once signed in
+  // Fetch the account copy of progress once signed in. This is only used to
+  // decide which screen to show (convert vs normal profile) — useProgress
+  // itself already loaded the account copy as `state` when one exists.
   useEffect(() => {
     if (!user) return
     fetch('/api/progress')
@@ -40,6 +42,10 @@ function ProfileInner() {
       .then(d => setServerProgress(d.progress ?? null))
       .catch(() => setServerProgress(null))
   }, [user])
+
+  // Read-only peek at this browser's local storage, purely to show an
+  // informational note. Never merged into the account automatically.
+  useEffect(() => { setLocalSnapshot(peekLocalProgress()) }, [])
 
   function loadFriends() {
     fetch('/api/friends')
@@ -57,16 +63,6 @@ function ProfileInner() {
     }).catch(() => {})
     loadFriends()
   }
-
-  // Returning users (account already has progress) are already converted,
-  // fresh users with nothing local have nothing to convert: enable auto-sync
-  useEffect(() => {
-    if (!user || !hydrated || serverProgress === undefined) return
-    const localHas = state.xp > 0 || Object.keys(state.lessons).length > 0
-    if (serverProgress !== null || !localHas) {
-      localStorage.setItem('bulgario_synced', '1')
-    }
-  }, [user, hydrated, serverProgress]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function startConvert() {
     setConvertPhase('running')
@@ -90,41 +86,15 @@ function ProfileInner() {
         clearInterval(timer)
         if (!res.ok) throw new Error('upload failed')
         setConvertPct(100)
-        localStorage.setItem('bulgario_synced', '1')
+        adoptAsAccount(state)
         setTimeout(() => { setServerProgress(state); setConvertPhase('done') }, 350)
       })
       .catch(() => {
         clearInterval(timer)
         setConvertPhase('idle')
-        setSyncMsg('')
         setNameError('')
         alert('Could not save your progress, please try again.')
       })
-  }
-
-  async function pushLocal(silent = false) {
-    setSaving(true)
-    try {
-      const res = await fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress: state }),
-      })
-      if (res.ok) {
-        setServerProgress(state)
-        localStorage.setItem('bulgario_synced', '1')
-        if (!silent) setSyncMsg('Progress saved to your account')
-      }
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  async function pullServer() {
-    if (!serverProgress) return
-    replaceState(serverProgress)
-    localStorage.setItem('bulgario_synced', '1')
-    setSyncMsg('Account progress loaded on this device')
   }
 
   async function deleteAccount() {
@@ -132,7 +102,6 @@ function ProfileInner() {
     try {
       const res = await fetch('/api/account', { method: 'DELETE' })
       if (res.ok) {
-        localStorage.removeItem('bulgario_synced')
         window.location.href = '/'
         return
       }
@@ -167,7 +136,14 @@ function ProfileInner() {
 
   const lessonsDone = Object.keys(state.lessons).length
   const localHasProgress = state.xp > 0 || lessonsDone > 0
-  const outOfSync = user && serverProgress && (serverProgress.xp !== state.xp || Object.keys(serverProgress.lessons || {}).length !== lessonsDone)
+
+  // Purely informational: this account already has its own progress, and this
+  // browser separately has local progress that was never linked to it. It's
+  // never touched or merged automatically.
+  const localLessonsDone = localSnapshot ? Object.keys(localSnapshot.lessons || {}).length : 0
+  const localDiffersFromAccount = user && serverProgress && localSnapshot
+    && (localSnapshot.xp > 0 || localLessonsDone > 0)
+    && (localSnapshot.xp !== state.xp || localLessonsDone !== lessonsDone)
 
   // First login with local progress: offer to convert it to the account
   const showConvert = user && !convertSkipped && localHasProgress
@@ -370,19 +346,15 @@ function ProfileInner() {
               </div>
             )}
 
-            {outOfSync && (
-              <div className={styles.syncBox}>
-                <div className={styles.syncTitle}>This device and your account differ</div>
-                <div className={styles.syncDetail}>
-                  Device: {state.xp} XP, {lessonsDone} lessons · Account: {serverProgress.xp || 0} XP, {Object.keys(serverProgress.lessons || {}).length} lessons
-                </div>
-                <div className={styles.syncBtns}>
-                  <button className={styles.syncBtn} onClick={() => pushLocal()} disabled={saving}>Upload this device</button>
-                  <button className={styles.syncBtnAlt} onClick={pullServer} disabled={saving}>Load account copy</button>
+            {localDiffersFromAccount && (
+              <div className={styles.localNote}>
+                <div className={styles.localNoteTitle}>Local device stats</div>
+                <div className={styles.localNoteDetail}>
+                  This browser also has {localSnapshot.xp} XP and {localLessonsDone} lessons stored outside
+                  your account. It's kept separate and untouched.
                 </div>
               </div>
             )}
-            {syncMsg && <div className={styles.syncMsg}>{syncMsg}</div>}
 
             <button className={styles.logoutBtn} onClick={logout}>SIGN OUT</button>
 

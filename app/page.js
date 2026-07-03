@@ -381,7 +381,10 @@ export default function HomePage() {
                   const pos = positions[idx % positions.length]
 
                   const isCurrent = unlocked && !complete
-                  const assignRef = isCurrent && !foundCurrent ? (foundCurrent = true, true) : false
+                  // Skipped levels stay unlocked for going back, but shouldn't
+                  // claim the "current" spot ahead of the level the user jumped to
+                  const eligibleForRef = isCurrent && !state.skippedLevels?.[level.id]
+                  const assignRef = eligibleForRef && !foundCurrent ? (foundCurrent = true, true) : false
                   return (
                     <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`} ref={assignRef ? currentLessonRef : null}>
                       <LessonNode

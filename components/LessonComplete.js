@@ -30,15 +30,21 @@ function getExerciseDisplay(ex) {
     case 'translate_to_en':
     case 'translate_to_bg':
     case 'word_bank':
-      return { q: ex.prompt, a: ex.answer }
+      return { q: ex.prompt, a: ex.answer || ex.answers?.[0] || '—' }
     case 'multiple_choice':
       return { q: ex.question, a: ex.answer }
     case 'fill_blank':
       return { q: ex.sentence, a: ex.answer }
     case 'match_pairs':
       return { q: ex.instruction, a: ex.pairs?.map(p => `${p.left} → ${p.right}`).join('  ·  ') || '—' }
+    case 'listen_and_type':
+      return { q: ex.tts, a: ex.answer }
+    case 'listen_translate':
+      return { q: ex.tts, a: ex.answers?.[0] || '—' }
+    case 'speak_sentence':
+      return { q: ex.tts, a: ex.tts }
     default:
-      return { q: '—', a: ex.answer || '—' }
+      return { q: '—', a: ex.answer || ex.answers?.[0] || '—' }
   }
 }
 

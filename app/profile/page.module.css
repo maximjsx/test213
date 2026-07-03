@@ -119,21 +119,13 @@ a.friendRow:hover { border-color:var(--border-hi); }
 }
 .declineBtn:hover { border-color:var(--red);background:var(--red-bg); }
 
-.syncBox {
+.localNote {
   width:100%;margin-top:16px;
-  background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);
+  background:var(--surface-hi);border:2px solid var(--border);border-radius:var(--r);
   padding:14px;
 }
-.syncTitle { font-size:14px;font-weight:900;color:var(--yellow); }
-.syncDetail { font-size:12.5px;font-weight:700;color:var(--text-muted);margin:6px 0 10px; }
-.syncBtns { display:flex;gap:8px;justify-content:center;flex-wrap:wrap; }
-.syncBtn, .syncBtnAlt {
-  font-size:12.5px;font-weight:900;padding:10px 14px;border-radius:var(--r2);
-}
-.syncBtn { background:var(--yellow);color:#3a2d00;box-shadow:0 3px 0 #b38c00; }
-.syncBtnAlt { background:transparent;border:2px solid var(--border-hi);color:var(--text); }
-.syncBtnAlt:hover { background:var(--surface-hi); }
-.syncMsg { font-size:13px;font-weight:800;color:var(--green);margin-top:10px; }
+.localNoteTitle { font-size:13px;font-weight:900;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px; }
+.localNoteDetail { font-size:12.5px;font-weight:700;color:var(--text-muted);margin-top:6px;line-height:1.5; }
 
 .logoutBtn {
   margin-top:22px;width:100%;
