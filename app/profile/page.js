@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
 import InstallButton from '../../components/InstallButton'
+import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
 function fmtDate(d) {
@@ -19,7 +20,7 @@ function fmtDate(d) {
 let cachedServerProgress = undefined
 
 function ProfileInner() {
-  const { state, adoptAsAccount } = useProgress()
+  const { state, hydrated, adoptAsAccount } = useProgress()
   const { user, refresh, logout } = useAuth()
   const params = useSearchParams()
 
@@ -135,18 +136,17 @@ function ProfileInner() {
     }
   }
 
+  // The genuine first load waits on auth + progress fetches, which can take a
+  // moment, so show the mascot loader. All of these flip to cached values after
+  // the first load, so subsequent tab switches skip the loader and render the
+  // numbers below straight away (updating async if a background refresh changes
+  // anything).
+  if (user === undefined || !hydrated || (user && serverProgress === undefined)) {
+    return <LoadingBear />
+  }
+
   const lessonsDone = Object.keys(state.lessons).length
   const localHasProgress = state.xp > 0 || lessonsDone > 0
-
-  // Render immediately — the stat numbers come from `state`, which starts at 0
-  // and fills in as progress hydrates (cached across tab switches, so it's
-  // usually already populated). We only hold back in two narrow cases where we
-  // genuinely can't pick the right screen yet:
-  //  - auth still unknown on the very first load (would flash signed-out UI)
-  //  - a signed-in user who might be a first-time converter: we must know the
-  //    account copy (serverProgress) before offering the convert screen
-  if (user === undefined) return null
-  if (user && serverProgress === undefined && localHasProgress) return null
 
   // Purely informational: this account already has its own progress, and this
   // browser separately has local progress that was never linked to it. It's
