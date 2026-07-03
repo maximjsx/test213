@@ -1,0 +1,49 @@
+.wrap {
+  position: fixed;
+  left: 12px; right: 12px;
+  bottom: calc(12px + 58px + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 2px solid var(--border-hi);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  font-family: 'Nunito', sans-serif;
+  animation: slideUp 0.28s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bear { flex-shrink: 0; display: flex; }
+.body { flex: 1; min-width: 0; }
+.title { font-size: 15px; font-weight: 900; color: var(--text); }
+.text { font-size: 12.5px; font-weight: 700; color: var(--text-muted); line-height: 1.35; margin-top: 2px; }
+.text b { color: var(--text); }
+
+.installBtn {
+  flex-shrink: 0;
+  font-size: 13px; font-weight: 900; letter-spacing: 0.4px;
+  padding: 10px 16px; border-radius: 12px;
+  background: var(--teal); color: #fff;
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--teal) 60%, #000);
+}
+.installBtn:active { transform: translateY(2px); box-shadow: 0 0 0 color-mix(in srgb, var(--teal) 60%, #000); }
+
+.close {
+  position: absolute; top: 6px; right: 8px;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0.6;
+}
+.close:hover { opacity: 1; }
+
+/* This is a mobile home-screen affordance; desktop can install via the URL bar */
+@media (min-width: 681px) {
+  .wrap { display: none; }
+}

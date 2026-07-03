@@ -6,6 +6,7 @@ import { useProgress, peekLocalProgress, clearLocalProgress } from '../../hooks/
 import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
+import InstallButton from '../../components/InstallButton'
 import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
@@ -359,6 +360,8 @@ function ProfileInner() {
                 </div>
               </div>
             )}
+
+            <InstallButton />
 
             <button className={styles.logoutBtn} onClick={logout}>SIGN OUT</button>
 
