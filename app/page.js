@@ -7,6 +7,7 @@ import { useProgress } from '../hooks/useProgress'
 import { useAuth } from '../hooks/useAuth'
 import { claimableQuestCount } from '../lib/quests'
 import { hapticTap, unlockAudio } from '../lib/audio'
+import { onSplashFinished } from '../lib/splash'
 import QuestsModal from '../components/QuestsModal'
 import StreakModal from '../components/StreakModal'
 import Bear from '../components/Bear'
@@ -259,10 +260,16 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!hydrated) return
-    const el = currentLessonRef.current
-    if (!el) return
-    const top = el.getBoundingClientRect().top + window.scrollY
-    window.scrollTo({ top: Math.max(0, top - window.innerHeight / 2 + 60), behavior: 'smooth' })
+    const scrollToCurrent = () => {
+      const el = currentLessonRef.current
+      if (!el) return
+      const top = el.getBoundingClientRect().top + window.scrollY
+      window.scrollTo({ top: Math.max(0, top - window.innerHeight / 2 + 60), behavior: 'smooth' })
+    }
+    // On a hard load the splash is still closing, so defer the scroll until it
+    // finishes — otherwise it happens behind the overlay and you never see it.
+    // On client-side nav (splash already done) this runs immediately.
+    return onSplashFinished(scrollToCurrent)
   }, [hydrated])
 
   const currentLevel = COURSE.levels[visibleLevel]

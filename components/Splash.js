@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Bear from './Bear'
+import { markSplashFinished } from '../lib/splash'
 import styles from './Splash.module.css'
 
 // Welcome splash shown once per full page load. It lives in the root layout, so
@@ -10,8 +11,11 @@ export default function Splash() {
   const [phase, setPhase] = useState('in') // in -> out -> gone
 
   useEffect(() => {
-    const hold = setTimeout(() => setPhase('out'), 1300)
-    const done = setTimeout(() => setPhase('gone'), 2500) // after the ~1.1s iris close
+    const hold = setTimeout(() => setPhase('out'), 1050)
+    const done = setTimeout(() => {
+      setPhase('gone')
+      markSplashFinished() // let the page reveal itself (e.g. scroll to current lesson)
+    }, 2000) // after the ~0.9s iris close
     return () => { clearTimeout(hold); clearTimeout(done) }
   }, [])
 
