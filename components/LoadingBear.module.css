@@ -1,5 +1,8 @@
 .screen {
-  min-height: 100vh;
+  /* Fixed overlay under the bottom tab bar (z-index 35) but over the footer */
+  position: fixed;
+  inset: 0;
+  z-index: 30;
   display: flex;
   flex-direction: column;
   align-items: center;

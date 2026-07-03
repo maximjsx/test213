@@ -106,9 +106,6 @@
   .statBtn { padding: 4px 5px; }
   .pathBear { display: none; }
 
-  /* Navigation moves to the bottom tab bar on mobile */
-  .leaderboardLink, .claimBtn, .profileLink { display: none; }
-
   .pos_left  { padding-left: 20px; }
   .pos_right { padding-right: 20px; }
   .node { width: 68px; height: 68px; border-radius: 16px; }
@@ -125,6 +122,9 @@
 
 @media (max-width: 680px) {
   .fabStack { bottom: calc(22px + 58px + env(safe-area-inset-bottom)); }
+
+  /* Same breakpoint as BottomNav: once the tab bar exists, these move there */
+  .leaderboardLink, .claimBtn, .profileLink { display: none; }
 }
 
 /* Main */
