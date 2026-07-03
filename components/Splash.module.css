@@ -10,12 +10,15 @@
   /* Circular (iris) reveal: the whole overlay is clipped to a big circle, then
      collapses to a point at the centre to wipe the app in — cleaner than a fade */
   clip-path: circle(150% at 50% 50%);
-  transition: clip-path 1.1s cubic-bezier(0.6, 0, 0.3, 1);
+  transition: clip-path 1.1s cubic-bezier(0.6, 0, 0.3, 1), background 0.35s ease;
   will-change: clip-path;
 }
 .overlay.out {
   clip-path: circle(0% at 50% 50%);
   pointer-events: none;
+  /* Shift to a lighter shade as it closes: the page behind is var(--bg), so a
+     same-colour circle would be invisible — this makes the shrinking disc show */
+  background: var(--surface-hi);
 }
 
 .stage {
