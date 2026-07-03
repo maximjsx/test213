@@ -135,7 +135,7 @@ function ProfileInner() {
   // Signed in but the account copy hasn't arrived yet: keep loading, otherwise
   // the normal profile flashes before the convert screen can show
   if (!hydrated || loading || (user && serverProgress === undefined)) {
-    return <LoadingBear fullscreen={false} />
+    return <LoadingBear />
   }
 
   const lessonsDone = Object.keys(state.lessons).length
@@ -418,7 +418,7 @@ function ProfileInner() {
 
 export default function ProfilePage() {
   return (
-    <Suspense fallback={<LoadingBear fullscreen={false} />}>
+    <Suspense fallback={<LoadingBear />}>
       <ProfileInner />
     </Suspense>
   )

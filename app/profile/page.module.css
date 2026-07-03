@@ -10,10 +10,12 @@
 
 @media (max-width: 680px) {
   .page { padding-bottom: calc(60px + 58px + env(safe-area-inset-bottom)); }
-  /* The bottom tab bar already provides Course / Leaderboard navigation here */
-  .topRow { display: none; }
-  /* Global footer is hidden on mobile; show the legal links here instead */
-  .legalLinks { display: flex; }
+  /* The bottom tab bar already provides Course / Leaderboard navigation here.
+     Scoped under .page so it outranks the later base `.topRow { display:flex }`. */
+  .page .topRow { display: none; }
+  /* Global footer is hidden on mobile; show the legal links here instead.
+     Scoped under .page so it outranks the later base `.legalLinks { display:none }`. */
+  .page .legalLinks { display: flex; }
 }
 
 /* Desktop already has the global footer, so this profile copy is mobile-only */

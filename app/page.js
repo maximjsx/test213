@@ -36,16 +36,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   const totalInLevel = levelLessons.length
   const displayTitle = isLast ? `Level ${levelIndex + 1} Review` : lesson.title
 
-  // The current lesson starts immediately on tap — no intermediate tooltip.
-  // Completed (practice) and locked lessons still open their info tooltip.
-  function handleToggle() {
-    if (isCurrent) {
-      unlockAudio()
-      router.push(`/lesson/${lesson.id}?level=${levelId}`)
-      return
-    }
-    setShowTooltip(v => !v)
-  }
+  function handleToggle() { setShowTooltip(v => !v) }
   function handlePress() { setPressed(true); hapticTap() }
   function handleRelease() { setPressed(false) }
 
@@ -85,14 +76,21 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
           <div className={styles.tooltip}>
             <div className={styles.tooltipTitle}>{displayTitle}</div>
             <div className={styles.tooltipSub}>Lesson {lessonNum} of {totalInLevel}</div>
-            <Link
-              href={`/lesson/${lesson.id}?level=${levelId}`}
+            <button
               className={styles.tooltipBtn}
               style={{ background: levelColor }}
-              onClick={() => { unlockAudio(); setShowTooltip(false) }}
+              onClick={(e) => {
+                // Navigate programmatically. Using a <Link> here meant its own
+                // onClick unmounted the anchor (setShowTooltip(false)) mid-click,
+                // which sometimes cancelled the navigation and left the browser
+                // to fall back to a scroll — "pressed start, page just jumped".
+                e.preventDefault()
+                unlockAudio()
+                router.push(`/lesson/${lesson.id}?level=${levelId}`)
+              }}
             >
               {isComplete ? `PRACTICE +${Math.ceil(lesson.xp / 2)} XP` : `START +${lesson.xp} XP`}
-            </Link>
+            </button>
           </div>
         ) : (
           <div className={`${styles.tooltip} ${styles.tooltipLocked}`}>

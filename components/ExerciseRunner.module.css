@@ -1,5 +1,11 @@
-/* True full-viewport flex column — no page scroll */
-.wrap { height:100vh;display:flex;flex-direction:column;background:var(--bg);overflow:hidden; }
+/* True full-viewport flex column — no page scroll. 100dvh tracks the *visible*
+   viewport so the mobile address bar can't push the top bar off-screen (100vh
+   ignores the dynamic toolbars and made the whole view scrollable/misaligned). */
+.wrap {
+  height:100vh; height:100dvh;
+  display:flex;flex-direction:column;background:var(--bg);
+  overflow:hidden; overscroll-behavior:none;
+}
 
 .topBar {
   flex-shrink:0;
@@ -55,7 +61,7 @@
 .area {
   flex:1;min-height:0;
   display:flex;align-items:center;justify-content:center;
-  overflow-y:auto;
+  overflow-y:auto; overscroll-behavior:contain;
   padding:32px 24px;
 }
 .areaContent {
