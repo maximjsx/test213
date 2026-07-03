@@ -1,16 +1,22 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 
+// Module-level cache so remounting (switching tabs) starts from the last known
+// auth result instead of `undefined`, which would flash the signed-out UI.
+let cachedUser = undefined
+
 // user: undefined = loading, null = signed out, object = signed in
 export function useAuth() {
-  const [user, setUser] = useState(undefined)
+  const [user, setUser] = useState(cachedUser)
 
   const refresh = useCallback(async () => {
     try {
       const res = await fetch('/api/auth/me')
       const data = await res.json()
-      setUser(data.user || null)
+      cachedUser = data.user || null
+      setUser(cachedUser)
     } catch {
+      cachedUser = null
       setUser(null)
     }
   }, [])
@@ -19,6 +25,7 @@ export function useAuth() {
 
   const logout = useCallback(async () => {
     await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {})
+    cachedUser = null
     setUser(null)
   }, [])
 

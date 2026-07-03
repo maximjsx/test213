@@ -58,27 +58,6 @@
   padding:8px 4px 0;
 }
 
-/* Loading skeleton (shown instead of the mascot loader on this tab) */
-.skel {
-  background:var(--surface-hi);
-  border-radius:8px;
-  position:relative;overflow:hidden;
-}
-.skel::after {
-  content:'';position:absolute;inset:0;
-  transform:translateX(-100%);
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-  animation:shimmer 1.3s ease-in-out infinite;
-}
-@keyframes shimmer { 100% { transform:translateX(100%); } }
-.skelAvatar { width:88px;height:88px;border-radius:50%;margin-bottom:8px; }
-.skelName { width:180px;height:26px;border-radius:10px; }
-.skelJoined { width:120px;height:14px;margin-top:6px; }
-.skelStatsHead { width:100%;margin-top:24px; }
-.skelLabel { width:96px;height:18px; }
-.skelStat { height:74px;border-radius:var(--r); }
-@media (prefers-reduced-motion: reduce) { .skel::after { animation:none; } }
-
 .avatarWrap { margin-bottom:4px; }
 .avatar { border-radius:50%;border:3px solid var(--border-hi); }
 

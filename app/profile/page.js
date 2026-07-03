@@ -14,32 +14,16 @@ function fmtDate(d) {
   return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-// Shown instead of the mascot loader while the profile settles. A skeleton keeps
-// the tab feeling instant on switches rather than flashing a full-screen loader.
-function ProfileSkeleton() {
-  return (
-    <div className={styles.page}>
-      <div className={styles.hero}>
-        <div className={`${styles.skel} ${styles.skelAvatar}`} />
-        <div className={`${styles.skel} ${styles.skelName}`} />
-        <div className={`${styles.skel} ${styles.skelJoined}`} />
-        <div className={styles.skelStatsHead}>
-          <div className={`${styles.skel} ${styles.skelLabel}`} />
-        </div>
-        <div className={styles.stats}>
-          {[0, 1, 2, 3].map(i => <div key={i} className={`${styles.skel} ${styles.skelStat}`} />)}
-        </div>
-      </div>
-    </div>
-  )
-}
+// Cached across mounts so a tab switch back to Profile can decide the convert
+// screen without re-blocking on the /api/progress fetch each time.
+let cachedServerProgress = undefined
 
 function ProfileInner() {
-  const { state, hydrated, adoptAsAccount } = useProgress()
-  const { user, loading, refresh, logout } = useAuth()
+  const { state, adoptAsAccount } = useProgress()
+  const { user, refresh, logout } = useAuth()
   const params = useSearchParams()
 
-  const [serverProgress, setServerProgress] = useState(undefined)
+  const [serverProgress, setServerProgress] = useState(cachedServerProgress)
   const [localSnapshot, setLocalSnapshot] = useState(null)
   const [friendsData, setFriendsData] = useState(null)
   const [nameEdit, setNameEdit] = useState(null)
@@ -60,8 +44,8 @@ function ProfileInner() {
     if (!user) return
     fetch('/api/progress')
       .then(r => r.json())
-      .then(d => setServerProgress(d.progress ?? null))
-      .catch(() => setServerProgress(null))
+      .then(d => { cachedServerProgress = d.progress ?? null; setServerProgress(cachedServerProgress) })
+      .catch(() => { cachedServerProgress = null; setServerProgress(null) })
   }, [user])
 
   // Read-only peek at this browser's local storage, purely to show an
@@ -151,14 +135,18 @@ function ProfileInner() {
     }
   }
 
-  // Signed in but the account copy hasn't arrived yet: keep loading, otherwise
-  // the normal profile flashes before the convert screen can show
-  if (!hydrated || loading || (user && serverProgress === undefined)) {
-    return <ProfileSkeleton />
-  }
-
   const lessonsDone = Object.keys(state.lessons).length
   const localHasProgress = state.xp > 0 || lessonsDone > 0
+
+  // Render immediately — the stat numbers come from `state`, which starts at 0
+  // and fills in as progress hydrates (cached across tab switches, so it's
+  // usually already populated). We only hold back in two narrow cases where we
+  // genuinely can't pick the right screen yet:
+  //  - auth still unknown on the very first load (would flash signed-out UI)
+  //  - a signed-in user who might be a first-time converter: we must know the
+  //    account copy (serverProgress) before offering the convert screen
+  if (user === undefined) return null
+  if (user && serverProgress === undefined && localHasProgress) return null
 
   // Purely informational: this account already has its own progress, and this
   // browser separately has local progress that was never linked to it. It's
@@ -437,7 +425,7 @@ function ProfileInner() {
 
 export default function ProfilePage() {
   return (
-    <Suspense fallback={<ProfileSkeleton />}>
+    <Suspense fallback={null}>
       <ProfileInner />
     </Suspense>
   )

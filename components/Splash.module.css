@@ -7,11 +7,14 @@
   justify-content: center;
   background: var(--bg);
   font-family: 'Nunito', sans-serif;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  /* Circular (iris) reveal: the whole overlay is clipped to a big circle, then
+     collapses to a point at the centre to wipe the app in — cleaner than a fade */
+  clip-path: circle(150% at 50% 50%);
+  transition: clip-path 0.65s cubic-bezier(0.7, 0, 0.84, 0);
+  will-change: clip-path;
 }
 .overlay.out {
-  opacity: 0;
+  clip-path: circle(0% at 50% 50%);
   pointer-events: none;
 }
 

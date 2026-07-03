@@ -11,7 +11,7 @@ export default function Splash() {
 
   useEffect(() => {
     const hold = setTimeout(() => setPhase('out'), 1400)
-    const done = setTimeout(() => setPhase('gone'), 1900) // after the fade
+    const done = setTimeout(() => setPhase('gone'), 2100) // after the iris close
     return () => { clearTimeout(hold); clearTimeout(done) }
   }, [])
 
