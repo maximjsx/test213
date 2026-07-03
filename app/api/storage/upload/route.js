@@ -1,4 +1,4 @@
-import { uploadFile, storageConfigured } from '@/lib/storage'
+import { uploadFile, storageConfigured, publicFileUrl } from '@/lib/storage'
 import { currentBuilderStatus } from '@/lib/builderAccess'
 
 // POST /api/storage/upload?kind=audio|image
@@ -31,7 +31,9 @@ export async function POST(req) {
     }
 
     const file = await uploadFile(Buffer.from(buf), mime, opts)
-    return Response.json(file)
+    // Always hand the browser the app-configured public origin, not whatever the
+    // service reports (guards against a stale PUBLIC_URL on the storage box).
+    return Response.json({ ...file, url: publicFileUrl(file.id) })
   } catch (e) {
     console.error('storage upload error:', e)
     return Response.json({ error: 'upload_failed', detail: e.message }, { status: 502 })
