@@ -121,7 +121,7 @@
 }
 
 @media (max-width: 680px) {
-  .fabStack { bottom: calc(22px + 58px + env(safe-area-inset-bottom)); }
+  .fabStack { bottom: calc(22px + 116px + env(safe-area-inset-bottom)); }
 
   /* Same breakpoint as BottomNav: once the tab bar exists, these move there.
      Scoped under .headerStats so it outranks the later `.shopBtn { display:flex }`

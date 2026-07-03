@@ -2,6 +2,7 @@ import './globals.css'
 import Link from 'next/link'
 import BottomNav from '../components/BottomNav'
 import InstallBanner from '../components/InstallBanner'
+import Splash from '../components/Splash'
 import styles from './layout.module.css'
 
 const BASE_URL = 'https://learn.bulgarian.dev'
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
         </div>
         <BottomNav />
         <InstallBanner />
+        <Splash />
       </body>
     </html>
   )

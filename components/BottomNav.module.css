@@ -7,8 +7,11 @@
     position: fixed;
     left: 0; right: 0; bottom: 0;
     z-index: 35;
+    /* Doubled bar height (was ~58px). The 116px value is mirrored in every
+       page's bottom offset — keep them in sync. */
+    min-height: calc(116px + env(safe-area-inset-bottom));
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: space-around;
     background: var(--surface);
     border-top: 2px solid var(--border);
@@ -18,22 +21,25 @@
 
 .item {
   flex: 1;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: 8px 4px 6px;
+  gap: 6px;
+  padding: 8px 4px;
   color: var(--text-dim);
   transition: color 0.15s;
 }
 .item:active { color: var(--text-muted); }
 .active { color: var(--teal); }
 
+.item svg { width: 30px; height: 30px; }
+
 .label {
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.2px;
 }
 
-.avatar { border-radius: 50%; display: block; }
+.avatar { width: 30px; height: 30px; border-radius: 50%; display: block; }

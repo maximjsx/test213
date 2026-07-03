@@ -1,7 +1,7 @@
 .wrap {
   position: fixed;
   left: 12px; right: 12px;
-  bottom: calc(12px + 58px + env(safe-area-inset-bottom));
+  bottom: calc(12px + 116px + env(safe-area-inset-bottom));
   z-index: 40;
   display: flex;
   align-items: center;

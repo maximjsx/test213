@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 680px) {
-  .page { padding-bottom: calc(60px + 58px + env(safe-area-inset-bottom)); }
+  .page { padding-bottom: calc(60px + 116px + env(safe-area-inset-bottom)); }
   /* The bottom tab bar already provides Course / Leaderboard navigation here.
      Scoped under .page so it outranks the later base `.topRow { display:flex }`. */
   .page .topRow { display: none; }
