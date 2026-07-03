@@ -9,6 +9,7 @@ import { hapticTap, unlockAudio } from '../lib/audio'
 import QuestsModal from '../components/QuestsModal'
 import StreakModal from '../components/StreakModal'
 import Bear from '../components/Bear'
+import LoadingBear from '../components/LoadingBear'
 import styles from './page.module.css'
 
 const SPECIAL_PACKS = [
@@ -260,7 +261,7 @@ export default function HomePage() {
   const claimable = claimableQuestCount(state.quests)
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
 
-  if (!hydrated) return <div className={styles.loading}>Loading…</div>
+  if (!hydrated) return <LoadingBear />
 
   return (
     <div className={styles.page}>

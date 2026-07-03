@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
+import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
 const MEDALS = ['🥇', '🥈', '🥉']
@@ -51,7 +52,7 @@ export default function LeaderboardPage() {
       </div>
 
       {data === undefined ? (
-        <div className={styles.loading}>Loading…</div>
+        <LoadingBear fullscreen={false} size={72} />
       ) : data.top.length === 0 ? (
         <div className={styles.empty}>
           <Bear mood="happy" size={90} />

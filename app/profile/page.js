@@ -6,6 +6,7 @@ import { useProgress, peekLocalProgress, clearLocalProgress } from '../../hooks/
 import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
+import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
 function fmtDate(d) {
@@ -133,7 +134,7 @@ function ProfileInner() {
   // Signed in but the account copy hasn't arrived yet: keep loading, otherwise
   // the normal profile flashes before the convert screen can show
   if (!hydrated || loading || (user && serverProgress === undefined)) {
-    return <div className={styles.loading}>Loading…</div>
+    return <LoadingBear fullscreen={false} />
   }
 
   const lessonsDone = Object.keys(state.lessons).length
@@ -405,7 +406,7 @@ function ProfileInner() {
 
 export default function ProfilePage() {
   return (
-    <Suspense fallback={<div className={styles.loading}>Loading…</div>}>
+    <Suspense fallback={<LoadingBear fullscreen={false} />}>
       <ProfileInner />
     </Suspense>
   )

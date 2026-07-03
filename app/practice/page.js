@@ -8,6 +8,7 @@ import { shuffle } from '../../lib/checker'
 import ExerciseRunner from '../../components/ExerciseRunner'
 import LessonComplete from '../../components/LessonComplete'
 import Bear from '../../components/Bear'
+import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
 const PRACTICE_LEVEL = { id: 'practice', title: 'Practice', color: '#1cb0f6' }
@@ -40,7 +41,7 @@ function PracticePageInner() {
     // Rebuild only per round so mid-session state updates don't reshuffle the queue
   }, [hydrated, round]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!hydrated) return <div className={styles.loading}>Loading…</div>
+  if (!hydrated) return <LoadingBear />
 
   if (exercises.length === 0 && phase === 'exercise') {
     return (
@@ -97,7 +98,7 @@ function PracticePageInner() {
 
 export default function PracticePage() {
   return (
-    <Suspense fallback={<div className={styles.loading}>Loading…</div>}>
+    <Suspense fallback={<LoadingBear />}>
       <PracticePageInner />
     </Suspense>
   )

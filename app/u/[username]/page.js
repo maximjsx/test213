@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Bear from '../../../components/Bear'
 import Chevron from '../../../components/Chevron'
+import LoadingBear from '../../../components/LoadingBear'
 import styles from './page.module.css'
 
 function fmtDate(d) {
@@ -38,7 +39,7 @@ export default function PublicProfilePage() {
     }
   }
 
-  if (data === undefined) return <div className={styles.loading}>Loading…</div>
+  if (data === undefined) return <LoadingBear fullscreen={false} />
 
   if (!data?.user) {
     return (

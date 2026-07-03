@@ -7,6 +7,7 @@ import { shuffle } from '../../../lib/checker'
 import ExerciseRunner from '../../../components/ExerciseRunner'
 import LessonComplete from '../../../components/LessonComplete'
 import Chevron from '../../../components/Chevron'
+import LoadingBear from '../../../components/LoadingBear'
 import styles from './page.module.css'
 
 function findLesson(id) {
@@ -116,7 +117,7 @@ function LessonPageInner() {
 
 export default function LessonPage() {
   return (
-    <Suspense fallback={<div className={styles.loading}>Loading…</div>}>
+    <Suspense fallback={<LoadingBear />}>
       <LessonPageInner />
     </Suspense>
   )
