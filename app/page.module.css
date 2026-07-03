@@ -123,8 +123,12 @@
 @media (max-width: 680px) {
   .fabStack { bottom: calc(22px + 58px + env(safe-area-inset-bottom)); }
 
-  /* Same breakpoint as BottomNav: once the tab bar exists, these move there */
-  .leaderboardLink, .claimBtn, .profileLink { display: none; }
+  /* Same breakpoint as BottomNav: once the tab bar exists, these move there.
+     Scoped under .headerStats so it outranks the later `.shopBtn { display:flex }`
+     rule (equal specificity would otherwise lose on source order). */
+  .headerStats .leaderboardLink,
+  .headerStats .claimBtn,
+  .headerStats .profileLink { display: none; }
 }
 
 /* Main */

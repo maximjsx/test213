@@ -23,5 +23,7 @@
 }
 
 @media (max-width: 680px) {
-  .footer { padding-bottom: calc(20px + 58px + env(safe-area-inset-bottom)); }
+  /* The fixed bottom tab bar strands this footer below the fold on mobile.
+     Hide it here; the legal links are surfaced inside the Profile tab instead. */
+  .footer { display: none; }
 }

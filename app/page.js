@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { COURSE } from '../data/course'
 import { useProgress } from '../hooks/useProgress'
 import { useAuth } from '../hooks/useAuth'
@@ -21,6 +22,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
   const nodeRef = useRef(null)
+  const router = useRouter()
 
   useEffect(() => {
     if (!showTooltip) return
@@ -34,7 +36,16 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   const totalInLevel = levelLessons.length
   const displayTitle = isLast ? `Level ${levelIndex + 1} Review` : lesson.title
 
-  function handleToggle() { setShowTooltip(v => !v) }
+  // The current lesson starts immediately on tap — no intermediate tooltip.
+  // Completed (practice) and locked lessons still open their info tooltip.
+  function handleToggle() {
+    if (isCurrent) {
+      unlockAudio()
+      router.push(`/lesson/${lesson.id}?level=${levelId}`)
+      return
+    }
+    setShowTooltip(v => !v)
+  }
   function handlePress() { setPressed(true); hapticTap() }
   function handleRelease() { setPressed(false) }
 

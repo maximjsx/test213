@@ -231,7 +231,7 @@ function ProfileInner() {
         <Link href="/leaderboard" className={styles.lbLink}><img src="/icons/trophy.png" alt="" width={18} height={18} /> Leaderboard</Link>
       </div>
 
-      <div className={styles.card}>
+      <div className={user ? styles.hero : styles.card}>
         {user ? (
           <>
             <div className={styles.avatarWrap}>
@@ -263,6 +263,7 @@ function ProfileInner() {
 
             <div className={styles.joined}>Joined {fmtDate(user.createdAt)}</div>
 
+            <div className={styles.statsHeading}>Statistics</div>
             <div className={styles.stats}>
               <div className={styles.stat}>
                 <img src="/icons/lightning.png" alt="" width={22} height={22} />
@@ -399,6 +400,14 @@ function ProfileInner() {
             </div>
           </>
         )}
+      </div>
+
+      {/* Mobile only: the global footer is hidden behind the tab bar there,
+          so keep the legal links reachable from the Profile tab. */}
+      <div className={styles.legalLinks}>
+        <Link href="/privacy" className={styles.legalLink}>Privacy Policy</Link>
+        <Link href="/legal" className={styles.legalLink}>Legal Notice</Link>
+        <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Discord</a>
       </div>
     </div>
   )
