@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useMemo, useState, Suspense } from 'react'
+import { useMemo, useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { COURSE } from '../../data/course'
 import { useProgress } from '../../hooks/useProgress'
@@ -41,7 +41,14 @@ function PracticePageInner() {
     // Rebuild only per round so mid-session state updates don't reshuffle the queue
   }, [hydrated, round]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!hydrated) return <LoadingBear />
+  // Same fake-loading beat as the lesson page so entry doesn't feel abrupt
+  const [booting, setBooting] = useState(true)
+  useEffect(() => {
+    const t = setTimeout(() => setBooting(false), 900)
+    return () => clearTimeout(t)
+  }, [])
+
+  if (!hydrated || booting) return <LoadingBear label={PRACTICE_LESSON.title} />
 
   if (exercises.length === 0 && phase === 'exercise') {
     return (

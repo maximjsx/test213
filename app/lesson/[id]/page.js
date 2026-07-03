@@ -1,6 +1,6 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { useMemo, useState, useRef, Suspense } from 'react'
+import { useMemo, useState, useRef, useEffect, Suspense } from 'react'
 import { COURSE } from '../../../data/course'
 import { useProgress } from '../../../hooks/useProgress'
 import { shuffle } from '../../../lib/checker'
@@ -28,6 +28,14 @@ function LessonPageInner() {
   const [score, setScore] = useState({ correct: 0, total: 0, mistakes: [] })
   const [xpEarned, setXpEarned] = useState(0)
   const prevWrongIdsRef = useRef({})
+
+  // Lessons load instantly, which feels abrupt; hold the mascot loader for a
+  // beat so entering a lesson has a moment of anticipation (Duolingo does this)
+  const [booting, setBooting] = useState(true)
+  useEffect(() => {
+    const t = setTimeout(() => setBooting(false), 900)
+    return () => clearTimeout(t)
+  }, [])
 
   const exercises = useMemo(() => {
     if (!found) return []
@@ -68,6 +76,8 @@ function LessonPageInner() {
 
   const { lesson, level } = found
   const isPractice = !!state.lessons[lesson.id]?.completed
+
+  if (booting) return <LoadingBear label={lesson.title} />
 
   function handleComplete(finalScore) {
     prevWrongIdsRef.current = { ...state.wrongExercises }

@@ -46,3 +46,7 @@ a      { color: inherit; text-decoration: none; }
 .snap-x { scroll-snap-type: x mandatory; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* While a fullscreen LoadingBear is mounted it tags the body; hide the layout
+   footer so it doesn't peek out under the loader and jump once the page renders */
+body[data-loading] footer { visibility: hidden; }
