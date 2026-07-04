@@ -70,34 +70,47 @@
   padding: 10px 20px;
 }
 .bannerInner {
+  position: relative;
   max-width: 640px; margin: 0 auto;
-  padding: 18px 24px;
+  padding: 15px 22px 15px 26px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  border-radius: 22px;
-  transition: background 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  border-radius: 16px;
+  background: var(--surface);
+  border: 2px solid var(--border-hi);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  overflow: hidden;
 }
-.bannerLeft { display:flex; flex-direction:column; gap:3px; min-width:0; }
-.bannerUnit { font-size:12px; font-weight:800; letter-spacing:1.5px; color:rgba(255,255,255,0.8); text-transform:uppercase; }
-.bannerTitle { font-size:16px; font-weight:800; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* Colored accent bar down the left edge, tinted by the current level */
+.bannerInner::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 6px; background: var(--lvl);
+  transition: background 0.3s ease;
+}
+.bannerLeft { display:flex; flex-direction:column; gap:2px; min-width:0; }
+.bannerUnit {
+  font-size:11px; font-weight:900; letter-spacing:1.5px; text-transform:uppercase;
+  color: var(--lvl); transition: color 0.3s ease;
+}
+.bannerTitle { font-size:16px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .guidebookBtn {
-  display:flex; align-items:center; gap:8px; flex-shrink:0;
-  background:rgba(255,255,255,0.2); border:2px solid rgba(255,255,255,0.4);
-  border-radius: 999px; padding:12px 22px;
-  font-size:15px; font-weight:800; color:#fff; letter-spacing:0.5px;
-  transition:background 0.15s;
+  display:flex; align-items:center; gap:7px; flex-shrink:0;
+  background:transparent; border:2px solid var(--lvl);
+  border-radius: 12px; padding:10px 18px;
+  font-size:14px; font-weight:800; color:var(--lvl); letter-spacing:0.5px;
+  transition:background 0.15s, color 0.3s ease, border-color 0.3s ease;
   white-space: nowrap;
 }
-.guidebookBtn:hover { background:rgba(255,255,255,0.32); }
+.guidebookBtn:hover { background: color-mix(in srgb, var(--lvl) 16%, transparent); }
 
 /* Mobile */
 @media (max-width: 520px) {
   .header { height: 60px; padding: 0 14px; }
   .levelBanner { top: 60px; padding: 8px 12px; }
-  .bannerInner { padding: 12px 16px; border-radius: 16px; }
+  .bannerInner { padding: 11px 14px 11px 20px; border-radius: 14px; }
   .bannerTitle { font-size: 14px; }
-  .bannerUnit { font-size: 11px; }
-  .guidebookBtn { padding: 9px 14px; font-size: 13px; gap: 5px; }
+  .bannerUnit { font-size: 10px; }
+  .guidebookBtn { padding: 9px 14px; font-size: 13px; gap: 5px; border-radius: 10px; }
 
   .logoName { display: none; }
   .headerStats { gap: 6px; }

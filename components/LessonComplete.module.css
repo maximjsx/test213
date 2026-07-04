@@ -35,15 +35,16 @@
   100% { transform:translateX(280%); opacity:0; }
 }
 
-/* Falling confetti */
+/* Center-burst confetti — pieces pop out from the middle, then arc down */
 .confetti { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:5; }
 .confettiPiece {
-  position:absolute; top:-6vh; border-radius:2px;
-  animation-name:confettiFall; animation-timing-function:linear; animation-fill-mode:forwards;
+  position:absolute; left:50%; top:44%; border-radius:2px;
+  animation-name:confettiBurst; animation-timing-function:cubic-bezier(0.15,0.7,0.3,1); animation-fill-mode:forwards;
 }
-@keyframes confettiFall {
-  0%   { transform:translateY(-6vh) translateX(0) rotate(0deg); opacity:1; }
-  100% { transform:translateY(112vh) translateX(var(--drift)) rotate(720deg); opacity:0.9; }
+@keyframes confettiBurst {
+  0%   { transform:translate(-50%,-50%) scale(0.4) rotate(0deg); opacity:1; }
+  15%  { opacity:1; }
+  100% { transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + var(--fall))) scale(1) rotate(var(--rot)); opacity:0; }
 }
 
 .perfectBanner {

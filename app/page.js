@@ -455,13 +455,13 @@ export default function HomePage() {
 
       {/* ── Sticky level banner ── */}
       <div className={styles.levelBanner}>
-        <div className={styles.bannerInner} style={{ background: currentLevel.color }}>
+        <div className={styles.bannerInner} style={{ '--lvl': currentLevel.color }}>
           <div className={styles.bannerLeft}>
             <span className={styles.bannerUnit}>SECTION {visibleLevel + 1}</span>
             <span className={styles.bannerTitle}>{currentLevel.title} · {currentLevel.subtitle}</span>
           </div>
           <Link href={`/level/${currentLevel.id}`} className={styles.guidebookBtn}>
-            <img src="/icons/open_book.png" alt="📖" width={24} height={24} /> NOTES
+            <img src="/icons/open_book.png" alt="" width={22} height={22} /> NOTES
           </Link>
         </div>
       </div>

@@ -6,16 +6,23 @@ import styles from './LessonComplete.module.css'
 
 const CONFETTI_COLORS = ['#ffc800', '#00cc7e', '#ff9600', '#1cb0f6', '#ce82ff', '#e8025e']
 
-// Burst of confetti that falls once, for perfect lessons.
-function Confetti({ count = 46 }) {
-  const pieces = useMemo(() => Array.from({ length: count }, (_, i) => ({
-    left: Math.random() * 100,
-    delay: Math.random() * 0.5,
-    dur: 1.7 + Math.random() * 1.3,
-    color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
-    w: 7 + Math.random() * 6,
-    drift: (Math.random() - 0.5) * 160,
-  }), [count]), [count])
+// A one-shot confetti burst that pops outward from the center, for perfect
+// lessons — pieces fly out radially, then arc down under a little gravity.
+function Confetti({ count = 60 }) {
+  const pieces = useMemo(() => Array.from({ length: count }, (_, i) => {
+    const angle = Math.random() * Math.PI * 2
+    const dist = 90 + Math.random() * 280
+    return {
+      dx: Math.cos(angle) * dist,
+      dy: Math.sin(angle) * dist,
+      fall: 40 + Math.random() * 160,
+      rot: (Math.random() - 0.5) * 900,
+      dur: 0.9 + Math.random() * 0.7,
+      delay: Math.random() * 0.06,
+      color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+      w: 7 + Math.random() * 7,
+    }
+  }), [count])
   return (
     <div className={styles.confetti} aria-hidden="true">
       {pieces.map((p, i) => (
@@ -23,10 +30,10 @@ function Confetti({ count = 46 }) {
           key={i}
           className={styles.confettiPiece}
           style={{
-            left: `${p.left}%`, background: p.color,
+            background: p.color,
             width: `${p.w}px`, height: `${p.w * 0.6}px`,
             animationDelay: `${p.delay}s`, animationDuration: `${p.dur}s`,
-            '--drift': `${p.drift}px`,
+            '--dx': `${p.dx}px`, '--dy': `${p.dy}px`, '--fall': `${p.fall}px`, '--rot': `${p.rot}deg`,
           }}
         />
       ))}
