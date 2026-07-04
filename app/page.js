@@ -41,11 +41,14 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
 
   useEffect(() => {
     if (!showTooltip) return
-    // If the popup is clipped by the bottom of the viewport, nudge the page
-    // down just enough to show the whole thing (including the START button).
+    // If the popup is clipped, nudge the page down to reveal the whole thing
+    // (including the START button). On mobile the fixed bottom nav bar covers
+    // the lower screen, so clear its top edge rather than the viewport bottom.
     const t = tooltipRef.current
     if (t) {
-      const overflow = t.getBoundingClientRect().bottom - (window.innerHeight - 16)
+      const navRect = document.querySelector('nav')?.getBoundingClientRect()
+      const bottomLimit = navRect && navRect.height > 0 ? navRect.top : window.innerHeight
+      const overflow = t.getBoundingClientRect().bottom - (bottomLimit - 16)
       if (overflow > 0) window.scrollBy({ top: overflow, behavior: 'smooth' })
     }
     const handler = (e) => { if (!nodeRef.current?.contains(e.target)) setShowTooltip(false) }
