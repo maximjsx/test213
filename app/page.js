@@ -244,7 +244,7 @@ function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, 
 }
 
 export default function HomePage() {
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, skipLevel, unskipLevel, claimQuest } = useProgress()
+  const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, claimQuest } = useProgress()
   const { user } = useAuth()
   const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
@@ -418,33 +418,16 @@ export default function HomePage() {
                 )
               })()}
 
-              {li === 0 && (
-                state.skippedLevels?.[level.id]
-                  ? (
-                    <div className={styles.skippedRow}>
-                      <span className={styles.skippedNote}>Alphabet skipped, lessons still available above</span>
-                      <button className={styles.unskipBtn} onClick={() => unskipLevel(level.id)}>Undo</button>
-                    </div>
-                  ) : (
-                    <div className={styles.skipRow}>
-                      <span className={styles.skipText}>Already know Cyrillic?</span>
-                      <button className={styles.skipLevelBtn} onClick={() => { skipLevel(level.id); setTimeout(() => { const el = levelRefs.current[1]; if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 200, behavior: 'smooth' }) }, 50) }}>Skip alphabet</button>
-                    </div>
-                  )
-              )}
-
               <LessonPathWithLines lessons={level.lessons} isLessonComplete={isLessonComplete} levelColor={level.color}>
                 {level.lessons.map((lesson, idx) => {
                   const complete = isLessonComplete(lesson.id)
-                  const prevLevel = li > 0 ? COURSE.levels[li - 1] : null
-                  const unlocked = isLessonUnlocked(level.lessons, idx, prevLevel?.lessons ?? null, prevLevel?.id ?? null)
+                  const unlocked = isLessonUnlocked(level.lessons, idx)
                   const pos = NODE_POSITIONS[idx % NODE_POSITIONS.length]
 
+                  // Every level's first lesson is unlocked now, so the "resume"
+                  // marker is simply the first incomplete lesson down the map.
                   const isCurrent = unlocked && !complete
-                  // Skipped levels stay unlocked for going back, but shouldn't
-                  // claim the "current" spot ahead of the level the user jumped to
-                  const eligibleForRef = isCurrent && !state.skippedLevels?.[level.id]
-                  const assignRef = eligibleForRef && !foundCurrent ? (foundCurrent = true, true) : false
+                  const assignRef = isCurrent && !foundCurrent ? (foundCurrent = true, true) : false
                   return (
                     <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`} ref={assignRef ? currentLessonRef : null}>
                       <LessonNode

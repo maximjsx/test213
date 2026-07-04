@@ -268,12 +268,10 @@ export function useProgress() {
     })
   }, [persist])
 
-  const isLessonUnlocked = useCallback((levelLessons, idx, prevLevelLessons = null, prevLevelId = null) => {
-    if (idx === 0) {
-      if (!prevLevelLessons) return true
-      if (prevLevelId && state.skippedLevels?.[prevLevelId]) return true
-      return prevLevelLessons.every(l => !!state.lessons[l.id]?.completed)
-    }
+  const isLessonUnlocked = useCallback((levelLessons, idx) => {
+    // The first lesson of every level is always startable, so learners can jump
+    // straight into any section. Within a level, lessons still unlock in order.
+    if (idx === 0) return true
     return !!state.lessons[levelLessons[idx - 1].id]?.completed
   }, [state])
 
