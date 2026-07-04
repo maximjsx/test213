@@ -6,19 +6,22 @@ import styles from './LessonComplete.module.css'
 
 const CONFETTI_COLORS = ['#ffc800', '#00cc7e', '#ff9600', '#1cb0f6', '#ce82ff', '#e8025e']
 
-// A one-shot confetti burst that pops outward from the center, for perfect
-// lessons — pieces fly out radially, then arc down under a little gravity.
-function Confetti({ count = 60 }) {
+// A one-shot confetti burst for perfect lessons. Pieces shoot out and up from
+// the center, decelerate to a peak, then arc back down under gravity with a bit
+// of sideways sway — the two phases are eased separately in the keyframes.
+function Confetti({ count = 64 }) {
   const pieces = useMemo(() => Array.from({ length: count }, (_, i) => {
     const angle = Math.random() * Math.PI * 2
-    const dist = 90 + Math.random() * 280
+    const dist = 120 + Math.random() * 280
     return {
+      // Burst target: bias upward so pieces pop up-and-out before falling.
       dx: Math.cos(angle) * dist,
-      dy: Math.sin(angle) * dist,
-      fall: 40 + Math.random() * 160,
-      rot: (Math.random() - 0.5) * 900,
-      dur: 0.9 + Math.random() * 0.7,
-      delay: Math.random() * 0.06,
+      dy: Math.sin(angle) * dist - 70,
+      sway: (Math.random() - 0.5) * 140,
+      fall: 240 + Math.random() * 300,
+      rot: (Math.random() - 0.5) * 1000,
+      dur: 2.3 + Math.random() * 1.4,
+      delay: Math.random() * 0.1,
       color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
       w: 7 + Math.random() * 7,
     }
@@ -33,7 +36,8 @@ function Confetti({ count = 60 }) {
             background: p.color,
             width: `${p.w}px`, height: `${p.w * 0.6}px`,
             animationDelay: `${p.delay}s`, animationDuration: `${p.dur}s`,
-            '--dx': `${p.dx}px`, '--dy': `${p.dy}px`, '--fall': `${p.fall}px`, '--rot': `${p.rot}deg`,
+            '--dx': `${p.dx}px`, '--dy': `${p.dy}px`,
+            '--sway': `${p.sway}px`, '--fall': `${p.fall}px`, '--rot': `${p.rot}deg`,
           }}
         />
       ))}

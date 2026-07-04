@@ -35,16 +35,29 @@
   100% { transform:translateX(280%); opacity:0; }
 }
 
-/* Center-burst confetti — pieces pop out from the middle, then arc down */
+/* Center-burst confetti — pieces pop up-and-out, hang at a peak, then fall.
+   Per-keyframe easing: ease-out into the peak (momentum), ease-in on the way
+   down (gravity accelerating). */
 .confetti { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:5; }
 .confettiPiece {
   position:absolute; left:50%; top:44%; border-radius:2px;
-  animation-name:confettiBurst; animation-timing-function:cubic-bezier(0.15,0.7,0.3,1); animation-fill-mode:forwards;
+  animation-name:confettiBurst; animation-fill-mode:forwards;
 }
 @keyframes confettiBurst {
-  0%   { transform:translate(-50%,-50%) scale(0.4) rotate(0deg); opacity:1; }
-  15%  { opacity:1; }
-  100% { transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + var(--fall))) scale(1) rotate(var(--rot)); opacity:0; }
+  0% {
+    transform:translate(-50%,-50%) scale(0.3) rotate(0deg); opacity:0;
+    animation-timing-function:cubic-bezier(0.12,0.85,0.25,1);
+  }
+  8%  { opacity:1; }
+  45% {
+    transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(calc(var(--rot) * 0.4));
+    opacity:1;
+    animation-timing-function:cubic-bezier(0.4,0,0.75,0.8);
+  }
+  100% {
+    transform:translate(calc(-50% + var(--dx) + var(--sway)), calc(-50% + var(--dy) + var(--fall))) scale(1) rotate(var(--rot));
+    opacity:0;
+  }
 }
 
 .perfectBanner {
