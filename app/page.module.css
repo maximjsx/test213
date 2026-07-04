@@ -139,32 +139,6 @@
 
 .levelDivider { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
 
-/* Skip / skipped rows */
-.skipRow {
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  margin-bottom:20px;
-}
-.skipText { font-size:13px; font-weight:700; color:var(--text-dim); }
-.skipLevelBtn {
-  font-size:13px; font-weight:800; letter-spacing:0.3px;
-  padding:7px 16px; border-radius:999px; cursor:pointer;
-  background:transparent; border:2px solid var(--border-hi); color:var(--text-muted);
-  transition:background 0.15s, color 0.15s, border-color 0.15s;
-  white-space:nowrap; flex-shrink:0;
-}
-.skipLevelBtn:hover { background:var(--surface-hi); color:var(--text); border-color:var(--text-dim); }
-
-.skippedRow {
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  margin-bottom:20px;
-}
-.skippedNote { font-size:12px; font-weight:700; color:var(--text-dim); }
-.unskipBtn {
-  font-size:12px; font-weight:800; padding:5px 12px; border-radius:999px; cursor:pointer;
-  background:transparent; border:2px solid var(--border); color:var(--text-dim);
-  transition:background 0.15s, color 0.15s; white-space:nowrap; flex-shrink:0;
-}
-.unskipBtn:hover { background:var(--surface-hi); color:var(--text); }
 .dividerLine { flex:1; height:1px; background:var(--border); border-radius:2px; }
 .dividerLabel {
   font-size:11px; font-weight:900; letter-spacing:1.5px; color:var(--text-muted); text-transform:uppercase; white-space:nowrap;
@@ -474,4 +448,38 @@
 @media (max-width: 520px) {
   .streakNudge { width:calc(100% - 24px); font-size:13px; padding:10px 14px; gap:8px; }
   .streakNudgeGo { padding:5px 11px; font-size:12px; }
+}
+
+/* ── Reward animations ── */
+
+/* XP counter floating +N */
+.xp { position: relative; }
+.xpDelta {
+  position:absolute; top:-14px; right:0;
+  font-size:13px; font-weight:900; color:var(--green, #58cc02);
+  pointer-events:none;
+  animation: xpFloat 1.1s ease-out forwards;
+}
+@keyframes xpFloat {
+  0%   { opacity:0; transform:translateY(4px) scale(0.8); }
+  20%  { opacity:1; transform:translateY(0) scale(1.1); }
+  100% { opacity:0; transform:translateY(-18px) scale(1); }
+}
+
+/* Just-completed lesson node pop */
+.nodeJustDone { animation: nodePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes nodePop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.22); }
+  60%  { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+/* Connector line drawing in as a segment completes */
+.lineDraw { animation: lineDraw 0.65s ease-out 0.1s forwards; }
+@keyframes lineDraw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .xpDelta, .nodeJustDone, .lineDraw { animation: none; }
+  .lineDraw { stroke-dashoffset: 0 !important; }
 }

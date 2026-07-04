@@ -4,14 +4,13 @@ import { playLevelComplete, playPerfect } from '../lib/audio'
 import Bear from './Bear'
 import styles from './LessonComplete.module.css'
 
-// Counts up from 0 to the earned XP over ~0.9s with an ease-out
-function useCountUp(target) {
+// Counts up from 0 to the target over ~0.9s with an ease-out
+function useCountUp(target, dur = 900) {
   const [value, setValue] = useState(0)
   useEffect(() => {
     if (!target) return
     let raf
     const start = performance.now()
-    const dur = 900
     const tick = (now) => {
       const t = Math.min((now - start) / dur, 1)
       const eased = 1 - Math.pow(1 - t, 3)
@@ -20,7 +19,7 @@ function useCountUp(target) {
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [target])
+  }, [target, dur])
   return value
 }
 
@@ -48,57 +47,53 @@ function getExerciseDisplay(ex) {
   }
 }
 
+// One Duolingo-style stat tile: a colored label bar over a value with an icon.
+function StatTile({ color, label, icon, value }) {
+  return (
+    <div className={styles.tile} style={{ borderColor: color }}>
+      <div className={styles.tileHead} style={{ background: color }}>{label}</div>
+      <div className={styles.tileBody} style={{ color }}>
+        {icon && <img src={icon} alt="" width={20} height={20} />}
+        <span>{value}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function LessonComplete({ lesson, level, score, xpEarned, onContinue, onRetry, mistakes = [], prevWrongIds = {} }) {
   const pct = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0
   const perfect = score.total > 0 && score.correct === score.total
+  const combo = score.maxCombo ?? 0
 
   const uniqueMistakes = mistakes.filter((m, i) => mistakes.findIndex(x => x.id === m.id) === i)
   const shownXp = useCountUp(xpEarned ?? lesson.xp)
+  const shownPct = useCountUp(pct)
 
   useEffect(() => {
     if (perfect) playPerfect()
     else playLevelComplete()
   }, [])
 
-  return (
-    <div className={`${styles.wrap} ${perfect ? styles.wrapPerfect : ''}`}>
-      <div className={`${styles.card} ${perfect ? styles.cardPerfect : ''}`}>
-        {perfect && <div className={styles.perfectBanner}><img src="/icons/star.png" alt="⭐" width={18} height={18} style={{ verticalAlign: 'middle' }} /> PERFECT LESSON <img src="/icons/star.png" alt="⭐" width={18} height={18} style={{ verticalAlign: 'middle' }} /></div>}
+  const accuracyColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)'
 
-        <div className={styles.emoji}>
-          <Bear mood={perfect ? 'cheer' : pct >= 60 ? 'happy' : 'sad'} size={96} />
+  return (
+    <div className={styles.wrap}>
+      <div className={styles.content}>
+        {perfect && <div className={styles.perfectBanner}>Perfect Lesson</div>}
+
+        <div className={styles.bear}>
+          <Bear mood={perfect ? 'cheer' : pct >= 60 ? 'happy' : 'sad'} size={104} />
         </div>
         <h1 className={styles.title}>
           {perfect ? 'Flawless!' : pct >= 60 ? 'Lesson Complete!' : 'Keep Practicing!'}
         </h1>
 
-        <div className={styles.xpBadge} style={{ background: level.color }}>
-          +{shownXp} XP
-        </div>
-
-        {(score.maxCombo ?? 0) >= 5 && (
-          <div className={styles.comboBadge}>
-            <img src="/icons/fire.png" alt="" width={16} height={16} /> Best run: {score.maxCombo} in a row
-          </div>
-        )}
-
-        <div className={styles.stats}>
-          <div className={styles.stat}>
-            <div className={styles.statVal} style={{ color: 'var(--green)' }}>{score.correct}</div>
-            <div className={styles.statLbl}>Correct</div>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <div className={styles.statVal} style={{ color: score.total - score.correct > 0 ? 'var(--red)' : 'var(--text-dim)' }}>
-              {score.total - score.correct}
-            </div>
-            <div className={styles.statLbl}>Errors</div>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <div className={styles.statVal} style={{ color: perfect ? 'var(--green)' : undefined }}>{pct}%</div>
-            <div className={styles.statLbl}>Accuracy</div>
-          </div>
+        <div className={styles.tiles}>
+          <StatTile color="var(--yellow)" label="Total XP" icon="/icons/lightning.png" value={`+${shownXp}`} />
+          <StatTile color={accuracyColor} label="Accuracy" value={`${shownPct}%`} />
+          {combo >= 3 && (
+            <StatTile color="var(--orange)" label="Best Combo" icon="/icons/fire.png" value={combo} />
+          )}
         </div>
 
         {uniqueMistakes.length > 0 && (
@@ -109,20 +104,22 @@ export default function LessonComplete({ lesson, level, score, xpEarned, onConti
               const isPrev = (prevWrongIds[ex.id] || 0) > 0
               return (
                 <div key={ex.id} className={styles.mistakeItem}>
-                  {isPrev && <div className={styles.prevBadge}>⚠ Previous mistake</div>}
+                  {isPrev && <div className={styles.prevBadge}>Previous mistake</div>}
                   <div className={styles.mistakeQ}>{q}</div>
-                  <div className={styles.mistakeA}><img src="/icons/green_checkmark.png" alt="✓" width={14} height={14} style={{ verticalAlign: 'middle', marginRight: 5 }} />{a}</div>
+                  <div className={styles.mistakeA}><img src="/icons/green_checkmark.png" alt="" width={14} height={14} style={{ verticalAlign: 'middle', marginRight: 5 }} />{a}</div>
                 </div>
               )
             })}
           </div>
         )}
+      </div>
 
-        <div className={styles.btns}>
-          <button className={styles.continueBtn} style={{ background: level.color }} onClick={onContinue}>
+      <div className={styles.footer}>
+        <div className={styles.footerInner}>
+          <button className={styles.retryBtn} onClick={onRetry}>Try Again</button>
+          <button className={styles.continueBtn} style={{ background: level.color, boxShadow: `0 4px 0 color-mix(in srgb, ${level.color} 65%, #000)` }} onClick={onContinue}>
             CONTINUE
           </button>
-          <button className={styles.retryBtn} onClick={onRetry}>Try Again</button>
         </div>
       </div>
     </div>

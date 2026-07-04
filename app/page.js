@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { COURSE } from '../data/course'
@@ -32,7 +32,7 @@ function packView(state, pack) {
   }
 }
 
-function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, levelId, isLast, levelIndex, pos }) {
+function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, isResume, justCompleted, levelId, isLast, levelIndex, pos }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
   const nodeRef = useRef(null)
@@ -56,10 +56,12 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
 
   return (
     <div className={styles.nodeWrap} ref={nodeRef}>
-      {isCurrent && (
+      {/* START label + mascot mark only the single "resume" node (where you
+          left off), not every startable level entry, so the map stays calm. */}
+      {isResume && (
         <div className={`${styles.startLabel} ${showTooltip ? styles.startLabelHide : ''}`}>START</div>
       )}
-      {isCurrent && (
+      {isResume && (
         <div className={`${styles.pathBear} ${pos === 'left' ? styles.pathBearRight : styles.pathBearLeft}`}>
           <Bear mood="idle" size={58} />
         </div>
@@ -70,7 +72,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
           !isUnlocked ? styles.nodeLocked
           : isComplete ? styles.nodeComplete
           : styles.nodeCurrent
-        } ${pressed ? styles.nodePressed : ''}`}
+        } ${pressed ? styles.nodePressed : ''} ${justCompleted ? styles.nodeJustDone : ''}`}
         style={isComplete ? { background: levelColor, borderColor: levelColor, boxShadow: `0 4px 0 color-mix(in srgb, ${levelColor} 60%, #000)` }
           : isCurrent ? { borderColor: levelColor, boxShadow: `0 4px 0 var(--border-hi)` } : {}}
         onClick={handleToggle}
@@ -118,7 +120,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   )
 }
 
-function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor }) {
+function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor, justCompletedId }) {
   const containerRef = useRef(null)
   const svgRef = useRef(null)
 
@@ -149,6 +151,14 @@ function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor }
           el.setAttribute('stroke', levelColor)
           el.setAttribute('stroke-width', '5')
           el.setAttribute('opacity', '0.55')
+          // If this segment just became complete (touches the lesson finished
+          // moments ago), draw it in with a stroke-dashoffset sweep.
+          if (justCompletedId && (lessons[i].id === justCompletedId || lessons[i + 1].id === justCompletedId)) {
+            const len = el.getTotalLength()
+            el.style.strokeDasharray = String(len)
+            el.style.strokeDashoffset = String(len)
+            el.classList.add(styles.lineDraw)
+          }
         } else {
           el.setAttribute('stroke', 'var(--border-hi)')
           el.setAttribute('stroke-width', '3')
@@ -174,7 +184,7 @@ function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor }
       window.removeEventListener('resize', recompute)
       ro.disconnect()
     }
-  }, [lessons, isLessonComplete, levelColor])
+  }, [lessons, isLessonComplete, levelColor, justCompletedId])
 
   return (
     <div className={styles.lessonPath} ref={containerRef}>
@@ -239,6 +249,54 @@ function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, 
           )
         })}
       </div>
+    </div>
+  )
+}
+
+// Eased count-up so the number rolls to its new value instead of snapping.
+// Starts already on `target`, so a fresh mount (or hard reload after hydration)
+// shows the real total with no distracting count-from-zero.
+function useCountUp(target, duration = 650) {
+  const [display, setDisplay] = useState(target)
+  const fromRef = useRef(target)
+  const rafRef = useRef(0)
+  useEffect(() => {
+    const from = fromRef.current
+    if (from === target) return
+    const start = performance.now()
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setDisplay(Math.round(from + (target - from) * eased))
+      if (t < 1) rafRef.current = requestAnimationFrame(tick)
+      else fromRef.current = target
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [target, duration])
+  return display
+}
+
+function XpCounter({ xp }) {
+  const display = useCountUp(xp)
+  const [delta, setDelta] = useState(null)
+  const prevRef = useRef(xp)
+  useEffect(() => {
+    if (xp > prevRef.current) {
+      // Keyed by value so React remounts the badge and the float animation
+      // replays even on back-to-back gains.
+      setDelta({ amount: xp - prevRef.current, key: Date.now() })
+      const t = setTimeout(() => setDelta(null), 1200)
+      prevRef.current = xp
+      return () => clearTimeout(t)
+    }
+    prevRef.current = xp
+  }, [xp])
+  return (
+    <div className={styles.xp}>
+      <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="⚡" width={24} height={24} /></span>
+      <span className={styles.xpNum}>{display} XP</span>
+      {delta && <span key={delta.key} className={styles.xpDelta}>+{delta.amount}</span>}
     </div>
   )
 }
@@ -312,6 +370,17 @@ export default function HomePage() {
   const claimable = claimableQuestCount(state.quests)
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
 
+  // The lesson finished most recently, but only if it was within the last few
+  // seconds — i.e. the user just came back from it — so its node pops and its
+  // connectors draw in once, without animating on an ordinary reload.
+  const justCompletedId = useMemo(() => {
+    let best = null, bestAt = 0
+    for (const [id, v] of Object.entries(state.lessons || {})) {
+      if (v?.completedAt && v.completedAt > bestAt) { bestAt = v.completedAt; best = id }
+    }
+    return best && Date.now() - bestAt < 8000 ? best : null
+  }, [state.lessons])
+
   if (!hydrated) return <LoadingBear />
 
   return (
@@ -347,10 +416,7 @@ export default function HomePage() {
               <span className={styles.streakFlame}><img src="/icons/fire.png" alt="🔥" width={26} height={26} /></span>
               <span className={styles.streakNum}>{state.streak}</span>
             </button>
-            <div className={styles.xp}>
-              <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="⚡" width={24} height={24} /></span>
-              <span className={styles.xpNum}>{state.xp} XP</span>
-            </div>
+            <XpCounter xp={state.xp} />
             <button className={styles.shopBtn} onClick={() => setShowQuests(true)} title="Daily quests">
               <img src="/icons/another_star.png" alt="quests" width={26} height={26} />
               {claimable > 0 && <span className={styles.questBadge}>{claimable}</span>}
@@ -418,7 +484,7 @@ export default function HomePage() {
                 )
               })()}
 
-              <LessonPathWithLines lessons={level.lessons} isLessonComplete={isLessonComplete} levelColor={level.color}>
+              <LessonPathWithLines lessons={level.lessons} isLessonComplete={isLessonComplete} levelColor={level.color} justCompletedId={justCompletedId}>
                 {level.lessons.map((lesson, idx) => {
                   const complete = isLessonComplete(lesson.id)
                   const unlocked = isLessonUnlocked(level.lessons, idx)
@@ -437,6 +503,8 @@ export default function HomePage() {
                         levelColor={level.color}
                         isComplete={complete}
                         isUnlocked={unlocked}
+                        isResume={assignRef}
+                        justCompleted={lesson.id === justCompletedId}
                         levelId={level.id}
                         isLast={idx === level.lessons.length - 1}
                         levelIndex={li}
