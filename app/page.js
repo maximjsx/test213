@@ -19,6 +19,19 @@ const SPECIAL_PACKS = [
   { id: 'street_slang', name: 'Street Slang', icon: '😎', costXP: 150, desc: 'Informal expressions locals actually use' },
 ]
 
+// Zig-zag layout of the lesson nodes down the map. Hoisted so it isn't
+// re-allocated for every lesson on every render.
+const NODE_POSITIONS = ['center', 'right', 'center', 'left', 'center', 'right', 'center', 'left']
+
+// Single source of truth for a pack's derived state, so the shop modal and the
+// bottom packs grid can't drift apart on what counts as owned/affordable.
+function packView(state, pack) {
+  return {
+    owned: !!state.specialUnlocks?.[pack.id],
+    canAfford: state.xp >= pack.costXP,
+  }
+}
+
 function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, levelId, isLast, levelIndex, pos }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
@@ -110,7 +123,8 @@ function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor }
   const svgRef = useRef(null)
 
   useEffect(() => {
-    function recompute() {
+    let frame = 0
+    function draw() {
       const container = containerRef.current
       const svg = svgRef.current
       if (!container || !svg) return
@@ -144,10 +158,23 @@ function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor }
         svg.appendChild(el)
       }
     }
+    // Coalesce bursts of resize/reflow events into a single draw per frame.
+    function recompute() {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(draw)
+    }
     recompute()
     window.addEventListener('resize', recompute)
-    return () => window.removeEventListener('resize', recompute)
-  })
+    // Also redraw when the container itself changes size (font load, images
+    // decoding, lessons expanding) — window resize alone misses those.
+    const ro = new ResizeObserver(recompute)
+    if (containerRef.current) ro.observe(containerRef.current)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('resize', recompute)
+      ro.disconnect()
+    }
+  }, [lessons, isLessonComplete, levelColor])
 
   return (
     <div className={styles.lessonPath} ref={containerRef}>
@@ -188,8 +215,7 @@ function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, 
 
         <div className={styles.shopSectionLabel}>Special Packs</div>
         {SPECIAL_PACKS.map(pack => {
-          const owned = state.specialUnlocks?.[pack.id]
-          const canAfford = state.xp >= pack.costXP
+          const { owned, canAfford } = packView(state, pack)
           return (
             <div key={pack.id} className={`${styles.shopItem} ${owned ? styles.shopItemOwned : ''}`}>
               <div className={styles.shopItemInfo}>
@@ -229,7 +255,9 @@ export default function HomePage() {
   const currentLessonRef = useRef(null)
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false
+    const measure = () => {
+      ticking = false
       const threshold = 130
       let current = 0
       COURSE.levels.forEach((_, i) => {
@@ -246,6 +274,13 @@ export default function HomePage() {
         const r = node.getBoundingClientRect()
         setShowJump(r.bottom < 80 || r.top > window.innerHeight - 40)
       }
+    }
+    // Do the layout reads at most once per frame instead of on every scroll
+    // event — keeps the map smooth on lower-end phones.
+    const handleScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(measure)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -354,6 +389,15 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ── Streak-at-risk nudge ── */}
+      {streakAtRisk && (
+        <button className={styles.streakNudge} onClick={jumpToCurrent}>
+          <img src="/icons/fire.png" alt="" width={22} height={22} />
+          <span>Do one lesson to keep your {state.streak}-day streak alive</span>
+          <span className={styles.streakNudgeGo}>Go</span>
+        </button>
+      )}
+
       {/* ── Course map ── */}
       <main className={styles.main}>
         {(() => { let foundCurrent = false; return COURSE.levels.map((level, li) => {
@@ -394,8 +438,7 @@ export default function HomePage() {
                   const complete = isLessonComplete(lesson.id)
                   const prevLevel = li > 0 ? COURSE.levels[li - 1] : null
                   const unlocked = isLessonUnlocked(level.lessons, idx, prevLevel?.lessons ?? null, prevLevel?.id ?? null)
-                  const positions = ['center', 'right', 'center', 'left', 'center', 'right', 'center', 'left']
-                  const pos = positions[idx % positions.length]
+                  const pos = NODE_POSITIONS[idx % NODE_POSITIONS.length]
 
                   const isCurrent = unlocked && !complete
                   // Skipped levels stay unlocked for going back, but shouldn't
@@ -433,8 +476,7 @@ export default function HomePage() {
           </div>
           <div className={styles.packsGrid}>
             {SPECIAL_PACKS.map(pack => {
-              const owned = state.specialUnlocks?.[pack.id]
-              const canAfford = state.xp >= pack.costXP
+              const { owned, canAfford } = packView(state, pack)
               return (
                 <div key={pack.id} className={`${styles.packCard} ${owned ? styles.packOwned : ''}`}>
                   <div className={styles.packCardIcon}>{pack.icon}</div>

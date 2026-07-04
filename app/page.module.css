@@ -451,3 +451,27 @@
 
 .jumpFab { animation:jumpFabIn 0.2s ease; }
 @keyframes jumpFabIn { from { opacity:0; transform:scale(0.7); } }
+
+/* Streak-at-risk nudge — sits under the sticky banner, taps back to current lesson */
+.streakNudge {
+  display:flex; align-items:center; gap:10px;
+  max-width:640px; margin:0 auto 4px; width:calc(100% - 40px);
+  padding:12px 18px;
+  background:var(--surface); border:2px solid var(--red);
+  border-radius:16px;
+  box-shadow:0 3px 0 var(--border), 0 4px 16px rgba(0,0,0,0.28);
+  color:var(--text); font-size:14px; font-weight:700; text-align:left;
+  cursor:pointer; transition:transform 0.1s, background 0.15s;
+}
+.streakNudge:hover { background:var(--surface-hi); }
+.streakNudge:active { transform:translateY(2px); }
+.streakNudge span:first-of-type { flex:1; min-width:0; }
+.streakNudgeGo {
+  flex-shrink:0; padding:6px 14px; border-radius:999px;
+  background:var(--red); color:#fff; font-size:13px; font-weight:900; letter-spacing:0.5px;
+}
+
+@media (max-width: 520px) {
+  .streakNudge { width:calc(100% - 24px); font-size:13px; padding:10px 14px; gap:8px; }
+  .streakNudgeGo { padding:5px 11px; font-size:12px; }
+}
