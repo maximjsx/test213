@@ -11,8 +11,40 @@
   max-width:460px; width:100%; margin:0 auto;
 }
 
-.bear { animation:pop 0.45s cubic-bezier(0.34,1.56,0.64,1) both; }
+.bearStage { position:relative; display:flex; align-items:center; justify-content:center; }
+.bear { animation:pop 0.45s cubic-bezier(0.34,1.56,0.64,1) both; position:relative; z-index:1; }
 @keyframes pop { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.12)} 100%{transform:scale(1);opacity:1} }
+
+/* Perfect lesson: bear runs in place */
+.bearRun { animation:pop 0.45s cubic-bezier(0.34,1.56,0.64,1) both, bearRun 0.42s ease-in-out 0.45s infinite; }
+@keyframes bearRun {
+  0%,100% { transform:translateY(0) rotate(-4deg); }
+  50%     { transform:translateY(-9px) rotate(4deg); }
+}
+
+/* Anime speed lines whooshing past the bear */
+.speedLines { position:absolute; inset:-12px -44px; overflow:hidden; pointer-events:none; z-index:0; }
+.speedLine {
+  position:absolute; right:100%; width:55%; height:4px; border-radius:2px;
+  background:linear-gradient(90deg, transparent, var(--yellow));
+  opacity:0; animation:speedZoom 0.55s linear infinite;
+}
+@keyframes speedZoom {
+  0%   { transform:translateX(0); opacity:0; }
+  25%  { opacity:0.75; }
+  100% { transform:translateX(280%); opacity:0; }
+}
+
+/* Falling confetti */
+.confetti { position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:5; }
+.confettiPiece {
+  position:absolute; top:-6vh; border-radius:2px;
+  animation-name:confettiFall; animation-timing-function:linear; animation-fill-mode:forwards;
+}
+@keyframes confettiFall {
+  0%   { transform:translateY(-6vh) translateX(0) rotate(0deg); opacity:1; }
+  100% { transform:translateY(112vh) translateX(var(--drift)) rotate(720deg); opacity:0.9; }
+}
 
 .perfectBanner {
   font-size:12px; font-weight:900; letter-spacing:2.5px; text-transform:uppercase;
@@ -69,7 +101,7 @@
   position:sticky; bottom:0;
   border-top:2px solid var(--border);
   background:var(--surface);
-  padding:16px 24px calc(16px + env(safe-area-inset-bottom));
+  padding:20px 24px 24px;
 }
 .footerInner {
   max-width:460px; margin:0 auto;
@@ -90,6 +122,13 @@
 }
 .retryBtn:hover { background:var(--surface-hi); color:var(--text); }
 
+/* Match the mid-lesson feedback bar so the CONTINUE button lands at the same
+   height between screens (that bar lifts the button ~56px off the bottom). */
+@media (max-width: 520px) {
+  .footer { padding:20px 16px calc(56px + env(safe-area-inset-bottom, 0px)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .bear, .tile { animation:none; }
+  .bear, .bearRun, .tile, .speedLine, .confettiPiece { animation:none; }
+  .confetti, .speedLines { display:none; }
 }

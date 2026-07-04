@@ -36,10 +36,18 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
   const nodeRef = useRef(null)
+  const tooltipRef = useRef(null)
   const router = useRouter()
 
   useEffect(() => {
     if (!showTooltip) return
+    // If the popup is clipped by the bottom of the viewport, nudge the page
+    // down just enough to show the whole thing (including the START button).
+    const t = tooltipRef.current
+    if (t) {
+      const overflow = t.getBoundingClientRect().bottom - (window.innerHeight - 16)
+      if (overflow > 0) window.scrollBy({ top: overflow, behavior: 'smooth' })
+    }
     const handler = (e) => { if (!nodeRef.current?.contains(e.target)) setShowTooltip(false) }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
@@ -89,7 +97,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
 
       {showTooltip && (
         isUnlocked ? (
-          <div className={styles.tooltip}>
+          <div className={styles.tooltip} ref={tooltipRef}>
             <div className={styles.tooltipTitle}>{displayTitle}</div>
             <div className={styles.tooltipSub}>Lesson {lessonNum} of {totalInLevel}</div>
             <button
@@ -109,7 +117,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
             </button>
           </div>
         ) : (
-          <div className={`${styles.tooltip} ${styles.tooltipLocked}`}>
+          <div className={`${styles.tooltip} ${styles.tooltipLocked}`} ref={tooltipRef}>
             <div className={styles.tooltipTitle}>{displayTitle}</div>
             <div className={styles.tooltipSub}>Complete all lessons above to unlock this!</div>
             <div className={styles.tooltipBtnLocked}>LOCKED</div>

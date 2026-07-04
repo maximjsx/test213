@@ -1,8 +1,49 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { playLevelComplete, playPerfect } from '../lib/audio'
 import Bear from './Bear'
 import styles from './LessonComplete.module.css'
+
+const CONFETTI_COLORS = ['#ffc800', '#00cc7e', '#ff9600', '#1cb0f6', '#ce82ff', '#e8025e']
+
+// Burst of confetti that falls once, for perfect lessons.
+function Confetti({ count = 46 }) {
+  const pieces = useMemo(() => Array.from({ length: count }, (_, i) => ({
+    left: Math.random() * 100,
+    delay: Math.random() * 0.5,
+    dur: 1.7 + Math.random() * 1.3,
+    color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+    w: 7 + Math.random() * 6,
+    drift: (Math.random() - 0.5) * 160,
+  }), [count]), [count])
+  return (
+    <div className={styles.confetti} aria-hidden="true">
+      {pieces.map((p, i) => (
+        <span
+          key={i}
+          className={styles.confettiPiece}
+          style={{
+            left: `${p.left}%`, background: p.color,
+            width: `${p.w}px`, height: `${p.w * 0.6}px`,
+            animationDelay: `${p.delay}s`, animationDuration: `${p.dur}s`,
+            '--drift': `${p.drift}px`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+// Anime-style horizontal speed lines that whoosh past the running bear.
+function SpeedLines() {
+  return (
+    <div className={styles.speedLines} aria-hidden="true">
+      {Array.from({ length: 6 }, (_, i) => (
+        <span key={i} className={styles.speedLine} style={{ top: `${8 + i * 15}%`, animationDelay: `${i * 0.11}s` }} />
+      ))}
+    </div>
+  )
+}
 
 // Counts up from 0 to the target over ~0.9s with an ease-out
 function useCountUp(target, dur = 900) {
@@ -78,11 +119,15 @@ export default function LessonComplete({ lesson, level, score, xpEarned, onConti
 
   return (
     <div className={styles.wrap}>
+      {perfect && <Confetti />}
       <div className={styles.content}>
         {perfect && <div className={styles.perfectBanner}>Perfect Lesson</div>}
 
-        <div className={styles.bear}>
-          <Bear mood={perfect ? 'cheer' : pct >= 60 ? 'happy' : 'sad'} size={104} />
+        <div className={styles.bearStage}>
+          {perfect && <SpeedLines />}
+          <div className={`${styles.bear} ${perfect ? styles.bearRun : ''}`}>
+            <Bear mood={perfect ? 'cheer' : pct >= 60 ? 'happy' : 'sad'} size={104} />
+          </div>
         </div>
         <h1 className={styles.title}>
           {perfect ? 'Flawless!' : pct >= 60 ? 'Lesson Complete!' : 'Keep Practicing!'}

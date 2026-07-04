@@ -254,7 +254,7 @@
   border-radius: var(--r); padding: 22px 20px;
   min-width: 260px; text-align:center;
   box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-  animation: tooltipPop 0.15s ease;
+  animation: tooltipPop 0.12s ease;
 }
 .tooltip::after {
   content:''; position:absolute; bottom:100%; left:50%; transform:translateX(-50%);
@@ -267,7 +267,9 @@
   background:var(--surface-hi); border:2px solid var(--border);
   letter-spacing:0.5px; cursor:not-allowed; opacity:0.6;
 }
-@keyframes tooltipPop { from { opacity:0; transform:translateX(-50%) scale(0.9); } }
+/* Fade only — no scale/translate, so the popup appears at its final spot
+   instantly instead of animating into place. */
+@keyframes tooltipPop { from { opacity:0; } }
 .tooltipTitle { font-size:17px; font-weight:800; color:var(--text); margin-bottom:6px; }
 .tooltipSub { font-size:14px; color:var(--text-muted); font-weight:600; margin-bottom:16px; }
 .tooltipBtn {
@@ -482,4 +484,20 @@
 @media (prefers-reduced-motion: reduce) {
   .xpDelta, .nodeJustDone, .lineDraw { animation: none; }
   .lineDraw { stroke-dashoffset: 0 !important; }
+}
+
+/* ── Shop modal: tighten spacing on phones so text and buttons don't crowd ── */
+@media (max-width: 520px) {
+  .shopOverlay { padding: 14px; }
+  .shopCard { padding: 28px 16px; gap: 12px; border-radius: 20px; }
+  .shopEmoji { font-size: 44px; }
+  .shopTitle { font-size: 21px; }
+
+  .shopItem { padding: 12px 12px; }
+  .shopItemInfo { gap: 10px; }
+  .shopItemIcon { font-size: 24px; }
+  .shopItemName { font-size: 14px; overflow-wrap: anywhere; }
+  .shopItemCost { font-size: 12px; overflow-wrap: anywhere; }
+  .shopBuyBtn { min-width: 0; padding: 10px 14px; font-size: 13px; }
+  .shopOwnedBadge { padding: 8px 6px; font-size: 13px; }
 }
