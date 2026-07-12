@@ -14,3 +14,12 @@
   35%      { transform: translateY(-9px) scale(1.03); }
   55%      { transform: translateY(0) scale(0.98); }
 }
+
+.sway {
+  transform-origin: 50% 100%;
+  animation: bearSway 2.8s ease-in-out infinite;
+}
+@keyframes bearSway {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(3px) rotate(2deg); }
+}

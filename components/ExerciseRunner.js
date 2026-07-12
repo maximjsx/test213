@@ -16,6 +16,7 @@ import ImageSelect from './exercises/ImageSelect'
 import ImageMatch from './exercises/ImageMatch'
 import ImageName from './exercises/ImageName'
 import ImageMultipleChoice from './exercises/ImageMultipleChoice'
+import Bear from './Bear'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
@@ -172,7 +173,9 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
       {showQuitConfirm && (
         <div className={styles.quitModalOverlay}>
           <div className={styles.quitModalCard}>
-            <div className={styles.quitModalEmoji}>😟</div>
+            <div className={styles.quitModalBear}>
+              <Bear mood="sad" size={80} />
+            </div>
             <h3 className={styles.quitModalTitle}>Quit lesson?</h3>
             <p className={styles.quitModalText}>
               You'll have to start this lesson over from the beginning if you quit now.

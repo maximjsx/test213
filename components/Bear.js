@@ -4,7 +4,7 @@ import styles from './Bear.module.css'
 // swap the shapes for real art later without touching call sites.
 // moods: idle | happy | cheer | sad
 export default function Bear({ mood = 'happy', size = 96, className = '' }) {
-  const anim = mood === 'cheer' ? styles.bounce : mood === 'sad' ? '' : styles.bob
+  const anim = mood === 'cheer' ? styles.bounce : mood === 'sad' ? styles.sway : styles.bob
   return (
     <svg
       viewBox="0 0 120 120"
