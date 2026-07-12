@@ -416,7 +416,7 @@ function ProfileInner() {
           so keep the legal links reachable from the Profile tab. */}
       <div className={styles.legalLinks}>
         <Link href="/privacy" className={styles.legalLink}>Privacy Policy</Link>
-        <Link href="/legal" className={styles.legalLink}>Legal Notice</Link>
+        <a href="https://legal.bulgarian.dev/" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Legal Notice</a>
         <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Discord</a>
       </div>
     </div>
