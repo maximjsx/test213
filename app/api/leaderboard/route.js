@@ -1,5 +1,6 @@
 import getClientPromise from '@/lib/mongodb'
 import { getSession } from '@/lib/auth'
+import { lifetimeXp, xpSince, XP_HISTORY_PROJECTION } from '@/lib/xp'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,13 +18,9 @@ function periodStartKey(period) {
   return keyOf(new Date(now.getFullYear(), now.getMonth(), 1)) // month
 }
 
-function xpSince(xpByDay, startKey) {
-  if (!xpByDay) return 0
-  let sum = 0
-  for (const [day, xp] of Object.entries(xpByDay)) {
-    if (day >= startKey) sum += Number(xp) || 0
-  }
-  return sum
+function periodXp(user, period) {
+  if (period === 'week' || period === 'month') return xpSince(user.progress?.xpByDay, periodStartKey(period))
+  return lifetimeXp(user)
 }
 
 export async function GET(req) {
@@ -33,23 +30,15 @@ export async function GET(req) {
     const users = client.db('bulgario').collection('users')
     const session = getSession()
 
-    let rows
-    if (period === 'week' || period === 'month') {
-      const startKey = periodStartKey(period)
-      const all = await users
-        .find({ xp: { $gt: 0 } }, { projection: { _id: 0, username: 1, streak: 1, discordId: 1, avatar: 1, 'progress.xpByDay': 1 } })
-        .toArray()
-      rows = all
-        .map(u => ({ ...u, periodXp: xpSince(u.progress?.xpByDay, startKey) }))
-        .filter(u => u.periodXp > 0)
-        .sort((a, b) => b.periodXp - a.periodXp)
-    } else {
-      rows = (await users
-        .find({ xp: { $gt: 0 } }, { projection: { _id: 0, username: 1, xp: 1, streak: 1, discordId: 1, avatar: 1 } })
-        .sort({ xp: -1 })
-        .toArray())
-        .map(u => ({ ...u, periodXp: u.xp }))
-    }
+    // Not filtered on `xp`: that is the spendable balance, and someone who
+    // spent it all still earned their place.
+    const all = await users
+      .find({}, { projection: { _id: 0, username: 1, streak: 1, discordId: 1, avatar: 1, ...XP_HISTORY_PROJECTION } })
+      .toArray()
+    const rows = all
+      .map(u => ({ ...u, periodXp: periodXp(u, period) }))
+      .filter(u => u.periodXp > 0)
+      .sort((a, b) => b.periodXp - a.periodXp)
 
     let me = null
     if (session) {

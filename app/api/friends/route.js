@@ -1,12 +1,13 @@
 import getClientPromise from '@/lib/mongodb'
 import { getSession } from '@/lib/auth'
+import { lifetimeXp, XP_HISTORY_PROJECTION } from '@/lib/xp'
 
 export const dynamic = 'force-dynamic'
 
 function publicUser(u) {
   return {
     username: u.username,
-    xp: u.xp || 0,
+    xp: lifetimeXp(u),
     streak: u.streak || 0,
     avatarUrl: u.avatar ? `https://cdn.discordapp.com/avatars/${u.discordId}/${u.avatar}.png?size=64` : null,
   }
@@ -28,7 +29,7 @@ export async function GET() {
 
     const otherIds = [...new Set(rels.map(r => (r.from === me ? r.to : r.from)))]
     const others = await db.collection('users')
-      .find({ discordId: { $in: otherIds } }, { projection: { _id: 0, discordId: 1, username: 1, avatar: 1, xp: 1, streak: 1 } })
+      .find({ discordId: { $in: otherIds } }, { projection: { _id: 0, discordId: 1, username: 1, avatar: 1, streak: 1, ...XP_HISTORY_PROJECTION } })
       .toArray()
     const byId = Object.fromEntries(others.map(u => [u.discordId, u]))
 
