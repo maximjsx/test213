@@ -56,25 +56,33 @@ function normalize(raw) {
   return ensureQuests(calcStreakBreak({ ...defaultState(), ...raw }))
 }
 
+// A break or used freeze found on load must be saved, or the server keeps
+// showing the old streak on the leaderboard and friend lists.
+function streakChanged(raw, next) {
+  return (raw.streak || 0) !== next.streak || (raw.streakFreezes || 0) !== next.streakFreezes
+}
+
 function calcStreakBreak(state) {
   if (!state.lastActiveDay || state.streak === 0) return state
   const last = new Date(state.lastActiveDay)
   const today = new Date()
   const lastMidnight = new Date(last.getFullYear(), last.getMonth(), last.getDate())
   const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-  const diffDays = Math.round((todayMidnight - lastMidnight) / 86400000)
-  if (diffDays <= 1) return state
-  if ((state.streakFreezes || 0) > 0) {
-    const yesterday = new Date(todayMidnight - 86400000)
-    const frozenDay = yesterday.toDateString()
-    return {
-      ...state,
-      streakFreezes: state.streakFreezes - 1,
-      lastActiveDay: frozenDay,
-      activeDays: { ...(state.activeDays || {}), [dayKey(yesterday)]: 'frozen' },
-    }
+  const missedDays = Math.round((todayMidnight - lastMidnight) / 86400000) - 1
+  if (missedDays <= 0) return state
+  // Each freeze covers exactly one missed day
+  if ((state.streakFreezes || 0) < missedDays) return { ...state, streak: 0 }
+  const activeDays = { ...(state.activeDays || {}) }
+  for (let i = 1; i <= missedDays; i++) {
+    activeDays[dayKey(new Date(lastMidnight.getFullYear(), lastMidnight.getMonth(), lastMidnight.getDate() + i))] = 'frozen'
   }
-  return { ...state, streak: 0 }
+  const yesterday = new Date(todayMidnight.getFullYear(), todayMidnight.getMonth(), todayMidnight.getDate() - 1)
+  return {
+    ...state,
+    streakFreezes: state.streakFreezes - missedDays,
+    lastActiveDay: yesterday.toDateString(),
+    activeDays,
+  }
 }
 
 // "2026-07-03" style key, local time
@@ -84,7 +92,10 @@ export function dayKey(d = new Date()) {
 }
 
 // Marks today active, bumps streak once per day, applies session results to quests
-function applySession(prev, xp, meta = {}) {
+function applySession(current, xp, meta = {}) {
+  // Re-check the break here too: a tab left open across missed days was only
+  // normalized when it loaded.
+  const prev = calcStreakBreak(current)
   const today = new Date().toDateString()
   const wasToday = prev.lastActiveDay === today
   const withQuests = ensureQuests(prev)
@@ -117,6 +128,18 @@ export function useProgress() {
   //              progress is authoritative and local storage is left alone
   const modeRef = useRef('local')
 
+  const persist = useCallback((next) => {
+    if (modeRef.current === 'account') {
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ progress: next }),
+      }).catch(() => {})
+    } else {
+      save(next)
+    }
+  }, [])
+
   // Decide the source of truth once auth is known. Local storage and the
   // account are never auto-merged: an account only ever starts using local
   // data through the explicit "convert" flow on the profile page (which
@@ -132,7 +155,9 @@ export function useProgress() {
           if (cancelled) return
           if (d.progress) {
             modeRef.current = 'account'
-            setState(normalize(d.progress))
+            const next = normalize(d.progress)
+            if (streakChanged(d.progress, next)) persist(next)
+            setState(next)
             setHydrated(true)
             return
           }
@@ -143,29 +168,21 @@ export function useProgress() {
       if (cancelled) return
       modeRef.current = 'local'
       const raw = load()
-      if (raw) setState(normalize(raw))
+      if (raw) {
+        const next = normalize(raw)
+        if (streakChanged(raw, next)) persist(next)
+        setState(next)
+      }
       setHydrated(true)
     }
     hydrate()
     return () => { cancelled = true }
-  }, [user, authLoading])
+  }, [user, authLoading, persist])
 
   // Mirror the latest values into the module cache so the next mount (a tab
   // switch) can start from them instead of the loading state.
   useEffect(() => { cachedState = state }, [state])
   useEffect(() => { if (hydrated) cachedHydrated = true }, [hydrated])
-
-  const persist = useCallback((next) => {
-    if (modeRef.current === 'account') {
-      fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress: next }),
-      }).catch(() => {})
-    } else {
-      save(next)
-    }
-  }, [])
 
   const completeLessonWithXP = useCallback((lessonId, xp, meta = {}) => {
     setState(prev => {

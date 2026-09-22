@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import getClientPromise from '@/lib/mongodb'
+import { exchangeCode, fetchDiscordUser, tokenFields } from '@/lib/discord'
 import { createSessionToken, sessionCookieOptions, SESSION_COOKIE, baseUrl } from '@/lib/auth'
 
 function sanitizeUsername(raw) {
@@ -20,27 +21,13 @@ export async function GET(req) {
   cookies().delete('oauth_state')
 
   try {
-    const tokenRes = await fetch('https://discord.com/api/oauth2/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: process.env.DISCORD_CLIENT_ID,
-        client_secret: process.env.DISCORD_CLIENT_SECRET,
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: `${home}/api/auth/callback`,
-      }),
-    })
-    const token = await tokenRes.json()
+    const token = await exchangeCode(code, `${home}/api/auth/callback`)
     if (!token.access_token) {
       console.error('Discord token exchange failed:', token)
       return Response.redirect(`${home}/profile?error=token_exchange`, 302)
     }
 
-    const meRes = await fetch('https://discord.com/api/users/@me', {
-      headers: { Authorization: `Bearer ${token.access_token}` },
-    })
-    const me = await meRes.json()
+    const me = await fetchDiscordUser(token.access_token)
     if (!me.id) return Response.redirect(`${home}/profile?error=discord_me`, 302)
 
     const client = await getClientPromise()
@@ -50,7 +37,7 @@ export async function GET(req) {
     if (existing) {
       await users.updateOne(
         { discordId: me.id },
-        { $set: { discordName: me.global_name || me.username, avatar: me.avatar, lastLoginAt: new Date() } }
+        { $set: { discordName: me.global_name || me.username, avatar: me.avatar, lastLoginAt: new Date(), ...tokenFields(token) } }
       )
     } else {
       // First login: pick a free username derived from the Discord handle
@@ -70,6 +57,7 @@ export async function GET(req) {
         streak: 0,
         lessonsCount: 0,
         progress: null,
+        ...tokenFields(token),
       })
     }
 

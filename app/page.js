@@ -32,6 +32,15 @@ function packView(state, pack) {
   }
 }
 
+// Same rule as the map's resume marker: the first unlocked, incomplete lesson
+function findResumeLesson(isLessonComplete, isLessonUnlocked) {
+  for (const level of COURSE.levels) {
+    const lesson = level.lessons.find((l, idx) => isLessonUnlocked(level.lessons, idx) && !isLessonComplete(l.id))
+    if (lesson) return { lesson, levelId: level.id }
+  }
+  return null
+}
+
 function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, isResume, justCompleted, levelId, isLast, levelIndex, pos }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
@@ -315,6 +324,7 @@ function XpCounter({ xp }) {
 export default function HomePage() {
   const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, claimQuest } = useProgress()
   const { user } = useAuth()
+  const router = useRouter()
   const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
   const [showQuests, setShowQuests] = useState(false)
@@ -377,6 +387,7 @@ export default function HomePage() {
   }, [hydrated])
 
   const currentLevel = COURSE.levels[visibleLevel]
+  const resume = findResumeLesson(isLessonComplete, isLessonUnlocked)
   const streakAtRisk = hydrated && state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
   const claimable = claimableQuestCount(state.quests)
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
@@ -468,7 +479,14 @@ export default function HomePage() {
 
       {/* ── Streak-at-risk nudge ── */}
       {streakAtRisk && (
-        <button className={styles.streakNudge} onClick={jumpToCurrent}>
+        <button
+          className={styles.streakNudge}
+          onClick={() => {
+            if (!resume) return jumpToCurrent()
+            unlockAudio()
+            router.push(`/lesson/${resume.lesson.id}?level=${resume.levelId}`)
+          }}
+        >
           <img src="/icons/fire.png" alt="" width={22} height={22} />
           <span>Do one lesson to keep your {state.streak}-day streak alive</span>
           <span className={styles.streakNudgeGo}>Go</span>
