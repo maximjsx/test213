@@ -162,6 +162,7 @@ export default function BuilderDashboard() {
         </Link>
         <h1 className={styles.pageTitle}>Level Builder</h1>
         <div className={styles.headerActions}>
+          <Link href="/voice" className={styles.importBtn}>Voice studio</Link>
           <button className={styles.importBtn} onClick={() => { setShowImport(v => !v); setImportError('') }}>
             Import
           </button>

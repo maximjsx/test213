@@ -236,7 +236,10 @@ function ProfileInner() {
     <div className={styles.page}>
       <div className={styles.topRow}>
         <Link href="/" className={styles.backBtn}><Chevron /> Course</Link>
-        <Link href="/leaderboard" className={styles.lbLink}><img src="/icons/trophy.png" alt="" width={18} height={18} /> Leaderboard</Link>
+        <div className={styles.topLinks}>
+          <Link href="/voice" className={styles.voiceLink}><img src="/icons/microphone.png" alt="" width={18} height={18} /> Record audio</Link>
+          <Link href="/leaderboard" className={styles.lbLink}><img src="/icons/trophy.png" alt="" width={18} height={18} /> Leaderboard</Link>
+        </div>
       </div>
 
       <div className={user ? styles.hero : styles.card}>
