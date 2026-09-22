@@ -9,8 +9,11 @@
     "add-topic": "bun scripts/add-topic.js"
   },
   "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
     "mongodb": "^7.4.0",
     "next": "^14.2.35",
+    "pdf-lib": "^1.17.1",
+    "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ws": "^8.21.0"

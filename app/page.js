@@ -12,6 +12,7 @@ import StreakModal from '../components/StreakModal'
 import Bear from '../components/Bear'
 import LoadingBear from '../components/LoadingBear'
 import TopicTree from '../components/TopicTree'
+import Certificates from '../components/Certificates'
 import styles from './page.module.css'
 
 const SPECIAL_PACKS = [
@@ -265,6 +266,15 @@ export default function HomePage() {
               )
             })}
           </div>
+        </section>
+
+        <section className={styles.levelSection}>
+          <div className={styles.levelDivider}>
+            <div className={styles.dividerLine} />
+            <span className={styles.dividerLabel}>Certificates</span>
+            <div className={styles.dividerLine} />
+          </div>
+          <Certificates lessons={state.lessons} user={user} />
         </section>
       </main>
 

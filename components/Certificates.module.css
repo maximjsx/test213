@@ -1,0 +1,63 @@
+.list { display:flex; flex-direction:column; gap:14px; }
+
+.card {
+  background:var(--surface-hi); border:2px solid var(--border);
+  border-radius:var(--r); padding:20px 18px;
+  display:flex; align-items:flex-start; gap:16px;
+  transition:border-color 0.2s;
+}
+.cardEarned { border-color:var(--teal); }
+
+.seal {
+  flex-shrink:0;
+  width:64px; height:64px; border-radius:50%;
+  background:var(--teal); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:900;
+  box-shadow:0 4px 0 var(--teal-press), inset 0 0 0 4px var(--teal), inset 0 0 0 6px rgba(255,255,255,0.7);
+}
+.cardLocked .seal {
+  background:var(--surface); color:var(--text-dim);
+  box-shadow:0 4px 0 var(--border), inset 0 0 0 4px var(--surface), inset 0 0 0 6px var(--border-hi);
+}
+
+.body { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+.level { font-size:11px; font-weight:900; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); }
+.cardLocked .level { color:var(--text-muted); }
+.title { font-size:18px; font-weight:900; color:var(--text); }
+.blurb { font-size:13px; font-weight:600; color:var(--text-muted); line-height:1.4; margin-bottom:10px; }
+
+.progressWrap { display:flex; align-items:center; gap:10px; }
+.progressBar { flex:1; height:12px; border-radius:999px; background:var(--surface); overflow:hidden; }
+.progressFill { height:100%; border-radius:999px; background:var(--teal); transition:width 0.4s ease; }
+.progressText { font-size:12px; font-weight:800; color:var(--text-muted); white-space:nowrap; }
+
+.claimBtn, .viewBtn, .signInBtn {
+  align-self:flex-start;
+  font-size:13px; font-weight:900; letter-spacing:0.5px; text-transform:uppercase;
+  padding:11px 18px; border-radius:var(--r);
+  transition:transform 0.1s, box-shadow 0.1s, filter 0.15s;
+}
+.claimBtn { background:var(--teal); color:#fff; box-shadow:0 4px 0 var(--teal-press); }
+.claimBtn:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 0 var(--teal-press); }
+.claimBtn:active:not(:disabled) { transform:translateY(4px); box-shadow:0 0 0 var(--teal-press); }
+.claimBtn:disabled { filter:grayscale(0.6) brightness(0.8); cursor:not-allowed; }
+
+.viewBtn { background:var(--surface); color:var(--teal); border:2px solid var(--teal); box-shadow:0 4px 0 var(--teal-press); }
+.viewBtn:hover { transform:translateY(-1px); box-shadow:0 5px 0 var(--teal-press); }
+
+.signInBtn { background:var(--blue); color:#fff; box-shadow:0 4px 0 #0f83bd; }
+.signInBtn:hover { transform:translateY(-1px); box-shadow:0 5px 0 #0f83bd; }
+
+.claimForm { display:flex; flex-direction:column; gap:6px; }
+.nameLabel { font-size:11px; font-weight:900; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); }
+.nameInput {
+  width:100%;
+  background:var(--surface); border:2px solid var(--border-hi); border-radius:var(--r2);
+  padding:11px 12px; font-size:16px; font-weight:800; outline:none;
+}
+.nameInput:focus { border-color:var(--teal); }
+.nameHint { font-size:12px; font-weight:600; color:var(--text-dim); margin-bottom:4px; }
+.error { font-size:13px; font-weight:700; color:var(--red); }
+
+.footnote { font-size:12px; font-weight:600; color:var(--text-dim); text-align:center; line-height:1.5; padding:0 8px; }
