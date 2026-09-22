@@ -108,7 +108,7 @@ function LessonPageInner() {
         xpEarned={xpEarned}
         mistakes={score.mistakes || []}
         prevWrongIds={prevWrongIdsRef.current}
-        onContinue={() => router.push('/')}
+        onContinue={() => router.push(`/topic/${level.id}`)}
         onRetry={() => { setPhase('exercise'); setScore({ correct: 0, total: 0, mistakes: [] }) }}
       />
     )
@@ -120,7 +120,7 @@ function LessonPageInner() {
       level={level}
       exercises={exercises}
       onComplete={handleComplete}
-      onQuit={() => router.push('/')}
+      onQuit={() => router.push(`/topic/${level.id}`)}
     />
   )
 }

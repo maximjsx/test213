@@ -1,27 +1,23 @@
 'use client'
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { COURSE } from '../data/course'
 import { useProgress } from '../hooks/useProgress'
 import { useAuth } from '../hooks/useAuth'
 import { claimableQuestCount } from '../lib/quests'
-import { hapticTap, unlockAudio } from '../lib/audio'
-import { onSplashFinished } from '../lib/splash'
+import { unlockAudio } from '../lib/audio'
 import QuestsModal from '../components/QuestsModal'
 import StreakModal from '../components/StreakModal'
 import Bear from '../components/Bear'
 import LoadingBear from '../components/LoadingBear'
+import TopicTree from '../components/TopicTree'
 import styles from './page.module.css'
 
 const SPECIAL_PACKS = [
   { id: 'swear_words',  name: 'Swear Words',  icon: '🤬', costXP: 200, desc: 'Bulgarian profanity & adult slang' },
   { id: 'street_slang', name: 'Street Slang', icon: '😎', costXP: 150, desc: 'Informal expressions locals actually use' },
 ]
-
-// Zig-zag layout of the lesson nodes down the map. Hoisted so it isn't
-// re-allocated for every lesson on every render.
-const NODE_POSITIONS = ['center', 'right', 'center', 'left', 'center', 'right', 'center', 'left']
 
 // Single source of truth for a pack's derived state, so the shop modal and the
 // bottom packs grid can't drift apart on what counts as owned/affordable.
@@ -39,179 +35,6 @@ function findResumeLesson(isLessonComplete, isLessonUnlocked) {
     if (lesson) return { lesson, levelId: level.id }
   }
   return null
-}
-
-function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, isResume, justCompleted, levelId, isLast, levelIndex, pos }) {
-  const [showTooltip, setShowTooltip] = useState(false)
-  const [pressed, setPressed] = useState(false)
-  const nodeRef = useRef(null)
-  const tooltipRef = useRef(null)
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!showTooltip) return
-    // If the popup is clipped, nudge the page down to reveal the whole thing
-    // (including the START button). On mobile the fixed bottom nav bar covers
-    // the lower screen, so clear its top edge rather than the viewport bottom.
-    const t = tooltipRef.current
-    if (t) {
-      const navRect = document.querySelector('nav')?.getBoundingClientRect()
-      const bottomLimit = navRect && navRect.height > 0 ? navRect.top : window.innerHeight
-      const overflow = t.getBoundingClientRect().bottom - (bottomLimit - 16)
-      if (overflow > 0) window.scrollBy({ top: overflow, behavior: 'smooth' })
-    }
-    const handler = (e) => { if (!nodeRef.current?.contains(e.target)) setShowTooltip(false) }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [showTooltip])
-
-  const isCurrent = isUnlocked && !isComplete
-  const lessonNum = idx + 1
-  const totalInLevel = levelLessons.length
-  const displayTitle = isLast ? `Level ${levelIndex + 1} Review` : lesson.title
-
-  function handleToggle() { setShowTooltip(v => !v) }
-  function handlePress() { setPressed(true); hapticTap() }
-  function handleRelease() { setPressed(false) }
-
-  return (
-    <div className={styles.nodeWrap} ref={nodeRef}>
-      {/* START label + mascot mark only the single "resume" node (where you
-          left off), not every startable level entry, so the map stays calm. */}
-      {isResume && (
-        <div className={`${styles.startLabel} ${showTooltip ? styles.startLabelHide : ''}`}>START</div>
-      )}
-      {isResume && (
-        <div className={`${styles.pathBear} ${pos === 'left' ? styles.pathBearRight : styles.pathBearLeft}`}>
-          <Bear mood="idle" size={58} />
-        </div>
-      )}
-      <button
-        data-lesson-node
-        className={`${styles.node} ${
-          !isUnlocked ? styles.nodeLocked
-          : isComplete ? styles.nodeComplete
-          : styles.nodeCurrent
-        } ${pressed ? styles.nodePressed : ''} ${justCompleted ? styles.nodeJustDone : ''}`}
-        style={isComplete ? { background: levelColor, borderColor: levelColor, boxShadow: `0 4px 0 color-mix(in srgb, ${levelColor} 60%, #000)` }
-          : isCurrent ? { borderColor: levelColor, boxShadow: `0 4px 0 var(--border-hi)` } : {}}
-        onClick={handleToggle}
-        onPointerDown={handlePress}
-        onPointerUp={handleRelease}
-        onPointerLeave={handleRelease}
-        onPointerCancel={handleRelease}
-        aria-label={displayTitle}
-      >
-        {isComplete ? <span className={styles.nodeCheck}><img src="/icons/green_checkmark.png" alt="✓" width={44} height={44} /></span>
-          : !isUnlocked ? <span className={styles.lockIcon}><img src="/icons/lock.png" alt="locked" width={36} height={36} /></span>
-          : <span className={styles.nodeNum}>{lessonNum}</span>}
-      </button>
-
-      {showTooltip && (
-        isUnlocked ? (
-          <div className={styles.tooltip} ref={tooltipRef}>
-            <div className={styles.tooltipTitle}>{displayTitle}</div>
-            <div className={styles.tooltipSub}>Lesson {lessonNum} of {totalInLevel}</div>
-            <button
-              className={styles.tooltipBtn}
-              style={{ background: levelColor }}
-              onClick={(e) => {
-                // Navigate programmatically. Using a <Link> here meant its own
-                // onClick unmounted the anchor (setShowTooltip(false)) mid-click,
-                // which sometimes cancelled the navigation and left the browser
-                // to fall back to a scroll — "pressed start, page just jumped".
-                e.preventDefault()
-                unlockAudio()
-                router.push(`/lesson/${lesson.id}?level=${levelId}`)
-              }}
-            >
-              {isComplete ? `PRACTICE +${Math.ceil(lesson.xp / 2)} XP` : `START +${lesson.xp} XP`}
-            </button>
-          </div>
-        ) : (
-          <div className={`${styles.tooltip} ${styles.tooltipLocked}`} ref={tooltipRef}>
-            <div className={styles.tooltipTitle}>{displayTitle}</div>
-            <div className={styles.tooltipSub}>Complete all lessons above to unlock this!</div>
-            <div className={styles.tooltipBtnLocked}>LOCKED</div>
-          </div>
-        )
-      )}
-    </div>
-  )
-}
-
-function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor, justCompletedId }) {
-  const containerRef = useRef(null)
-  const svgRef = useRef(null)
-
-  useEffect(() => {
-    let frame = 0
-    function draw() {
-      const container = containerRef.current
-      const svg = svgRef.current
-      if (!container || !svg) return
-      const cRect = container.getBoundingClientRect()
-      const buttons = container.querySelectorAll('button[data-lesson-node]')
-      const pts = Array.from(buttons).map(btn => {
-        const r = btn.getBoundingClientRect()
-        return { x: r.left + r.width / 2 - cRect.left, y: r.top + r.height / 2 - cRect.top }
-      })
-      while (svg.firstChild) svg.removeChild(svg.firstChild)
-      if (pts.length < 2) return
-      for (let i = 0; i < pts.length - 1; i++) {
-        const a = pts[i], b = pts[i + 1]
-        const midY = (a.y + b.y) / 2
-        const d = `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`
-        const bothDone = isLessonComplete(lessons[i].id) && isLessonComplete(lessons[i + 1].id)
-        const el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        el.setAttribute('d', d)
-        el.setAttribute('fill', 'none')
-        el.setAttribute('stroke-linecap', 'round')
-        if (bothDone) {
-          el.setAttribute('stroke', levelColor)
-          el.setAttribute('stroke-width', '5')
-          el.setAttribute('opacity', '0.55')
-          // If this segment just became complete (touches the lesson finished
-          // moments ago), draw it in with a stroke-dashoffset sweep.
-          if (justCompletedId && (lessons[i].id === justCompletedId || lessons[i + 1].id === justCompletedId)) {
-            const len = el.getTotalLength()
-            el.style.strokeDasharray = String(len)
-            el.style.strokeDashoffset = String(len)
-            el.classList.add(styles.lineDraw)
-          }
-        } else {
-          el.setAttribute('stroke', 'var(--border-hi)')
-          el.setAttribute('stroke-width', '3')
-          el.setAttribute('stroke-dasharray', '6 7')
-          el.setAttribute('opacity', '0.45')
-        }
-        svg.appendChild(el)
-      }
-    }
-    // Coalesce bursts of resize/reflow events into a single draw per frame.
-    function recompute() {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(draw)
-    }
-    recompute()
-    window.addEventListener('resize', recompute)
-    // Also redraw when the container itself changes size (font load, images
-    // decoding, lessons expanding) — window resize alone misses those.
-    const ro = new ResizeObserver(recompute)
-    if (containerRef.current) ro.observe(containerRef.current)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener('resize', recompute)
-      ro.disconnect()
-    }
-  }, [lessons, isLessonComplete, levelColor, justCompletedId])
-
-  return (
-    <div className={styles.lessonPath} ref={containerRef}>
-      <svg ref={svgRef} style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, overflow:'visible' }} />
-      {children}
-    </div>
-  )
 }
 
 function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, onClose }) {
@@ -322,88 +145,19 @@ function XpCounter({ xp }) {
 }
 
 export default function HomePage() {
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, claimQuest } = useProgress()
+  const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, claimQuest } = useProgress()
   const { user } = useAuth()
   const router = useRouter()
-  const [visibleLevel, setVisibleLevel] = useState(0)
   const [showShop, setShowShop] = useState(false)
   const [showQuests, setShowQuests] = useState(false)
   const [showStreak, setShowStreak] = useState(false)
-  const [showJump, setShowJump] = useState(false)
-  const levelRefs = useRef([])
-  const currentLessonRef = useRef(null)
-
-  useEffect(() => {
-    let ticking = false
-    const measure = () => {
-      ticking = false
-      const threshold = 130
-      let current = 0
-      COURSE.levels.forEach((_, i) => {
-        const el = levelRefs.current[i]
-        if (el) {
-          const top = el.getBoundingClientRect().top
-          if (top <= threshold) current = i
-        }
-      })
-      setVisibleLevel(current)
-
-      const node = currentLessonRef.current
-      if (node) {
-        const r = node.getBoundingClientRect()
-        setShowJump(r.bottom < 80 || r.top > window.innerHeight - 40)
-      }
-    }
-    // Do the layout reads at most once per frame instead of on every scroll
-    // event — keeps the map smooth on lower-end phones.
-    const handleScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(measure)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [hydrated])
-
-  function jumpToCurrent() {
-    const el = currentLessonRef.current
-    if (!el) return
-    const top = el.getBoundingClientRect().top + window.scrollY
-    window.scrollTo({ top: Math.max(0, top - window.innerHeight / 2 + 60), behavior: 'smooth' })
-  }
-
-  useEffect(() => {
-    if (!hydrated) return
-    const scrollToCurrent = () => {
-      const el = currentLessonRef.current
-      if (!el) return
-      const top = el.getBoundingClientRect().top + window.scrollY
-      window.scrollTo({ top: Math.max(0, top - window.innerHeight / 2 + 60), behavior: 'smooth' })
-    }
-    // On a hard load the splash is still closing, so defer the scroll until it
-    // finishes — otherwise it happens behind the overlay and you never see it.
-    // On client-side nav (splash already done) this runs immediately.
-    return onSplashFinished(scrollToCurrent)
-  }, [hydrated])
-
-  const currentLevel = COURSE.levels[visibleLevel]
-  const resume = findResumeLesson(isLessonComplete, isLessonUnlocked)
-  const streakAtRisk = hydrated && state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
-  const claimable = claimableQuestCount(state.quests)
-  const mistakeCount = Object.keys(state.wrongExercises || {}).length
-
-  // The lesson finished most recently, but only if it was within the last few
-  // seconds — i.e. the user just came back from it — so its node pops and its
-  // connectors draw in once, without animating on an ordinary reload.
-  const justCompletedId = useMemo(() => {
-    let best = null, bestAt = 0
-    for (const [id, v] of Object.entries(state.lessons || {})) {
-      if (v?.completedAt && v.completedAt > bestAt) { bestAt = v.completedAt; best = id }
-    }
-    return best && Date.now() - bestAt < 8000 ? best : null
-  }, [state.lessons])
 
   if (!hydrated) return <LoadingBear />
+
+  const resume = findResumeLesson(isLessonComplete, isLessonUnlocked)
+  const streakAtRisk = state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
+  const claimable = claimableQuestCount(state.quests)
+  const mistakeCount = Object.keys(state.wrongExercises || {}).length
 
   return (
     <div className={styles.page}>
@@ -464,25 +218,11 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* ── Sticky level banner ── */}
-      <div className={styles.levelBanner}>
-        <div className={styles.bannerInner} style={{ '--lvl': currentLevel.color }}>
-          <div className={styles.bannerLeft}>
-            <span className={styles.bannerUnit}>SECTION {visibleLevel + 1}</span>
-            <span className={styles.bannerTitle}>{currentLevel.title} · {currentLevel.subtitle}</span>
-          </div>
-          <Link href={`/level/${currentLevel.id}`} className={styles.guidebookBtn}>
-            <img src="/icons/open_book.png" alt="" width={22} height={22} /> NOTES
-          </Link>
-        </div>
-      </div>
-
       {/* ── Streak-at-risk nudge ── */}
-      {streakAtRisk && (
+      {streakAtRisk && resume && (
         <button
           className={styles.streakNudge}
           onClick={() => {
-            if (!resume) return jumpToCurrent()
             unlockAudio()
             router.push(`/lesson/${resume.lesson.id}?level=${resume.levelId}`)
           }}
@@ -493,59 +233,8 @@ export default function HomePage() {
         </button>
       )}
 
-      {/* ── Course map ── */}
       <main className={styles.main}>
-        {(() => { let foundCurrent = false; return COURSE.levels.map((level, li) => {
-          return (
-            <section
-              key={level.id}
-              className={styles.levelSection}
-              ref={el => levelRefs.current[li] = el}
-            >
-              {(() => {
-                const allDone = level.lessons.every(l => isLessonComplete(l.id))
-                return (
-                  <div className={`${styles.levelDivider} ${allDone ? styles.levelDividerComplete : ''}`}>
-                    <div className={styles.dividerLine} />
-                    <span className={styles.dividerLabel}>{level.title}{allDone ? ' ✓' : ''}</span>
-                    <div className={styles.dividerLine} />
-                  </div>
-                )
-              })()}
-
-              <LessonPathWithLines lessons={level.lessons} isLessonComplete={isLessonComplete} levelColor={level.color} justCompletedId={justCompletedId}>
-                {level.lessons.map((lesson, idx) => {
-                  const complete = isLessonComplete(lesson.id)
-                  const unlocked = isLessonUnlocked(level.lessons, idx)
-                  const pos = NODE_POSITIONS[idx % NODE_POSITIONS.length]
-
-                  // Every level's first lesson is unlocked now, so the "resume"
-                  // marker is simply the first incomplete lesson down the map.
-                  const isCurrent = unlocked && !complete
-                  const assignRef = isCurrent && !foundCurrent ? (foundCurrent = true, true) : false
-                  return (
-                    <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`} ref={assignRef ? currentLessonRef : null}>
-                      <LessonNode
-                        lesson={lesson}
-                        levelLessons={level.lessons}
-                        idx={idx}
-                        levelColor={level.color}
-                        isComplete={complete}
-                        isUnlocked={unlocked}
-                        isResume={assignRef}
-                        justCompleted={lesson.id === justCompletedId}
-                        levelId={level.id}
-                        isLast={idx === level.lessons.length - 1}
-                        levelIndex={li}
-                        pos={pos}
-                      />
-                    </div>
-                  )
-                })}
-              </LessonPathWithLines>
-            </section>
-          )
-        })})()}
+        <TopicTree levels={COURSE.levels} levelProgress={levelProgress} resumeLevelId={resume?.levelId} />
 
         {/* ── Special Packs ── */}
         <section className={styles.levelSection}>
@@ -586,11 +275,6 @@ export default function HomePage() {
             <img src="/icons/broken_heart.png" alt="" width={26} height={26} />
             <span className={styles.practiceFabCount}>{mistakeCount}</span>
           </Link>
-        )}
-        {showJump && (
-          <button className={styles.jumpFab} onClick={jumpToCurrent} title="Back to current lesson">
-            <img src="/icons/lightning.png" alt="" width={22} height={22} />
-          </button>
         )}
       </div>
     </div>

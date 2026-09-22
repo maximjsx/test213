@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { getTTSMuted, setTTSMuted } from '../../../lib/audio'
 import { BG_VOICES, DEFAULT_VOICE } from '../../../lib/voices'
 import { AudioField, ImageField } from '../../../components/builder/MediaControls'
+import TopicArt from '../../../components/TopicArt'
 import BuilderGate from '../../../components/builder/BuilderGate'
 import Link from 'next/link'
 import styles from './page.module.css'
@@ -989,8 +990,16 @@ export default function LevelEditor() {
                     <input className={styles.input} value={level.color} style={{ width: 100, fontFamily: 'monospace' }} onChange={e => updateLevel({ color: e.target.value })} />
                   </div>
                 </FieldRow>
-                <FieldRow label="Icon / Short label" hint="Emoji or 2-4 chars shown on the level card">
+                <FieldRow label="Icon / Short label" hint="2-4 chars shown in the topic bubble when there is no picture">
                   <input className={styles.input} style={{ width: 90 }} value={level.icon} placeholder="★" maxLength={6} onChange={e => updateLevel({ icon: e.target.value })} />
+                </FieldRow>
+                <FieldRow label="Topic picture" hint="Shown inside the round topic bubble on the home page. A square PNG with a transparent background looks best.">
+                  <div className={styles.bubbleRow}>
+                    <span className={styles.bubblePreview} style={{ background: level.color }}>
+                      <TopicArt level={level} size={50} />
+                    </span>
+                    <ImageField image={level.image || null} onChange={img => updateLevel({ image: img })} courseId={id} label="Topic picture" />
+                  </div>
                 </FieldRow>
               </div>
               <div className={styles.fieldRow}>

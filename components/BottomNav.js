@@ -7,7 +7,7 @@ import styles from './BottomNav.module.css'
 
 const ITEMS = [
   {
-    href: '/', label: 'Learn', match: p => p === '/',
+    href: '/', label: 'Learn', match: p => p === '/' || p.startsWith('/topic/'),
     icon: (
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 11.5 12 4l9 7.5" />
@@ -36,6 +36,7 @@ export default function BottomNav() {
   // which are the same section as You). Anywhere else, especially inside a
   // lesson, it would just steal space and invite mid-exercise navigation.
   const showOn = pathname === '/'
+    || pathname.startsWith('/topic/')
     || pathname.startsWith('/leaderboard')
     || pathname.startsWith('/profile')
     || pathname.startsWith('/u/')

@@ -1,0 +1,67 @@
+.tree { display: flex; flex-direction: column; gap: 36px; padding: 28px 0 44px; }
+.row { display: flex; justify-content: center; gap: clamp(28px, 12vw, 72px); }
+
+.bubble {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: 132px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ringWrap { position: relative; width: 120px; height: 120px; display: block; }
+.ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.ringTrack { fill: none; stroke: var(--surface-hi); stroke-width: 7; }
+.ringFill { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+
+.disc {
+  position: absolute; inset: 14px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2), 0 4px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.bubble:hover .disc { transform: translateY(-2px); filter: brightness(1.08); }
+.bubble:active .disc { transform: translateY(3px); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.25); }
+
+.count {
+  position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 4px;
+  padding: 2px 9px; border-radius: 999px;
+  background: var(--surface); border: 2px solid var(--border-hi);
+  font-size: 12px; font-weight: 900; color: var(--text-muted); white-space: nowrap;
+}
+.countDone { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-bg); }
+
+.title {
+  font-size: 16px; font-weight: 900; color: var(--text); text-align: center; line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.startLabel {
+  position: absolute; bottom: calc(100% + 4px); left: 50%;
+  padding: 4px 12px; border-radius: 10px;
+  background: var(--surface); border: 2px solid var(--teal);
+  font-size: 13px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text);
+  white-space: nowrap;
+  animation: floatBob 2s ease-in-out infinite;
+}
+.startLabel::after {
+  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--teal);
+}
+@keyframes floatBob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .startLabel { animation: none; transform: translateX(-50%); }
+}
+
+@media (max-width: 400px) {
+  .bubble { width: 118px; }
+  .ringWrap { width: 108px; height: 108px; }
+  .disc { inset: 12px; }
+  .title { font-size: 15px; }
+}

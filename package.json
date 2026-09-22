@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "add-topic": "bun scripts/add-topic.js"
   },
   "dependencies": {
     "mongodb": "^7.4.0",
