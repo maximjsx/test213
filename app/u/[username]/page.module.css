@@ -8,9 +8,6 @@
   font-family:var(--font-nunito), sans-serif;
 }
 
-@media (max-width: 680px) {
-  .page { padding-bottom: calc(60px + 116px + env(safe-area-inset-bottom)); }
-}
 
 .topRow {
   display:flex;align-items:center;justify-content:space-between;

@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-left: var(--rail-w);
+  padding-bottom: var(--bottom-nav-h);
 }
 .content { flex: 1 0 auto; }
 
@@ -10,7 +12,7 @@
   border-top: 1px solid var(--border);
   padding: 20px 24px;
   display: flex;
-  gap: 24px;
+  gap: 10px 24px;
   justify-content: center;
   flex-wrap: wrap;
   font-family: var(--font-nunito), sans-serif;
@@ -21,14 +23,11 @@
   font-size: 0.9rem;
   font-weight: 700;
 }
+.footerLink:hover { color: var(--text); }
 
+/* Inside lessons the runner fills a phone screen, so the footer only shows
+   on pages that have the app navigation. */
 @media (max-width: 680px) {
-  /* Inside lessons there is no tab bar and the runner fills the screen, so the
-     footer stays hidden there. On tab pages it sits above the fixed bar. */
   .footer { display: none; }
-  body:has([data-bottom-nav]) .footer {
-    display: flex;
-    gap: 10px 20px;
-    padding: 16px 16px calc(116px + env(safe-area-inset-bottom) + 16px);
-  }
+  body:has([data-app-nav]) .footer { display: flex; }
 }

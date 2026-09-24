@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation'
 import { useProgress, peekLocalProgress, clearLocalProgress } from '../../hooks/useProgress'
 import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
-import Chevron from '../../components/Chevron'
 import InstallButton from '../../components/InstallButton'
 import Achievements from '../../components/Achievements'
 import LoadingBear from '../../components/LoadingBear'
@@ -239,10 +238,8 @@ function ProfileInner() {
   return (
     <div className={styles.page}>
       <div className={styles.topRow}>
-        <Link href="/" className={styles.backBtn}><Chevron /> Course</Link>
         <div className={styles.topLinks}>
           <Link href="/voice" className={styles.voiceLink}><img src="/icons/microphone.png" alt="" width={18} height={18} /> Record audio</Link>
-          <Link href="/leaderboard" className={styles.lbLink}><img src="/icons/trophy.png" alt="" width={18} height={18} /> Leaderboard</Link>
         </div>
       </div>
 
@@ -420,14 +417,6 @@ function ProfileInner() {
         )}
       </div>
 
-      {/* Mobile only: the global footer is hidden behind the tab bar there,
-          so keep the legal links reachable from the Profile tab. */}
-      <div className={styles.legalLinks}>
-        <Link href="/privacy" className={styles.legalLink}>Privacy Policy</Link>
-        <Link href="/terms" className={styles.legalLink}>Terms</Link>
-        <a href="https://legal.bulgarian.dev/" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Legal Notice</a>
-        <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Discord</a>
-      </div>
     </div>
   )
 }

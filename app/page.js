@@ -8,6 +8,7 @@ import { claimableQuestCount } from '../lib/quests'
 import { pendingMilestone } from '../lib/goals'
 import { unlockAudio } from '../lib/audio'
 import HomeHeader from '../components/home/HomeHeader'
+import HomeStats from '../components/home/HomeStats'
 import ResumeCard, { PracticeMistakesLink } from '../components/home/ResumeCard'
 import PracticeLinks from '../components/home/PracticeLinks'
 import ShopModal from '../components/home/ShopModal'
@@ -47,6 +48,14 @@ export default function HomePage() {
   const streakAtRisk = state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
   const milestone = pendingMilestone(state)
+  const stats = {
+    state,
+    streakAtRisk,
+    claimable: claimableQuestCount(state.quests),
+    onOpenStreak: () => setModal('streak'),
+    onOpenQuests: () => setModal('quests'),
+    onOpenShop: () => setModal('shop'),
+  }
 
   return (
     <div className={styles.page}>
@@ -80,51 +89,50 @@ export default function HomePage() {
       {modal === 'streak' && <StreakModal state={state} onClose={close} />}
       {milestone && <StreakMilestone days={milestone} onClose={() => markStreakMilestone(milestone)} />}
 
-      <HomeHeader
-        state={state}
-        user={user}
-        streakAtRisk={streakAtRisk}
-        claimable={claimableQuestCount(state.quests)}
-        onOpenStreak={() => setModal('streak')}
-        onOpenQuests={() => setModal('quests')}
-        onOpenShop={() => setModal('shop')}
-      />
+      <HomeHeader {...stats} />
 
-      <main className={styles.main}>
-        <DailyGoal state={state} setDailyGoal={setDailyGoal} />
-        {resume ? (
-          <ResumeCard
-            resume={resume}
-            isNew={!Object.keys(state.lessons || {}).length}
-            streak={state.streak}
-            streakAtRisk={streakAtRisk}
-            mistakeCount={mistakeCount}
-            onStart={() => {
-              unlockAudio()
-              router.push(lessonHref(resume.lesson, resume.level))
-            }}
-          />
-        ) : (
-          <PracticeMistakesLink count={mistakeCount} />
-        )}
-        <PracticeLinks />
-        <TopicTree
-          levels={LEVELS}
-          levelProgress={levelProgress}
-          resumeLevelId={resume?.level.id}
-          lockOf={lockOf}
-          onUnlock={setUnlocking}
-        />
-
-        <section className={styles.levelSection}>
-          <div className={styles.levelDivider}>
-            <div className={styles.dividerLine} />
-            <h2 className={styles.dividerLabel}>Certificates</h2>
-            <div className={styles.dividerLine} />
+      <div className={styles.layout}>
+        <main className={styles.primary}>
+          {resume && (
+            <ResumeCard
+              className={styles.oResume}
+              resume={resume}
+              isNew={!Object.keys(state.lessons || {}).length}
+              streak={state.streak}
+              streakAtRisk={streakAtRisk}
+              onStart={() => {
+                unlockAudio()
+                router.push(lessonHref(resume.lesson, resume.level))
+              }}
+            />
+          )}
+          <div className={styles.oTree}>
+            <h1 className="sr-only">Your Bulgarian course</h1>
+            <TopicTree
+              levels={LEVELS}
+              levelProgress={levelProgress}
+              resumeLevelId={resume?.level.id}
+              lockOf={lockOf}
+              onUnlock={setUnlocking}
+            />
           </div>
-          <Certificates lessons={state.lessons} user={user} />
-        </section>
-      </main>
+          <section className={styles.oCerts} aria-labelledby="certs-title">
+            <div className={styles.sectionHead}>
+              <div className={styles.sectionLine} />
+              <h2 id="certs-title" className={styles.sectionLabel}>Certificates</h2>
+              <div className={styles.sectionLine} />
+            </div>
+            <Certificates lessons={state.lessons} user={user} />
+          </section>
+        </main>
+
+        <aside className={styles.aside} aria-label="Your day">
+          <HomeStats {...stats} className={styles.asideStats} />
+          <DailyGoal className={styles.oGoal} state={state} setDailyGoal={setDailyGoal} />
+          <PracticeMistakesLink className={styles.oMistakes} count={mistakeCount} />
+          <PracticeLinks className={styles.oTiles} />
+        </aside>
+      </div>
     </div>
   )
 }

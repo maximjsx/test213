@@ -1,22 +1,28 @@
-.loading {
-  min-height:60vh;display:flex;align-items:center;justify-content:center;
-  color:var(--text-muted);font-weight:700;
+.page { min-height: 100vh; background: var(--bg); }
+.main { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; display: flex; flex-direction: column; gap: 24px; }
+
+.group { display: flex; flex-direction: column; gap: 10px; }
+.groupTitle {
+  padding: 0 4px;
+  font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted);
 }
 
-.empty {
-  min-height:70vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;padding:32px 24px;text-align:center;
+.link {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: var(--r-lg);
+  background: var(--surface); border: 2px solid var(--border);
+  transition: border-color 0.15s, background 0.15s, transform 0.12s;
 }
-.emptyTitle { font-size:26px;font-weight:900;margin:0; }
-.emptyText { font-size:14.5px;font-weight:600;color:var(--text-muted);max-width:360px;line-height:1.6;margin:0; }
-.emptyBtn {
-  margin-top:10px;
-  font-size:15px;font-weight:900;letter-spacing:0.5px;
-  padding:14px 32px;border-radius:var(--r);
-  background:var(--blue);color:var(--on-accent);
-  box-shadow:0 4px 0 #0f83bd;
-  transition:transform 0.1s,box-shadow 0.1s;
+.link:hover { border-color: var(--border-hi); background: var(--surface-hi); transform: translateY(-1px); }
+.icon {
+  flex-shrink: 0; width: 48px; height: 48px; border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-hi);
 }
-.emptyBtn:hover  { transform:translateY(-1px);box-shadow:0 5px 0 #0f83bd; }
-.emptyBtn:active { transform:translateY(2px);box-shadow:0 1px 0 #0f83bd; }
+.link:hover .icon { background: var(--surface); }
+.glyph { font-size: 20px; font-weight: 900; color: var(--teal); }
+.text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.title { font-size: var(--fs-md); font-weight: 900; color: var(--text); }
+.sub { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+.arrow { flex-shrink: 0; color: var(--text-dim); }
+.link:hover .arrow { color: var(--text); }

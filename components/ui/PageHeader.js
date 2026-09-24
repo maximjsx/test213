@@ -3,11 +3,12 @@ import Chevron from '../Chevron'
 import styles from './PageHeader.module.css'
 
 // Sticky top bar for sub pages: a back link, an optional title, and actions on
-// the right. Lines up with the 640px content column on wide screens.
+// the right. Lines up with the 640px content column on wide screens. Tab
+// pages pass backHref={null}: the app navigation already gets you around.
 export default function PageHeader({ backHref = '/', backLabel = 'Course', title, children }) {
   return (
     <header className={styles.header}>
-      <Link href={backHref} className={styles.back}><Chevron /> {backLabel}</Link>
+      {backHref && <Link href={backHref} className={styles.back}><Chevron /> {backLabel}</Link>}
       {title && <h1 className={styles.title}>{title}</h1>}
       {children && <div className={styles.actions}>{children}</div>}
     </header>

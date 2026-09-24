@@ -1,72 +1,89 @@
-.tree { display: flex; flex-direction: column; gap: 36px; padding: 28px 0 44px; }
-.row { display: flex; justify-content: center; gap: clamp(28px, 12vw, 72px); }
+.path { list-style: none; display: flex; flex-direction: column; align-items: center; padding: 36px 0 24px; }
+.stop { display: flex; flex-direction: column; align-items: center; }
+
+.connector { display: block; overflow: visible; margin: 6px 0 2px; }
+.connector path { fill: none; stroke-width: 6; stroke-linecap: round; }
+.lineOpen path { stroke: var(--border); }
+.lineDone path { stroke: var(--yellow); }
+.lineLocked path { stroke: var(--border); stroke-dasharray: 2 12; }
 
 .bubble {
   position: relative;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
   width: 132px;
   -webkit-tap-highlight-color: transparent;
 }
 
-.ringWrap { position: relative; width: 120px; height: 120px; display: block; }
+.ringWrap { position: relative; display: block; width: 120px; height: 120px; }
 .ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
 .ringTrack { fill: none; stroke: var(--surface-hi); stroke-width: 7; }
-.ringFill { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+.ringFill { fill: none; stroke: var(--topic); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+.ringDone { stroke: var(--yellow); }
 
 .disc {
   position: absolute; inset: 14px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
+  border-radius: 50%; overflow: hidden;
   box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2), 0 4px 0 rgba(0, 0, 0, 0.25);
-  overflow: hidden;
   transition: transform 0.12s ease, filter 0.12s ease;
 }
 .bubble:hover .disc { transform: translateY(-2px); filter: brightness(1.08); }
-.bubble:active .disc { transform: translateY(3px); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.25); }
+.bubble:active .disc { transform: translateY(3px); }
 
 .count {
-  position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%);
   display: flex; align-items: center; gap: 4px;
-  padding: 2px 9px; border-radius: 999px;
+  padding: 2px 10px; border-radius: var(--r-pill);
   background: var(--surface); border: 2px solid var(--border-hi);
   font-size: 12px; font-weight: 900; color: var(--text-muted); white-space: nowrap;
 }
-.countDone { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-bg); }
 
 .title {
-  font-size: 16px; font-weight: 900; color: var(--text); text-align: center; line-height: 1.2;
+  max-width: 150px;
+  font-size: var(--fs-md); font-weight: 900; color: var(--text); text-align: center; line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
+/* Done: gold ring and a gold badge with a check */
+.done .count { border-color: var(--yellow); background: var(--yellow); color: var(--on-accent); }
+
+/* Current: the topic glows so the next step is unmistakable. The glow is a
+   ring drawn outside the disc, so it can't be clipped by overflow. */
+.current .ringWrap::after {
+  content: ''; position: absolute; inset: 6px; border-radius: 50%;
+  box-shadow: 0 0 0 0 var(--topic);
+  animation: glow 2.2s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes glow {
+  0%   { box-shadow: 0 0 0 0 var(--topic); opacity: 0.7; }
+  100% { box-shadow: 0 0 0 16px var(--topic); opacity: 0; }
+}
+
+/* Locked special topic: greyed until unlocked */
+.locked { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.locked .disc { background: var(--surface-hi); box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.2); }
+.locked .title { color: var(--text-muted); }
+.locked .count { color: var(--yellow); }
+
 .startLabel {
-  position: absolute; bottom: calc(100% + 4px); left: 50%;
-  padding: 4px 12px; border-radius: 10px;
-  background: var(--surface); border: 2px solid var(--teal);
-  font-size: 13px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text);
+  position: absolute; bottom: calc(100% + 8px); left: 50%; z-index: 1;
+  padding: 4px 12px; border-radius: var(--r);
+  background: var(--surface); border: 2px solid var(--topic);
+  font-size: var(--fs-sm); font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text);
   white-space: nowrap;
   animation: floatBob 2s ease-in-out infinite;
 }
 .startLabel::after {
   content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-  border: 6px solid transparent; border-top-color: var(--teal);
+  border: 6px solid transparent; border-top-color: var(--topic);
 }
 @keyframes floatBob {
   0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, -5px); }
+  50%      { transform: translate(-50%, -5px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .startLabel { animation: none; transform: translateX(-50%); }
+  .current .ringWrap::after { animation: none; box-shadow: 0 0 0 6px var(--topic); opacity: 0.4; }
 }
-
-@media (max-width: 400px) {
-  .bubble { width: 118px; }
-  .ringWrap { width: 108px; height: 108px; }
-  .disc { inset: 12px; }
-  .title { font-size: 15px; }
-}
-
-.locked { cursor: pointer; background: none; border: 0; padding: 0; font: inherit; color: inherit; }
-.locked .disc { background: var(--surface-hi); }
-.locked .title { color: var(--text-muted); }
-.locked .count { color: var(--yellow); }

@@ -3,9 +3,6 @@
   display:flex; flex-direction:column; gap:18px;
 }
 
-@media (max-width: 680px) {
-  .page { padding-bottom: calc(60px + 116px + env(safe-area-inset-bottom)); }
-}
 
 .backBtn {
   align-self:flex-start;

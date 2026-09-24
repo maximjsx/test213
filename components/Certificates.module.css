@@ -1,9 +1,13 @@
-.list { display:flex; flex-direction:column; gap:14px; }
+.wrap { display:flex; flex-direction:column; gap:14px; }
+.list { display:grid; grid-template-columns:minmax(0, 1fr); gap:12px; }
+@media (min-width: 640px) {
+  .list { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
 
 .card {
-  background:var(--surface-hi); border:2px solid var(--border);
-  border-radius:var(--r); padding:20px 18px;
-  display:flex; align-items:flex-start; gap:16px;
+  background:var(--surface); border:2px solid var(--border);
+  border-radius:var(--r-lg); padding:16px;
+  display:flex; flex-direction:column; align-items:flex-start; gap:12px;
   transition:border-color 0.2s;
 }
 .cardEarned { border-color:var(--teal); }
@@ -21,7 +25,7 @@
   box-shadow:0 4px 0 var(--border), inset 0 0 0 4px var(--surface), inset 0 0 0 6px var(--border-hi);
 }
 
-.body { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+.body { width:100%; min-width:0; display:flex; flex-direction:column; gap:3px; }
 .level { font-size:11px; font-weight:900; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal); }
 .cardLocked .level { color:var(--text-muted); }
 .title { font-size:18px; font-weight:900; color:var(--text); }
@@ -60,4 +64,8 @@
 .nameHint { font-size:12px; font-weight:600; color:var(--text-dim); margin-bottom:4px; }
 .error { font-size:13px; font-weight:700; color:var(--red); }
 
-.footnote { font-size:12px; font-weight:600; color:var(--text-dim); text-align:center; line-height:1.5; padding:0 8px; }
+.footnote {
+  padding:12px 14px; border-radius:var(--r);
+  background:var(--surface); border:2px solid var(--border);
+  font-size:var(--fs-sm); font-weight:700; color:var(--text-muted); line-height:1.5;
+}

@@ -3,24 +3,6 @@
   font-family:var(--font-nunito), sans-serif;
 }
 
-@media (max-width: 680px) {
-  .page { padding-bottom: calc(60px + 116px + env(safe-area-inset-bottom)); }
-  /* The bottom tab bar already provides Course / Profile navigation here.
-     Scoped under .page so it outranks the later base `.topRow { display:flex }`. */
-  .page .topRow { display: none; }
-}
-
-.topRow {
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:10px;
-}
-.backBtn, .profileLink {
-  display:flex;align-items:center;gap:6px;
-  font-size:14px;font-weight:900;color:var(--text-muted);
-  padding:8px 14px;border-radius:var(--r2);
-}
-.backBtn:hover, .profileLink:hover { background:var(--surface-hi);color:var(--text); }
-
 .head { text-align:center;margin-bottom:22px; }
 .title { font-size:26px;font-weight:900;margin:8px 0 2px; }
 .sub { font-size:13.5px;font-weight:700;color:var(--text-muted);margin:0; }
@@ -60,10 +42,15 @@
 .rowMe:hover { border-color:var(--blue); }
 
 .rank {
-  width:32px;text-align:center;
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
   font-size:15px;font-weight:900;color:var(--text-muted);
   flex-shrink:0;
 }
+.rankGold, .rankSilver, .rankBronze { color:var(--on-accent); box-shadow:inset 0 -3px 0 rgba(0,0,0,0.2); }
+.rankGold { background:var(--yellow); }
+.rankSilver { background:var(--text-muted); }
+.rankBronze { background:var(--orange); }
 .rowAvatar { border-radius:50%;flex-shrink:0;overflow:hidden;display:flex; }
 .rowName {
   flex:1;min-width:0;

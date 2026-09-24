@@ -1,0 +1,13 @@
+.counter { position: relative; display: flex; align-items: center; gap: 6px; }
+.delta {
+  position: absolute; top: -14px; right: 0;
+  font-size: var(--fs-sm); font-weight: 900; color: var(--green);
+  pointer-events: none;
+  animation: coinFloat 1.1s ease-out forwards;
+}
+@keyframes coinFloat {
+  0%   { opacity: 0; transform: translateY(4px) scale(0.8); }
+  20%  { opacity: 1; transform: translateY(0) scale(1.1); }
+  100% { opacity: 0; transform: translateY(-18px) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .delta { animation: none; } }

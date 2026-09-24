@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import CoinIcon from '../ui/CoinIcon'
-import styles from './Home.module.css'
+import styles from './HomeStats.module.css'
+import own from './CoinCounter.module.css'
 
 // Eased count-up so the number rolls to its new value instead of snapping.
 // Starts already on `target`, so a fresh mount shows the real total with no
@@ -43,10 +44,10 @@ export default function CoinCounter({ coins }) {
     prevRef.current = coins
   }, [coins])
   return (
-    <div className={styles.coins}>
-      <span className={styles.coinIcon}><CoinIcon size={24} /></span>
-      <span className={styles.coinNum}>{display}</span>
-      {delta && <span key={delta.key} className={styles.coinDelta}>+{delta.amount}</span>}
-    </div>
+    <span className={own.counter}>
+      <CoinIcon size={24} />
+      <span className={styles.num}>{display}</span>
+      {delta && <span key={delta.key} className={own.delta}>+{delta.amount}</span>}
+    </span>
   )
 }

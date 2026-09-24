@@ -34,7 +34,7 @@ export default function LettersPage() {
 
   return (
     <div className={styles.page}>
-      <PageHeader title="Letters" />
+      <PageHeader backHref="/practice" backLabel="Practice" title="Letters" />
       <main className={styles.main}>
         <div className={styles.summary}>
           <div className={styles.summaryText}>

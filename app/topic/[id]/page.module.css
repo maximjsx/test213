@@ -48,10 +48,6 @@
   min-height: 100vh; padding: 0 16px; color: var(--text-muted); font-weight: 700;
 }
 
-@media (max-width: 680px) {
-  .main { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
-}
-
 @media (max-width: 520px) {
   .hero { gap: 14px; padding: 14px 16px; }
   .heroDisc { width: 68px; height: 68px; }

@@ -2,12 +2,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Bear from '../../components/Bear'
-import Chevron from '../../components/Chevron'
-import LoadingBear from '../../components/LoadingBear'
+import Skeleton from '../../components/ui/Skeleton'
 import CoinIcon from '../../components/ui/CoinIcon'
 import styles from './page.module.css'
 
-const MEDALS = ['🥇', '🥈', '🥉']
+const PODIUM = ['rankGold', 'rankSilver', 'rankBronze']
 const PERIODS = [
   { id: 'league', label: 'LEAGUE' },
   { id: 'week',  label: 'WEEK' },
@@ -58,11 +57,6 @@ export default function LeaderboardPage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.topRow}>
-        <Link href="/" className={styles.backBtn}><Chevron /> Course</Link>
-        <Link href="/profile" className={styles.profileLink}>Profile</Link>
-      </div>
-
       <div className={styles.head}>
         <img src="/icons/trophy_with_star.png" alt="" width={56} height={56} />
         <h1 className={styles.title}>Leaderboard</h1>
@@ -84,7 +78,9 @@ export default function LeaderboardPage() {
       {period === 'league' && data && <LeagueHeader league={data.league} />}
 
       {data === undefined ? (
-        <LoadingBear fullscreen={false} size={72} />
+        <div className={styles.list} aria-busy="true" aria-label="Loading leaderboard">
+          {[0, 1, 2, 3, 4].map(i => <Skeleton key={i} height={64} radius="var(--r)" />)}
+        </div>
       ) : period === 'league' && !data.league ? null : data.top.length === 0 ? (
         <div className={styles.empty}>
           <Bear mood="happy" size={90} />
@@ -98,7 +94,7 @@ export default function LeaderboardPage() {
         <div className={styles.list}>
           {data.top.map(row => (
             <Link key={row.rank} href={`/u/${row.username}`} className={`${styles.row} ${row.isMe ? styles.rowMe : ''}`}>
-              <span className={styles.rank}>{row.rank <= 3 ? MEDALS[row.rank - 1] : row.rank}</span>
+              <span className={`${styles.rank} ${row.rank <= 3 ? styles[PODIUM[row.rank - 1]] : ''}`}>{row.rank}</span>
               {row.avatarUrl
                 ? <img src={row.avatarUrl} alt="" className={styles.rowAvatar} width={38} height={38} />
                 : <span className={styles.rowAvatar}><Bear mood="idle" size={38} /></span>}

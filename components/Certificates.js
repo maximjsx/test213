@@ -94,22 +94,24 @@ export default function Certificates({ lessons, user }) {
   }, [user])
 
   return (
-    <div className={styles.list}>
-      {CERTIFICATES.map(tier => {
-        const progress = certificateProgress(tier, lessons)
-        const earned = !!issued[tier.id]
-        return (
-          <div key={tier.id} className={`${styles.card} ${earned ? styles.cardEarned : ''} ${!progress.complete && !earned ? styles.cardLocked : ''}`}>
-            <div className={styles.seal}>{tier.seal}</div>
-            <div className={styles.body}>
-              <div className={styles.level}>{tier.level}</div>
-              <div className={styles.title}>{tier.title}</div>
-              <div className={styles.blurb}>{tier.blurb}</div>
-              <CertificateAction tier={tier} progress={progress} issued={issued[tier.id]} user={user} />
+    <div className={styles.wrap}>
+      <div className={styles.list}>
+        {CERTIFICATES.map(tier => {
+          const progress = certificateProgress(tier, lessons)
+          const earned = !!issued[tier.id]
+          return (
+            <div key={tier.id} className={`${styles.card} ${earned ? styles.cardEarned : ''} ${!progress.complete && !earned ? styles.cardLocked : ''}`}>
+              <div className={styles.seal}>{tier.seal}</div>
+              <div className={styles.body}>
+                <div className={styles.level}>{tier.level}</div>
+                <div className={styles.title}>{tier.title}</div>
+                <div className={styles.blurb}>{tier.blurb}</div>
+                <CertificateAction tier={tier} progress={progress} issued={issued[tier.id]} user={user} />
+              </div>
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
       <p className={styles.footnote}>
         Every certificate is a digitally signed PDF with a QR code that links back here, so anyone can check it is real.
         Certificates show you finished the course. They are not an official CEFR exam result.

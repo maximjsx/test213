@@ -8,43 +8,10 @@
   font-family:var(--font-nunito), sans-serif;
 }
 
-@media (max-width: 680px) {
-  .page { padding-bottom: calc(60px + 116px + env(safe-area-inset-bottom)); }
-  /* The bottom tab bar already provides Course / Leaderboard navigation here.
-     Scoped under .page so it outranks the later base `.topRow { display:flex }`. */
-  .page .topRow { display: none; }
-  /* Global footer is hidden on mobile; show the legal links here instead.
-     Scoped under .page so it outranks the later base `.legalLinks { display:none }`. */
-  .page .legalLinks { display: flex; }
-}
-
-/* Desktop already has the global footer, so this profile copy is mobile-only */
-.legalLinks {
-  display: none;
-  flex-wrap: wrap; justify-content: center; gap: 18px;
-  margin-top: 28px; padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-.legalLink {
-  color: var(--text-muted); font-size: 13px; font-weight: 700;
-}
-
 .topRow {
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:center;justify-content:flex-end;
   margin-bottom:18px;
 }
-.backBtn {
-  display:flex;align-items:center;gap:6px;
-  font-size:14px;font-weight:900;color:var(--text-muted);
-  padding:8px 14px;border-radius:var(--r2);
-}
-.backBtn:hover { background:var(--surface-hi);color:var(--text); }
-.lbLink {
-  display:flex;align-items:center;gap:6px;
-  font-size:14px;font-weight:900;color:var(--yellow);
-  padding:8px 14px;border-radius:var(--r2);
-}
-.lbLink:hover { background:var(--surface-hi); }
 .topLinks { display:flex;align-items:center;gap:4px; }
 .voiceLink {
   display:flex;align-items:center;gap:6px;
@@ -246,4 +213,3 @@ a.friendRow:hover { border-color:var(--border-hi); }
 }
 
 /* The global footer now shows on tab pages too, so skip this copy there */
-body:has([data-bottom-nav]) .legalLinks { display: none; }

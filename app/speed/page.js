@@ -21,15 +21,15 @@ const MAX_COINS = 25
 const MODES = {
   words: {
     title: 'Word speed round',
-    back: '/words',
-    backLabel: 'Words',
+    back: '/practice',
+    backLabel: 'Practice',
     learnHref: '/',
     pool: lessons => withStrength(WORDS, lessons).filter(w => w.strength > 0).map(w => ({ left: w.bg, right: w.en })),
   },
   letters: {
     title: 'Letter speed round',
-    back: '/letters',
-    backLabel: 'Letters',
+    back: '/practice',
+    backLabel: 'Practice',
     learnHref: '/topic/alphabet',
     pool: lessons => withStrength(LETTERS, lessons).filter(l => l.strength > 0).map(l => ({ left: `${l.letter}${l.letter.toLowerCase()}`, right: l.sound })),
   },

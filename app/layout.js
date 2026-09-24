@@ -1,7 +1,7 @@
 import './globals.css'
 import Link from 'next/link'
 import { Nunito } from 'next/font/google'
-import BottomNav from '../components/BottomNav'
+import AppNav from '../components/AppNav'
 import InstallBanner from '../components/InstallBanner'
 import Splash from '../components/Splash'
 import { SITE_URL, SITE_NAME } from '../lib/seo'
@@ -101,7 +101,7 @@ export default function RootLayout({ children }) {
             <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Discord</a>
           </footer>
         </div>
-        <BottomNav />
+        <AppNav />
         <InstallBanner />
         <Splash />
       </body>

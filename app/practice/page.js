@@ -1,112 +1,53 @@
 'use client'
-import { useRouter } from 'next/navigation'
-import { useMemo, useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { COURSE } from '../../data/course'
 import { useProgress } from '../../hooks/useProgress'
-import { shuffle } from '../../lib/checker'
-import ExerciseRunner from '../../components/ExerciseRunner'
-import LessonComplete from '../../components/LessonComplete'
-import Bear from '../../components/Bear'
-import LoadingBear from '../../components/LoadingBear'
+import { WORDS, LETTERS, withStrength } from '../../lib/words'
+import PageHeader from '../../components/ui/PageHeader'
+import { ListSkeleton } from '../../components/PageSkeletons'
+import { PracticeMistakesLink, ArrowRight } from '../../components/home/ResumeCard'
 import styles from './page.module.css'
 
-const PRACTICE_LEVEL = { id: 'practice', title: 'Practice', color: '#1cb0f6' }
-const PRACTICE_LESSON = { id: 'practice', title: 'Mistake Practice', coins: 0 }
-const MAX_EXERCISES = 10
-const COINS_PER_CORRECT = 2
-
-function collectWrongExercises(wrongExercises) {
-  const out = []
-  for (const level of COURSE.levels)
-    for (const lesson of level.lessons)
-      for (const ex of lesson.exercises)
-        if (ex.id && (wrongExercises[ex.id] || 0) > 0 && ex.type !== 'introduce')
-          out.push(ex)
-  return out
-}
-
-function PracticePageInner() {
-  const router = useRouter()
-  const { state, hydrated, completePractice } = useProgress()
-
-  const [phase, setPhase] = useState('exercise')
-  const [score, setScore] = useState({ correct: 0, total: 0, mistakes: [] })
-  const [coinsEarned, setCoinsEarned] = useState(0)
-  const [round, setRound] = useState(0)
-
-  const exercises = useMemo(() => {
-    if (!hydrated) return []
-    return shuffle(collectWrongExercises(state.wrongExercises || {})).slice(0, MAX_EXERCISES)
-    // Rebuild only per round so mid-session state updates don't reshuffle the queue
-  }, [hydrated, round]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Same fake-loading beat as the lesson page so entry doesn't feel abrupt
-  const [booting, setBooting] = useState(true)
-  useEffect(() => {
-    const t = setTimeout(() => setBooting(false), 900)
-    return () => clearTimeout(t)
-  }, [])
-
-  if (!hydrated || booting) return <LoadingBear label={PRACTICE_LESSON.title} />
-
-  if (exercises.length === 0 && phase === 'exercise') {
-    return (
-      <div className={styles.empty}>
-        <Bear mood="cheer" size={110} />
-        <h1 className={styles.emptyTitle}>Nothing to fix!</h1>
-        <p className={styles.emptyText}>You have no open mistakes right now. Do a few lessons and anything you get wrong lands here.</p>
-        <Link href="/" className={styles.emptyBtn}>BACK TO COURSE</Link>
-      </div>
-    )
-  }
-
-  function handleComplete(finalScore) {
-    const wrongIds = [...new Set((finalScore.mistakes || []).map(m => m.id).filter(Boolean))]
-    const correctIds = exercises.map(ex => ex.id).filter(id => !wrongIds.includes(id))
-    const perfect = finalScore.total > 0 && finalScore.correct === finalScore.total
-    const earned = correctIds.length * COINS_PER_CORRECT + (perfect ? 5 : 0)
-    const pct = finalScore.total > 0 ? finalScore.correct / finalScore.total : 0
-
-    setScore(finalScore)
-    setCoinsEarned(earned)
-    completePractice(earned, {
-      accuracyPct: Math.round(pct * 100),
-      maxCombo: finalScore.maxCombo || 0,
-      perfect,
-    }, correctIds, wrongIds)
-    setPhase('complete')
-  }
-
-  if (phase === 'complete') {
-    return (
-      <LessonComplete
-        lesson={PRACTICE_LESSON}
-        level={PRACTICE_LEVEL}
-        score={score}
-        coinsEarned={coinsEarned}
-        mistakes={score.mistakes || []}
-        onContinue={() => router.push('/')}
-        onRetry={() => { setPhase('exercise'); setScore({ correct: 0, total: 0, mistakes: [] }); setRound(r => r + 1) }}
-      />
-    )
-  }
-
+function HubLink({ href, icon, title, sub }) {
   return (
-    <ExerciseRunner
-      lesson={PRACTICE_LESSON}
-      level={PRACTICE_LEVEL}
-      exercises={exercises}
-      onComplete={handleComplete}
-      onQuit={() => router.push('/')}
-    />
+    <Link href={href} className={styles.link}>
+      <span className={styles.icon}>{icon}</span>
+      <span className={styles.text}>
+        <span className={styles.title}>{title}</span>
+        <span className={styles.sub}>{sub}</span>
+      </span>
+      <span className={styles.arrow}><ArrowRight size={20} /></span>
+    </Link>
   )
 }
 
+const img = src => <img src={src} alt="" width={30} height={30} />
+
 export default function PracticePage() {
+  const { state, hydrated } = useProgress()
+  if (!hydrated) return <ListSkeleton />
+
+  const learnedWords = withStrength(WORDS, state.lessons).filter(w => w.strength > 0).length
+  const learnedLetters = withStrength(LETTERS, state.lessons).filter(l => l.strength > 0).length
+  const mistakes = Object.keys(state.wrongExercises || {}).length
+
   return (
-    <Suspense fallback={<LoadingBear />}>
-      <PracticePageInner />
-    </Suspense>
+    <div className={styles.page}>
+      <PageHeader backHref={null} title="Practice" />
+      <main className={styles.main}>
+        <PracticeMistakesLink count={mistakes} />
+
+        <section className={styles.group} aria-labelledby="browse">
+          <h2 id="browse" className={styles.groupTitle}>Review what you know</h2>
+          <HubLink href="/words" icon={img('/icons/open_book.png')} title="Words" sub={`${learnedWords} of ${WORDS.length} learned, with audio`} />
+          <HubLink href="/letters" icon={<span className={styles.glyph} lang="bg">Аа</span>} title="Letters" sub={`${learnedLetters} of ${LETTERS.length} letters, tap to hear them`} />
+        </section>
+
+        <section className={styles.group} aria-labelledby="games">
+          <h2 id="games" className={styles.groupTitle}>Games</h2>
+          <HubLink href="/speed?mode=words" icon={img('/icons/lightning.png')} title="Word speed round" sub="Match as many words as you can in 60 seconds" />
+          <HubLink href="/speed?mode=letters" icon={img('/icons/star.png')} title="Letter speed round" sub="Match letters to their sounds against the clock" />
+        </section>
+      </main>
+    </div>
   )
 }

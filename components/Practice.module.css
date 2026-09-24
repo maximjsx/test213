@@ -126,6 +126,3 @@
   .tileWrong, .clockLow, .countdown { animation: none; }
 }
 
-@media (max-width: 680px) {
-  .main { padding-bottom: calc(40px + 116px + env(safe-area-inset-bottom)); }
-}
