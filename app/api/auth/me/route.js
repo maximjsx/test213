@@ -4,7 +4,8 @@ import { syncDiscordProfile } from '@/lib/discord'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+// ?sync=1 forces a Discord re-read, used after someone joins a server
+export async function GET(req) {
   try {
     const session = getSession()
     if (!session) return Response.json({ user: null })
@@ -13,14 +14,17 @@ export async function GET() {
     const users = client.db('bulgario').collection('users')
     const user = await users.findOne(
       { discordId: session.discordId },
-      { projection: { _id: 0, discordId: 1, discordName: 1, avatar: 1, username: 1, createdAt: 1, xp: 1, streak: 1, lessonsCount: 1 } }
+      { projection: { _id: 0, discordId: 1, discordName: 1, avatar: 1, username: 1, createdAt: 1, coins: 1, streak: 1, lessonsCount: 1, guildIds: 1 } }
     )
     if (!user) return Response.json({ user: null })
 
-    Object.assign(user, await syncDiscordProfile(users, session.discordId))
+    Object.assign(user, await syncDiscordProfile(users, session.discordId, {
+      force: new URL(req.url).searchParams.has('sync'),
+    }))
     return Response.json({
       user: {
         ...user,
+        guildIds: user.guildIds || [],
         avatarUrl: user.avatar
           ? `https://cdn.discordapp.com/avatars/${user.discordId}/${user.avatar}.png?size=128`
           : null,

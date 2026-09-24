@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
 import LoadingBear from '../../components/LoadingBear'
+import CoinIcon from '../../components/ui/CoinIcon'
 import styles from './page.module.css'
 
 const MEDALS = ['🥇', '🥈', '🥉']
@@ -20,7 +21,7 @@ function LeagueHeader({ league }) {
       <div className={styles.leagueCard}>
         <div className={styles.leagueName}>Weekly leagues</div>
         <p className={styles.leagueText}>
-          Sign in to join a league. Everyone starts in Bronze, and the XP you earn each week decides your league for the next one.
+          Sign in to join a league. Everyone starts in Bronze, and the coins you earn each week decides your league for the next one.
         </p>
         <Link href="/profile" className={styles.joinLink}>Sign in</Link>
       </div>
@@ -34,9 +35,9 @@ function LeagueHeader({ league }) {
       <div className={styles.leagueName}>{league.name} League</div>
       <p className={styles.leagueText}>
         {league.next
-          ? <>Earn <strong>{league.next.minXp} XP</strong> this week to move up to {league.next.name}.</>
-          : <>You are in the top league. Earn {league.stayXp} XP a week to stay here.</>}
-        {league.next && league.index > 0 && <> Below {league.stayXp} XP you drop down a league.</>}
+          ? <>Earn <strong>{league.next.minCoins} coins</strong> this week to move up to {league.next.name}.</>
+          : <>You are in the top league. Earn {league.stayCoins} coins a week to stay here.</>}
+        {league.next && league.index > 0 && <> Below {league.stayCoins} coins you drop down a league.</>}
       </p>
     </div>
   )
@@ -65,7 +66,7 @@ export default function LeaderboardPage() {
       <div className={styles.head}>
         <img src="/icons/trophy_with_star.png" alt="" width={56} height={56} />
         <h1 className={styles.title}>Leaderboard</h1>
-        <p className={styles.sub}>Top XP earners</p>
+        <p className={styles.sub}>Top coin earners</p>
       </div>
 
       <div className={styles.tabs}>
@@ -90,7 +91,7 @@ export default function LeaderboardPage() {
           <p>
             {period === 'all'
               ? 'No one on the board yet. Sign in on your profile and be the first!'
-              : 'No XP earned in this period yet. Finish a lesson and take the top spot!'}
+              : 'No coins earned in this period yet. Finish a lesson and take the top spot!'}
           </p>
         </div>
       ) : (
@@ -107,7 +108,7 @@ export default function LeaderboardPage() {
                   <img src="/icons/fire.png" alt="" width={14} height={14} />{row.streak}
                 </span>
               )}
-              <span className={styles.rowXp}>{row.xp} XP</span>
+              <span className={styles.rowCoins}>{row.coins} <CoinIcon size={16} /></span>
             </Link>
           ))}
         </div>
@@ -115,7 +116,7 @@ export default function LeaderboardPage() {
 
       {data?.me && data.me.rank > 50 && (
         <div className={styles.meFooter}>
-          Your rank: #{data.me.rank} with {data.me.xp} XP
+          Your rank: #{data.me.rank} with {data.me.coins} coins
         </div>
       )}
       {data && !data.me && period !== 'league' && (

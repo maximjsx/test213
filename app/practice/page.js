@@ -12,9 +12,9 @@ import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
 const PRACTICE_LEVEL = { id: 'practice', title: 'Practice', color: '#1cb0f6' }
-const PRACTICE_LESSON = { id: 'practice', title: 'Mistake Practice', xp: 0 }
+const PRACTICE_LESSON = { id: 'practice', title: 'Mistake Practice', coins: 0 }
 const MAX_EXERCISES = 10
-const XP_PER_CORRECT = 2
+const COINS_PER_CORRECT = 2
 
 function collectWrongExercises(wrongExercises) {
   const out = []
@@ -32,7 +32,7 @@ function PracticePageInner() {
 
   const [phase, setPhase] = useState('exercise')
   const [score, setScore] = useState({ correct: 0, total: 0, mistakes: [] })
-  const [xpEarned, setXpEarned] = useState(0)
+  const [coinsEarned, setCoinsEarned] = useState(0)
   const [round, setRound] = useState(0)
 
   const exercises = useMemo(() => {
@@ -65,11 +65,11 @@ function PracticePageInner() {
     const wrongIds = [...new Set((finalScore.mistakes || []).map(m => m.id).filter(Boolean))]
     const correctIds = exercises.map(ex => ex.id).filter(id => !wrongIds.includes(id))
     const perfect = finalScore.total > 0 && finalScore.correct === finalScore.total
-    const earned = correctIds.length * XP_PER_CORRECT + (perfect ? 5 : 0)
+    const earned = correctIds.length * COINS_PER_CORRECT + (perfect ? 5 : 0)
     const pct = finalScore.total > 0 ? finalScore.correct / finalScore.total : 0
 
     setScore(finalScore)
-    setXpEarned(earned)
+    setCoinsEarned(earned)
     completePractice(earned, {
       accuracyPct: Math.round(pct * 100),
       maxCombo: finalScore.maxCombo || 0,
@@ -84,7 +84,7 @@ function PracticePageInner() {
         lesson={PRACTICE_LESSON}
         level={PRACTICE_LEVEL}
         score={score}
-        xpEarned={xpEarned}
+        coinsEarned={coinsEarned}
         mistakes={score.mistakes || []}
         onContinue={() => router.push('/')}
         onRetry={() => { setPhase('exercise'); setScore({ correct: 0, total: 0, mistakes: [] }); setRound(r => r + 1) }}

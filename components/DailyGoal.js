@@ -11,18 +11,18 @@ function GoalPicker({ current, onPick, onClose }) {
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.card} ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="goal-title" onClick={e => e.stopPropagation()}>
         <h2 id="goal-title" className={styles.title}>Pick a daily goal</h2>
-        <p className={styles.sub}>How much XP do you want to earn each day?</p>
+        <p className={styles.sub}>How many coins do you want to earn each day?</p>
         <div className={styles.options}>
           {DAILY_GOALS.map(g => (
             <button
-              key={g.xp}
-              className={`${styles.option} ${g.xp === current ? styles.optionActive : ''}`}
-              onClick={() => { onPick(g.xp); onClose() }}
-              aria-pressed={g.xp === current}
-              data-autofocus={g.xp === current ? '' : undefined}
+              key={g.coins}
+              className={`${styles.option} ${g.coins === current ? styles.optionActive : ''}`}
+              onClick={() => { onPick(g.coins); onClose() }}
+              aria-pressed={g.coins === current}
+              data-autofocus={g.coins === current ? '' : undefined}
             >
               <span className={styles.optionLabel}>{g.label}</span>
-              <span className={styles.optionXp}>{g.xp} XP a day</span>
+              <span className={styles.optionCoins}>{g.coins} coins a day</span>
             </button>
           ))}
         </div>
@@ -34,7 +34,7 @@ function GoalPicker({ current, onPick, onClose }) {
 export default function DailyGoal({ state, setDailyGoal }) {
   const [picking, setPicking] = useState(false)
   const goal = state.dailyGoal || DEFAULT_DAILY_GOAL
-  const today = state.xpByDay?.[dayKey()] || 0
+  const today = state.coinsByDay?.[dayKey()] || 0
   const reached = today >= goal
 
   return (
@@ -43,7 +43,7 @@ export default function DailyGoal({ state, setDailyGoal }) {
       <div className={styles.body}>
         <div className={styles.row}>
           <span className={styles.label}>{reached ? 'Daily goal reached' : 'Daily goal'}</span>
-          <span className={styles.count}>{Math.min(today, goal)} / {goal} XP</span>
+          <span className={styles.count}>{Math.min(today, goal)} / {goal} coins</span>
         </div>
         <div className={styles.track} role="progressbar" aria-valuemin={0} aria-valuemax={goal} aria-valuenow={Math.min(today, goal)} aria-label="Daily goal progress">
           <div className={styles.fill} style={{ width: `${Math.min(100, (today / goal) * 100)}%` }} />

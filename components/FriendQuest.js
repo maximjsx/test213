@@ -43,7 +43,7 @@ export default function FriendQuest({ myAvatarUrl, claimedWeek, onClaim }) {
       <>
         {heading}
         <p className={styles.fqText}>
-          Add a friend from their profile page, then team up to earn {data.goal} XP together each week.
+          Add a friend from their profile page, then team up to earn {data.goal} coins together each week.
         </p>
       </>
     )
@@ -53,7 +53,7 @@ export default function FriendQuest({ myAvatarUrl, claimedWeek, onClaim }) {
     return (
       <>
         {heading}
-        <p className={styles.fqText}>Pick a friend and earn {data.goal} XP together by Sunday.</p>
+        <p className={styles.fqText}>Pick a friend and earn {data.goal} coins together by Sunday.</p>
         <div className={styles.fqPickList}>
           {data.friends.map(f => (
             <button key={f.username} className={styles.fqPick} onClick={() => pick(f.username)}>
@@ -66,7 +66,7 @@ export default function FriendQuest({ myAvatarUrl, claimedWeek, onClaim }) {
     )
   }
 
-  const total = data.myXp + data.partner.xp
+  const total = data.myCoins + data.partner.coins
   const done = total >= data.goal
   const claimed = claimedWeek === data.week
   return (
@@ -79,18 +79,18 @@ export default function FriendQuest({ myAvatarUrl, claimedWeek, onClaim }) {
         </div>
         <div className={styles.questBody}>
           <div className={styles.questTitle}>
-            Earn {data.goal} XP with <Link href={`/u/${data.partner.username}`} className={styles.fqName}>{data.partner.username}</Link>
+            Earn {data.goal} coins with <Link href={`/u/${data.partner.username}`} className={styles.fqName}>{data.partner.username}</Link>
           </div>
           <div className={styles.track}>
             <div className={styles.fill} style={{ width: `${Math.min(100, (total / data.goal) * 100)}%` }} />
             <span className={styles.trackLabel}>{Math.min(total, data.goal)} / {data.goal}</span>
           </div>
-          <div className={styles.fqSplit}>You {data.myXp} XP · {data.partner.username} {data.partner.xp} XP</div>
+          <div className={styles.fqSplit}>You {data.myCoins} · {data.partner.username} {data.partner.coins} coins</div>
         </div>
         {claimed ? (
           <div className={styles.claimedTag}><img src="/icons/green_checkmark.png" alt="Claimed" width={16} height={16} /></div>
         ) : done ? (
-          <button className={styles.claimBtn} onClick={() => { hapticTap(); onClaim(data.week, data.reward) }}>+{data.reward} XP</button>
+          <button className={styles.claimBtn} onClick={() => { hapticTap(); onClaim(data.week, data.reward) }}>+{data.reward} coins</button>
         ) : (
           <div className={styles.rewardTag}><img src="/icons/lightning.png" alt="" width={14} height={14} />{data.reward}</div>
         )}

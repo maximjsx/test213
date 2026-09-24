@@ -2,10 +2,36 @@
 import Link from 'next/link'
 import { hapticTap } from '../lib/audio'
 import TopicArt from './TopicArt'
+import CoinIcon from './ui/CoinIcon'
+import DiscordIcon from './ui/DiscordIcon'
 import styles from './TopicTree.module.css'
 
 const RING_R = 56
 const RING_LEN = 2 * Math.PI * RING_R
+
+function LockedBubble({ level, lock, onUnlock }) {
+  const { guild, price } = level.special
+  const label = lock.needsGuild
+    ? `Locked special topic for members of ${guild.name}`
+    : `Locked special topic, unlock for ${price} coins`
+  return (
+    <button type="button" className={`${styles.bubble} ${styles.locked}`} onClick={() => { hapticTap(); onUnlock(level) }}>
+      <span className={styles.ringWrap}>
+        <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r={RING_R} className={styles.ringTrack} />
+        </svg>
+        <span className={styles.disc}>
+          <img src="/icons/lock.png" alt="" width={44} height={44} />
+        </span>
+        <span className={styles.count}>
+          {lock.needsGuild ? <DiscordIcon size={16} /> : <><CoinIcon size={14} />{price}</>}
+        </span>
+      </span>
+      <span className={styles.title}>{level.title}</span>
+      <span className="sr-only">{label}</span>
+    </button>
+  )
+}
 
 // First topic on its own, then pairs, like the old Duolingo tree.
 function treeRows(levels) {
@@ -46,12 +72,14 @@ function TopicBubble({ level, done, total, isResume }) {
   )
 }
 
-export default function TopicTree({ levels, levelProgress, resumeLevelId }) {
+export default function TopicTree({ levels, levelProgress, resumeLevelId, lockOf, onUnlock }) {
   return (
     <div className={styles.tree}>
       {treeRows(levels).map(row => (
         <div key={row[0].id} className={styles.row}>
           {row.map(level => {
+            const lock = lockOf(level)
+            if (lock) return <LockedBubble key={level.id} level={level} lock={lock} onUnlock={onUnlock} />
             const { done, total } = levelProgress(level.lessons)
             return <TopicBubble key={level.id} level={level} done={done} total={total} isResume={level.id === resumeLevelId} />
           })}

@@ -9,7 +9,7 @@
     {
       "id": "sch-1",
       "title": "People at School",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "sch-1-i1", "label": "NEW WORD", "display": "училище", "sublabel": "neuter noun (ends in -е)", "translation": "school", "tts": "училище" },
         { "type": "introduce", "id": "sch-1-i2", "label": "NEW WORD", "display": "учител", "sublabel": "masculine noun", "translation": "teacher (male)", "tts": "учител" },
@@ -28,7 +28,7 @@
     {
       "id": "sch-2",
       "title": "School Supplies",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "sch-2-i1", "label": "NEW WORD", "display": "книга", "sublabel": "feminine noun (ends in -а)", "translation": "book", "tts": "книга" },
         { "type": "introduce", "id": "sch-2-i2", "label": "NEW WORD", "display": "тетрадка", "sublabel": "feminine noun (ends in -а)", "translation": "notebook", "tts": "тетрадка" },
@@ -48,7 +48,7 @@
     {
       "id": "sch-3",
       "title": "In the Classroom",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "sch-3-i1", "label": "NEW PHRASE", "display": "Разбирам", "sublabel": "use when you follow the lesson", "translation": "I understand", "tts": "Разбирам" },
         { "type": "introduce", "id": "sch-3-i2", "label": "NEW PHRASE", "display": "Не разбирам", "sublabel": "не = not, so \"I not understand\"", "translation": "I don't understand", "tts": "Не разбирам" },
@@ -66,7 +66,7 @@
     {
       "id": "sch-4",
       "title": "Days of the Week",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "sch-4-i1", "label": "NEW WORDS", "display": "понеделник, вторник", "sublabel": "the week begins with Monday", "translation": "Monday, Tuesday", "tts": "понеделник вторник" },
         { "type": "introduce", "id": "sch-4-i2", "label": "NEW WORDS", "display": "сряда, четвъртък", "sublabel": "middle of the week", "translation": "Wednesday, Thursday", "tts": "сряда четвъртък" },
@@ -84,7 +84,7 @@
     {
       "id": "sch-5",
       "title": "School Review",
-      "xp": 15,
+      "coins": 15,
       "exercises": [
         { "type": "multiple_choice", "id": "sch-5-mc1", "question": "What day comes after \"събота\" (Saturday)?", "choices": ["неделя", "петък", "понеделник", "сряда"], "answer": "неделя" },
         { "type": "translate_to_en", "id": "sch-5-tr1", "prompt": "Учителката дава книга на ученика", "answer": "The teacher gives a book to the student", "hint": "дава = gives, на = to", "tts": "Учителката дава книга на ученика" },

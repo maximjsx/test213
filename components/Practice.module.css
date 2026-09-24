@@ -79,7 +79,7 @@
   background: var(--yellow-bg); border: 2px solid var(--yellow);
   font-size: 13px; font-weight: 900; letter-spacing: 0.8px; color: var(--yellow);
 }
-.xpGain { display: flex; align-items: center; gap: 6px; font-size: 18px; font-weight: 900; color: var(--yellow); }
+.coinGain { display: flex; align-items: center; gap: 6px; font-size: 18px; font-weight: 900; color: var(--yellow); }
 .btnRow { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
 .play { max-width: 560px; margin: 0 auto; padding: 16px 16px 40px; display: flex; flex-direction: column; gap: 16px; }

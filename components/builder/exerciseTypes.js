@@ -47,7 +47,7 @@ export function defaultExercise(type) {
 }
 
 export function defaultLesson(levelId) {
-  return { id: levelId + '_l' + Date.now(), title: 'New Lesson', xp: 10, exercises: [] }
+  return { id: levelId + '_l' + Date.now(), title: 'New Lesson', coins: 10, exercises: [] }
 }
 
 export function exerciseSummary(ex) {

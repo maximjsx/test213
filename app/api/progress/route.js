@@ -4,8 +4,8 @@ import { getSession } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 const ALLOWED_KEYS = [
-  'lessons', 'xp', 'streak', 'lastActiveDay', 'streakFreezes',
-  'specialUnlocks', 'wrongExercises', 'skippedLevels', 'activeDays', 'xpByDay', 'quests', 'startedAt',
+  'lessons', 'coins', 'streak', 'lastActiveDay', 'streakFreezes',
+  'unlockedTopics', 'wrongExercises', 'skippedLevels', 'activeDays', 'coinsByDay', 'quests', 'startedAt',
   'dailyGoal', 'streakMilestone', 'speedBest', 'friendQuestClaimed',
 ]
 const MAX_BYTES = 300_000
@@ -48,7 +48,7 @@ export async function POST(req) {
       {
         $set: {
           progress,
-          xp: Number(progress.xp) || 0,
+          coins: Number(progress.coins) || 0,
           streak: Number(progress.streak) || 0,
           lessonsCount: Object.keys(progress.lessons || {}).length,
           updatedAt: new Date(),

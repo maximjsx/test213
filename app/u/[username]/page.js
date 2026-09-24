@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Bear from '../../../components/Bear'
 import Chevron from '../../../components/Chevron'
 import LoadingBear from '../../../components/LoadingBear'
+import CoinIcon from '../../../components/ui/CoinIcon'
 import styles from './page.module.css'
 
 function fmtDate(d) {
@@ -74,9 +75,9 @@ export default function PublicProfilePage() {
 
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <img src="/icons/lightning.png" alt="" width={22} height={22} />
-            <div className={styles.statVal}>{user.xp}</div>
-            <div className={styles.statLbl}>Total XP</div>
+            <CoinIcon size={22} />
+            <div className={styles.statVal}>{user.coins}</div>
+            <div className={styles.statLbl}>Coins earned</div>
           </div>
           <div className={styles.stat}>
             <img src="/icons/fire.png" alt="" width={22} height={22} />

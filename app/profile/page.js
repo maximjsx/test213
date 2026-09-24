@@ -9,6 +9,9 @@ import Chevron from '../../components/Chevron'
 import InstallButton from '../../components/InstallButton'
 import Achievements from '../../components/Achievements'
 import LoadingBear from '../../components/LoadingBear'
+import DiscordIcon from '../../components/ui/DiscordIcon'
+import CoinIcon from '../../components/ui/CoinIcon'
+import { coinsSince } from '../../lib/coins'
 import styles from './page.module.css'
 
 function fmtDate(d) {
@@ -147,15 +150,15 @@ function ProfileInner() {
   }
 
   const lessonsDone = Object.keys(state.lessons).length
-  const localHasProgress = state.xp > 0 || lessonsDone > 0
+  const localHasProgress = state.coins > 0 || lessonsDone > 0
 
   // Purely informational: this account already has its own progress, and this
   // browser separately has local progress that was never linked to it. It's
   // never touched or merged automatically.
   const localLessonsDone = localSnapshot ? Object.keys(localSnapshot.lessons || {}).length : 0
   const localDiffersFromAccount = user && serverProgress && localSnapshot
-    && (localSnapshot.xp > 0 || localLessonsDone > 0)
-    && (localSnapshot.xp !== state.xp || localLessonsDone !== lessonsDone)
+    && (localSnapshot.coins > 0 || localLessonsDone > 0)
+    && (localSnapshot.coins !== state.coins || localLessonsDone !== lessonsDone)
 
   // First login with local progress: offer to convert it to the account
   const showConvert = user && !convertSkipped && localHasProgress
@@ -188,9 +191,9 @@ function ProfileInner() {
 
               <div className={styles.stats}>
                 <div className={styles.stat}>
-                  <img src="/icons/lightning.png" alt="" width={22} height={22} />
-                  <div className={styles.statVal}>{state.xp}</div>
-                  <div className={styles.statLbl}>Total XP</div>
+                  <CoinIcon size={22} />
+                  <div className={styles.statVal}>{coinsSince(state.coinsByDay)}</div>
+                  <div className={styles.statLbl}>Coins earned</div>
                 </div>
                 <div className={styles.stat}>
                   <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
@@ -278,9 +281,9 @@ function ProfileInner() {
             <div className={styles.statsHeading}>Statistics</div>
             <div className={styles.stats}>
               <div className={styles.stat}>
-                <img src="/icons/lightning.png" alt="" width={22} height={22} />
-                <div className={styles.statVal}>{state.xp}</div>
-                <div className={styles.statLbl}>Total XP</div>
+                <CoinIcon size={22} />
+                <div className={styles.statVal}>{coinsSince(state.coinsByDay)}</div>
+                <div className={styles.statLbl}>Coins earned</div>
               </div>
               <div className={styles.stat}>
                 <img src="/icons/fire.png" alt="" width={22} height={22} />
@@ -338,7 +341,7 @@ function ProfileInner() {
                             <span className={styles.friendStreak}><img src="/icons/fire.png" alt="" width={13} height={13} />{f.streak}</span>
                           )}
                         </span>
-                        <span className={styles.friendXp}>{f.xp} XP</span>
+                        <span className={styles.friendCoins}>{f.coins} coins</span>
                       </Link>
                     ))}
                   </>
@@ -368,7 +371,7 @@ function ProfileInner() {
               <div className={styles.localNote}>
                 <div className={styles.localNoteTitle}>Local device stats</div>
                 <div className={styles.localNoteDetail}>
-                  This browser also has {localSnapshot.xp} XP and {localLessonsDone} lessons stored outside
+                  This browser also has {localSnapshot.coins || 0} coins and {localLessonsDone} lessons stored outside
                   your account. It's kept separate and untouched.
                 </div>
               </div>
@@ -406,13 +409,11 @@ function ProfileInner() {
             </p>
             {oauthError && <div className={styles.error}>Sign in failed ({oauthError}), please try again.</div>}
             <a href="/api/auth/login" className={styles.discordBtn}>
-              <svg width="22" height="17" viewBox="0 0 71 55" fill="currentColor" aria-hidden="true">
-                <path d="M60.1 4.9A58.5 58.5 0 0 0 45.4.4l-1.8 3.7a54 54 0 0 0-16.2 0L25.5.4a58.4 58.4 0 0 0-14.7 4.6C1.5 18.7-1 32.1.3 45.4a58.9 58.9 0 0 0 18 9.1l3.8-6.2a38 38 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 35.8 0l1.5 1.1a38 38 0 0 1-6 2.9l3.8 6.2a58.7 58.7 0 0 0 18-9.1c1.6-15.3-2.7-28.6-10.6-40.5ZM23.7 37.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/>
-              </svg>
+              <DiscordIcon />
               SIGN IN WITH DISCORD
             </a>
             <div className={styles.localStats}>
-              On this device: {state.xp} XP · {lessonsDone} lessons · {state.streak} day streak
+              On this device: {state.coins} coins · {lessonsDone} lessons · {state.streak} day streak
             </div>
             <Achievements state={state} />
           </>

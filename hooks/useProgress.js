@@ -2,9 +2,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { ensureQuests, applySessionToQuests } from '../lib/quests'
 import { useAuth } from './useAuth'
+import { topicLock } from '../lib/specialTopics'
 
-const KEY = 'bulgarolearn'
-const STREAK_FREEZE_COST_XP = 20
+const KEY = 'bulgario_progress'
+const STREAK_FREEZE_COST = 20
 
 function load() {
   if (typeof window === 'undefined') return null
@@ -38,15 +39,15 @@ export function clearLocalProgress() {
 function defaultState() {
   return {
     lessons: {},
-    xp: 0,
+    coins: 0,
     streak: 0,
     lastActiveDay: null,
     streakFreezes: 0,
-    specialUnlocks: {},
+    unlockedTopics: {},
     wrongExercises: {},
     skippedLevels: {},
     activeDays: {},
-    xpByDay: {},
+    coinsByDay: {},
     quests: null,
     startedAt: null,
   }
@@ -58,7 +59,7 @@ function normalize(raw) {
 
 // A break or used freeze found on load must be saved, or the server keeps
 // showing the old streak on the leaderboard and friend lists.
-function streakChanged(raw, next) {
+function needsSave(raw, next) {
   return (raw.streak || 0) !== next.streak || (raw.streakFreezes || 0) !== next.streakFreezes
 }
 
@@ -91,8 +92,14 @@ export function dayKey(d = new Date()) {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`
 }
 
+// Earned history drives rankings, so only earning adds to it, never spending
+function earnedToday(state, coins) {
+  const byDay = state.coinsByDay || {}
+  return { ...byDay, [dayKey()]: (byDay[dayKey()] || 0) + coins }
+}
+
 // Marks today active, bumps streak once per day, applies session results to quests
-function applySession(current, xp, meta = {}) {
+function applySession(current, coins, meta = {}) {
   // Re-check the break here too: a tab left open across missed days was only
   // normalized when it loaded.
   const prev = calcStreakBreak(current)
@@ -101,13 +108,13 @@ function applySession(current, xp, meta = {}) {
   const withQuests = ensureQuests(prev)
   return {
     ...withQuests,
-    xp: prev.xp + xp,
+    coins: prev.coins + coins,
     streak: wasToday ? prev.streak : prev.streak + 1,
     lastActiveDay: today,
     startedAt: prev.startedAt || Date.now(),
     activeDays: { ...(prev.activeDays || {}), [dayKey()]: true },
-    xpByDay: { ...(prev.xpByDay || {}), [dayKey()]: ((prev.xpByDay || {})[dayKey()] || 0) + xp },
-    quests: applySessionToQuests(withQuests.quests, { ...meta, xpEarned: xp }),
+    coinsByDay: earnedToday(prev, coins),
+    quests: applySessionToQuests(withQuests.quests, { ...meta, coinsEarned: coins }),
   }
 }
 
@@ -156,7 +163,7 @@ export function useProgress() {
           if (d.progress) {
             modeRef.current = 'account'
             const next = normalize(d.progress)
-            if (streakChanged(d.progress, next)) persist(next)
+            if (needsSave(d.progress, next)) persist(next)
             setState(next)
             setHydrated(true)
             return
@@ -170,7 +177,7 @@ export function useProgress() {
       const raw = load()
       if (raw) {
         const next = normalize(raw)
-        if (streakChanged(raw, next)) persist(next)
+        if (needsSave(raw, next)) persist(next)
         setState(next)
       }
       setHydrated(true)
@@ -184,10 +191,10 @@ export function useProgress() {
   useEffect(() => { cachedState = state }, [state])
   useEffect(() => { if (hydrated) cachedHydrated = true }, [hydrated])
 
-  const completeLessonWithXP = useCallback((lessonId, xp, meta = {}) => {
+  const completeLesson = useCallback((lessonId, coins, meta = {}) => {
     setState(prev => {
       const next = {
-        ...applySession(prev, xp, { ...meta, isLesson: true }),
+        ...applySession(prev, coins, { ...meta, isLesson: true }),
         lessons: { ...prev.lessons, [lessonId]: { completed: true, completedAt: Date.now() } },
       }
       persist(next)
@@ -196,12 +203,12 @@ export function useProgress() {
   }, [persist])
 
   // Mistake practice session: clears fixed mistakes, keeps repeated ones
-  const completePractice = useCallback((xp, meta = {}, correctIds = [], wrongIds = []) => {
+  const completePractice = useCallback((coins, meta = {}, correctIds = [], wrongIds = []) => {
     setState(prev => {
       const wrongExercises = { ...prev.wrongExercises }
       correctIds.forEach(id => { delete wrongExercises[id] })
       wrongIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
-      const next = { ...applySession(prev, xp, { ...meta, isLesson: false }), wrongExercises }
+      const next = { ...applySession(prev, coins, { ...meta, isLesson: false }), wrongExercises }
       persist(next)
       return next
     })
@@ -213,13 +220,11 @@ export function useProgress() {
       if (!items) return prev
       const q = items.find(x => x.id === questId)
       if (!q || q.claimed || q.progress < q.goal) return prev
-      const isXp = q.reward.type === 'xp'
+      const isCoins = q.reward.type === 'coins'
       const next = {
         ...prev,
-        xp: isXp ? prev.xp + q.reward.amount : prev.xp,
-        xpByDay: isXp
-          ? { ...(prev.xpByDay || {}), [dayKey()]: ((prev.xpByDay || {})[dayKey()] || 0) + q.reward.amount }
-          : (prev.xpByDay || {}),
+        coins: isCoins ? prev.coins + q.reward.amount : prev.coins,
+        coinsByDay: isCoins ? earnedToday(prev, q.reward.amount) : (prev.coinsByDay || {}),
         streakFreezes: q.reward.type === 'freeze' ? (prev.streakFreezes || 0) + q.reward.amount : (prev.streakFreezes || 0),
         quests: { ...prev.quests, items: items.map(x => x.id === questId ? { ...x, claimed: true } : x) },
       }
@@ -241,10 +246,10 @@ export function useProgress() {
 
   const buyStreakFreeze = useCallback(() => {
     setState(prev => {
-      if (prev.xp < STREAK_FREEZE_COST_XP) return prev
+      if (prev.coins < STREAK_FREEZE_COST) return prev
       const next = {
         ...prev,
-        xp: prev.xp - STREAK_FREEZE_COST_XP,
+        coins: prev.coins - STREAK_FREEZE_COST,
         streakFreezes: (prev.streakFreezes || 0) + 1,
       }
       persist(next)
@@ -252,9 +257,33 @@ export function useProgress() {
     })
   }, [persist])
 
-  const setDailyGoal = useCallback((xp) => {
+  const guildIds = user?.guildIds
+  const lockOf = useCallback(
+    (level) => topicLock(level, { unlockedTopics: state.unlockedTopics, guildIds }),
+    [state.unlockedTopics, guildIds]
+  )
+  const isTopicUnlocked = useCallback((level) => !lockOf(level), [lockOf])
+
+  // Spending only lowers the balance; coinsByDay is earned history, so a
+  // purchase never costs rank.
+  const unlockTopic = useCallback((level) => {
     setState(prev => {
-      const next = { ...prev, dailyGoal: xp }
+      const lock = topicLock(level, { unlockedTopics: prev.unlockedTopics, guildIds })
+      const price = level.special?.price || 0
+      if (!lock?.needsCoins || lock.needsGuild || prev.coins < price) return prev
+      const next = {
+        ...prev,
+        coins: prev.coins - price,
+        unlockedTopics: { ...(prev.unlockedTopics || {}), [level.id]: new Date().toISOString() },
+      }
+      persist(next)
+      return next
+    })
+  }, [persist, guildIds])
+
+  const setDailyGoal = useCallback((coins) => {
+    setState(prev => {
+      const next = { ...prev, dailyGoal: coins }
       persist(next)
       return next
     })
@@ -268,11 +297,11 @@ export function useProgress() {
     })
   }, [persist])
 
-  const completeSpeedRound = useCallback((mode, matches, xp) => {
+  const completeSpeedRound = useCallback((mode, matches, coins) => {
     setState(prev => {
       const best = prev.speedBest || {}
       const next = {
-        ...applySession(prev, xp, { isLesson: false }),
+        ...applySession(prev, coins, { isLesson: false }),
         speedBest: { ...best, [mode]: Math.max(best[mode] || 0, matches) },
       }
       persist(next)
@@ -280,13 +309,13 @@ export function useProgress() {
     })
   }, [persist])
 
-  const claimFriendQuest = useCallback((week, xp) => {
+  const claimFriendQuest = useCallback((week, coins) => {
     setState(prev => {
       if (prev.friendQuestClaimed === week) return prev
       const next = {
         ...prev,
-        xp: prev.xp + xp,
-        xpByDay: { ...(prev.xpByDay || {}), [dayKey()]: ((prev.xpByDay || {})[dayKey()] || 0) + xp },
+        coins: prev.coins + coins,
+        coinsByDay: earnedToday(prev, coins),
         friendQuestClaimed: week,
       }
       persist(next)
@@ -342,8 +371,9 @@ export function useProgress() {
 
   return {
     state, hydrated,
-    buyStreakFreeze, STREAK_FREEZE_COST_XP,
-    recordMistakes, completeLessonWithXP, completePractice,
+    buyStreakFreeze, STREAK_FREEZE_COST,
+    unlockTopic, isTopicUnlocked, lockOf,
+    recordMistakes, completeLesson, completePractice,
     claimQuest, claimFriendQuest,
     setDailyGoal, markStreakMilestone, completeSpeedRound,
     isLessonComplete, isLessonUnlocked, levelProgress,

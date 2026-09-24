@@ -1,11 +1,11 @@
 import getClientPromise from '@/lib/mongodb'
 import { getSession } from '@/lib/auth'
-import { xpSince, weekStartKey } from '@/lib/xp'
+import { coinsSince, weekStartKey } from '@/lib/coins'
 import { FRIEND_QUEST_GOAL, FRIEND_QUEST_REWARD } from '@/lib/goals'
 
 export const dynamic = 'force-dynamic'
 
-const USER_PROJECTION = { _id: 0, discordId: 1, username: 1, avatar: 1, friendQuest: 1, 'progress.xpByDay': 1 }
+const USER_PROJECTION = { _id: 0, discordId: 1, username: 1, avatar: 1, friendQuest: 1, 'progress.coinsByDay': 1 }
 
 function avatarUrl(u) {
   return u.avatar ? `https://cdn.discordapp.com/avatars/${u.discordId}/${u.avatar}.png?size=64` : null
@@ -42,16 +42,16 @@ export async function GET() {
       || friends.find(f => f.friendQuest?.week === week && f.friendQuest.partnerId === me)
       || null
 
-    const myXp = xpSince(meUser?.progress?.xpByDay, week)
+    const myCoins = meUser ? coinsSince(meUser.progress?.coinsByDay, week) : 0
     return Response.json({
       week,
       goal: FRIEND_QUEST_GOAL,
       reward: FRIEND_QUEST_REWARD,
-      myXp,
+      myCoins,
       partner: partner && {
         username: partner.username,
         avatarUrl: avatarUrl(partner),
-        xp: xpSince(partner.progress?.xpByDay, week),
+        coins: coinsSince(partner.progress?.coinsByDay, week),
       },
       friends: friends.map(f => ({ username: f.username, avatarUrl: avatarUrl(f) })),
     })

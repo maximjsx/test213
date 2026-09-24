@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { playLevelComplete, playPerfect } from '../lib/audio'
 import Bear from './Bear'
+import CoinIcon from './ui/CoinIcon'
 import styles from './LessonComplete.module.css'
 
 const CONFETTI_COLORS = ['#ffc800', '#00cc7e', '#ff9600', '#1cb0f6', '#ce82ff', '#e8025e']
@@ -105,20 +106,20 @@ function StatTile({ color, label, icon, value }) {
     <div className={styles.tile} style={{ borderColor: color }}>
       <div className={styles.tileHead} style={{ background: color }}>{label}</div>
       <div className={styles.tileBody} style={{ color }}>
-        {icon && <img src={icon} alt="" width={20} height={20} />}
+        {icon}
         <span>{value}</span>
       </div>
     </div>
   )
 }
 
-export default function LessonComplete({ lesson, level, score, xpEarned, onContinue, onRetry, mistakes = [], prevWrongIds = {} }) {
+export default function LessonComplete({ lesson, level, score, coinsEarned, onContinue, onRetry, mistakes = [], prevWrongIds = {} }) {
   const pct = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0
   const perfect = score.total > 0 && score.correct === score.total
   const combo = score.maxCombo ?? 0
 
   const uniqueMistakes = mistakes.filter((m, i) => mistakes.findIndex(x => x.id === m.id) === i)
-  const shownXp = useCountUp(xpEarned ?? lesson.xp)
+  const shownCoins = useCountUp(coinsEarned ?? lesson.coins)
   const shownPct = useCountUp(pct)
 
   useEffect(() => {
@@ -145,10 +146,10 @@ export default function LessonComplete({ lesson, level, score, xpEarned, onConti
         </h1>
 
         <div className={styles.tiles}>
-          <StatTile color="var(--yellow)" label="Total XP" icon="/icons/lightning.png" value={`+${shownXp}`} />
+          <StatTile color="var(--yellow)" label="Coins" icon={<CoinIcon size={20} />} value={`+${shownCoins}`} />
           <StatTile color={accuracyColor} label="Accuracy" value={`${shownPct}%`} />
           {combo >= 3 && (
-            <StatTile color="var(--orange)" label="Best Combo" icon="/icons/fire.png" value={combo} />
+            <StatTile color="var(--orange)" label="Best Combo" icon={<img src="/icons/fire.png" alt="" width={20} height={20} />} value={combo} />
           )}
         </div>
 

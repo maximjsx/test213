@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Bear from '../Bear'
-import XpCounter from './XpCounter'
+import CoinCounter from './CoinCounter'
 import styles from './Home.module.css'
 
 export default function HomeHeader({ state, user, streakAtRisk, claimable, onOpenStreak, onOpenQuests, onOpenShop }) {
@@ -19,7 +19,7 @@ export default function HomeHeader({ state, user, streakAtRisk, claimable, onOpe
             <span className={styles.streakFlame}><img src="/icons/fire.png" alt="" width={26} height={26} /></span>
             <span className={styles.streakNum}>{state.streak}</span>
           </button>
-          <XpCounter xp={state.xp} />
+          <CoinCounter coins={state.coins} />
           <button className={styles.iconBtn} onClick={onOpenQuests} title="Daily quests" aria-label={claimable ? `Daily quests, ${claimable} ready to claim` : 'Daily quests'}>
             <img src="/icons/another_star.png" alt="" width={26} height={26} />
             <span className={styles.iconLabel}>Quests</span>

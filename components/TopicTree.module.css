@@ -65,3 +65,8 @@
   .disc { inset: 12px; }
   .title { font-size: 15px; }
 }
+
+.locked { cursor: pointer; background: none; border: 0; padding: 0; font: inherit; color: inherit; }
+.locked .disc { background: var(--surface-hi); }
+.locked .title { color: var(--text-muted); }
+.locked .count { color: var(--yellow); }

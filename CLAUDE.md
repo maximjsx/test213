@@ -57,6 +57,7 @@ Terminology: a **level** in code is a **topic** in the UI. A topic has lessons, 
 
 - Most pages are client components because progress lives in the browser. Metadata for them goes in a sibling `layout.js`.
 - `useProgress` and `useAuth` cache module-level state so tab switches don't flash loaders. Keep that when changing them.
-- `xp` is a spendable balance; rankings use XP earned per day (`lib/xp.js`), so spending never lowers rank.
+- `coins` is the one currency: a spendable balance, while rankings use coins earned per day (`coinsByDay`, `lib/coins.js`), so spending never lowers rank.
+- Special topics (`special: { price?, guild? }` on a level) show locked on home. `lib/specialTopics.js` decides the lock; Discord server membership comes from the `guilds` OAuth scope, stored as `users.guildIds` (only servers the course references).
 - `app/opengraph-image.js` runs on the edge runtime because `@vercel/og` in Node breaks on Windows paths.
 - `lib/storage.js` is server only (reads STORAGE_API_KEY). Never import it from a client component.

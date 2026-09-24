@@ -29,7 +29,7 @@
 .doneEmoji { font-size: 72px; }
 .doneTitle { font-size: 32px; font-weight: 900; color: var(--text); }
 .doneSub { font-size: 15px; color: var(--text-muted); }
-.xpBadge {
+.coinBadge {
   border: 3px solid; font-size: 22px; font-weight: 900;
   padding: 8px 24px; border-radius: 100px; margin: 8px 0;
 }

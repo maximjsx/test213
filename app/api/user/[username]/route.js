@@ -1,6 +1,6 @@
 import getClientPromise from '@/lib/mongodb'
 import { getSession } from '@/lib/auth'
-import { lifetimeXp, XP_HISTORY_PROJECTION } from '@/lib/xp'
+import { lifetimeCoins, COIN_HISTORY_PROJECTION } from '@/lib/coins'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,7 +12,7 @@ export async function GET(req, { params }) {
 
     const target = await db.collection('users').findOne(
       { usernameLower: String(params.username || '').toLowerCase() },
-      { projection: { _id: 0, discordId: 1, username: 1, avatar: 1, createdAt: 1, streak: 1, lessonsCount: 1, ...XP_HISTORY_PROJECTION } }
+      { projection: { _id: 0, discordId: 1, username: 1, avatar: 1, createdAt: 1, streak: 1, lessonsCount: 1, ...COIN_HISTORY_PROJECTION } }
     )
     if (!target) return Response.json({ error: 'not_found' }, { status: 404 })
 
@@ -38,7 +38,7 @@ export async function GET(req, { params }) {
         username: target.username,
         avatarUrl: target.avatar ? `https://cdn.discordapp.com/avatars/${target.discordId}/${target.avatar}.png?size=128` : null,
         createdAt: target.createdAt,
-        xp: lifetimeXp(target),
+        coins: lifetimeCoins(target),
         streak: target.streak || 0,
         lessonsCount: target.lessonsCount || 0,
       },

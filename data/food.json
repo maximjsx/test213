@@ -9,7 +9,7 @@
     {
       "id": "food-1",
       "title": "Drinks",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "food-1-i1", "label": "NEW WORD", "display": "вода", "sublabel": "feminine noun (ends in -а)", "translation": "water", "tts": "вода" },
         { "type": "introduce", "id": "food-1-i2", "label": "NEW WORD", "display": "кафе", "sublabel": "neuter noun (ends in -е)", "translation": "coffee", "tts": "кафе" },
@@ -29,7 +29,7 @@
     {
       "id": "food-2",
       "title": "Food",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "food-2-i1", "label": "NEW WORD", "display": "хляб", "sublabel": "masculine noun", "translation": "bread", "tts": "хляб" },
         { "type": "introduce", "id": "food-2-i2", "label": "NEW WORD", "display": "месо", "sublabel": "neuter noun (ends in -о)", "translation": "meat", "tts": "месо" },
@@ -48,7 +48,7 @@
     {
       "id": "food-3",
       "title": "Numbers 1-10",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "food-3-i1", "label": "NEW NUMBERS", "display": "едно, две, три", "sublabel": "1, 2, 3", "tts": "едно две три" },
         { "type": "introduce", "id": "food-3-i2", "label": "NEW NUMBERS", "display": "четири, пет, шест", "sublabel": "4, 5, 6", "tts": "четири пет шест" },
@@ -67,7 +67,7 @@
     {
       "id": "food-4",
       "title": "Ordering",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "food-4-i1", "label": "NEW PHRASE", "display": "Искам...", "sublabel": "direct way to order", "translation": "I want...", "tts": "Искам" },
         { "type": "introduce", "id": "food-4-i2", "label": "NEW PHRASE", "display": "Бих искал...", "sublabel": "more polite (used by men)", "translation": "I would like...", "tts": "Бих искал" },
@@ -86,7 +86,7 @@
     {
       "id": "food-5",
       "title": "Bon Appetit Review",
-      "xp": 15,
+      "coins": 15,
       "exercises": [
         { "type": "multiple_choice", "id": "food-5-mc1", "question": "How do you ask for the bill?", "choices": ["Сметката, моля", "Искам вода", "Вкусно е", "Три кафета"], "answer": "Сметката, моля" },
         { "type": "translate_to_en", "id": "food-5-tr1", "prompt": "Искам риба, хляб и вино", "answer": "I want fish, bread and wine", "tts": "Искам риба хляб и вино" },

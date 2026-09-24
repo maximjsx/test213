@@ -3,6 +3,7 @@ import Bear from './Bear'
 import FriendQuest from './FriendQuest'
 import { hapticTap } from '../lib/audio'
 import Modal from './ui/Modal'
+import CoinIcon from './ui/CoinIcon'
 import styles from './QuestsModal.module.css'
 
 export default function QuestsModal({ quests, claimQuest, user, friendQuestClaimed, claimFriendQuest, onClose }) {
@@ -28,13 +29,13 @@ export default function QuestsModal({ quests, claimQuest, user, friendQuestClaim
                 <div className={styles.claimedTag}><img src="/icons/green_checkmark.png" alt="" width={16} height={16} /></div>
               ) : done ? (
                 <button className={styles.claimBtn} onClick={() => { hapticTap(); claimQuest(q.id) }}>
-                  +{q.reward.amount} {q.reward.type === 'xp' ? 'XP' : ''}
+                  +{q.reward.amount} {q.reward.type === 'coins' && <CoinIcon size={16} />}
                   {q.reward.type === 'freeze' && <img src="/icons/shield.png" alt="freeze" width={16} height={16} />}
                 </button>
               ) : (
                 <div className={styles.rewardTag}>
-                  {q.reward.type === 'xp'
-                    ? <><img src="/icons/lightning.png" alt="" width={14} height={14} />{q.reward.amount}</>
+                  {q.reward.type === 'coins'
+                    ? <><CoinIcon size={14} />{q.reward.amount}</>
                     : <><img src="/icons/shield.png" alt="" width={14} height={14} />1</>}
                 </div>
               )}

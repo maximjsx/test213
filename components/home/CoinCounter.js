@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import CoinIcon from '../ui/CoinIcon'
 import styles from './Home.module.css'
 
 // Eased count-up so the number rolls to its new value instead of snapping.
@@ -26,26 +27,26 @@ function useCountUp(target, duration = 650) {
   return display
 }
 
-export default function XpCounter({ xp }) {
-  const display = useCountUp(xp)
+export default function CoinCounter({ coins }) {
+  const display = useCountUp(coins)
   const [delta, setDelta] = useState(null)
-  const prevRef = useRef(xp)
+  const prevRef = useRef(coins)
   useEffect(() => {
-    if (xp > prevRef.current) {
+    if (coins > prevRef.current) {
       // Keyed by value so React remounts the badge and the float animation
       // replays even on back-to-back gains.
-      setDelta({ amount: xp - prevRef.current, key: Date.now() })
+      setDelta({ amount: coins - prevRef.current, key: Date.now() })
       const t = setTimeout(() => setDelta(null), 1200)
-      prevRef.current = xp
+      prevRef.current = coins
       return () => clearTimeout(t)
     }
-    prevRef.current = xp
-  }, [xp])
+    prevRef.current = coins
+  }, [coins])
   return (
-    <div className={styles.xp}>
-      <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="" width={24} height={24} /></span>
-      <span className={styles.xpNum}>{display} XP</span>
-      {delta && <span key={delta.key} className={styles.xpDelta}>+{delta.amount}</span>}
+    <div className={styles.coins}>
+      <span className={styles.coinIcon}><CoinIcon size={24} /></span>
+      <span className={styles.coinNum}>{display}</span>
+      {delta && <span key={delta.key} className={styles.coinDelta}>+{delta.amount}</span>}
     </div>
   )
 }

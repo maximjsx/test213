@@ -9,7 +9,7 @@
     {
       "id": "alph-1",
       "title": "А to Д",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "alph-1-i1", "label": "NEW LETTER", "display": "А", "sublabel": "\"a\" as in \"bath\"", "tts": "А" },
         { "type": "multiple_choice", "id": "alph-1-mc1", "question": "What sound does А make?", "choices": ["\"a\" as in bath", "\"b\" as in bug", "\"g\" as in good"], "answer": "\"a\" as in bath", "tts": "А" },
@@ -30,7 +30,7 @@
     {
       "id": "alph-2",
       "title": "Е to Й",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "alph-2-i1", "label": "NEW LETTER", "display": "Е", "sublabel": "\"e\" as in \"best\"", "tts": "Е" },
         { "type": "multiple_choice", "id": "alph-2-mc1", "question": "What sound does Е make?", "choices": ["\"e\" as in best", "\"ee\" as in machine", "\"a\" as in bath"], "answer": "\"e\" as in best", "tts": "Е" },
@@ -52,7 +52,7 @@
     {
       "id": "alph-3",
       "title": "К to О",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "alph-3-i1", "label": "NEW LETTER", "display": "К", "sublabel": "\"k\" as in \"make\"", "tts": "Къ" },
         { "type": "multiple_choice", "id": "alph-3-mc1", "question": "Which letter makes the \"k\" sound?", "choices": ["К", "Г", "Д"], "answer": "К", "tts": "Къ" },
@@ -76,7 +76,7 @@
     {
       "id": "alph-4",
       "title": "П to У",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "alph-4-i1", "label": "NEW LETTER", "display": "П", "sublabel": "\"p\" as in \"pet\"", "tts": "Пъ" },
         { "type": "multiple_choice", "id": "alph-4-mc1", "question": "What sound does П make?", "choices": ["\"p\" as in pet", "\"b\" as in bug", "\"t\" as in top"], "answer": "\"p\" as in pet", "tts": "Пъ" },
@@ -100,7 +100,7 @@
     {
       "id": "alph-5",
       "title": "Ф to Ш",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "alph-5-i1", "label": "NEW LETTER", "display": "Ф", "sublabel": "\"f\" as in \"food\"", "tts": "Фъ" },
         { "type": "multiple_choice", "id": "alph-5-mc1", "question": "Which letter makes the \"f\" sound?", "choices": ["Ф", "В", "Х"], "answer": "Ф", "tts": "Фъ" },
@@ -124,7 +124,7 @@
     {
       "id": "alph-6",
       "title": "Щ to Я",
-      "xp": 15,
+      "coins": 15,
       "exercises": [
         { "type": "introduce", "id": "alph-6-i1", "label": "NEW LETTER", "display": "Щ", "sublabel": "\"sht\" as in \"shtick\"", "tts": "Щъ" },
         { "type": "multiple_choice", "id": "alph-6-mc1", "question": "What sound does Щ make?", "choices": ["\"sht\" as in shtick", "\"sh\" as in shot", "\"ch\" as in chip"], "answer": "\"sht\" as in shtick", "tts": "Щъ" },

@@ -1,0 +1,4 @@
+.coin { display: inline-block; flex-shrink: 0; vertical-align: middle; }
+.rim { fill: var(--orange); }
+.face { fill: var(--yellow); }
+.mark { fill: none; stroke: var(--orange); stroke-width: 1.8; stroke-linecap: round; }

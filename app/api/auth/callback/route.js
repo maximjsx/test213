@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import getClientPromise from '@/lib/mongodb'
-import { exchangeCode, fetchDiscordUser, tokenFields } from '@/lib/discord'
+import { exchangeCode, fetchDiscordUser, fetchCourseGuildIds, tokenFields } from '@/lib/discord'
 import { createSessionToken, sessionCookieOptions, SESSION_COOKIE, baseUrl } from '@/lib/auth'
 
 function sanitizeUsername(raw) {
@@ -29,6 +29,7 @@ export async function GET(req) {
 
     const me = await fetchDiscordUser(token.access_token)
     if (!me.id) return Response.redirect(`${home}/profile?error=discord_me`, 302)
+    const guildIds = await fetchCourseGuildIds(token.access_token)
 
     const client = await getClientPromise()
     const users = client.db('bulgario').collection('users')
@@ -37,7 +38,7 @@ export async function GET(req) {
     if (existing) {
       await users.updateOne(
         { discordId: me.id },
-        { $set: { discordName: me.global_name || me.username, avatar: me.avatar, lastLoginAt: new Date(), ...tokenFields(token) } }
+        { $set: { discordName: me.global_name || me.username, avatar: me.avatar, guildIds, lastLoginAt: new Date(), ...tokenFields(token) } }
       )
     } else {
       // First login: pick a free username derived from the Discord handle
@@ -49,11 +50,12 @@ export async function GET(req) {
         discordId: me.id,
         discordName: me.global_name || me.username,
         avatar: me.avatar,
+        guildIds,
         username,
         usernameLower: username.toLowerCase(),
         createdAt: new Date(),
         lastLoginAt: new Date(),
-        xp: 0,
+        coins: 0,
         streak: 0,
         lessonsCount: 0,
         progress: null,

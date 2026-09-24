@@ -9,13 +9,14 @@ import Bear from '../../components/Bear'
 import PageHeader from '../../components/ui/PageHeader'
 import Button from '../../components/ui/Button'
 import { ListSkeleton } from '../../components/PageSkeletons'
+import CoinIcon from '../../components/ui/CoinIcon'
 import styles from '../../components/Practice.module.css'
 
 const ROUND_MS = 60000
 const LOW_TIME_MS = 10000
 const COUNTDOWN_FROM = 3
 const ROWS = 5
-const MAX_XP = 25
+const MAX_COINS = 25
 
 const MODES = {
   words: {
@@ -221,9 +222,9 @@ function SpeedInner() {
   }
 
   function finish(matches) {
-    const xp = Math.min(MAX_XP, Math.ceil(matches / 2))
-    setResult({ matches, xp, newBest: matches > best && matches > 0 })
-    if (matches > 0) completeSpeedRound(modeId, matches, xp)
+    const coins = Math.min(MAX_COINS, Math.ceil(matches / 2))
+    setResult({ matches, coins, newBest: matches > best && matches > 0 })
+    if (matches > 0) completeSpeedRound(modeId, matches, coins)
     setPhase('done')
   }
 
@@ -249,8 +250,8 @@ function SpeedInner() {
         <div className={styles.bigNumber}>{result.matches}</div>
         <p className={styles.centerText}>{result.matches === 1 ? 'match' : 'matches'} in {ROUND_MS / 1000} seconds</p>
         {result.newBest && <span className={styles.newBest}>NEW PERSONAL BEST</span>}
-        {result.xp > 0 && (
-          <span className={styles.xpGain}><img src="/icons/lightning.png" alt="" width={20} height={20} />+{result.xp} XP</span>
+        {result.coins > 0 && (
+          <span className={styles.coinGain}><CoinIcon size={20} />+{result.coins} coins</span>
         )}
         <div className={styles.btnRow}>
           <Button onClick={start}>Play again</Button>

@@ -9,7 +9,7 @@
     {
       "id": "fam-1",
       "title": "Close Family",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "fam-1-i1", "label": "NEW WORD", "display": "майка", "sublabel": "feminine noun (ends in -а)", "translation": "mother", "tts": "майка" },
         { "type": "introduce", "id": "fam-1-i2", "label": "NEW WORD", "display": "баща", "sublabel": "masculine noun (ends in -а, exception)", "translation": "father", "tts": "баща" },
@@ -28,7 +28,7 @@
     {
       "id": "fam-2",
       "title": "Extended Family",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "fam-2-i1", "label": "NEW WORD", "display": "дядо", "sublabel": "masculine noun", "translation": "grandfather", "tts": "дядо" },
         { "type": "introduce", "id": "fam-2-i2", "label": "NEW WORD", "display": "баба", "sublabel": "feminine noun (ends in -а)", "translation": "grandmother", "tts": "баба" },
@@ -47,7 +47,7 @@
     {
       "id": "fam-3",
       "title": "Describing People",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "fam-3-i1", "label": "NEW WORD", "display": "голям / голяма", "sublabel": "masc / fem forms", "translation": "big / large", "tts": "голям" },
         { "type": "introduce", "id": "fam-3-i2", "label": "NEW WORD", "display": "малък / малка", "sublabel": "masc / fem forms", "translation": "small / little", "tts": "малък" },
@@ -66,7 +66,7 @@
     {
       "id": "fam-4",
       "title": "I Have / I Don't Have",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "fam-4-i1", "label": "NEW PHRASE", "display": "Имам...", "sublabel": "I have (something)", "translation": "I have...", "tts": "Имам" },
         { "type": "introduce", "id": "fam-4-i2", "label": "NEW PHRASE", "display": "Нямам...", "sublabel": "\"не + имам\" = the opposite", "translation": "I don't have...", "tts": "Нямам" },
@@ -84,7 +84,7 @@
     {
       "id": "fam-5",
       "title": "Family Review",
-      "xp": 15,
+      "coins": 15,
       "exercises": [
         { "type": "multiple_choice", "id": "fam-5-mc1", "question": "Which word means \"grandmother\"?", "choices": ["баба", "майка", "сестра", "съпруга"], "answer": "баба" },
         { "type": "translate_to_en", "id": "fam-5-tr1", "prompt": "Моят дядо е стар, но хубав", "answer": "My grandfather is old but nice", "hint": "но = but", "tts": "Моят дядо е стар но хубав" },

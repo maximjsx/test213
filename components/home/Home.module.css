@@ -29,7 +29,7 @@
 .logoName { font-size:20px; font-weight:900; color:var(--teal); letter-spacing:-0.5px; }
 
 .headerStats { display:flex; align-items:center; gap:14px; flex-shrink:0; }
-.streak, .xp { display:flex; align-items:center; gap:5px; }
+.streak, .coins { display:flex; align-items:center; gap:5px; }
 .statBtn { padding:6px 8px; border-radius:var(--r2); transition:background 0.15s; }
 .statBtn:hover { background:var(--surface-hi); }
 
@@ -53,8 +53,8 @@
   display:flex; align-items:center; justify-content:center;
   border:2px solid var(--surface);
 }
-.streakFlame, .xpIcon { display:flex; align-items:center; flex-shrink:0; }
-.streakNum, .xpNum { font-size:17px; font-weight:800; color:var(--text); }
+.streakFlame, .coinIcon { display:flex; align-items:center; flex-shrink:0; }
+.streakNum, .coinNum { font-size:17px; font-weight:800; color:var(--text); }
 
 @keyframes streakPulse {
   0%, 100% { opacity: 1; filter: brightness(1); }
@@ -67,7 +67,7 @@
   .header { height: 60px; padding: 0 14px; }
   .logoName { display: none; }
   .headerStats { gap: 6px; }
-  .streakNum, .xpNum { font-size: 14px; }
+  .streakNum, .coinNum { font-size: 14px; }
   .iconBtn { width: 34px; height: 34px; }
   .statBtn { padding: 4px 5px; }
 }
@@ -146,21 +146,21 @@
 .practiceLink:hover { border-color:var(--border-hi); background:var(--surface-hi); }
 .practiceGlyph { font-size:22px; font-weight:900; line-height:28px; color:var(--teal); }
 
-/* XP counter floating +N */
-.xp { position: relative; }
-.xpDelta {
+/* Coin counter floating +N */
+.coins { position: relative; }
+.coinDelta {
   position:absolute; top:-14px; right:0;
   font-size:13px; font-weight:900; color:var(--green, #58cc02);
   pointer-events:none;
-  animation: xpFloat 1.1s ease-out forwards;
+  animation: coinFloat 1.1s ease-out forwards;
 }
-@keyframes xpFloat {
+@keyframes coinFloat {
   0%   { opacity:0; transform:translateY(4px) scale(0.8); }
   20%  { opacity:1; transform:translateY(0) scale(1.1); }
   100% { opacity:0; transform:translateY(-18px) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .xpDelta { animation: none; }
+  .coinDelta { animation: none; }
 }
 
 /* Wide screens have room to name the header icons. Scoped under .headerStats

@@ -59,7 +59,7 @@ export default function BuilderPlayPage() {
                 <div className={styles.lessonInfo}>
                   <div className={styles.lessonTitle}>{lesson.title}</div>
                   <div className={styles.lessonMeta}>
-                    {lesson.exercises?.length || 0} exercise{lesson.exercises?.length !== 1 ? 's' : ''} · {lesson.xp} XP
+                    {lesson.exercises?.length || 0} exercise{lesson.exercises?.length !== 1 ? 's' : ''} · {lesson.coins} coins
                   </div>
                 </div>
               </Link>

@@ -39,4 +39,4 @@
 .option:hover { border-color: var(--border-hi); }
 .optionActive { border-color: var(--blue); background: var(--blue-bg); }
 .optionLabel { font-size: 16px; font-weight: 900; color: var(--text); }
-.optionXp { font-size: 14px; font-weight: 800; color: var(--text-muted); }
+.optionCoins { font-size: 14px; font-weight: 800; color: var(--text-muted); }

@@ -94,7 +94,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
                 router.push(`/lesson/${lesson.id}?level=${levelId}`)
               }}
             >
-              {isComplete ? `PRACTICE +${Math.ceil(lesson.xp / 2)} XP` : `START +${lesson.xp} XP`}
+              {isComplete ? `PRACTICE +${Math.ceil(lesson.coins / 2)} COINS` : `START +${lesson.coins} COINS`}
             </button>
           </div>
         ) : (

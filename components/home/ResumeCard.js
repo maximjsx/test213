@@ -22,7 +22,7 @@ export default function ResumeCard({ resume, isNew, streak, streakAtRisk, mistak
           <div className={styles.resumeSub}>Lesson {idx + 1} of {level.lessons.length}</div>
         </div>
       </div>
-      <Button size="lg" block color={level.color} onClick={onStart}>Start +{lesson.xp} XP</Button>
+      <Button size="lg" block color={level.color} onClick={onStart}>Start +{lesson.coins} coins</Button>
       <PracticeMistakesLink count={mistakeCount} />
     </section>
   )

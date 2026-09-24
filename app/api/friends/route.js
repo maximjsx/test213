@@ -1,13 +1,13 @@
 import getClientPromise from '@/lib/mongodb'
 import { getSession } from '@/lib/auth'
-import { lifetimeXp, XP_HISTORY_PROJECTION } from '@/lib/xp'
+import { lifetimeCoins, COIN_HISTORY_PROJECTION } from '@/lib/coins'
 
 export const dynamic = 'force-dynamic'
 
 function publicUser(u) {
   return {
     username: u.username,
-    xp: lifetimeXp(u),
+    coins: lifetimeCoins(u),
     streak: u.streak || 0,
     avatarUrl: u.avatar ? `https://cdn.discordapp.com/avatars/${u.discordId}/${u.avatar}.png?size=64` : null,
   }
@@ -29,7 +29,7 @@ export async function GET() {
 
     const otherIds = [...new Set(rels.map(r => (r.from === me ? r.to : r.from)))]
     const others = await db.collection('users')
-      .find({ discordId: { $in: otherIds } }, { projection: { _id: 0, discordId: 1, username: 1, avatar: 1, streak: 1, ...XP_HISTORY_PROJECTION } })
+      .find({ discordId: { $in: otherIds } }, { projection: { _id: 0, discordId: 1, username: 1, avatar: 1, streak: 1, ...COIN_HISTORY_PROJECTION } })
       .toArray()
     const byId = Object.fromEntries(others.map(u => [u.discordId, u]))
 
@@ -41,7 +41,7 @@ export async function GET() {
       else if (r.to === me) incoming.push(publicUser(other))
       else outgoing.push(publicUser(other))
     }
-    friends.sort((a, b) => b.xp - a.xp)
+    friends.sort((a, b) => b.coins - a.coins)
 
     return Response.json({ friends, incoming, outgoing })
   } catch (e) {

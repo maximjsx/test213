@@ -136,7 +136,7 @@ a.friendRow:hover { border-color:var(--border-hi); }
   display:flex;align-items:center;gap:3px;
   font-size:12px;font-weight:900;color:var(--orange);flex-shrink:0;
 }
-.friendXp { font-size:13px;font-weight:900;color:var(--yellow);flex-shrink:0; }
+.friendCoins { font-size:13px;font-weight:900;color:var(--yellow);flex-shrink:0; }
 .friendBtns { display:flex;align-items:center;gap:6px;flex-shrink:0; }
 .acceptBtn {
   font-size:12px;font-weight:900;letter-spacing:0.3px;

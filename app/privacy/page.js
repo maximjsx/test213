@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         <section>
           <h2>Without an Account</h2>
           <p>
-            Your progress (lessons, XP, streaks, hearts, settings) is saved in your browser&apos;s local storage
+            Your progress (lessons, coins, streaks, settings) is saved in your browser&apos;s local storage
             and is not sent to us. You can clear it at any time in your browser settings.
           </p>
           <p>
@@ -50,9 +50,9 @@ export default function PrivacyPage() {
         <section>
           <h2>Signing In With Discord</h2>
           <p>
-            When you sign in, Discord shares your Discord user ID, username, display name, and avatar with us. We
+            When you sign in, Discord shares your Discord user ID, username, display name, avatar, and the list of servers you are in. From that list we keep only whether you are in the few servers that unlock special topics. We
             never receive your email address or password. We store these together with a username you can change,
-            your synced progress (lessons, XP, streaks, quests, daily XP history), and Discord access tokens. We use
+            your synced progress (lessons, coins, streaks, quests, daily coin history), and Discord access tokens. We use
             the tokens only to refresh your name and avatar every few hours, so your profile stays current.
           </p>
           <p>
@@ -65,10 +65,10 @@ export default function PrivacyPage() {
           <h2>Public Profile, Friends, and Leaderboard</h2>
           <p>
             Signed-in players have a public profile at <code>/u/username</code> showing their username, avatar,
-            join date, XP, and streak. The same details appear on the public leaderboards and to your friends.
+            join date, coins earned, and streak. The same details appear on the public leaderboards and to your friends.
             Friend requests are sent by username. If you team up with a friend for the weekly friend quest, we
-            store who you picked, and you both see each other&apos;s XP for that week. Weekly leagues group players
-            by the XP they earned the week before.
+            store who you picked, and you both see each other&apos;s coins earned that week. Weekly leagues group players
+            by the coins they earned the week before.
           </p>
         </section>
 

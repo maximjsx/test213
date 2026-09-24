@@ -9,7 +9,7 @@
     {
       "id": "greet-1",
       "title": "First Hellos",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "greet-1-i1", "label": "NEW WORD", "display": "Здравей!", "sublabel": "informal hello to one person", "translation": "Hello!", "tts": "Здравей" },
         { "type": "introduce", "id": "greet-1-i2", "label": "NEW WORD", "display": "Здравейте!", "sublabel": "formal hello, or to a group", "translation": "Hello!", "tts": "Здравейте" },
@@ -28,7 +28,7 @@
     {
       "id": "greet-2",
       "title": "Times of Day",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "greet-2-i1", "label": "NEW PHRASE", "display": "Добро утро", "sublabel": "said in the morning", "translation": "Good morning", "tts": "Добро утро" },
         { "type": "introduce", "id": "greet-2-i2", "label": "NEW PHRASE", "display": "Добър ден", "sublabel": "said during the day", "translation": "Good day / Good afternoon", "tts": "Добър ден" },
@@ -48,7 +48,7 @@
     {
       "id": "greet-3",
       "title": "What Is Your Name?",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "greet-3-i1", "label": "NEW WORD", "display": "Довиждане", "sublabel": "formal goodbye", "translation": "Goodbye", "tts": "Довиждане" },
         { "type": "introduce", "id": "greet-3-i2", "label": "NEW WORD", "display": "Чао", "sublabel": "informal bye (borrowed from Italian)", "translation": "Bye!", "tts": "Чао" },
@@ -69,7 +69,7 @@
     {
       "id": "greet-4",
       "title": "Please and Thank You",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "greet-4-i1", "label": "NEW WORD", "display": "Моля", "sublabel": "\"Please\" when asking, \"You're welcome\" when replying", "translation": "Please / You're welcome", "tts": "Моля" },
         { "type": "introduce", "id": "greet-4-i2", "label": "NEW WORD", "display": "Благодаря", "sublabel": "the standard \"thank you\"", "translation": "Thank you", "tts": "Благодаря" },
@@ -88,7 +88,7 @@
     {
       "id": "greet-5",
       "title": "Putting It Together",
-      "xp": 15,
+      "coins": 15,
       "exercises": [
         { "type": "multiple_choice", "id": "greet-5-mc1", "question": "How do you say \"Good evening\"?", "choices": ["Добър вечер", "Добро утро", "Лека нощ", "Добър ден"], "answer": "Добър вечер", "tts": "Добър вечер" },
         { "type": "match_pairs", "id": "greet-5-mp1", "instruction": "Match each phrase to its meaning:", "pairs": [{ "left": "Здравей", "right": "Hello (informal)" }, { "left": "Довиждане", "right": "Goodbye" }, { "left": "Моля", "right": "Please" }, { "left": "Благодаря", "right": "Thank you" }] },

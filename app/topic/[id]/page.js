@@ -26,12 +26,17 @@ function recentlyCompleted(lessons) {
 
 export default function TopicPage() {
   const { id } = useParams()
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress } = useProgress()
+  const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress, isTopicUnlocked } = useProgress()
   const levelIndex = findLevelIndex(id)
   const level = LEVELS[levelIndex]
   const router = useRouter()
   const currentRef = useRef(null)
   const justCompletedId = useMemo(() => recentlyCompleted(state.lessons), [state.lessons])
+
+  const locked = hydrated && level && !isTopicUnlocked(level)
+  useEffect(() => {
+    if (locked) router.replace(`/?unlock=${level.id}`)
+  }, [locked, level, router])
 
   useEffect(() => {
     if (!hydrated) return
@@ -51,7 +56,7 @@ export default function TopicPage() {
       </div>
     )
   }
-  if (!hydrated) return <TopicSkeleton />
+  if (!hydrated || locked) return <TopicSkeleton />
 
   const { done, total } = levelProgress(level.lessons)
   const nextIdx = level.lessons.findIndex((l, idx) => isLessonUnlocked(level.lessons, idx) && !isLessonComplete(l.id))

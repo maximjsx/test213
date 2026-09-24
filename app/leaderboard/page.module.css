@@ -75,7 +75,7 @@
   font-size:12.5px;font-weight:900;color:var(--orange);
   flex-shrink:0;
 }
-.rowXp { font-size:14px;font-weight:900;color:var(--yellow);flex-shrink:0; }
+.rowCoins { display:flex;align-items:center;gap:4px;font-size:14px;font-weight:900;color:var(--yellow);flex-shrink:0; }
 
 .meFooter {
   text-align:center;margin-top:18px;

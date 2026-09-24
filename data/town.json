@@ -9,7 +9,7 @@
     {
       "id": "town-1",
       "title": "Places in the City",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "town-1-i1", "label": "NEW WORD", "display": "хотел", "sublabel": "masculine noun", "translation": "hotel", "tts": "хотел" },
         { "type": "introduce", "id": "town-1-i2", "label": "NEW WORD", "display": "ресторант", "sublabel": "masculine noun", "translation": "restaurant", "tts": "ресторант" },
@@ -29,7 +29,7 @@
     {
       "id": "town-2",
       "title": "Getting Around",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "town-2-i1", "label": "NEW WORD", "display": "автобус", "sublabel": "masculine noun", "translation": "bus", "tts": "автобус" },
         { "type": "introduce", "id": "town-2-i2", "label": "NEW WORD", "display": "метро", "sublabel": "neuter noun (ends in -о)", "translation": "metro / subway", "tts": "метро" },
@@ -48,7 +48,7 @@
     {
       "id": "town-3",
       "title": "Directions",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "town-3-i1", "label": "NEW WORD", "display": "вляво", "sublabel": "turn or go this way", "translation": "to the left", "tts": "вляво" },
         { "type": "introduce", "id": "town-3-i2", "label": "NEW WORD", "display": "вдясно", "sublabel": "opposite of вляво", "translation": "to the right", "tts": "вдясно" },
@@ -66,7 +66,7 @@
     {
       "id": "town-4",
       "title": "Asking for Help",
-      "xp": 10,
+      "coins": 10,
       "exercises": [
         { "type": "introduce", "id": "town-4-i1", "label": "NEW PHRASE", "display": "Извинете, къде е...?", "sublabel": "start with \"Извинете\" to be polite", "translation": "Excuse me, where is...?", "tts": "Извинете, къде е ресторантът" },
         { "type": "introduce", "id": "town-4-i2", "label": "NEW PHRASE", "display": "Как да стигна до...?", "sublabel": "ask for step-by-step directions", "translation": "How do I get to...?", "tts": "Как да стигна до хотела" },
@@ -84,7 +84,7 @@
     {
       "id": "town-5",
       "title": "City Review",
-      "xp": 15,
+      "coins": 15,
       "exercises": [
         { "type": "multiple_choice", "id": "town-5-mc1", "question": "Where do you buy medicine?", "choices": ["аптека", "болница", "хотел", "магазин"], "answer": "аптека" },
         { "type": "translate_to_en", "id": "town-5-tr1", "prompt": "Автобусът е далеч", "answer": "The bus is far", "hint": "Автобусът = the bus", "tts": "Автобусът е далеч" },

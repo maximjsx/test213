@@ -14,6 +14,7 @@ import Markdown from '../../../components/ui/Markdown'
 import Modal, { ModalText, ModalActions } from '../../../components/ui/Modal'
 import Button from '../../../components/ui/Button'
 import { clickable } from '../../../lib/a11y'
+import SpecialTopicFields from '../../../components/builder/SpecialTopicFields'
 import styles from '../../../components/builder/LevelEditor.module.css'
 
 function ExpandIcon() {
@@ -324,6 +325,9 @@ export default function LevelEditor() {
                     <ImageField image={level.image || null} onChange={img => updateLevel({ image: img })} courseId={id} label="Topic picture" />
                   </div>
                 </FieldRow>
+                <FieldRow label="Access" hint="Special topics show locked on the home path. Server ids: Discord settings, Advanced, Developer Mode, then right-click the server.">
+                  <SpecialTopicFields special={level.special} onChange={special => updateLevel({ special })} />
+                </FieldRow>
               </div>
               <div className={styles.fieldRow}>
                 <div className={styles.notesTabRow}>
@@ -383,7 +387,7 @@ export default function LevelEditor() {
                   <div className={styles.lessonHeaderLeft}>
                     <span className={styles.lessonNumBadge}>{li + 1}</span>
                     <span className={styles.lessonTitle}>{lesson.title}</span>
-                    <span className={styles.lessonMeta}>{lesson.exercises?.length || 0} ex · {lesson.xp} XP</span>
+                    <span className={styles.lessonMeta}>{lesson.exercises?.length || 0} ex · {lesson.coins} coins</span>
                     {lessonIssues > 0 && <span className={styles.issueBadge} title="Things to fix">{lessonIssues}</span>}
                   </div>
                   <div className={styles.lessonHeaderRight} onClick={e => e.stopPropagation()}>
@@ -405,8 +409,8 @@ export default function LevelEditor() {
                       <FieldRow label="Lesson title">
                         <input className={styles.input} value={lesson.title} onChange={e => setLessonField(li, 'title', e.target.value)} />
                       </FieldRow>
-                      <FieldRow label="XP reward">
-                        <input className={styles.input} type="number" min={1} max={999} value={lesson.xp} style={{ width: 80 }} onChange={e => setLessonField(li, 'xp', parseInt(e.target.value) || 10)} />
+                      <FieldRow label="Coin reward">
+                        <input className={styles.input} type="number" min={1} max={999} value={lesson.coins} style={{ width: 80 }} onChange={e => setLessonField(li, 'coins', parseInt(e.target.value) || 10)} />
                       </FieldRow>
                     </div>
 

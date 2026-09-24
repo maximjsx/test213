@@ -45,8 +45,8 @@ export default function BuilderLessonPage() {
         <div className={styles.doneEmoji}>🎉</div>
         <h2 className={styles.doneTitle}>Lesson complete!</h2>
         <p className={styles.doneSub}>{lesson.title}</p>
-        <div className={styles.xpBadge} style={{ borderColor: level.color, color: level.color }}>
-          +{lesson.xp} XP
+        <div className={styles.coinBadge} style={{ borderColor: level.color, color: level.color }}>
+          +{lesson.coins} coins
         </div>
         <div className={styles.doneActions}>
           <button className={styles.doneBack} onClick={() => router.push('/builder/play/' + levelId)}>

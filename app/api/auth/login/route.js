@@ -15,7 +15,7 @@ export async function GET(req) {
     client_id: clientId,
     response_type: 'code',
     redirect_uri: `${baseUrl(req)}/api/auth/callback`,
-    scope: 'identify',
+    scope: 'identify guilds',
     state,
     prompt: 'none',
   })

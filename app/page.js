@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { LEVELS, findResumeLesson, lessonHref } from '../lib/course'
+import { LEVELS, findLevel, findResumeLesson, lessonHref } from '../lib/course'
 import { useProgress } from '../hooks/useProgress'
 import { useAuth } from '../hooks/useAuth'
 import { claimableQuestCount } from '../lib/quests'
@@ -11,6 +11,7 @@ import HomeHeader from '../components/home/HomeHeader'
 import ResumeCard, { PracticeMistakesLink } from '../components/home/ResumeCard'
 import PracticeLinks from '../components/home/PracticeLinks'
 import ShopModal from '../components/home/ShopModal'
+import UnlockTopicModal from '../components/home/UnlockTopicModal'
 import QuestsModal from '../components/QuestsModal'
 import StreakModal from '../components/StreakModal'
 import StreakMilestone from '../components/StreakMilestone'
@@ -23,17 +24,26 @@ import styles from '../components/home/Home.module.css'
 export default function HomePage() {
   const {
     state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress,
-    buyStreakFreeze, STREAK_FREEZE_COST_XP, claimQuest, claimFriendQuest,
-    setDailyGoal, markStreakMilestone,
+    buyStreakFreeze, STREAK_FREEZE_COST, claimQuest, claimFriendQuest,
+    setDailyGoal, markStreakMilestone, unlockTopic, isTopicUnlocked, lockOf,
   } = useProgress()
-  const { user } = useAuth()
+  const { user, refresh: refreshAuth } = useAuth()
   const router = useRouter()
   const [modal, setModal] = useState(null)
+  const [unlocking, setUnlocking] = useState(null)
   const close = () => setModal(null)
+
+  // Opening a locked special topic from a link lands here with ?unlock=<id>
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('unlock')
+    const level = id && findLevel(id)
+    if (level?.special) setUnlocking(level)
+    if (id) router.replace('/', { scroll: false })
+  }, [router])
 
   if (!hydrated) return <HomeSkeleton />
 
-  const resume = findResumeLesson(isLessonComplete, isLessonUnlocked)
+  const resume = findResumeLesson(isLessonComplete, isLessonUnlocked, isTopicUnlocked)
   const streakAtRisk = state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
   const milestone = pendingMilestone(state)
@@ -41,7 +51,7 @@ export default function HomePage() {
   return (
     <div className={styles.page}>
       {modal === 'shop' && (
-        <ShopModal state={state} freezeCost={STREAK_FREEZE_COST_XP} onBuyFreeze={buyStreakFreeze} onClose={close} />
+        <ShopModal state={state} freezeCost={STREAK_FREEZE_COST} onBuyFreeze={buyStreakFreeze} onClose={close} />
       )}
       {modal === 'quests' && (
         <QuestsModal
@@ -51,6 +61,20 @@ export default function HomePage() {
           friendQuestClaimed={state.friendQuestClaimed}
           claimFriendQuest={claimFriendQuest}
           onClose={close}
+        />
+      )}
+      {unlocking && lockOf(unlocking) && (
+        <UnlockTopicModal
+          level={unlocking}
+          lock={lockOf(unlocking)}
+          coins={state.coins}
+          user={user}
+          onUnlock={unlockTopic}
+          onCheckGuild={async () => {
+            const fresh = await refreshAuth({ sync: true })
+            return !!fresh?.guildIds?.includes(unlocking.special.guild.id)
+          }}
+          onClose={() => setUnlocking(null)}
         />
       )}
       {modal === 'streak' && <StreakModal state={state} onClose={close} />}
@@ -84,7 +108,13 @@ export default function HomePage() {
           <PracticeMistakesLink count={mistakeCount} />
         )}
         <PracticeLinks />
-        <TopicTree levels={LEVELS} levelProgress={levelProgress} resumeLevelId={resume?.level.id} />
+        <TopicTree
+          levels={LEVELS}
+          levelProgress={levelProgress}
+          resumeLevelId={resume?.level.id}
+          lockOf={lockOf}
+          onUnlock={setUnlocking}
+        />
 
         <section className={styles.levelSection}>
           <div className={styles.levelDivider}>
