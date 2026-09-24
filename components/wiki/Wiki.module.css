@@ -1,5 +1,6 @@
 .page { min-height: 100vh; background: var(--bg); }
 .main { max-width: 760px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 20px; }
+.article { gap: 20px; }
 
 .crumbs { display: flex; flex-wrap: wrap; gap: 4px 8px; font-size: var(--fs-sm); font-weight: 800; color: var(--text-dim); }
 .crumbs a { color: var(--text-muted); }

@@ -5,6 +5,8 @@ import PageHeader from '../../../components/ui/PageHeader'
 import Markdown from '../../../components/ui/Markdown'
 import WikiList from '../../../components/wiki/WikiList'
 import VulgarGate from '../../../components/wiki/VulgarGate'
+import WikiTree from '../../../components/library/WikiTree'
+import layout from '../../../components/library/Library.module.css'
 import styles from '../../../components/wiki/Wiki.module.css'
 
 export const dynamicParams = false
@@ -54,17 +56,23 @@ export default function WikiPage({ params }) {
   return (
     <div className={styles.page}>
       <PageHeader
-        backHref={parent ? `/wiki/${parent.slug}` : '/wiki'}
-        backLabel={parent ? shortTitle(parent.title) : 'Wiki'}
+        backHref={parent ? `/wiki/${parent.slug}` : '/library'}
+        backLabel={parent ? shortTitle(parent.title) : 'Library'}
+        title={shortTitle(page.title)}
       />
-      <main className={styles.main}>
-        <nav className={styles.crumbs} aria-label="Breadcrumb">
-          <Link href="/wiki">Wiki</Link>
-          {trail.map(p => <span key={p.slug}>/ <Link href={`/wiki/${p.slug}`}>{shortTitle(p.title)}</Link></span>)}
-        </nav>
-        <h1 className={styles.title}>{page.title}</h1>
-        {page.warning ? <VulgarGate>{content}</VulgarGate> : content}
-      </main>
+      <div className={layout.layout}>
+        <main className={`${layout.primary} ${styles.article}`}>
+          <nav className={styles.crumbs} aria-label="Breadcrumb">
+            <Link href="/library">Library</Link>
+            {trail.map(p => <span key={p.slug}>/ <Link href={`/wiki/${p.slug}`}>{shortTitle(p.title)}</Link></span>)}
+          </nav>
+          <h1 className={styles.title}>{page.title}</h1>
+          {page.warning ? <VulgarGate>{content}</VulgarGate> : content}
+        </main>
+        <aside className={layout.aside}>
+          <WikiTree current={slug} />
+        </aside>
+      </div>
     </div>
   )
 }

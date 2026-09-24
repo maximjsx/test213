@@ -108,7 +108,7 @@
 }
 .tile:hover .tileIcon { background: var(--surface); }
 
-.sectionHead { display: flex; align-items: center; gap: 12px; margin: 20px 0 4px; }
+.sectionHead { display: flex; align-items: center; gap: 12px; margin: 28px 0 18px; }
 .sectionLine { flex: 1; height: 1px; background: var(--border); }
 .sectionLabel {
   padding: 5px 14px; border-radius: var(--r-pill);
