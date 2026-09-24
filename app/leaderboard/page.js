@@ -8,13 +8,42 @@ import styles from './page.module.css'
 
 const MEDALS = ['🥇', '🥈', '🥉']
 const PERIODS = [
-  { id: 'week',  label: 'THIS WEEK' },
-  { id: 'month', label: 'THIS MONTH' },
+  { id: 'league', label: 'LEAGUE' },
+  { id: 'week',  label: 'WEEK' },
+  { id: 'month', label: 'MONTH' },
   { id: 'all',   label: 'ALL TIME' },
 ]
 
+function LeagueHeader({ league }) {
+  if (!league) {
+    return (
+      <div className={styles.leagueCard}>
+        <div className={styles.leagueName}>Weekly leagues</div>
+        <p className={styles.leagueText}>
+          Sign in to join a league. Everyone starts in Bronze, and the XP you earn each week decides your league for the next one.
+        </p>
+        <Link href="/profile" className={styles.joinLink}>Sign in</Link>
+      </div>
+    )
+  }
+  return (
+    <div className={styles.leagueCard} style={{ '--league': league.color }}>
+      <span className={styles.leagueBadge} aria-hidden="true">
+        <img src="/icons/trophy.png" alt="" width={30} height={30} />
+      </span>
+      <div className={styles.leagueName}>{league.name} League</div>
+      <p className={styles.leagueText}>
+        {league.next
+          ? <>Earn <strong>{league.next.minXp} XP</strong> this week to move up to {league.next.name}.</>
+          : <>You are in the top league. Earn {league.stayXp} XP a week to stay here.</>}
+        {league.next && league.index > 0 && <> Below {league.stayXp} XP you drop down a league.</>}
+      </p>
+    </div>
+  )
+}
+
 export default function LeaderboardPage() {
-  const [period, setPeriod] = useState('week')
+  const [period, setPeriod] = useState('league')
   const [cache, setCache] = useState({})
   const data = cache[period]
 
@@ -51,9 +80,11 @@ export default function LeaderboardPage() {
         ))}
       </div>
 
+      {period === 'league' && data && <LeagueHeader league={data.league} />}
+
       {data === undefined ? (
         <LoadingBear fullscreen={false} size={72} />
-      ) : data.top.length === 0 ? (
+      ) : period === 'league' && !data.league ? null : data.top.length === 0 ? (
         <div className={styles.empty}>
           <Bear mood="happy" size={90} />
           <p>
@@ -87,7 +118,7 @@ export default function LeaderboardPage() {
           Your rank: #{data.me.rank} with {data.me.xp} XP
         </div>
       )}
-      {data && !data.me && (
+      {data && !data.me && period !== 'league' && (
         <div className={styles.meFooter}>
           <Link href="/profile" className={styles.joinLink}>Sign in to join the leaderboard</Link>
         </div>

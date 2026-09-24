@@ -83,3 +83,19 @@
 }
 .joinLink { color:var(--blue); }
 .joinLink:hover { text-decoration:underline; }
+
+.leagueCard {
+  --league: var(--border-hi);
+  display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+  margin-bottom:16px;padding:18px 18px 16px;
+  background:var(--surface);border:2px solid var(--league);border-radius:18px;
+}
+.leagueBadge {
+  width:54px;height:54px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb, var(--league) 22%, var(--surface));
+  border:3px solid var(--league);
+}
+.leagueName { font-size:20px;font-weight:900;color:var(--text); }
+.leagueText { font-size:14px;font-weight:700;color:var(--text-muted);margin:0;line-height:1.45; }
+.leagueText strong { color:var(--text); }

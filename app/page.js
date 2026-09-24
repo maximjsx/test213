@@ -15,6 +15,9 @@ import LoadingBear from '../components/LoadingBear'
 import TopicTree from '../components/TopicTree'
 import Certificates from '../components/Certificates'
 import TopicArt from '../components/TopicArt'
+import DailyGoal from '../components/DailyGoal'
+import StreakMilestone from '../components/StreakMilestone'
+import { pendingMilestone } from '../lib/goals'
 import styles from './page.module.css'
 
 const SPECIAL_PACKS = [
@@ -74,6 +77,25 @@ function PracticeLink({ count }) {
       <img src="/icons/broken_heart.png" alt="" width={18} height={18} />
       Practice {count} {count === 1 ? 'mistake' : 'mistakes'}
     </Link>
+  )
+}
+
+const PRACTICE_LINKS = [
+  { href: '/letters', label: 'Letters', icon: <span className={styles.practiceGlyph} lang="bg">Аа</span> },
+  { href: '/words', label: 'Words', icon: <img src="/icons/open_book.png" alt="" width={28} height={28} /> },
+  { href: '/speed?mode=words', label: 'Speed round', icon: <img src="/icons/lightning.png" alt="" width={28} height={28} /> },
+]
+
+function PracticeLinks() {
+  return (
+    <nav className={styles.practiceLinks} aria-label="Practice">
+      {PRACTICE_LINKS.map(p => (
+        <Link key={p.href} href={p.href} className={styles.practiceLink}>
+          {p.icon}
+          <span>{p.label}</span>
+        </Link>
+      ))}
+    </nav>
   )
 }
 
@@ -186,7 +208,11 @@ function XpCounter({ xp }) {
 }
 
 export default function HomePage() {
-  const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, claimQuest } = useProgress()
+  const {
+    state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress,
+    buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, claimQuest, claimFriendQuest,
+    setDailyGoal, markStreakMilestone,
+  } = useProgress()
   const { user } = useAuth()
   const router = useRouter()
   const [showShop, setShowShop] = useState(false)
@@ -199,6 +225,7 @@ export default function HomePage() {
   const streakAtRisk = state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
   const claimable = claimableQuestCount(state.quests)
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
+  const milestone = pendingMilestone(state)
 
   return (
     <div className={styles.page}>
@@ -212,11 +239,19 @@ export default function HomePage() {
         />
       )}
       {showQuests && (
-        <QuestsModal quests={state.quests} claimQuest={claimQuest} onClose={() => setShowQuests(false)} />
+        <QuestsModal
+          quests={state.quests}
+          claimQuest={claimQuest}
+          user={user}
+          friendQuestClaimed={state.friendQuestClaimed}
+          claimFriendQuest={claimFriendQuest}
+          onClose={() => setShowQuests(false)}
+        />
       )}
       {showStreak && (
         <StreakModal state={state} onClose={() => setShowStreak(false)} />
       )}
+      {milestone && <StreakMilestone days={milestone} onClose={() => markStreakMilestone(milestone)} />}
 
       {/* ── Header ── */}
       <header className={styles.header}>
@@ -263,6 +298,7 @@ export default function HomePage() {
       </header>
 
       <main className={styles.main}>
+        <DailyGoal state={state} setDailyGoal={setDailyGoal} />
         {resume && (
           <ResumeCard
             resume={resume}
@@ -277,6 +313,7 @@ export default function HomePage() {
           />
         )}
         {!resume && <PracticeLink count={mistakeCount} />}
+        <PracticeLinks />
         <TopicTree levels={COURSE.levels} levelProgress={levelProgress} resumeLevelId={resume?.levelId} />
 
         <section className={styles.levelSection}>

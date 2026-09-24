@@ -1,10 +1,11 @@
 'use client'
 import Bear from './Bear'
+import FriendQuest from './FriendQuest'
 import { hapticTap } from '../lib/audio'
 import { useDialog } from '../hooks/useDialog'
 import styles from './QuestsModal.module.css'
 
-export default function QuestsModal({ quests, claimQuest, onClose }) {
+export default function QuestsModal({ quests, claimQuest, user, friendQuestClaimed, claimFriendQuest, onClose }) {
   const items = quests?.items || []
   const cardRef = useDialog(onClose)
   return (
@@ -45,6 +46,8 @@ export default function QuestsModal({ quests, claimQuest, onClose }) {
             </div>
           )
         })}
+
+        {user && <FriendQuest myAvatarUrl={user.avatarUrl} claimedWeek={friendQuestClaimed} onClaim={claimFriendQuest} />}
       </div>
     </div>
   )

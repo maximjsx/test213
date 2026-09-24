@@ -244,3 +244,6 @@ a.friendRow:hover { border-color:var(--border-hi); }
 .localStats {
   margin-top:16px;font-size:12.5px;font-weight:700;color:var(--text-dim);
 }
+
+/* The global footer now shows on tab pages too, so skip this copy there */
+body:has([data-bottom-nav]) .legalLinks { display: none; }

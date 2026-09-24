@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import Chevron from '../../components/Chevron'
 import InstallButton from '../../components/InstallButton'
+import Achievements from '../../components/Achievements'
 import LoadingBear from '../../components/LoadingBear'
 import styles from './page.module.css'
 
@@ -298,6 +299,8 @@ function ProfileInner() {
               </div>
             </div>
 
+            <Achievements state={state} />
+
             {friendsData && (friendsData.incoming.length > 0 || friendsData.friends.length > 0 || friendsData.outgoing.length > 0) && (
               <div className={styles.friendsSection}>
                 {friendsData.incoming.length > 0 && (
@@ -411,6 +414,7 @@ function ProfileInner() {
             <div className={styles.localStats}>
               On this device: {state.xp} XP · {lessonsDone} lessons · {state.streak} day streak
             </div>
+            <Achievements state={state} />
           </>
         )}
       </div>

@@ -265,6 +265,48 @@ export function useProgress() {
     })
   }, [persist])
 
+  const setDailyGoal = useCallback((xp) => {
+    setState(prev => {
+      const next = { ...prev, dailyGoal: xp }
+      persist(next)
+      return next
+    })
+  }, [persist])
+
+  const markStreakMilestone = useCallback((days) => {
+    setState(prev => {
+      const next = { ...prev, streakMilestone: days }
+      persist(next)
+      return next
+    })
+  }, [persist])
+
+  const completeSpeedRound = useCallback((mode, matches, xp) => {
+    setState(prev => {
+      const best = prev.speedBest || {}
+      const next = {
+        ...applySession(prev, xp, { isLesson: false }),
+        speedBest: { ...best, [mode]: Math.max(best[mode] || 0, matches) },
+      }
+      persist(next)
+      return next
+    })
+  }, [persist])
+
+  const claimFriendQuest = useCallback((week, xp) => {
+    setState(prev => {
+      if (prev.friendQuestClaimed === week) return prev
+      const next = {
+        ...prev,
+        xp: prev.xp + xp,
+        xpByDay: { ...(prev.xpByDay || {}), [dayKey()]: ((prev.xpByDay || {})[dayKey()] || 0) + xp },
+        friendQuestClaimed: week,
+      }
+      persist(next)
+      return next
+    })
+  }, [persist])
+
   const isLessonComplete = useCallback((id) => !!state.lessons[id]?.completed, [state])
 
   const skipLevel = useCallback((levelId) => {
@@ -316,7 +358,8 @@ export function useProgress() {
     buyStreakFreeze, STREAK_FREEZE_COST_XP,
     unlockPack,
     recordMistakes, completeLessonWithXP, completePractice,
-    claimQuest,
+    claimQuest, claimFriendQuest,
+    setDailyGoal, markStreakMilestone, completeSpeedRound,
     isLessonComplete, isLessonUnlocked, levelProgress,
     skipLevel, unskipLevel, resetProgress, adoptAsAccount,
   }

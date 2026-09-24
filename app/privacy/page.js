@@ -66,7 +66,9 @@ export default function PrivacyPage() {
           <p>
             Signed-in players have a public profile at <code>/u/username</code> showing their username, avatar,
             join date, XP, and streak. The same details appear on the public leaderboards and to your friends.
-            Friend requests are sent by username.
+            Friend requests are sent by username. If you team up with a friend for the weekly friend quest, we
+            store who you picked, and you both see each other&apos;s XP for that week. Weekly leagues group players
+            by the XP they earned the week before.
           </p>
         </section>
 
