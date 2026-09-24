@@ -8,6 +8,7 @@ import PageHeader from '../../components/ui/PageHeader'
 import Button from '../../components/ui/Button'
 import { ListSkeleton } from '../../components/PageSkeletons'
 import StrengthBars from '../../components/StrengthBars'
+import AddToDeckButton from '../../components/decks/AddToDeckButton'
 import styles from '../../components/Practice.module.css'
 
 function play(text) {
@@ -34,6 +35,7 @@ function TopicWords({ level, words }) {
             <span className={styles.wordEn}>{w.en}</span>
           </div>
           <StrengthBars strength={w.strength} />
+          <AddToDeckButton size="sm" word={{ bg: w.bg, en: w.en, source: { kind: 'course', ref: w.lessonId } }} />
         </div>
       ))}
       {remaining > 0 && (

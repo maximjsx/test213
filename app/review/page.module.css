@@ -1,0 +1,49 @@
+.left { font-size: var(--fs-sm); font-weight: 900; color: var(--text-muted); white-space: nowrap; }
+
+.stage { display: flex; flex-direction: column; gap: 16px; }
+
+.flashcard {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  min-height: 280px; padding: 48px 20px 28px;
+  background: var(--surface); border: 2px solid var(--border); border-radius: var(--r-xl);
+  text-align: center;
+}
+.speak {
+  position: absolute; top: 12px; right: 12px;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-hi); border: 2px solid var(--border-hi);
+}
+.speak:hover { background: var(--border); }
+.front { font-size: 32px; font-weight: 900; color: var(--text); line-height: 1.2; overflow-wrap: anywhere; }
+.back {
+  width: 100%; padding-top: 16px;
+  border-top: 2px dashed var(--border);
+  display: flex; flex-direction: column; gap: 8px;
+  animation: reveal 0.18s ease-out;
+}
+.answer { font-size: var(--fs-lg); font-weight: 900; color: var(--teal); overflow-wrap: anywhere; }
+.note { font-size: var(--fs-base); font-weight: 700; color: var(--text-muted); overflow-wrap: anywhere; }
+@keyframes reveal { from { opacity: 0; transform: translateY(6px); } }
+
+.controls { display: flex; flex-direction: column; gap: 8px; }
+.grades { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.grade {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 12px 4px; border-radius: var(--r);
+  border: 2px solid var(--g); background: var(--surface);
+  box-shadow: 0 4px 0 var(--g);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.grade:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--g); }
+.grade1 { --g: var(--red); }
+.grade2 { --g: var(--orange); }
+.grade3 { --g: var(--green); }
+.grade4 { --g: var(--blue); }
+.gradeLabel { font-size: var(--fs-base); font-weight: 900; color: var(--text); }
+.gradeTime { font-size: var(--fs-xs); font-weight: 800; color: var(--g); }
+.keys { text-align: center; font-size: var(--fs-xs); font-weight: 700; color: var(--text-dim); }
+
+@media (hover: none) { .keys { display: none; } }
+@media (prefers-reduced-motion: reduce) { .back { animation: none; } }

@@ -19,6 +19,9 @@ lib/course.js    Every lookup over the course: findLevel, findLesson, resume les
 lib/levelSchema.js  Content validator shared by the builder UI and add-topic.
 lib/builderStore.js Builder levels in localStorage, share links, JSON export.
 hooks/useProgress.js  Learner state (XP, streak, lessons, mistakes, quests). localStorage for guests, /api/progress for accounts.
+hooks/useDecks.js     Decks and cards (account only). lib/decks.js is the server side, lib/srs.js wraps FSRS (ts-fsrs).
+lib/wordDrills.js     Turns any word list into lesson exercises for /study (flashcards, choice, typing, listening).
+components/decks/     AddToDeckButton (use it wherever a Bulgarian word appears), deck UI pieces.
 components/ui/   Shared primitives: Button, Modal, PageHeader, Skeleton, Markdown. Use these, don't restyle.
 components/exercises/  One component per exercise type, played by components/ExerciseRunner.js.
 components/builder/    Level editor pieces. exerciseTypes.js is the builder's catalogue of types.

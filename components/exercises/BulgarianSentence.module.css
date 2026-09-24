@@ -1,44 +1,30 @@
-.wordWrap {
-  position: relative;
-  display: inline-block;
-  cursor: default;
-}
+.wordWrap { position: relative; display: inline-block; }
 .word {
+  font: inherit; color: inherit;
   border-bottom: 2px dotted var(--blue);
   padding-bottom: 1px;
   transition: color 0.12s;
 }
-.wordWrap:hover .word { color: var(--blue); }
+.wordWrap:hover .word, .open .word { color: var(--blue); }
 
+/* display:none while closed, so a tooltip near the edge never widens the page */
 .tooltip {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%) translateY(4px);
-  background: var(--surface);
-  border: 2px solid var(--border-hi);
-  border-radius: 10px;
-  padding: 5px 12px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  white-space: nowrap;
-  z-index: 200;
+  display: none;
+  position: absolute; bottom: calc(100% + 8px); left: 50%; z-index: var(--z-sticky);
+  transform: translateX(-50%);
+  align-items: center; gap: 8px;
+  padding: 5px 12px; border-radius: 10px;
+  background: var(--surface); border: 2px solid var(--border-hi);
+  font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
   pointer-events: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-  opacity: 0;
-  transition: opacity 0.15s, transform 0.15s;
-}
-.wordWrap:hover .tooltip {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
 }
 .tooltip::after {
   content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--border-hi);
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--border-hi);
 }
+@media (hover: hover) {
+  .wordWrap:hover .tooltip { display: flex; }
+}
+.open .tooltip { display: flex; pointer-events: auto; padding-right: 6px; }

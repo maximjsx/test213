@@ -2,6 +2,7 @@ import getClientPromise from '@/lib/mongodb'
 import { getSession, SESSION_COOKIE } from '@/lib/auth'
 import { cookies } from 'next/headers'
 import { voiceoversCollection, releaseContributor } from '@/lib/voiceovers'
+import { deleteAllDeckData } from '@/lib/decks'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,6 +17,8 @@ export async function DELETE() {
       db.collection('users').deleteOne({ discordId: session.discordId }),
       db.collection('friends').deleteMany({ $or: [{ from: session.discordId }, { to: session.discordId }] }),
       db.collection('certificates').deleteMany({ discordId: session.discordId }),
+      db.collection('builder_levels').deleteMany({ discordId: session.discordId }),
+      deleteAllDeckData(session.discordId),
       voiceoversCollection().then(col => releaseContributor(col, session.discordId)),
     ])
 

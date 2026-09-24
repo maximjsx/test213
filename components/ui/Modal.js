@@ -1,4 +1,6 @@
 'use client'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useDialog } from '../../hooks/useDialog'
 import styles from './Modal.module.css'
 
@@ -9,7 +11,15 @@ import styles from './Modal.module.css'
 //   dismissable: false for celebrations that need an explicit button
 //   accent:      border color, e.g. var(--orange) for streak moments
 //   role:        'alertdialog' for confirmations
-export default function Modal({ title, label, icon, onClose, dismissable = true, accent, role = 'dialog', size = 'md', className = '', children }) {
+// Rendered into document.body, so a modal opened from inside a positioned or
+// transformed element (a tooltip, a sticky bar) still covers the whole screen.
+export default function Modal(props) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  return mounted ? createPortal(<ModalCard {...props} />, document.body) : null
+}
+
+function ModalCard({ title, label, icon, onClose, dismissable = true, accent, role = 'dialog', size = 'md', className = '', children }) {
   const cardRef = useDialog(onClose)
   return (
     <div className={styles.overlay} onClick={dismissable ? onClose : undefined}>

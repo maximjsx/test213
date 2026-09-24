@@ -9,6 +9,8 @@ import { pendingMilestone } from '../lib/goals'
 import { unlockAudio } from '../lib/audio'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeStats from '../components/home/HomeStats'
+import ReviewCta from '../components/decks/ReviewCta'
+import { useDecks } from '../hooks/useDecks'
 import ResumeCard, { PracticeMistakesLink } from '../components/home/ResumeCard'
 import PracticeLinks from '../components/home/PracticeLinks'
 import ShopModal from '../components/home/ShopModal'
@@ -29,6 +31,7 @@ export default function HomePage() {
     setDailyGoal, markStreakMilestone, unlockTopic, isTopicUnlocked, lockOf,
   } = useProgress()
   const { user, refresh: refreshAuth } = useAuth()
+  const { dueCount } = useDecks()
   const router = useRouter()
   const [modal, setModal] = useState(null)
   const [unlocking, setUnlocking] = useState(null)
@@ -129,6 +132,7 @@ export default function HomePage() {
         <aside className={styles.aside} aria-label="Your day">
           <HomeStats {...stats} className={styles.asideStats} />
           <DailyGoal className={styles.oGoal} state={state} setDailyGoal={setDailyGoal} />
+          <ReviewCta className={styles.oReview} count={dueCount} />
           <PracticeMistakesLink className={styles.oMistakes} count={mistakeCount} />
           <PracticeLinks className={styles.oTiles} />
         </aside>

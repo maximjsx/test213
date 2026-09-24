@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { playClip } from '../../lib/audio'
 import { langOf } from '../../lib/lang'
 import UsageNote from './UsageNote'
+import AddToDeckButton from '../decks/AddToDeckButton'
 import styles from './Exercise.module.css'
 
 export default function Introduce({ exercise, onPendingChange, checkTrigger, onAnswer }) {
@@ -49,16 +50,21 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
         )}
         <UsageNote exercise={exercise} centered />
 
-        {(exercise.tts || exercise.audio?.url) && (
-          <button
-            className={styles.introduceAudioBtn}
-            onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })}
-            title="Listen again"
-          >
-            <img src="/icons/speaker.png" alt="" width={22} height={22} />
-            <span>Listen again</span>
-          </button>
-        )}
+        <div className={styles.introduceActions}>
+          {(exercise.tts || exercise.audio?.url) && (
+            <button
+              className={styles.introduceAudioBtn}
+              onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })}
+              title="Listen again"
+            >
+              <img src="/icons/speaker.png" alt="" width={22} height={22} />
+              <span>Listen again</span>
+            </button>
+          )}
+          {/\p{Script=Cyrillic}/u.test(exercise.display || '') && exercise.label !== 'NEW LETTER' && (
+            <AddToDeckButton word={{ bg: exercise.display, en: exercise.translation || '', note: exercise.sublabel || '', source: { kind: 'course', ref: exercise.id } }} />
+          )}
+        </div>
       </div>
     </div>
   )

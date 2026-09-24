@@ -213,6 +213,7 @@
   cursor:pointer; transition:background 0.15s, transform 0.1s;
 }
 .introduceAudioBtn:hover { background:color-mix(in srgb, var(--blue) 22%, transparent); transform:translateY(-1px); }
+.introduceActions { display:flex; align-items:center; justify-content:center; gap:10px; }
 
 /* ── Speak sentence ──────────────────────────────────────── */
 .speakBubbleRow {

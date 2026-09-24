@@ -6,6 +6,8 @@ import { topicLock } from '../lib/specialTopics'
 
 const KEY = 'bulgario_progress'
 const STREAK_FREEZE_COST = 20
+// Card reviews pay 1 coin each, up to this many coins a day
+export const REVIEW_COIN_CAP = 20
 
 function load() {
   if (typeof window === 'undefined') return null
@@ -281,6 +283,23 @@ export function useProgress() {
     })
   }, [persist, guildIds])
 
+  // Reviews are reported in batches (every few cards and when the session
+  // ends) so a long review session is not one progress write per card.
+  const completeReviews = useCallback((count) => {
+    if (count <= 0) return
+    setState(prev => {
+      const today = dayKey()
+      const done = prev.reviewCoins?.day === today ? prev.reviewCoins.count : 0
+      const coins = Math.max(0, Math.min(count, REVIEW_COIN_CAP - done))
+      const next = {
+        ...applySession(prev, coins, { isLesson: false }),
+        reviewCoins: { day: today, count: done + count },
+      }
+      persist(next)
+      return next
+    })
+  }, [persist])
+
   const setDailyGoal = useCallback((coins) => {
     setState(prev => {
       const next = { ...prev, dailyGoal: coins }
@@ -373,7 +392,7 @@ export function useProgress() {
     state, hydrated,
     buyStreakFreeze, STREAK_FREEZE_COST,
     unlockTopic, isTopicUnlocked, lockOf,
-    recordMistakes, completeLesson, completePractice,
+    recordMistakes, completeLesson, completePractice, completeReviews,
     claimQuest, claimFriendQuest,
     setDailyGoal, markStreakMilestone, completeSpeedRound,
     isLessonComplete, isLessonUnlocked, levelProgress,

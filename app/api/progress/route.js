@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 const ALLOWED_KEYS = [
   'lessons', 'coins', 'streak', 'lastActiveDay', 'streakFreezes',
   'unlockedTopics', 'wrongExercises', 'skippedLevels', 'activeDays', 'coinsByDay', 'quests', 'startedAt',
-  'dailyGoal', 'streakMilestone', 'speedBest', 'friendQuestClaimed',
+  'dailyGoal', 'streakMilestone', 'speedBest', 'friendQuestClaimed', 'reviewCoins',
 ]
 const MAX_BYTES = 300_000
 

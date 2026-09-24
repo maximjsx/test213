@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '../hooks/useAuth'
+import { useDecks } from '../hooks/useDecks'
 import Bear from './Bear'
 import styles from './AppNav.module.css'
 
@@ -20,8 +21,8 @@ const ITEMS = [
     icon: icon(<><path d="M3 11.5 12 4l9 7.5" /><path d="M5.5 10v9a1 1 0 0 0 1 1H9v-6h6v6h2.5a1 1 0 0 0 1-1v-9" /></>),
   },
   {
-    href: '/practice', label: 'Practice',
-    match: p => startsWithAny(p, ['/practice', '/words', '/letters', '/speed']),
+    href: '/practice', label: 'Practice', badge: 'due',
+    match: p => startsWithAny(p, ['/practice', '/words', '/letters', '/speed', '/decks', '/study']),
     icon: icon(<><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11" /></>),
   },
   {
@@ -33,12 +34,13 @@ const ITEMS = [
 
 // Sections that get the app navigation. Lessons and the builder stay
 // full-screen so nothing invites leaving mid-exercise.
-const SHOW_ON = ['/topic', '/level', '/practice', '/words', '/letters', '/leaderboard', '/profile', '/u']
+const SHOW_ON = ['/topic', '/level', '/practice', '/words', '/letters', '/decks', '/leaderboard', '/profile', '/u']
 const FULL_SCREEN = ['/practice/mistakes']
 
 export default function AppNav() {
   const pathname = usePathname()
   const { user } = useAuth()
+  const { dueCount } = useDecks()
   if (startsWithAny(pathname, FULL_SCREEN)) return null
   if (pathname !== '/' && !startsWithAny(pathname, SHOW_ON)) return null
 
@@ -53,7 +55,10 @@ export default function AppNav() {
         const active = it.match(pathname)
         return (
           <Link key={it.href} href={it.href} className={`${styles.item} ${active ? styles.active : ''}`} aria-current={active ? 'page' : undefined}>
-            {it.icon}
+            <span className={styles.iconWrap}>
+              {it.icon}
+              {it.badge && dueCount > 0 && <span className={styles.badge} aria-label={`${dueCount} cards due`}>{dueCount > 99 ? '99+' : dueCount}</span>}
+            </span>
             <span className={styles.label}>{it.label}</span>
           </Link>
         )

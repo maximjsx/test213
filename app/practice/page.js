@@ -5,6 +5,8 @@ import { WORDS, LETTERS, withStrength } from '../../lib/words'
 import PageHeader from '../../components/ui/PageHeader'
 import { ListSkeleton } from '../../components/PageSkeletons'
 import { PracticeMistakesLink, ArrowRight } from '../../components/home/ResumeCard'
+import ReviewCta from '../../components/decks/ReviewCta'
+import { useDecks } from '../../hooks/useDecks'
 import styles from './page.module.css'
 
 function HubLink({ href, icon, title, sub }) {
@@ -24,6 +26,7 @@ const img = src => <img src={src} alt="" width={30} height={30} />
 
 export default function PracticePage() {
   const { state, hydrated } = useProgress()
+  const { status: deckStatus, decks, dueCount } = useDecks()
   if (!hydrated) return <ListSkeleton />
 
   const learnedWords = withStrength(WORDS, state.lessons).filter(w => w.strength > 0).length
@@ -34,7 +37,21 @@ export default function PracticePage() {
     <div className={styles.page}>
       <PageHeader backHref={null} title="Practice" />
       <main className={styles.main}>
+        <ReviewCta count={dueCount} />
         <PracticeMistakesLink count={mistakes} />
+
+        <section className={styles.group} aria-labelledby="decks">
+          <h2 id="decks" className={styles.groupTitle}>Spaced repetition</h2>
+          <HubLink
+            href="/decks"
+            icon={img('/icons/gift_box.png')}
+            title="Decks"
+            sub={deckStatus === 'ready'
+              ? `${decks.length} ${decks.length === 1 ? 'deck' : 'decks'}, reviewed on a smart schedule`
+              : 'Save words and review them before you forget'}
+          />
+          <HubLink href="/study?list=course" icon={img('/icons/keyboard.png')} title="Practise your words" sub="Flashcards, multiple choice, typing and listening" />
+        </section>
 
         <section className={styles.group} aria-labelledby="browse">
           <h2 id="browse" className={styles.groupTitle}>Review what you know</h2>
