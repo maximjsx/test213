@@ -107,7 +107,7 @@
   font-size:22px; cursor:pointer; transition:background 0.15s; flex-shrink:0;
 }
 .micBtn:hover { background:var(--surface-hi); }
-.micActive { border-color:var(--red)!important; background:var(--red-bg)!important; animation:pulse 0.8s infinite; }
+.micActive { border-color:var(--blue)!important; background:var(--blue-bg)!important; animation:pulse 0.8s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
 /* ── Fill blank ──────────────────────────────────────────── */
@@ -256,8 +256,8 @@
   border-color:var(--blue); background:var(--blue-bg); color:var(--blue);
 }
 .speakMicListening {
-  border-color:var(--red)!important; background:var(--red-bg)!important;
-  color:var(--red)!important; animation:pulse 0.8s infinite;
+  border-color:var(--blue)!important; background:var(--blue-bg)!important;
+  color:var(--blue)!important; animation:pulse 0.8s infinite;
 }
 .speakMicOk {
   border-color:var(--green)!important; background:var(--green-bg)!important;
