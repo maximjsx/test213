@@ -126,10 +126,9 @@ export default function TermsPage() {
           <h2>Contact</h2>
           <p>
             Максим Фидлер (Maksim Fidler), software developer<br />
-            1 6 66, 8217 Aheloy, Burgas Province, Bulgaria<br />
-            Please do not send letters to this address, contact us by email instead.<br />
+            8217 Aheloy, Burgas Province, Bulgaria<br />
             Email: <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a><br />
-            Phone: +359 88 8839802
+            The full postal address is available on request by email.
           </p>
         </section>
       </main>
