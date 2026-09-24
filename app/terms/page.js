@@ -19,8 +19,8 @@ export default function TermsPage() {
         <section>
           <h2>Who We Are</h2>
           <p>
-            Learn Bulgarian (learn.bulgarian.dev) is run by o7studios EOOD, Sredna Gora St. 1, Floor 6, Apt. 66,
-            8217 Aheloy, Bulgaria. By using the site you agree to these terms. If you do not agree, please do not
+            Learn Bulgarian (learn.bulgarian.dev) is run by Максим Фидлер (Maksim Fidler), a software developer
+            based in Aheloy, Bulgaria. By using the site you agree to these terms. If you do not agree, please do not
             use it.
           </p>
         </section>
@@ -62,7 +62,7 @@ export default function TermsPage() {
             <li>you are 18 or older, or a parent or guardian has agreed on your behalf.</li>
           </ul>
           <p>
-            <strong>License.</strong> You give o7studios EOOD a worldwide, royalty-free, non-exclusive, perpetual,
+            <strong>License.</strong> You give Maksim Fidler a worldwide, royalty-free, non-exclusive, perpetual,
             and irrevocable license to use, copy, edit, adapt, publish, and distribute your recordings, as part of
             Learn Bulgarian and its related materials, and to let others do so on our behalf. You keep ownership of
             your recordings and may use them anywhere else you like.
@@ -99,7 +99,7 @@ export default function TermsPage() {
         <section>
           <h2>Our Content</h2>
           <p>
-            The lessons, design, and code of Learn Bulgarian belong to o7studios EOOD or its licensors. You may use
+            The lessons, design, and code of Learn Bulgarian belong to Maksim Fidler or the respective licensors. You may use
             them for your own learning. Please do not copy or republish them without asking us first.
           </p>
         </section>
@@ -125,10 +125,11 @@ export default function TermsPage() {
         <section>
           <h2>Contact</h2>
           <p>
-            o7studios EOOD (о7студиос ЕООД)<br />
-            Sredna Gora St. 1, Floor 6, Apt. 66<br />
-            8217 Aheloy, Bulgaria<br />
-            Email: <a href="mailto:legal@ur.contact">legal@ur.contact</a>
+            Максим Фидлер (Maksim Fidler), software developer<br />
+            1 6 66, 8217 Aheloy, Burgas Province, Bulgaria<br />
+            Please do not send letters to this address, contact us by email instead.<br />
+            Email: <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a><br />
+            Phone: +359 88 8839802
           </p>
         </section>
       </main>

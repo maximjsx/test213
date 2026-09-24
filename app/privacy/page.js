@@ -19,8 +19,8 @@ export default function PrivacyPage() {
         <section>
           <h2>Who Is Responsible</h2>
           <p>
-            The controller for your personal data is o7studios EOOD, Sredna Gora St. 1, Floor 6, Apt. 66,
-            8217 Aheloy, Bulgaria, <a href="mailto:legal@ur.contact">legal@ur.contact</a>.
+            The controller for your personal data is Максим Фидлер (Maksim Fidler), 1 6 66, 8217 Aheloy,
+            Burgas Province, Bulgaria, <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a>.
           </p>
         </section>
 
@@ -170,7 +170,7 @@ export default function PrivacyPage() {
           <h2>Your Rights</h2>
           <p>
             Under the GDPR you have the right to access, correct, delete, restrict, or port your personal data, and
-            to object to its processing. Email <a href="mailto:legal@ur.contact">legal@ur.contact</a> and we will
+            to object to its processing. Email <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a> and we will
             reply within one month. You can also complain to the Bulgarian Commission for Personal Data Protection
             (<a href="https://www.cpdp.bg" target="_blank" rel="noopener noreferrer">cpdp.bg</a>) or the data
             protection authority in your country.
@@ -187,10 +187,11 @@ export default function PrivacyPage() {
         <section>
           <h2>Contact</h2>
           <p>
-            o7studios EOOD (о7студиос ЕООД)<br />
-            Sredna Gora St. 1, Floor 6, Apt. 66<br />
-            8217 Aheloy, Bulgaria<br />
-            Email: <a href="mailto:legal@ur.contact">legal@ur.contact</a>
+            Максим Фидлер (Maksim Fidler), software developer<br />
+            1 6 66, 8217 Aheloy, Burgas Province, Bulgaria<br />
+            Please do not send letters to this address, contact us by email instead.<br />
+            Email: <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a><br />
+            Phone: +359 88 8839802
           </p>
         </section>
       </main>
