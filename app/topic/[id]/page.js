@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { COURSE } from '../../../data/course'
 import { useProgress } from '../../../hooks/useProgress'
 import { onSplashFinished } from '../../../lib/splash'
+import { unlockAudio } from '../../../lib/audio'
 import LessonPath from '../../../components/LessonPath'
 import TopicArt from '../../../components/TopicArt'
 import Chevron from '../../../components/Chevron'
@@ -26,6 +27,7 @@ export default function TopicPage() {
   const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress } = useProgress()
   const levelIndex = COURSE.levels.findIndex(l => l.id === id)
   const level = COURSE.levels[levelIndex]
+  const router = useRouter()
   const currentRef = useRef(null)
   const justCompletedId = useMemo(() => recentlyCompleted(state.lessons), [state.lessons])
 
@@ -50,6 +52,9 @@ export default function TopicPage() {
   if (!hydrated) return <LoadingBear />
 
   const { done, total } = levelProgress(level.lessons)
+  const nextIdx = level.lessons.findIndex((l, idx) => isLessonUnlocked(level.lessons, idx) && !isLessonComplete(l.id))
+  const nextLesson = level.lessons[nextIdx]
+  const nextTopic = COURSE.levels[levelIndex + 1]
 
   return (
     <div className={styles.page} style={{ '--lvl': level.color }}>
@@ -74,6 +79,17 @@ export default function TopicPage() {
             <span className={styles.progressText}>{done} of {total}</span>
           </div>
         </div>
+        {nextLesson && (
+          <button
+            className={styles.startBtn}
+            onClick={() => {
+              unlockAudio()
+              router.push(`/lesson/${nextLesson.id}?level=${level.id}`)
+            }}
+          >
+            {done ? `CONTINUE: LESSON ${nextIdx + 1}` : 'START LESSON 1'}
+          </button>
+        )}
       </section>
 
       <main className={styles.main}>
@@ -85,6 +101,12 @@ export default function TopicPage() {
           justCompletedId={justCompletedId}
           currentRef={currentRef}
         />
+        {!nextLesson && nextTopic && (
+          <Link href={`/topic/${nextTopic.id}`} className={styles.nextTopic} style={{ '--next': nextTopic.color }}>
+            <span className={styles.nextTopicLabel}>Topic complete. Next up</span>
+            <span className={styles.nextTopicTitle}>{nextTopic.title} <Chevron dir="right" /></span>
+          </Link>
+        )}
       </main>
     </div>
   )

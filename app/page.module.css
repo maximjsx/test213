@@ -217,59 +217,42 @@
 .packCardBuyBtn:disabled { background:var(--surface); color:var(--text-dim); border:2px solid var(--border); box-shadow:none; cursor:not-allowed; }
 .packCardNeedMore { font-size:11px; font-weight:700; opacity:0.8; }
 
-/* Floating actions (bottom right) */
-.fabStack {
-  position:fixed; right:18px; bottom:22px; z-index:30;
-  display:flex; flex-direction:column; align-items:flex-end; gap:12px;
+/* Resume card: the next lesson, one tap away */
+.resume {
+  display:flex; flex-direction:column; gap:14px;
+  padding:18px; margin-bottom:24px;
+  background:var(--surface); border:2px solid var(--border-hi); border-radius:18px;
 }
-/* Lift the FABs above the fixed bottom nav bar on mobile. Must come after the
-   base rule above or source order would keep the 22px bottom (see CSS notes). */
-@media (max-width: 680px) {
-  .fabStack { bottom: calc(22px + 116px + env(safe-area-inset-bottom)); }
+.resumeAtRisk { border-color:var(--orange); }
+.resumeMain { display:flex; align-items:center; gap:14px; }
+.resumeDisc {
+  flex-shrink:0; width:56px; height:56px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,0.2);
 }
-.practiceFab {
-  width:56px; height:56px; border-radius:50%;
-  background:var(--surface); border:2px solid var(--border-hi);
-  box-shadow:0 4px 0 var(--border), 0 6px 20px rgba(0,0,0,0.35);
-  display:flex; align-items:center; justify-content:center;
-  position:relative;
-  transition:transform 0.1s, box-shadow 0.1s, background 0.15s;
+.resumeText { min-width:0; display:flex; flex-direction:column; gap:2px; }
+.resumeHeading { font-size:12px; font-weight:900; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); }
+.resumeAtRisk .resumeHeading { color:var(--orange); }
+.resumeTitle { font-size:18px; font-weight:900; color:var(--text); line-height:1.2; overflow-wrap:anywhere; }
+.resumeSub { font-size:13px; font-weight:700; color:var(--text-muted); }
+.resumeBtn {
+  width:100%; padding:14px 16px; border-radius:var(--r);
+  background:var(--lvl); color:var(--on-accent);
+  font-size:16px; font-weight:900; letter-spacing:0.5px;
+  box-shadow:0 4px 0 color-mix(in srgb, var(--lvl) 60%, #000);
+  transition:filter 0.15s, transform 0.1s, box-shadow 0.1s;
 }
-.practiceFab:hover { transform:translateY(-2px); background:var(--surface-hi); }
-.practiceFab:active { transform:translateY(2px); box-shadow:0 1px 0 var(--border); }
-
-.practiceFabCount {
-  position:absolute; top:-4px; right:-4px;
-  min-width:20px; height:20px; padding:0 5px;
-  border-radius:999px; background:var(--red); color:#fff;
-  font-size:11px; font-weight:900;
-  display:flex; align-items:center; justify-content:center;
-  border:2px solid var(--bg);
+.resumeBtn:hover { filter:brightness(1.08); }
+.resumeBtn:active { transform:translateY(3px); box-shadow:0 1px 0 color-mix(in srgb, var(--lvl) 60%, #000); }
+.resumePractice {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:10px 16px; border-radius:var(--r);
+  border:2px solid var(--border-hi);
+  font-size:14px; font-weight:800; color:var(--text);
+  transition:background 0.15s;
 }
-
-/* Streak-at-risk nudge, opens the next lesson */
-.streakNudge {
-  display:flex; align-items:center; gap:10px;
-  max-width:640px; margin:0 auto 4px; width:calc(100% - 40px);
-  padding:12px 18px;
-  background:var(--surface); border:2px solid var(--red);
-  border-radius:16px;
-  box-shadow:0 3px 0 var(--border), 0 4px 16px rgba(0,0,0,0.28);
-  color:var(--text); font-size:14px; font-weight:700; text-align:left;
-  cursor:pointer; transition:transform 0.1s, background 0.15s;
-}
-.streakNudge:hover { background:var(--surface-hi); }
-.streakNudge:active { transform:translateY(2px); }
-.streakNudge span:first-of-type { flex:1; min-width:0; }
-.streakNudgeGo {
-  flex-shrink:0; padding:6px 14px; border-radius:999px;
-  background:var(--red); color:#fff; font-size:13px; font-weight:900; letter-spacing:0.5px;
-}
-
-@media (max-width: 520px) {
-  .streakNudge { width:calc(100% - 24px); font-size:13px; padding:10px 14px; gap:8px; }
-  .streakNudgeGo { padding:5px 11px; font-size:12px; }
-}
+.resumePractice:hover { background:var(--surface-hi); }
+.main > .resumePractice { margin-bottom:8px; }
 
 /* XP counter floating +N */
 .xp { position: relative; }

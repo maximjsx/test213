@@ -14,6 +14,7 @@ import Bear from '../components/Bear'
 import LoadingBear from '../components/LoadingBear'
 import TopicTree from '../components/TopicTree'
 import Certificates from '../components/Certificates'
+import TopicArt from '../components/TopicArt'
 import styles from './page.module.css'
 
 const SPECIAL_PACKS = [
@@ -34,9 +35,46 @@ function packView(state, pack) {
 function findResumeLesson(isLessonComplete, isLessonUnlocked) {
   for (const level of COURSE.levels) {
     const lesson = level.lessons.find((l, idx) => isLessonUnlocked(level.lessons, idx) && !isLessonComplete(l.id))
-    if (lesson) return { lesson, levelId: level.id }
+    if (lesson) return { lesson, level, levelId: level.id }
   }
   return null
+}
+
+// The one obvious next step, so starting a lesson is a single tap from home
+function ResumeCard({ resume, isNew, streak, streakAtRisk, mistakeCount, onStart }) {
+  const { lesson, level } = resume
+  const idx = level.lessons.indexOf(lesson)
+  const heading = streakAtRisk ? `Do one lesson to keep your ${streak}-day streak`
+    : isNew ? 'Start here'
+    : 'Up next'
+  return (
+    <section className={`${styles.resume} ${streakAtRisk ? styles.resumeAtRisk : ''}`} style={{ '--lvl': level.color }}>
+      <div className={styles.resumeMain}>
+        <span className={styles.resumeDisc} style={{ background: level.color }}>
+          <TopicArt level={level} size={40} />
+        </span>
+        <div className={styles.resumeText}>
+          <div className={styles.resumeHeading}>{heading}</div>
+          <div className={styles.resumeTitle}>{level.title}: {lesson.title}</div>
+          <div className={styles.resumeSub}>Lesson {idx + 1} of {level.lessons.length}</div>
+        </div>
+      </div>
+      <button className={styles.resumeBtn} onClick={onStart}>
+        START +{lesson.xp} XP
+      </button>
+      <PracticeLink count={mistakeCount} />
+    </section>
+  )
+}
+
+function PracticeLink({ count }) {
+  if (!count) return null
+  return (
+    <Link href="/practice" className={styles.resumePractice}>
+      <img src="/icons/broken_heart.png" alt="" width={18} height={18} />
+      Practice {count} {count === 1 ? 'mistake' : 'mistakes'}
+    </Link>
+  )
 }
 
 function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, onClose }) {
@@ -221,23 +259,31 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* ── Streak-at-risk nudge ── */}
-      {streakAtRisk && resume && (
-        <button
-          className={styles.streakNudge}
-          onClick={() => {
-            unlockAudio()
-            router.push(`/lesson/${resume.lesson.id}?level=${resume.levelId}`)
-          }}
-        >
-          <img src="/icons/fire.png" alt="" width={22} height={22} />
-          <span>Do one lesson to keep your {state.streak}-day streak alive</span>
-          <span className={styles.streakNudgeGo}>Go</span>
-        </button>
-      )}
-
       <main className={styles.main}>
+        {resume && (
+          <ResumeCard
+            resume={resume}
+            isNew={!Object.keys(state.lessons || {}).length}
+            streak={state.streak}
+            streakAtRisk={streakAtRisk}
+            mistakeCount={mistakeCount}
+            onStart={() => {
+              unlockAudio()
+              router.push(`/lesson/${resume.lesson.id}?level=${resume.levelId}`)
+            }}
+          />
+        )}
+        {!resume && <PracticeLink count={mistakeCount} />}
         <TopicTree levels={COURSE.levels} levelProgress={levelProgress} resumeLevelId={resume?.levelId} />
+
+        <section className={styles.levelSection}>
+          <div className={styles.levelDivider}>
+            <div className={styles.dividerLine} />
+            <span className={styles.dividerLabel}>Certificates</span>
+            <div className={styles.dividerLine} />
+          </div>
+          <Certificates lessons={state.lessons} user={user} />
+        </section>
 
         {/* ── Special Packs ── */}
         <section className={styles.levelSection}>
@@ -269,26 +315,8 @@ export default function HomePage() {
             })}
           </div>
         </section>
-
-        <section className={styles.levelSection}>
-          <div className={styles.levelDivider}>
-            <div className={styles.dividerLine} />
-            <span className={styles.dividerLabel}>Certificates</span>
-            <div className={styles.dividerLine} />
-          </div>
-          <Certificates lessons={state.lessons} user={user} />
-        </section>
       </main>
 
-      {/* ── Floating actions ── */}
-      <div className={styles.fabStack}>
-        {mistakeCount > 0 && (
-          <Link href="/practice" className={styles.practiceFab} title="Practice your mistakes">
-            <img src="/icons/broken_heart.png" alt="" width={26} height={26} />
-            <span className={styles.practiceFabCount}>{mistakeCount}</span>
-          </Link>
-        )}
-      </div>
     </div>
   )
 }

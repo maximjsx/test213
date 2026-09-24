@@ -19,7 +19,7 @@ export default function TermsPage() {
         <section>
           <h2>Who We Are</h2>
           <p>
-            Learn Bulgarian (learn.bulgarian.dev) is run by Максим Фидлер (Maksim Fidler), a software developer
+            Learn Bulgarian (learn.bulgarian.dev) is run by Максим Фидлер (Maxim Fiedler), a software developer
             based in Aheloy, Bulgaria. By using the site you agree to these terms. If you do not agree, please do not
             use it.
           </p>
@@ -62,7 +62,7 @@ export default function TermsPage() {
             <li>you are 18 or older, or a parent or guardian has agreed on your behalf.</li>
           </ul>
           <p>
-            <strong>License.</strong> You give Maksim Fidler a worldwide, royalty-free, non-exclusive, perpetual,
+            <strong>License.</strong> You give Maxim Fiedler a worldwide, royalty-free, non-exclusive, perpetual,
             and irrevocable license to use, copy, edit, adapt, publish, and distribute your recordings, as part of
             Learn Bulgarian and its related materials, and to let others do so on our behalf. You keep ownership of
             your recordings and may use them anywhere else you like.
@@ -99,7 +99,7 @@ export default function TermsPage() {
         <section>
           <h2>Our Content</h2>
           <p>
-            The lessons, design, and code of Learn Bulgarian belong to Maksim Fidler or the respective licensors. You may use
+            The lessons, design, and code of Learn Bulgarian belong to Maxim Fiedler or the respective licensors. You may use
             them for your own learning. Please do not copy or republish them without asking us first.
           </p>
         </section>
@@ -125,7 +125,7 @@ export default function TermsPage() {
         <section>
           <h2>Contact</h2>
           <p>
-            Максим Фидлер (Maksim Fidler), software developer<br />
+            Максим Фидлер (Maxim Fiedler), software developer<br />
             8217 Aheloy, Burgas Province, Bulgaria<br />
             Email: <a href="mailto:legal@bulgarian.dev">legal@bulgarian.dev</a><br />
             The full postal address is available on request by email.
