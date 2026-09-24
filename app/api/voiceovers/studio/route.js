@@ -1,5 +1,6 @@
 import { currentBuilderStatus } from '@/lib/builderAccess'
-import { voiceoversCollection } from '@/lib/voiceovers'
+import getClientPromise from '@/lib/mongodb'
+import { voiceoversCollection, hasVoiceAgreement } from '@/lib/voiceovers'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,10 +18,14 @@ export async function GET() {
       ? {}
       : { $or: [{ status: 'approved' }, { by: status.discordId }] }
     const docs = await col.find(filter, { projection: PUBLIC_FIELDS }).sort({ createdAt: 1 }).toArray()
+    const client = await getClientPromise()
+    const user = await client.db('bulgario').collection('users')
+      .findOne({ discordId: status.discordId }, { projection: { voiceAgreement: 1 } })
 
     return Response.json({
       loggedIn: true,
       canReview: status.allowed,
+      agreed: hasVoiceAgreement(user),
       myId: status.discordId,
       voiceovers: docs.map(({ _id, ...d }) => ({ id: String(_id), ...d })),
     })

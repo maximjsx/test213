@@ -71,6 +71,7 @@ export default function RootLayout({ children }) {
           <footer className={styles.footer}>
             <Link href="/builder" className={styles.footerLink}>Level Builder</Link>
             <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
+            <Link href="/terms" className={styles.footerLink}>Terms</Link>
             <a href="https://legal.bulgarian.dev/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Legal Notice</a>
             <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Discord</a>
           </footer>

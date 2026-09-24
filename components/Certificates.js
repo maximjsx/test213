@@ -48,7 +48,7 @@ function ClaimForm({ tier, defaultName }) {
         placeholder="Your full name"
         autoComplete="name"
       />
-      <p className={styles.nameHint}>This is printed and signed, so it can't be changed later.</p>
+      <p className={styles.nameHint}>This is printed and signed, so it can't be changed later. Anyone with the certificate link can see it.</p>
       {error && <p className={styles.error}>{error}</p>}
       <button className={styles.claimBtn} disabled={busy || name.trim().length < 2}>
         {busy ? 'Signing...' : 'Claim certificate'}
@@ -112,6 +112,7 @@ export default function Certificates({ lessons, user }) {
       })}
       <p className={styles.footnote}>
         Every certificate is a digitally signed PDF with a QR code that links back here, so anyone can check it is real.
+        Certificates show you finished the course. They are not an official CEFR exam result.
       </p>
     </div>
   )

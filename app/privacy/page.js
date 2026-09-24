@@ -14,119 +14,173 @@ export default function PrivacyPage() {
       </header>
       <main className={styles.main}>
         <h1>Privacy Policy</h1>
-        <p className={styles.updated}>Last updated: July 2026</p>
+        <p className={styles.updated}>Last updated: September 2026</p>
 
         <section>
-          <h2>Overview</h2>
+          <h2>Who Is Responsible</h2>
           <p>
-            Learn Bulgarian is a free language learning web app. You can use the entire course without
-            an account: your progress (completed lessons, XP, streaks, hearts) is stored in your browser
-            using localStorage and never sent to any server. Signing in with Discord is optional and lets
-            you back up your progress, use it across devices, add friends, and appear on the leaderboard.
+            The controller for your personal data is o7studios EOOD, Sredna Gora St. 1, Floor 6, Apt. 66,
+            8217 Aheloy, Bulgaria, <a href="mailto:legal@ur.contact">legal@ur.contact</a>.
           </p>
         </section>
 
         <section>
-          <h2>Data We Do Not Collect</h2>
-          <ul>
-            <li>We do not require account registration to use the course.</li>
-            <li>We never see or store your email address or Discord password.</li>
-            <li>We do not sell or share any data with third parties for advertising.</li>
-          </ul>
+          <h2>Overview</h2>
+          <p>
+            You can use the whole course without an account. Your progress then lives only in your browser.
+            Signing in with Discord is optional and lets you sync progress, add friends, appear on the
+            leaderboard, claim certificates, and contribute voice recordings. We do not sell your data, show
+            ads, or use analytics or tracking tools.
+          </p>
         </section>
 
         <section>
-          <h2>Local Storage (no account)</h2>
+          <h2>Without an Account</h2>
           <p>
-            If you don't sign in, your learning progress is saved only in your browser's localStorage and
-            never leaves your device. You can clear it at any time through your browser settings.
+            Your progress (lessons, XP, streaks, hearts, settings) is saved in your browser&apos;s local storage
+            and is not sent to us. You can clear it at any time in your browser settings.
+          </p>
+          <p>
+            Like every website, our hosting provider (Vercel) processes your IP address and basic request details
+            to deliver the pages and keep the service secure. These logs are kept for a short time and are not
+            used to identify you.
           </p>
         </section>
 
         <section>
           <h2>Signing In With Discord</h2>
           <p>
-            Signing in uses Discord OAuth. Discord shares your Discord user ID, username, and avatar with us;
-            we do not receive your email address or password. We store this alongside a username (which you
-            can change), avatar, and a signed session cookie that keeps you logged in.
+            When you sign in, Discord shares your Discord user ID, username, display name, and avatar with us. We
+            never receive your email address or password. We store these together with a username you can change,
+            your synced progress (lessons, XP, streaks, quests, daily XP history), and Discord access tokens. We use
+            the tokens only to refresh your name and avatar every few hours, so your profile stays current.
           </p>
           <p>
-            Once signed in, your course progress (lessons, XP, streaks, quests, daily XP history) is stored
-            on our server tied to your account so it can sync across devices and be used to calculate
-            leaderboard rankings.
-          </p>
-        </section>
-
-        <section>
-          <h2>Friends</h2>
-          <p>
-            You can send, accept, and decline friend requests using another player's username. Friends can
-            see each other's username, avatar, XP, and streak. Anyone can view a public profile page
-            (username, avatar, join date, and stats) at its <code>/u/username</code> URL, even without
-            signing in.
+            A single essential cookie keeps you signed in. Legal basis: performance of our agreement with you
+            (Art. 6(1)(b) GDPR).
           </p>
         </section>
 
         <section>
-          <h2>Leaderboard</h2>
+          <h2>Public Profile, Friends, and Leaderboard</h2>
           <p>
-            If you're signed in, your username, avatar, XP, and streak may appear on the public weekly,
-            monthly, and all-time leaderboards. You can stop appearing on the leaderboard by deleting your
-            account (see "Your Rights" below).
+            Signed-in players have a public profile at <code>/u/username</code> showing their username, avatar,
+            join date, XP, and streak. The same details appear on the public leaderboards and to your friends.
+            Friend requests are sent by username.
           </p>
         </section>
 
         <section>
-          <h2>Account Deletion</h2>
+          <h2>Speaking Exercises</h2>
           <p>
-            You can permanently delete your account at any time from your profile page. This immediately
-            removes your account record, synced progress, and all friend relationships from our database,
-            and signs you out. This cannot be undone; progress that still lives only in a browser's
-            localStorage is unaffected.
+            Speaking exercises use your microphone only while you press the record button. To check what you said,
+            the audio is transcribed by one of these services, depending on your browser:
+          </p>
+          <ul>
+            <li>your browser&apos;s built-in speech recognition (for example Google in Chrome, Apple in Safari);</li>
+            <li>Speechmatics, in its EU region;</li>
+            <li>Groq, as a fallback on some devices.</li>
+          </ul>
+          <p>
+            We do not store this audio or the transcripts, and we do not send your name or account with them.
+            Legal basis: performance of our agreement with you, because you started the exercise.
+          </p>
+        </section>
+
+        <section id="recordings">
+          <h2>Voice Studio Recordings</h2>
+          <p>
+            If you contribute recordings in the voice studio, we store the audio on our own file server together
+            with your account ID, your username, and the date. Approved recordings play in the lessons for everyone,
+            with your username shown as the speaker. You accept the{' '}
+            <Link href="/terms#recordings">voice contribution terms</Link> before your first recording, and we store
+            when you accepted them.
+          </p>
+          <p>
+            Legal basis: performance of the contribution agreement you accepted (Art. 6(1)(b) GDPR). Unreviewed
+            recordings are deleted when you delete your account. Approved recordings are kept for as long as they
+            are used in the course, with your username and account ID removed.
+          </p>
+          <p>
+            You can still contact us about your recordings at any time. We will handle every request according to
+            the GDPR.
           </p>
         </section>
 
         <section>
-          <h2>Text-to-Speech (TTS)</h2>
+          <h2>Certificates</h2>
           <p>
-            Certain lessons use a text-to-speech API to generate audio pronunciation. Text snippets from lessons
-            may be sent to a third-party TTS provider solely to generate audio. No personal information is included
-            in these requests.
+            When you claim a certificate, we store the name you enter, the certificate details, and the signed PDF.
+            Anyone with the certificate link or ID can view the name and details, so employers and others can check
+            it is real. Certificates are deleted when you delete your account, and their links then stop working.
           </p>
         </section>
 
         <section>
-          <h2>Cookies</h2>
+          <h2>Text-to-Speech</h2>
           <p>
-            We do not use tracking or advertising cookies. If you sign in, we set a single essential session
-            cookie to keep you logged in; it is not used for tracking or advertising. No cookie consent
-            banner is shown because no tracking cookies are placed.
+            Some lessons generate pronunciation audio with Google Cloud Text-to-Speech. Only lesson text is sent,
+            never anything about you.
           </p>
         </section>
 
         <section>
-          <h2>Children's Privacy</h2>
+          <h2>Cookies and Local Storage</h2>
           <p>
-            Learn Bulgarian does not knowingly collect any data from children under 13. Because no personal
-            data is collected at all, the service is safe for all ages.
+            We use one essential session cookie when you sign in, and local storage for your progress and settings.
+            Both are strictly necessary for features you ask for, so no consent banner is needed. We do not use
+            tracking, analytics, or advertising cookies, and our font is served from our own domain.
+          </p>
+        </section>
+
+        <section>
+          <h2>Who Processes Data for Us</h2>
+          <ul>
+            <li>Vercel: website hosting.</li>
+            <li>Our database provider: stores accounts, progress, certificates, and recording details.</li>
+            <li>Discord: sign-in.</li>
+            <li>Speechmatics, Groq, and your browser&apos;s provider: speech recognition.</li>
+            <li>Google: text-to-speech (lesson text only).</li>
+          </ul>
+          <p>
+            Some of these providers are based outside the EU, mainly in the United States. Those transfers rely on
+            the EU-US Data Privacy Framework or the European Commission&apos;s Standard Contractual Clauses.
+          </p>
+        </section>
+
+        <section>
+          <h2>Deleting Your Account</h2>
+          <p>
+            You can delete your account at any time from your profile page. This immediately deletes your account,
+            synced progress, Discord tokens, friends, certificates, and unreviewed recordings, and removes your name
+            from approved recordings. Progress stored only in a browser&apos;s local storage is not affected.
+          </p>
+        </section>
+
+        <section>
+          <h2>Children</h2>
+          <p>
+            The course is suitable for all ages without an account. Accounts are not meant for children under 14,
+            the age of digital consent in Bulgaria. Contributing voice recordings requires being 18, or permission
+            from a parent or guardian.
           </p>
         </section>
 
         <section>
           <h2>Your Rights</h2>
           <p>
-            Under GDPR you have the right to access, correct, or delete any personal data we hold. If you
-            have an account, you can delete it (and everything tied to it) yourself from your profile page,
-            or contact us at <a href="mailto:legal@ur.contact">legal@ur.contact</a> for any other request.
-            If you never signed in, we hold no personal data about you at all.
+            Under the GDPR you have the right to access, correct, delete, restrict, or port your personal data, and
+            to object to its processing. Email <a href="mailto:legal@ur.contact">legal@ur.contact</a> and we will
+            reply within one month. You can also complain to the Bulgarian Commission for Personal Data Protection
+            (<a href="https://www.cpdp.bg" target="_blank" rel="noopener noreferrer">cpdp.bg</a>) or the data
+            protection authority in your country.
           </p>
         </section>
 
         <section>
           <h2>Changes to This Policy</h2>
           <p>
-            We may update this policy as the service evolves. Significant changes will be noted by updating
-            the date above.
+            We may update this policy as the service changes and will update the date above when we do.
           </p>
         </section>
 

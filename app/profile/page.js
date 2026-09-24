@@ -381,7 +381,7 @@ function ProfileInner() {
               ) : (
                 <div className={styles.deleteConfirm}>
                   <div className={styles.deleteConfirmText}>
-                    This permanently deletes your account, progress, and friends. This cannot be undone.
+                    This permanently deletes your account, progress, friends, and certificates. Approved voice recordings stay in the course without your name. This cannot be undone.
                   </div>
                   <div className={styles.deleteConfirmBtns}>
                     <button className={styles.deleteConfirmBtn} onClick={deleteAccount} disabled={deleting}>
@@ -419,6 +419,7 @@ function ProfileInner() {
           so keep the legal links reachable from the Profile tab. */}
       <div className={styles.legalLinks}>
         <Link href="/privacy" className={styles.legalLink}>Privacy Policy</Link>
+        <Link href="/terms" className={styles.legalLink}>Terms</Link>
         <a href="https://legal.bulgarian.dev/" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Legal Notice</a>
         <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.legalLink}>Discord</a>
       </div>

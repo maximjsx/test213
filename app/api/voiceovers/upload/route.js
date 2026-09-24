@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import getClientPromise from '@/lib/mongodb'
 import { currentBuilderStatus } from '@/lib/builderAccess'
 import { uploadFile, storageConfigured, publicFileUrl } from '@/lib/storage'
-import { COURSE_PHRASES, voiceoversCollection, approveVoiceover, dropOwnPending } from '@/lib/voiceovers'
+import { COURSE_PHRASES, voiceoversCollection, approveVoiceover, dropOwnPending, hasVoiceAgreement } from '@/lib/voiceovers'
 
 const MAX_BYTES = 3 * 1024 * 1024
 const MAX_PENDING = 500
@@ -14,6 +14,11 @@ export async function POST(req) {
     const status = await currentBuilderStatus()
     if (!status.loggedIn) return Response.json({ error: 'unauthorized' }, { status: 401 })
     if (!storageConfigured()) return Response.json({ error: 'storage_not_configured' }, { status: 503 })
+
+    const client = await getClientPromise()
+    const user = await client.db('bulgario').collection('users')
+      .findOne({ discordId: status.discordId }, { projection: { username: 1, discordName: 1, voiceAgreement: 1 } })
+    if (!hasVoiceAgreement(user)) return Response.json({ error: 'agreement_required' }, { status: 403 })
 
     const key = new URL(req.url).searchParams.get('key') || ''
     const phrase = COURSE_PHRASES.get(key)
@@ -32,10 +37,6 @@ export async function POST(req) {
     const mime = req.headers.get('content-type') || 'application/octet-stream'
     const hash = crypto.createHash('sha1').update(key).digest('hex').slice(0, 12)
     const file = await uploadFile(buf, mime, { compress: true, bitrate: '64k', filename: `vo--${hash}` })
-
-    const client = await getClientPromise()
-    const user = await client.db('bulgario').collection('users')
-      .findOne({ discordId: status.discordId }, { projection: { username: 1, discordName: 1 } })
 
     await dropOwnPending(col, key, status.discordId)
     const doc = {

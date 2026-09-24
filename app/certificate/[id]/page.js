@@ -170,6 +170,10 @@ export default function CertificatePage() {
           The PDF carries an Ed25519 signature over these details. Anyone can check it offline
           with our <a href="/api/certificates/public-key" className={styles.inlineLink}>public key</a>.
         </p>
+        <p className={styles.sectionText}>
+          This certificate confirms that the holder finished these lessons on Learn Bulgarian. It is not
+          an official CEFR exam result; the level name describes the course content.
+        </p>
       </div>
 
       <FileCheck certId={cert.id} />

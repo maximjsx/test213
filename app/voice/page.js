@@ -6,6 +6,7 @@ import { collectPhrases } from '../../lib/voicePhrases'
 import { fetchStudio, uploadVoice, reviewVoice, mergeVoiceover } from '../../lib/voiceStudio'
 import RecordCard from '../../components/voice/RecordCard'
 import ReviewQueue from '../../components/voice/ReviewQueue'
+import VoiceAgreement from '../../components/voice/VoiceAgreement'
 import Chevron from '../../components/Chevron'
 import styles from '../../components/voice/Voice.module.css'
 
@@ -125,6 +126,7 @@ export default function VoiceStudio() {
   if (loadError) return <div className={styles.loading}>Could not load the voice studio. Refresh to try again.</div>
   if (!studio) return <div className={styles.loading}>Loading...</div>
   if (!studio.loggedIn) return <SignIn />
+  if (!studio.agreed) return <VoiceAgreement onAccept={() => setStudio(s => ({ ...s, agreed: true }))} />
 
   const recorded = counts.done
   const saveError = current && saving[current.key] !== 'saving' ? saving[current.key] : null

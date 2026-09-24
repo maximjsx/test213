@@ -214,6 +214,24 @@
   box-shadow: 0 4px 0 #4752c4;
 }
 
+.agreementList {
+  display: flex; flex-direction: column; gap: 8px; padding-left: 20px; text-align: left;
+  font-size: 14px; font-weight: 600; color: var(--text-muted); line-height: 1.5;
+}
+.agreementCheck {
+  display: flex; gap: 10px; align-items: flex-start; text-align: left; cursor: pointer;
+  font-size: 14px; font-weight: 700; line-height: 1.5;
+}
+.agreementCheck input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--green); }
+.agreementCheck a { color: var(--blue); text-decoration: underline; }
+.agreementError { font-size: 14px; font-weight: 700; color: var(--red); }
+.agreementBtn {
+  padding: 12px 22px; border-radius: var(--r);
+  background: var(--green); color: var(--on-accent); font-weight: 900; font-size: 15px;
+  box-shadow: 0 4px 0 var(--green-press);
+}
+.agreementBtn:disabled { background: var(--surface-hi); color: var(--text-dim); box-shadow: none; cursor: not-allowed; }
+
 @media (max-width: 800px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
   .list { max-height: 50vh; }
