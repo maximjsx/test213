@@ -17,7 +17,8 @@ import ImageMatch from './exercises/ImageMatch'
 import ImageName from './exercises/ImageName'
 import ImageMultipleChoice from './exercises/ImageMultipleChoice'
 import Bear from './Bear'
-import { useDialog } from '../hooks/useDialog'
+import Modal, { ModalText, ModalActions } from './ui/Modal'
+import Button from './ui/Button'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
@@ -44,21 +45,14 @@ const EXERCISE_MAP = {
 const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
 
 function QuitConfirm({ onQuit, onCancel }) {
-  const cardRef = useDialog(onCancel)
   return (
-    <div className={styles.quitModalOverlay}>
-      <div className={styles.quitModalCard} ref={cardRef} role="alertdialog" aria-modal="true" aria-labelledby="quit-title" aria-describedby="quit-text">
-        <div className={styles.quitModalBear}>
-          <Bear mood="sad" size={80} />
-        </div>
-        <h3 id="quit-title" className={styles.quitModalTitle}>Quit lesson?</h3>
-        <p id="quit-text" className={styles.quitModalText}>
-          You'll have to start this lesson over from the beginning if you quit now.
-        </p>
-        <button className={styles.quitConfirmBtn} onClick={onQuit}>QUIT</button>
-        <button className={styles.quitCancelBtn} onClick={onCancel} data-autofocus>KEEP LEARNING</button>
-      </div>
-    </div>
+    <Modal role="alertdialog" size="sm" title="Quit lesson?" icon={<Bear mood="sad" size={80} />} dismissable={false} onClose={onCancel}>
+      <ModalText>You'll have to start this lesson over from the beginning if you quit now.</ModalText>
+      <ModalActions>
+        <Button size="lg" block onClick={onCancel} data-autofocus>Keep learning</Button>
+        <Button variant="ghost" block onClick={onQuit}>Quit</Button>
+      </ModalActions>
+    </Modal>
   )
 }
 

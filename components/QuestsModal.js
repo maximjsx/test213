@@ -2,18 +2,13 @@
 import Bear from './Bear'
 import FriendQuest from './FriendQuest'
 import { hapticTap } from '../lib/audio'
-import { useDialog } from '../hooks/useDialog'
+import Modal from './ui/Modal'
 import styles from './QuestsModal.module.css'
 
 export default function QuestsModal({ quests, claimQuest, user, friendQuestClaimed, claimFriendQuest, onClose }) {
   const items = quests?.items || []
-  const cardRef = useDialog(onClose)
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.card} ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="quests-title" onClick={e => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose}><img src="/icons/gray_x.png" alt="Close" width={20} height={20} /></button>
-        <div className={styles.bear}><Bear mood="happy" size={72} /></div>
-        <h2 id="quests-title" className={styles.title}>Daily Quests</h2>
+    <Modal title="Daily Quests" icon={<Bear mood="happy" size={72} />} onClose={onClose}>
         <p className={styles.sub}>New quests every day at midnight</p>
 
         {items.map(q => {
@@ -48,7 +43,6 @@ export default function QuestsModal({ quests, claimQuest, user, friendQuestClaim
         })}
 
         {user && <FriendQuest myAvatarUrl={user.avatarUrl} claimedWeek={friendQuestClaimed} onClaim={claimFriendQuest} />}
-      </div>
-    </div>
+    </Modal>
   )
 }

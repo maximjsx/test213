@@ -1,32 +1,3 @@
-.overlay {
-  position:fixed;inset:0;z-index:60;
-  background:rgba(0,0,0,0.6);
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-  animation:fadeIn 0.15s ease;
-}
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-.card {
-  position:relative;
-  background:var(--surface);border:2px solid var(--border);border-radius:20px;
-  padding:32px 24px 24px;max-width:420px;width:100%;
-  display:flex;flex-direction:column;gap:12px;
-  animation:popIn 0.2s ease;
-  max-height:85vh;overflow-y:auto;
-}
-@keyframes popIn { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
-
-.close {
-  position:absolute;top:14px;right:14px;
-  width:36px;height:36px;border-radius:50%;
-  background:var(--surface-hi);border:2px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-}
-.close:hover { background:var(--border); }
-
-.bear { display:flex;justify-content:center; }
-.title { font-size:22px;font-weight:900;text-align:center;margin:0; }
 .sub { font-size:13px;font-weight:600;color:var(--text-muted);text-align:center;margin:-6px 0 8px; }
 
 .quest {

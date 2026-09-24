@@ -1,6 +1,6 @@
-# BulgaroLearn
+# Learn Bulgarian
 
-A Duolingo-style Bulgarian language learning app. Config-driven, progress saved in your browser. Optional Discord sign-in backs progress up to MongoDB and unlocks the leaderboard.
+A Duolingo-style Bulgarian course. Progress is saved in your browser. Optional Discord sign-in backs progress up to MongoDB and unlocks the leaderboard.
 
 ## Setup
 
@@ -23,70 +23,16 @@ Accounts, progress sync and the leaderboard need three env vars in `.env.local`:
 
 Without these, the site works exactly as before, local-only.
 
-## Structure
+## Adding content
 
-```
-data/
-  course.js          ← ALL lesson content lives here (edit to add more)
-components/
-  ExerciseRunner.js  ← handles exercise flow, hearts, progress bar
-  LessonNotes.js     ← markdown lesson notes before exercises
-  LessonComplete.js  ← score screen
-  exercises/
-    MultipleChoice.js
-    TranslateInput.js  ← used for both to-BG and to-EN exercises
-    FillBlank.js
-hooks/
-  useProgress.js     ← localStorage progress tracking
-lib/
-  checker.js         ← fuzzy answer checking, transliteration
-app/
-  page.js            ← course map (home)
-  lesson/[id]/       ← lesson page
+Topics are built in the Level Builder at `/builder`, which flags anything a learner would trip over (missing answers, choices without the answer, half-filled pairs). When a topic has no warnings left:
+
+```bash
+bun run add-topic path/to/exported-level.json
 ```
 
-## Adding Content
+This validates the file again, writes it to `data/`, and registers it in `data/course.js`. Commit and push to publish.
 
-Edit `data/course.js`. Add units, lessons, and exercises:
+## Code map
 
-### Exercise types
-
-**multiple_choice**
-```js
-{
-  type: "multiple_choice",
-  id: "unique-id",
-  question: "What does X mean?",
-  choices: ["Option A", "Option B", "Option C"],
-  answer: "Option A",
-}
-```
-
-**translate_to_en** / **translate_to_bg**
-```js
-{
-  type: "translate_to_bg",
-  id: "unique-id",
-  prompt: "Hello, how are you?",
-  answer: "Здравей, как си?",
-  hint: "здравей = hello",
-  translitMap: { "zdravey": "Здравей", "kak": "как", "si": "си" },
-}
-```
-
-**fill_blank**
-```js
-{
-  type: "fill_blank",
-  id: "unique-id",
-  sentence: "Аз ___ жена.",
-  answer: "съм",
-  hint: "1st person singular of to be",
-}
-```
-
-### Transliteration for Bulgarian input
-
-Users can type in Roman letters. The `translitMap` in each exercise maps
-common romanizations to Cyrillic (e.g. `"zhena" → "жена"`). The global
-map in `lib/checker.js` handles letter-by-letter conversion.
+See `CLAUDE.md` for where things live, how to add an exercise type, and the styling rules.

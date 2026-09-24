@@ -185,52 +185,6 @@
 .continueBtnSkip:active { transform:translateY(2px);box-shadow:0 1px 0 var(--text-muted); }
 
 /* Quit confirmation modal */
-.quitModalOverlay {
-  position:fixed;inset:0;z-index:50;
-  background:rgba(0,0,0,0.6);
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-  animation:fadeIn 0.15s ease;
-}
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-.quitModalCard {
-  background:var(--surface);border:2px solid var(--border);border-radius:20px;
-  padding:40px 32px;max-width:380px;width:100%;text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:12px;
-  animation:popIn 0.2s ease;
-}
-@keyframes popIn { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
-
-.quitModalBear { margin-bottom:4px; }
-.quitModalTitle { font-size:22px;font-weight:900;color:var(--text);margin:0; }
-.quitModalText  { font-size:14px;color:var(--text-muted);font-weight:600;line-height:1.6;margin:0; }
-
-.quitConfirmBtn {
-  width:100%;padding:14px;border-radius:var(--r);border:none;cursor:pointer;
-  background:var(--red);color:#fff;
-  font-size:15px;font-weight:900;letter-spacing:0.5px;
-  box-shadow:0 4px 0 var(--red-press);
-  transition:transform 0.1s,box-shadow 0.1s;
-  margin-top:4px;
-}
-.quitConfirmBtn:hover  { transform:translateY(-1px);box-shadow:0 5px 0 var(--red-press); }
-.quitConfirmBtn:active { transform:translateY(2px);box-shadow:0 1px 0 var(--red-press); }
-
-.quitCancelBtn {
-  width:100%;padding:14px;border-radius:var(--r);cursor:pointer;
-  background:transparent;border:2px solid var(--border-hi);color:var(--text);
-  font-size:15px;font-weight:900;letter-spacing:0.5px;
-  transition:background 0.15s;
-}
-.quitCancelBtn:hover { background:var(--surface-hi); }
-
-
-@keyframes slideUpContent {
-  from { transform: translateY(200px); }
-  to   { transform: translateY(0); }
-}
-
 @media (max-width: 520px) {
   .topBar { height: 64px; padding: 0 14px; }
   .topBarInner { gap: 12px; }
@@ -302,4 +256,9 @@
     z-index: 1;
     margin-bottom: 0;
   }
+}
+
+@keyframes slideUpContent {
+  from { transform: translateY(200px); }
+  to   { transform: translateY(0); }
 }

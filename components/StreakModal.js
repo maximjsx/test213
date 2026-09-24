@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { dayKey } from '../hooks/useProgress'
 import Chevron from './Chevron'
-import { useDialog } from '../hooks/useDialog'
+import Modal from './ui/Modal'
 import styles from './StreakModal.module.css'
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -12,7 +12,6 @@ export default function StreakModal({ state, onClose }) {
   const now = new Date()
   const [view, setView] = useState({ y: now.getFullYear(), m: now.getMonth() })
   const activeDays = state.activeDays || {}
-  const cardRef = useDialog(onClose)
 
   const first = new Date(view.y, view.m, 1)
   const daysInMonth = new Date(view.y, view.m + 1, 0).getDate()
@@ -32,9 +31,7 @@ export default function StreakModal({ state, onClose }) {
   }
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.card} ref={cardRef} role="dialog" aria-modal="true" aria-label="Streak calendar" onClick={e => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose}><img src="/icons/gray_x.png" alt="Close" width={20} height={20} /></button>
+    <Modal label="Streak calendar" onClose={onClose}>
 
         <div className={styles.hero}>
           <img src="/icons/fire.png" alt="" width={44} height={44} />
@@ -76,7 +73,6 @@ export default function StreakModal({ state, onClose }) {
           <span><i className={`${styles.dot} ${styles.dotActive}`} /> practiced</span>
           <span><i className={`${styles.dot} ${styles.dotFrozen}`} /> freeze used</span>
         </div>
-      </div>
-    </div>
+    </Modal>
   )
 }

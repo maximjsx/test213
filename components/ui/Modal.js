@@ -4,11 +4,12 @@ import styles from './Modal.module.css'
 
 // Overlay + card with focus trap, Escape to close and click-outside to close.
 //   title:       rendered as the heading and used as the accessible name
+//   label:       accessible name when there is no visible title
 //   icon:        optional art above the title (mascot, icon image)
 //   dismissable: false for celebrations that need an explicit button
 //   accent:      border color, e.g. var(--orange) for streak moments
 //   role:        'alertdialog' for confirmations
-export default function Modal({ title, icon, onClose, dismissable = true, accent, role = 'dialog', size = 'md', className = '', children }) {
+export default function Modal({ title, label, icon, onClose, dismissable = true, accent, role = 'dialog', size = 'md', className = '', children }) {
   const cardRef = useDialog(onClose)
   return (
     <div className={styles.overlay} onClick={dismissable ? onClose : undefined}>
@@ -18,7 +19,7 @@ export default function Modal({ title, icon, onClose, dismissable = true, accent
         style={accent ? { '--modal-accent': accent } : undefined}
         role={role}
         aria-modal="true"
-        aria-label={typeof title === 'string' ? title : undefined}
+        aria-label={label ?? (typeof title === 'string' ? title : undefined)}
         onClick={e => e.stopPropagation()}
       >
         {dismissable && (

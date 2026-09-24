@@ -4,6 +4,7 @@
 //   bun run add-topic path/to/level.json
 import { readFileSync, writeFileSync, readdirSync } from 'fs'
 import { join } from 'path'
+import { validateLevel } from '../lib/levelSchema.js'
 
 const DATA = join(import.meta.dir, '..', 'data')
 const COURSE_FILE = join(DATA, 'course.js')
@@ -18,13 +19,28 @@ function readLevel(path) {
   let level
   try { level = JSON.parse(readFileSync(path, 'utf8')) } catch (e) { fail(`Could not read ${path}: ${e.message}`) }
   if (!level.id || !/^[\w-]+$/.test(level.id)) fail('The level needs an id made of letters, digits, _ or -.')
-  if (!level.title) fail('The level needs a title.')
-  if (!Array.isArray(level.lessons) || !level.lessons.length) fail('The level has no lessons.')
+  if (!Array.isArray(level.lessons)) fail('The level has no lessons.')
   for (const lesson of level.lessons) {
     if (!lesson.id) fail(`Lesson "${lesson.title}" has no id.`)
-    if (!lesson.exercises?.length) fail(`Lesson "${lesson.title}" has no exercises.`)
   }
+  checkContent(level)
   return level
+}
+
+// Same checks the builder shows as orange badges
+function checkContent(level) {
+  const issues = validateLevel(level)
+  if (!issues.count) return
+  const lines = [...issues.level]
+  for (const [li, problems] of Object.entries(issues.lessons)) {
+    lines.push(...problems.map(p => `Lesson ${Number(li) + 1}: ${p}`))
+  }
+  for (const lesson of level.lessons) {
+    for (const ex of lesson.exercises || []) {
+      for (const p of issues.exercises[ex.id] || []) lines.push(`${lesson.title} / ${ex.type} (${ex.id}): ${p}`)
+    }
+  }
+  fail(['Fix these before publishing:', ...lines].join('\n  '))
 }
 
 // Progress is stored per lesson id, so two topics sharing one would complete each other.

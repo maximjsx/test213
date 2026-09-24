@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
 import Bear from './Bear'
-import { useDialog } from '../hooks/useDialog'
+import Modal, { ModalText, ModalActions } from './ui/Modal'
+import Button from './ui/Button'
 import styles from './StreakMilestone.module.css'
 
 function loadImage(src) {
@@ -62,28 +63,34 @@ async function share(days) {
 }
 
 export default function StreakMilestone({ days, onClose }) {
-  const cardRef = useDialog(onClose)
   const [sharing, setSharing] = useState(false)
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.card} ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="milestone-title">
-        <Bear mood="cheer" size={110} />
-        <div className={styles.flame}>
-          <img src="/icons/fire.png" alt="" width={48} height={48} />
-          <span className={styles.days}>{days}</span>
-        </div>
-        <h2 id="milestone-title" className={styles.title}>{days} day streak!</h2>
-        <p className={styles.text}>You have practised Bulgarian {days} days in a row. That is a real habit now.</p>
-        <button
-          className={styles.shareBtn}
+    <Modal
+      title={`${days} day streak!`}
+      icon={<Bear mood="cheer" size={110} />}
+      accent="var(--orange)"
+      dismissable={false}
+      size="sm"
+      onClose={onClose}
+    >
+      <div className={styles.flame}>
+        <img src="/icons/fire.png" alt="" width={48} height={48} />
+        <span className={styles.days}>{days}</span>
+      </div>
+      <ModalText>You have practised Bulgarian {days} days in a row. That is a real habit now.</ModalText>
+      <ModalActions>
+        <Button
+          block
+          size="lg"
+          color="var(--orange)"
           disabled={sharing}
           onClick={async () => { setSharing(true); await share(days); setSharing(false) }}
         >
-          {sharing ? 'PREPARING...' : 'SHARE'}
-        </button>
-        <button className={styles.continueBtn} onClick={onClose} data-autofocus>CONTINUE</button>
-      </div>
-    </div>
+          {sharing ? 'Preparing...' : 'Share'}
+        </Button>
+        <Button variant="secondary" block size="lg" onClick={onClose} data-autofocus>Continue</Button>
+      </ModalActions>
+    </Modal>
   )
 }
