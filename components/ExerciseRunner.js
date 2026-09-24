@@ -20,6 +20,7 @@ import Bear from './Bear'
 import Modal, { ModalText, ModalActions } from './ui/Modal'
 import Button from './ui/Button'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
+import UsageNote from './exercises/UsageNote'
 import styles from './ExerciseRunner.module.css'
 
 const EXERCISE_MAP = {
@@ -242,6 +243,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
               <div>
                 <div className={styles.feedbackTitle}>{feedback.ok === true ? 'Correct!' : feedback.ok === 'skip' ? 'Skipped!' : 'Incorrect'}</div>
                 <div className={styles.feedbackMsg}>{feedback.message}</div>
+                <UsageNote exercise={exercise} />
               </div>
             </div>
             <div className={styles.feedbackBtnWrap}>

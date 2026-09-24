@@ -1,0 +1,7 @@
+.problems {
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 240px; overflow-y: auto;
+  padding: 10px 12px 10px 28px; border-radius: var(--r2);
+  background: var(--surface-hi);
+  font-size: var(--fs-sm); font-weight: 700; color: var(--orange); text-align: left;
+}

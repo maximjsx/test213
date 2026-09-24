@@ -1,6 +1,7 @@
 import { BG_VOICES, DEFAULT_VOICE } from '../../lib/voices'
 import { AudioField, ImageField } from './MediaControls'
 import { uid } from './exerciseTypes'
+import { REGISTERS, MAX_USAGE_LENGTH } from '../../lib/registers'
 import styles from './LevelEditor.module.css'
 
 export function FieldRow({ label, children, hint }) {
@@ -40,7 +41,45 @@ function StringList({ label, values, onChange, placeholder = 'Add item…', minI
 }
 
 
-export default function ExerciseEditor({ ex, onChange, courseId }) {
+// Tags that apply to every exercise type
+function UsageFields({ ex, onChange }) {
+  const set = (field, val) => {
+    const next = { ...ex, [field]: val }
+    if (!val) delete next[field]
+    onChange(next)
+  }
+  return (
+    <div className={styles.usageBox}>
+      <FieldRow label="Register" hint="How the phrase sounds. Shown after answering.">
+        <select className={styles.input} value={ex.register || ''} onChange={e => set('register', e.target.value)}>
+          <option value="">Not tagged</option>
+          {Object.entries(REGISTERS).map(([id, r]) => <option key={id} value={id}>{r.label}</option>)}
+        </select>
+      </FieldRow>
+      <FieldRow label="Usage note" hint={`Who says it and when. Up to ${MAX_USAGE_LENGTH} characters.`}>
+        <textarea
+          className={styles.textarea}
+          rows={2}
+          maxLength={MAX_USAGE_LENGTH}
+          value={ex.usage || ''}
+          placeholder="Friends say this to each other; rude to a stranger."
+          onChange={e => set('usage', e.target.value)}
+        />
+      </FieldRow>
+    </div>
+  )
+}
+
+export default function ExerciseEditor(props) {
+  return (
+    <>
+      <TypeFields {...props} />
+      <UsageFields ex={props.ex} onChange={props.onChange} />
+    </>
+  )
+}
+
+function TypeFields({ ex, onChange, courseId }) {
   const set = (field, val) => onChange({ ...ex, [field]: val })
   const ttsField = (
     <div className={styles.fieldRow}>

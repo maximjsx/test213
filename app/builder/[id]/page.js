@@ -9,6 +9,8 @@ import { EXERCISE_TYPES, defaultExercise, defaultLesson, exerciseSummary } from 
 import ExerciseEditor, { FieldRow } from '../../../components/builder/ExerciseEditor'
 import { ImageField } from '../../../components/builder/MediaControls'
 import BuilderGate from '../../../components/builder/BuilderGate'
+import PublishButton from '../../../components/builder/PublishButton'
+import SyncStatus from '../../../components/builder/SyncStatus'
 import TopicArt from '../../../components/TopicArt'
 import Markdown from '../../../components/ui/Markdown'
 import Modal, { ModalText, ModalActions } from '../../../components/ui/Modal'
@@ -258,6 +260,7 @@ export default function LevelEditor() {
         <div className={styles.topCenter}>
           <span className={styles.topLevel} style={{ color: level.color }}>{level.icon}</span>
           <span className={styles.topTitle}>{level.title}</span>
+          <SyncStatus />
         </div>
         <div className={styles.topActions}>
           {level.lessons.length > 0 && (
@@ -276,6 +279,7 @@ export default function LevelEditor() {
           <button className={`${styles.exportBtn} ${exportFlash ? styles.exportFlash : ''}`} onClick={exportJSON}>
             {exportFlash ? 'Exported!' : 'Export JSON'}
           </button>
+          <PublishButton level={level} className={styles.exportBtn} />
           <button className={styles.deleteTopBtn} onClick={() => setConfirmDelete({ type: 'level', label: level.title })} title="Delete level">
             🗑️
           </button>

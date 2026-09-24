@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import BuilderGate from '../../components/builder/BuilderGate'
+import SyncStatus from '../../components/builder/SyncStatus'
 import AdminUsersPanel from '../../components/builder/AdminUsersPanel'
 import AdminFilesPanel from '../../components/builder/AdminFilesPanel'
-import { loadLevels, saveLevels, addLevel, deleteLevel as removeLevel, newLevel, newLevelId, countExercises, shareUrl, decodeLevel, copyText } from '../../lib/builderStore'
+import { loadLevels, syncLevels, addLevel, deleteLevel as removeLevel, newLevel, newLevelId, countExercises, shareUrl, decodeLevel, copyText } from '../../lib/builderStore'
 import Modal, { ModalText, ModalActions } from '../../components/ui/Modal'
 import Button from '../../components/ui/Button'
 import { clickable } from '../../lib/a11y'
@@ -49,6 +50,7 @@ export default function BuilderDashboard() {
   useEffect(() => {
     setLevels(loadLevels())
     setReady(true)
+    syncLevels().then(setLevels)
   }, [])
 
   function createLevel() {
@@ -93,10 +95,8 @@ export default function BuilderDashboard() {
     }
 
     // give it a fresh id so it never collides
-    const imported = { ...level, id: newLevelId() }
-    const updated = [...levels, imported]
-    saveLevels(updated)
-    setLevels(updated)
+    addLevel({ ...level, id: newLevelId() })
+    setLevels(loadLevels())
     setShowImport(false)
     setImportText('')
   }
@@ -120,6 +120,7 @@ export default function BuilderDashboard() {
           <img src="/icons/gray_x.png" alt="Back to course" width={18} height={18} />
         </Link>
         <h1 className={styles.pageTitle}>Level Builder</h1>
+        <SyncStatus />
         <div className={styles.headerActions}>
           <Link href="/voice" className={styles.importBtn}>Voice studio</Link>
           <button className={styles.importBtn} onClick={() => { setShowImport(v => !v); setImportError('') }}>

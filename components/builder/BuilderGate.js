@@ -1,7 +1,14 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import styles from './BuilderGate.module.css'
+
+const BuilderAccess = createContext({ isAdmin: false })
+
+// { isAdmin } for the signed-in builder, inside a BuilderGate
+export function useBuilderAccess() {
+  return useContext(BuilderAccess)
+}
 
 // Wraps builder pages. Only renders children once the signed-in Discord user is
 // on the builder allowlist. Otherwise shows a login / no-access screen.
@@ -22,7 +29,7 @@ export default function BuilderGate({ children }) {
   }
 
   if (state.status === 'done' && state.allowed) {
-    return children
+    return <BuilderAccess.Provider value={{ isAdmin: !!state.isAdmin }}>{children}</BuilderAccess.Provider>
   }
 
   // Not allowed → login or no-access

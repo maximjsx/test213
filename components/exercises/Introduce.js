@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { playClip } from '../../lib/audio'
 import { langOf } from '../../lib/lang'
+import UsageNote from './UsageNote'
 import styles from './Exercise.module.css'
 
 export default function Introduce({ exercise, onPendingChange, checkTrigger, onAnswer }) {
@@ -46,6 +47,7 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
         {exercise.translation && (
           <p className={styles.introduceTranslation}>{exercise.translation}</p>
         )}
+        <UsageNote exercise={exercise} centered />
 
         {(exercise.tts || exercise.audio?.url) && (
           <button

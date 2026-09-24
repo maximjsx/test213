@@ -32,8 +32,8 @@ Terminology: a **level** in code is a **topic** in the UI. A topic has lessons, 
 
 ## Content workflow
 
-1. Build a topic in `/builder` (stored in the browser only). Fix every orange validation badge.
-2. Export JSON, run `bun run add-topic file.json`, commit, push.
+1. Build a topic in `/builder`. Drafts live in localStorage and back up to the builder's account (`builder_levels` collection, `lib/builderStore.js` sync). Fix every orange validation badge.
+2. Publish: either Export JSON, run `bun run add-topic file.json`, commit and push; or the super-admin's Publish button, which commits `data/<id>.json` and `data/course.js` to master through the GitHub API (`GITHUB_TOKEN`, `GITHUB_REPO`, optional `GITHUB_BRANCH`). Both run the same checks in `lib/publishTopic.js`. Course content only ever lives in repo files.
 3. Lesson and exercise ids must be unique across the course, since progress and mistakes are stored by id.
 
 ## Adding an exercise type
@@ -42,7 +42,7 @@ Terminology: a **level** in code is a **topic** in the UI. A topic has lessons, 
 2. Register it in `EXERCISE_MAP` in `components/ExerciseRunner.js`.
 3. Add it to `EXERCISE_TYPES`, `defaultExercise` and `exerciseSummary` in `components/builder/exerciseTypes.js`.
 4. Add an editor case in `components/builder/ExerciseEditor.js`.
-5. Add a rule in `lib/levelSchema.js` and, if it matters for ordering, a tier in `DIFFICULTY` in `lib/course.js`.
+5. Add a rule in `lib/levelSchema.js` (the optional `register` and `usage` tags are checked for every type there already) and, if it matters for ordering, a tier in `DIFFICULTY` in `lib/course.js`.
 
 ## Styling rules
 
