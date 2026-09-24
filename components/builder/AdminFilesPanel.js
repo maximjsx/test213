@@ -30,10 +30,7 @@ async function downloadFile(url, name) {
 }
 function loadCourseTitles() {
   try {
-    const levels = JSON.parse(localStorage.getItem('builder_levels') || '[]')
-    const map = {}
-    for (const l of levels) map[l.id] = l.title
-    return map
+    return Object.fromEntries(loadLevels().map(l => [l.id, l.title]))
   } catch { return {} }
 }
 

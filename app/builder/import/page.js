@@ -2,23 +2,8 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { addLevel, decodeLevel, newLevelId, saveTempLevel, countExercises } from '../../../lib/builderStore'
 import styles from './page.module.css'
-
-function loadLevels() {
-  try { return JSON.parse(localStorage.getItem('builder_levels') || '[]') } catch { return [] }
-}
-function saveLevels(levels) {
-  try { localStorage.setItem('builder_levels', JSON.stringify(levels)) } catch {}
-}
-
-function decodeLevel(str) {
-  try {
-    const b64 = str.replace(/-/g, '+').replace(/_/g, '/') + '=='.slice((str.length % 4) || 4)
-    return JSON.parse(decodeURIComponent(
-      Array.from(atob(b64)).map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
-    ))
-  } catch { return null }
-}
 
 function ImportPageInner() {
   const params = useSearchParams()
@@ -35,20 +20,14 @@ function ImportPageInner() {
     setLevel(decoded)
   }, [params])
 
-  function saveImported() {
-    const imported = { ...level, id: 'custom_' + Date.now() }
-    saveLevels([...loadLevels(), imported])
-    return imported.id
-  }
-
   function addToMyLevels() {
-    saveImported()
+    addLevel({ ...level, id: newLevelId() })
     setDone(true)
   }
 
   function playNow() {
     const tempId = 'temp_' + Date.now()
-    try { localStorage.setItem('builder_temp_level', JSON.stringify({ ...level, id: tempId })) } catch {}
+    saveTempLevel({ ...level, id: tempId })
     router.push('/builder/play/' + tempId)
   }
 
@@ -76,7 +55,7 @@ function ImportPageInner() {
 
   if (!level) return <div className={styles.loading}>Decoding level…</div>
 
-  const totalExercises = level.lessons?.reduce((n, l) => n + (l.exercises?.length || 0), 0) || 0
+  const totalExercises = countExercises(level)
 
   return (
     <div className={styles.page}>

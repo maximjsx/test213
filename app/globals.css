@@ -30,6 +30,27 @@
 
   --r:  12px;
   --r2: 8px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  --fs-xs:   11px;
+  --fs-sm:   13px;
+  --fs-base: 15px;
+  --fs-md:   16px;
+  --fs-lg:   20px;
+  --fs-xl:   26px;
+
+  --overlay: rgba(8, 12, 20, 0.78);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Stacking order, lowest first */
+  --z-sticky: 20;
+  --z-nav: 50;
+  --z-modal: 60;
+  --z-celebration: 120;
+
+  color-scheme: dark;
 }
 
 html, body {

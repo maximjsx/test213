@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed; inset: 0; z-index: var(--z-modal);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background: var(--overlay);
+  animation: fade 0.15s ease;
+}
+.card {
+  --modal-accent: var(--border);
+  position: relative;
+  width: 100%; max-height: 88vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 30px 22px 22px;
+  border-radius: var(--r-xl);
+  background: var(--surface); border: 2px solid var(--modal-accent);
+  text-align: center;
+  animation: pop 0.25s var(--ease-pop);
+}
+.sm { max-width: 360px; }
+.md { max-width: 420px; }
+.lg { max-width: 560px; }
+
+.close {
+  position: absolute; top: 12px; right: 12px;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-hi); border: 2px solid var(--border);
+}
+.close:hover { background: var(--border); }
+
+.icon { display: flex; justify-content: center; }
+.title { font-size: 22px; font-weight: 900; color: var(--text); }
+.text { font-size: var(--fs-base); font-weight: 700; color: var(--text-muted); line-height: 1.5; }
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes pop { from { opacity: 0; transform: scale(0.9) } to { opacity: 1; transform: scale(1) } }
+
+@media (max-width: 420px) {
+  .overlay { padding: 14px; }
+  .card { padding: 28px 16px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .card { animation: none; }
+}

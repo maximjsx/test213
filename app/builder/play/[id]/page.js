@@ -2,18 +2,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { loadLevel } from '../../../../lib/builderStore'
 import styles from './page.module.css'
-
-function loadLevel(id) {
-  try {
-    const levels = JSON.parse(localStorage.getItem('builder_levels') || '[]')
-    const found = levels.find(l => l.id === id)
-    if (found) return found
-    const temp = JSON.parse(localStorage.getItem('builder_temp_level') || 'null')
-    if (temp?.id === id) return temp
-    return null
-  } catch { return null }
-}
 
 export default function BuilderPlayPage() {
   const { id } = useParams()

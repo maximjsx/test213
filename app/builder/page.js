@@ -5,39 +5,11 @@ import { useRouter } from 'next/navigation'
 import BuilderGate from '../../components/builder/BuilderGate'
 import AdminUsersPanel from '../../components/builder/AdminUsersPanel'
 import AdminFilesPanel from '../../components/builder/AdminFilesPanel'
+import { loadLevels, saveLevels, addLevel, deleteLevel as removeLevel, newLevel, newLevelId, countExercises, shareUrl, decodeLevel, copyText } from '../../lib/builderStore'
+import Modal, { ModalText, ModalActions } from '../../components/ui/Modal'
+import Button from '../../components/ui/Button'
 import { clickable } from '../../lib/a11y'
 import styles from './page.module.css'
-
-function loadLevels() {
-  try { return JSON.parse(localStorage.getItem('builder_levels') || '[]') } catch { return [] }
-}
-function saveLevels(levels) {
-  try { localStorage.setItem('builder_levels', JSON.stringify(levels)) } catch {}
-}
-
-function encodeLevel(level) {
-  try {
-    const json = JSON.stringify(level)
-    const b64 = btoa(encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))))
-    return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-  } catch { return null }
-}
-function copyText(text) {
-  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text)
-  const ta = Object.assign(document.createElement('textarea'), { value: text, style: 'position:fixed;opacity:0' })
-  document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove()
-  return Promise.resolve()
-}
-
-// Unicode-safe, URL-safe base64 decode
-function decodeLevel(str) {
-  try {
-    const b64 = str.replace(/-/g, '+').replace(/_/g, '/') + '=='.slice((str.length % 4) || 4)
-    return JSON.parse(decodeURIComponent(
-      Array.from(atob(b64)).map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
-    ))
-  } catch { return null }
-}
 
 function ShareIcon() {
   return (
@@ -80,30 +52,18 @@ export default function BuilderDashboard() {
   }, [])
 
   function createLevel() {
-    const id = 'custom_' + Date.now()
-    const level = {
-      id,
-      title: 'New Level',
-      subtitle: 'A custom course level',
-      color: '#58cc02',
-      icon: '★',
-      notes: '## Notes\n\nWrite your level notes here.',
-      lessons: [],
-    }
-    saveLevels([...levels, level])
-    router.push('/builder/' + id)
+    const level = newLevel()
+    addLevel(level)
+    router.push('/builder/' + level.id)
   }
 
   function deleteLevel(id) {
-    const updated = levels.filter(l => l.id !== id)
-    saveLevels(updated)
-    setLevels(updated)
+    setLevels(removeLevel(id))
     setConfirmDeleteLevel(null)
   }
   function shareLevel(level) {
-    const encoded = encodeLevel(level)
-    if (!encoded) return
-    const url = window.location.origin + '/builder/import?d=' + encoded
+    const url = shareUrl(level)
+    if (!url) return
     copyText(url).then(() => {
       setShareFlashId(level.id)
       setTimeout(() => setShareFlashId(null), 2500)
@@ -133,7 +93,7 @@ export default function BuilderDashboard() {
     }
 
     // give it a fresh id so it never collides
-    const imported = { ...level, id: 'custom_' + Date.now() }
+    const imported = { ...level, id: newLevelId() }
     const updated = [...levels, imported]
     saveLevels(updated)
     setLevels(updated)
@@ -147,15 +107,13 @@ export default function BuilderDashboard() {
     <BuilderGate>
     <div className={styles.page}>
       {confirmDeleteLevel && (
-        <div className={styles.modalOverlay} onClick={() => setConfirmDeleteLevel(null)}>
-          <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
-            <div className={styles.modalEmoji}>🗑️</div>
-            <h3 className={styles.modalTitle}>Delete level?</h3>
-            <p className={styles.modalText}>"{confirmDeleteLevel.title}" and all its lessons will be permanently removed.</p>
-            <button className={styles.modalConfirmBtn} onClick={() => deleteLevel(confirmDeleteLevel.id)}>DELETE</button>
-            <button className={styles.modalCancelBtn} onClick={() => setConfirmDeleteLevel(null)}>CANCEL</button>
-          </div>
-        </div>
+        <Modal role="alertdialog" size="sm" title="Delete level?" onClose={() => setConfirmDeleteLevel(null)}>
+          <ModalText>"{confirmDeleteLevel.title}" and all its lessons will be permanently removed.</ModalText>
+          <ModalActions>
+            <Button variant="danger" block onClick={() => deleteLevel(confirmDeleteLevel.id)}>Delete</Button>
+            <Button variant="secondary" block onClick={() => setConfirmDeleteLevel(null)} data-autofocus>Cancel</Button>
+          </ModalActions>
+        </Modal>
       )}
       <div className={styles.header}>
         <Link href="/" className={styles.backBtn}>
@@ -228,7 +186,7 @@ export default function BuilderDashboard() {
                     <div className={styles.cardSub}>{level.subtitle}</div>
                     <div className={styles.cardMeta}>
                       {level.lessons.length} lesson{level.lessons.length !== 1 ? 's' : ''} ·{' '}
-                      {level.lessons.reduce((n, l) => n + (l.exercises?.length || 0), 0)} exercises
+                      {countExercises(level)} exercises
                     </div>
                     <div className={styles.cardActions} onClick={e => e.stopPropagation()}>
                       <div className={styles.cardActionsRow}>

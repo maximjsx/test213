@@ -75,13 +75,13 @@
 .section { background: var(--surface); border: 2px solid var(--border); border-radius: var(--r); overflow: hidden; }
 
 .sectionFull {
-  position: fixed; inset: 0; z-index: 200;
+  position: fixed; inset: 0; z-index: 41;
   background: var(--bg); overflow-y: auto;
   animation: maximizeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .backdrop {
-  position: fixed; inset: 0; z-index: 199;
+  position: fixed; inset: 0; z-index: 40;
   background: rgba(0,0,0,0.45);
   animation: fadeIn 0.15s ease;
 }
@@ -407,53 +407,8 @@
 .notesPreview {
   min-height: 200px; padding: 14px 16px;
   background: var(--surface-hi); border: 2px solid var(--border); border-radius: var(--r2);
-  display: flex; flex-direction: column; gap: 12px;
 }
 .notesEmpty { font-size: 14px; color: var(--text-dim); font-style: italic; }
-.mdH2 { font-size: 18px; font-weight: 800; color: var(--text); padding-bottom: 8px; border-bottom: 2px solid var(--border); margin-top: 4px; }
-.mdH3 { font-size: 15px; font-weight: 800; color: var(--text-muted); }
-.mdP  { font-size: 14px; color: var(--text); line-height: 1.7; }
-.mdUl { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
-.mdUl li { font-size: 14px; color: var(--text); line-height: 1.6; }
-.mdTable { width: 100%; border-collapse: collapse; font-size: 13px; border: 2px solid var(--border); border-radius: var(--r2); overflow: hidden; }
-.mdTable th { background: var(--surface); color: var(--text-muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; text-align: left; border-bottom: 2px solid var(--border); }
-.mdTable td { padding: 8px 12px; color: var(--text); border-bottom: 1px solid var(--border); }
-.mdTable tr:last-child td { border-bottom: none; }
-.mdTable tr:nth-child(even) td { background: var(--surface); }
-
-/* delete confirm modal */
-.modalOverlay {
-  position: fixed; inset: 0; z-index: 300;
-  background: rgba(0,0,0,0.6);
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px; animation: fadeIn 0.15s ease;
-}
-.modalCard {
-  background: var(--surface); border: 2px solid var(--border); border-radius: 20px;
-  padding: 36px 28px; max-width: 360px; width: 100%; text-align: center;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  animation: modalPop 0.2s ease;
-}
-@keyframes modalPop { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-.modalEmoji { font-size: 48px; }
-.modalTitle { font-size: 20px; font-weight: 900; color: var(--text); margin: 0; }
-.modalText { font-size: 14px; color: var(--text-muted); font-weight: 600; line-height: 1.6; margin: 0; }
-.modalConfirmBtn {
-  width: 100%; padding: 14px; border-radius: var(--r); border: none; cursor: pointer;
-  background: var(--red); color: #fff;
-  font-size: 15px; font-weight: 900; letter-spacing: 0.5px;
-  box-shadow: 0 4px 0 var(--red-press);
-  transition: transform 0.1s, box-shadow 0.1s; margin-top: 6px;
-}
-.modalConfirmBtn:hover  { transform: translateY(-1px); box-shadow: 0 5px 0 var(--red-press); }
-.modalConfirmBtn:active { transform: translateY(2px);  box-shadow: 0 1px 0 var(--red-press); }
-.modalCancelBtn {
-  width: 100%; padding: 14px; border-radius: var(--r); cursor: pointer;
-  background: transparent; border: 2px solid var(--border-hi); color: var(--text);
-  font-size: 15px; font-weight: 900; letter-spacing: 0.5px;
-  transition: background 0.15s;
-}
-.modalCancelBtn:hover { background: var(--surface-hi); }
 
 @media (max-width: 520px) {
   .topBar { padding: 0 12px; gap: 8px; }
@@ -466,4 +421,36 @@
   .lessonBody { padding: 0 14px 16px; }
   .sectionRow { padding: 14px 16px; }
   .sectionBody { padding: 14px; }
+}
+
+/* Content validation (lib/levelSchema.js) */
+.issuesBar {
+  max-width: 720px; margin: 16px auto 0; padding: 10px 16px;
+  border-radius: var(--r); border: 2px solid var(--orange);
+  background: var(--orange-bg); color: var(--text);
+  font-size: var(--fs-sm); font-weight: 800;
+}
+.issuesBarOk { border-color: var(--green); background: var(--green-bg); }
+.issuesBar code { font-weight: 900; color: var(--green); }
+.issueBadge {
+  flex-shrink: 0; min-width: 20px; height: 20px; padding: 0 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--r-pill); background: var(--orange); color: var(--on-accent);
+  font-size: var(--fs-xs); font-weight: 900;
+}
+.issueList {
+  margin-bottom: 12px; padding: 10px 14px 10px 30px;
+  border-radius: var(--r2); background: var(--orange-bg); border: 1px solid var(--orange);
+  font-size: var(--fs-sm); font-weight: 700; color: var(--text);
+}
+.testBtn {
+  height: 30px; padding: 0 10px; border-radius: var(--r2);
+  display: flex; align-items: center;
+  background: var(--surface-hi); border: 2px solid var(--border);
+  font-size: var(--fs-sm); font-weight: 800; color: var(--text-muted);
+}
+.testBtn:hover { border-color: var(--teal); color: var(--teal); }
+
+@media (max-width: 760px) {
+  .issuesBar { margin: 12px 12px 0; }
 }
