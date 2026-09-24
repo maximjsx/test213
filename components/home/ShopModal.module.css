@@ -1,0 +1,11 @@
+.inlineIcon { vertical-align: -2px; margin-right: 4px; }
+.item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; margin-top: 4px;
+  border-radius: var(--r);
+  background: var(--surface-hi); border: 2px solid var(--border);
+  text-align: left;
+}
+.info { flex: 1; min-width: 0; }
+.name { font-size: var(--fs-md); font-weight: 800; color: var(--text); }
+.meta { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }

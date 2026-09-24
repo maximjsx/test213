@@ -1,10 +1,10 @@
 'use client'
-import Link from 'next/link'
 import { useProgress } from '../../hooks/useProgress'
 import { LETTERS, MAX_STRENGTH, MIN_SPEED_ITEMS, withStrength } from '../../lib/words'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
-import Chevron from '../../components/Chevron'
-import LoadingBear from '../../components/LoadingBear'
+import PageHeader from '../../components/ui/PageHeader'
+import Button from '../../components/ui/Button'
+import { ListSkeleton } from '../../components/PageSkeletons'
 import styles from '../../components/Practice.module.css'
 
 function LetterTile({ item }) {
@@ -26,7 +26,7 @@ function LetterTile({ item }) {
 
 export default function LettersPage() {
   const { state, hydrated } = useProgress()
-  if (!hydrated) return <LoadingBear />
+  if (!hydrated) return <ListSkeleton />
 
   const letters = withStrength(LETTERS, state.lessons)
   const learned = letters.filter(l => l.strength > 0).length
@@ -34,10 +34,7 @@ export default function LettersPage() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.backBtn}><Chevron /> Course</Link>
-        <h1 className={styles.headerTitle}>Letters</h1>
-      </header>
+      <PageHeader title="Letters" />
       <main className={styles.main}>
         <div className={styles.summary}>
           <div className={styles.summaryText}>
@@ -49,8 +46,8 @@ export default function LettersPage() {
             </span>
           </div>
           {canPlay
-            ? <Link href="/speed?mode=letters" className={styles.primaryBtn}>SPEED ROUND</Link>
-            : <Link href="/topic/alphabet" className={styles.primaryBtn}>LEARN LETTERS</Link>}
+            ? <Button href="/speed?mode=letters">Speed round</Button>
+            : <Button href="/topic/alphabet">Learn letters</Button>}
         </div>
         <div className={styles.letterGrid}>
           {letters.map(item => <LetterTile key={item.letter} item={item} />)}

@@ -1,11 +1,12 @@
 'use client'
 import Link from 'next/link'
-import { COURSE } from '../../data/course'
+import { LEVELS } from '../../lib/course'
 import { useProgress } from '../../hooks/useProgress'
 import { WORDS, MIN_SPEED_ITEMS, withStrength } from '../../lib/words'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
-import Chevron from '../../components/Chevron'
-import LoadingBear from '../../components/LoadingBear'
+import PageHeader from '../../components/ui/PageHeader'
+import Button from '../../components/ui/Button'
+import { ListSkeleton } from '../../components/PageSkeletons'
 import StrengthBars from '../../components/StrengthBars'
 import styles from '../../components/Practice.module.css'
 
@@ -46,7 +47,7 @@ function TopicWords({ level, words }) {
 
 export default function WordsPage() {
   const { state, hydrated } = useProgress()
-  if (!hydrated) return <LoadingBear />
+  if (!hydrated) return <ListSkeleton />
 
   const words = withStrength(WORDS, state.lessons)
   const learned = words.filter(w => w.strength > 0)
@@ -55,10 +56,7 @@ export default function WordsPage() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.backBtn}><Chevron /> Course</Link>
-        <h1 className={styles.headerTitle}>Words</h1>
-      </header>
+      <PageHeader title="Words" />
       <main className={styles.main}>
         <div className={styles.summary}>
           <div className={styles.summaryText}>
@@ -69,9 +67,9 @@ export default function WordsPage() {
                 : 'All your words are strong. Nice work.'}
             </span>
           </div>
-          <Link href="/speed?mode=words" className={styles.primaryBtn} aria-disabled={!canPlay}>SPEED ROUND</Link>
+          <Button href="/speed?mode=words" aria-disabled={!canPlay}>Speed round</Button>
         </div>
-        {COURSE.levels.filter(l => l.id !== 'alphabet').map(level => (
+        {LEVELS.filter(l => l.id !== 'alphabet').map(level => (
           <TopicWords key={level.id} level={level} words={words.filter(w => w.levelId === level.id)} />
         ))}
       </main>

@@ -1,17 +1,19 @@
 'use client'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useProgress } from '../../hooks/useProgress'
 import { LETTERS, WORDS, MIN_SPEED_ITEMS, withStrength } from '../../lib/words'
 import { playCorrect, playWrong, unlockAudio } from '../../lib/audio'
 import { shuffle } from '../../lib/checker'
 import Bear from '../../components/Bear'
-import Chevron from '../../components/Chevron'
-import LoadingBear from '../../components/LoadingBear'
+import PageHeader from '../../components/ui/PageHeader'
+import Button from '../../components/ui/Button'
+import { ListSkeleton } from '../../components/PageSkeletons'
 import styles from '../../components/Practice.module.css'
 
 const ROUND_MS = 60000
+const LOW_TIME_MS = 10000
+const COUNTDOWN_FROM = 3
 const ROWS = 5
 const MAX_XP = 25
 
@@ -19,12 +21,14 @@ const MODES = {
   words: {
     title: 'Word speed round',
     back: '/words',
+    backLabel: 'Words',
     learnHref: '/',
     pool: lessons => withStrength(WORDS, lessons).filter(w => w.strength > 0).map(w => ({ left: w.bg, right: w.en })),
   },
   letters: {
     title: 'Letter speed round',
     back: '/letters',
+    backLabel: 'Letters',
     learnHref: '/topic/alphabet',
     pool: lessons => withStrength(LETTERS, lessons).filter(l => l.strength > 0).map(l => ({ left: `${l.letter}${l.letter.toLowerCase()}`, right: l.sound })),
   },
@@ -67,6 +71,41 @@ function Tile({ text, state, lang, onClick }) {
     <button className={`${styles.tile} ${cls}`} lang={lang} onClick={onClick} aria-pressed={state === 'selected'}>
       {text}
     </button>
+  )
+}
+
+function formatClock(ms) {
+  const secs = Math.ceil(ms / 1000)
+  return `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`
+}
+
+// "3, 2, 1" before the clock starts, so the first seconds aren't spent finding the board
+function Countdown({ onDone }) {
+  const [count, setCount] = useState(COUNTDOWN_FROM)
+  useEffect(() => {
+    if (count === 0) { onDone(); return }
+    const t = setTimeout(() => setCount(c => c - 1), 800)
+    return () => clearTimeout(t)
+  }, [count]) // eslint-disable-line react-hooks/exhaustive-deps
+  return (
+    <div className={styles.center} aria-live="assertive">
+      <p className={styles.centerText}>Get ready</p>
+      {count > 0 && <div key={count} className={styles.countdown}>{count}</div>}
+    </div>
+  )
+}
+
+function Clock({ remaining }) {
+  const low = remaining < LOW_TIME_MS
+  return (
+    <div className={styles.clockWrap}>
+      <span className={`${styles.clock} ${low ? styles.clockLow : ''}`} role="timer" aria-label={`${Math.ceil(remaining / 1000)} seconds left`}>
+        {formatClock(remaining)}
+      </span>
+      <div className={styles.timer} aria-hidden="true">
+        <div className={`${styles.timerFill} ${low ? styles.timerLow : ''}`} style={{ width: `${(remaining / ROUND_MS) * 100}%` }} />
+      </div>
+    </div>
   )
 }
 
@@ -136,9 +175,7 @@ function Round({ pool, onFinish }) {
   return (
     <div className={styles.play}>
       <div className={styles.playTop}>
-        <div className={styles.timer} role="timer" aria-label={`${Math.ceil(remaining / 1000)} seconds left`}>
-          <div className={`${styles.timerFill} ${remaining < 10000 ? styles.timerLow : ''}`} style={{ width: `${(remaining / ROUND_MS) * 100}%` }} />
-        </div>
+        <Clock remaining={remaining} />
         <span className={styles.score} aria-live="polite">
           <img src="/icons/green_checkmark.png" alt="" width={20} height={20} />{matches}
         </span>
@@ -173,14 +210,14 @@ function SpeedInner() {
 
   const pool = useMemo(() => (hydrated ? mode.pool(state.lessons) : []), [hydrated, modeId]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!hydrated) return <LoadingBear />
+  if (!hydrated) return <ListSkeleton rows={4} />
 
   const best = state.speedBest?.[modeId] || 0
 
   function start() {
     unlockAudio()
     setRoundKey(k => k + 1)
-    setPhase('play')
+    setPhase('countdown')
   }
 
   function finish(matches) {
@@ -197,9 +234,11 @@ function SpeedInner() {
         <Bear mood="happy" size={100} />
         <h2 className={styles.centerTitle}>Learn a few more first</h2>
         <p className={styles.centerText}>A speed round needs at least {MIN_SPEED_ITEMS} {modeId} you have learned. Finish another lesson and come back.</p>
-        <Link href={mode.learnHref} className={styles.primaryBtn}>GO TO LESSONS</Link>
+        <Button href={mode.learnHref}>Go to lessons</Button>
       </div>
     )
+  } else if (phase === 'countdown') {
+    body = <Countdown onDone={() => setPhase('play')} />
   } else if (phase === 'play') {
     body = <Round key={roundKey} pool={pool} onFinish={finish} />
   } else if (phase === 'done') {
@@ -208,14 +247,14 @@ function SpeedInner() {
         <Bear mood={result.matches ? 'cheer' : 'happy'} size={100} />
         <h2 className={styles.centerTitle}>Time is up!</h2>
         <div className={styles.bigNumber}>{result.matches}</div>
-        <p className={styles.centerText}>{result.matches === 1 ? 'match' : 'matches'} in 60 seconds</p>
+        <p className={styles.centerText}>{result.matches === 1 ? 'match' : 'matches'} in {ROUND_MS / 1000} seconds</p>
         {result.newBest && <span className={styles.newBest}>NEW PERSONAL BEST</span>}
         {result.xp > 0 && (
           <span className={styles.xpGain}><img src="/icons/lightning.png" alt="" width={20} height={20} />+{result.xp} XP</span>
         )}
         <div className={styles.btnRow}>
-          <button className={styles.primaryBtn} onClick={start}>PLAY AGAIN</button>
-          <Link href={mode.back} className={styles.secondaryBtn}>Done</Link>
+          <Button onClick={start}>Play again</Button>
+          <Button variant="secondary" href={mode.back}>Done</Button>
         </div>
       </div>
     )
@@ -225,20 +264,17 @@ function SpeedInner() {
         <Bear mood="happy" size={100} />
         <h2 className={styles.centerTitle}>{mode.title}</h2>
         <p className={styles.centerText}>
-          Match as many pairs as you can in 60 seconds. Tap a Bulgarian {modeId === 'letters' ? 'letter' : 'word'}, then its match.
+          Match as many pairs as you can in {ROUND_MS / 1000} seconds. Tap a Bulgarian {modeId === 'letters' ? 'letter' : 'word'}, then its match.
         </p>
         {best > 0 && <p className={styles.centerText}>Your best: <strong>{best}</strong></p>}
-        <button className={styles.primaryBtn} onClick={start} autoFocus>START</button>
+        <Button size="lg" onClick={start} autoFocus>Start</Button>
       </div>
     )
   }
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Link href={mode.back} className={styles.backBtn}><Chevron /> {modeId === 'letters' ? 'Letters' : 'Words'}</Link>
-        <h1 className={styles.headerTitle}>{mode.title}</h1>
-      </header>
+      <PageHeader backHref={mode.back} backLabel={mode.backLabel} title={mode.title} />
       {body}
     </div>
   )
@@ -246,7 +282,7 @@ function SpeedInner() {
 
 export default function SpeedPage() {
   return (
-    <Suspense fallback={<LoadingBear />}>
+    <Suspense fallback={<ListSkeleton rows={4} />}>
       <SpeedInner />
     </Suspense>
   )

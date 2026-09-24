@@ -1,19 +1,5 @@
 .page { min-height: 100vh; background: var(--bg); }
 
-.header {
-  position: sticky; top: 0; z-index: 20;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  height: 64px;
-  /* Line the buttons up with the 640px content column on wide screens */
-  padding: 0 max(16px, calc((100% - 640px) / 2));
-  background: var(--surface); border-bottom: 2px solid var(--border);
-}
-.backBtn {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 12px; border-radius: var(--r2);
-  font-size: 15px; font-weight: 900; color: var(--text-muted);
-}
-.backBtn:hover { background: var(--surface-hi); color: var(--text); }
 .notesBtn {
   display: flex; align-items: center; gap: 7px;
   padding: 8px 14px; border-radius: 12px;
@@ -43,16 +29,7 @@
 .progressFill { height: 100%; border-radius: 999px; background: var(--lvl); transition: width 0.4s ease; }
 .progressText { font-size: 13px; font-weight: 800; color: var(--text-muted); white-space: nowrap; }
 
-.startBtn {
-  flex-basis: 100%;
-  padding: 14px 16px; border-radius: var(--r);
-  background: var(--lvl); color: var(--on-accent);
-  font-size: 16px; font-weight: 900; letter-spacing: 0.5px;
-  box-shadow: 0 4px 0 color-mix(in srgb, var(--lvl) 60%, #000);
-  transition: filter 0.15s, transform 0.1s, box-shadow 0.1s;
-}
-.startBtn:hover { filter: brightness(1.08); }
-.startBtn:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--lvl) 60%, #000); }
+.startBtn { flex-basis: 100%; }
 
 .nextTopic {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -70,7 +47,6 @@
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
   min-height: 100vh; padding: 0 16px; color: var(--text-muted); font-weight: 700;
 }
-.backLink { display: flex; align-items: center; gap: 6px; color: var(--blue); font-weight: 900; }
 
 @media (max-width: 680px) {
   .main { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }

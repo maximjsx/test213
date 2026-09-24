@@ -2,14 +2,16 @@
 import { useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { COURSE } from '../../../data/course'
+import { LEVELS, findLevelIndex, lessonHref } from '../../../lib/course'
 import { useProgress } from '../../../hooks/useProgress'
 import { onSplashFinished } from '../../../lib/splash'
 import { unlockAudio } from '../../../lib/audio'
 import LessonPath from '../../../components/LessonPath'
 import TopicArt from '../../../components/TopicArt'
 import Chevron from '../../../components/Chevron'
-import LoadingBear from '../../../components/LoadingBear'
+import PageHeader from '../../../components/ui/PageHeader'
+import Button from '../../../components/ui/Button'
+import { TopicSkeleton } from '../../../components/PageSkeletons'
 import styles from './page.module.css'
 
 // The lesson finished in the last few seconds, so its node pops and its
@@ -25,8 +27,8 @@ function recentlyCompleted(lessons) {
 export default function TopicPage() {
   const { id } = useParams()
   const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress } = useProgress()
-  const levelIndex = COURSE.levels.findIndex(l => l.id === id)
-  const level = COURSE.levels[levelIndex]
+  const levelIndex = findLevelIndex(id)
+  const level = LEVELS[levelIndex]
   const router = useRouter()
   const currentRef = useRef(null)
   const justCompletedId = useMemo(() => recentlyCompleted(state.lessons), [state.lessons])
@@ -45,25 +47,24 @@ export default function TopicPage() {
     return (
       <div className={styles.notFound}>
         <p>Topic not found.</p>
-        <Link href="/" className={styles.backLink}><Chevron /> All topics</Link>
+        <Button variant="secondary" href="/"><Chevron /> All topics</Button>
       </div>
     )
   }
-  if (!hydrated) return <LoadingBear />
+  if (!hydrated) return <TopicSkeleton />
 
   const { done, total } = levelProgress(level.lessons)
   const nextIdx = level.lessons.findIndex((l, idx) => isLessonUnlocked(level.lessons, idx) && !isLessonComplete(l.id))
   const nextLesson = level.lessons[nextIdx]
-  const nextTopic = COURSE.levels[levelIndex + 1]
+  const nextTopic = LEVELS[levelIndex + 1]
 
   return (
     <div className={styles.page} style={{ '--lvl': level.color }}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.backBtn}><Chevron /> Topics</Link>
+      <PageHeader backLabel="Topics">
         <Link href={`/level/${level.id}`} className={styles.notesBtn}>
           <img src="/icons/open_book.png" alt="" width={20} height={20} /> NOTES
         </Link>
-      </header>
+      </PageHeader>
 
       <section className={styles.hero}>
         <span className={styles.heroDisc} style={{ background: level.color }}>
@@ -80,15 +81,17 @@ export default function TopicPage() {
           </div>
         </div>
         {nextLesson && (
-          <button
+          <Button
+            size="lg"
+            color={level.color}
             className={styles.startBtn}
             onClick={() => {
               unlockAudio()
-              router.push(`/lesson/${nextLesson.id}?level=${level.id}`)
+              router.push(lessonHref(nextLesson, level))
             }}
           >
-            {done ? `CONTINUE: LESSON ${nextIdx + 1}` : 'START LESSON 1'}
-          </button>
+            {done ? `Continue: lesson ${nextIdx + 1}` : 'Start lesson 1'}
+          </Button>
         )}
       </section>
 

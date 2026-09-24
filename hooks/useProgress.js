@@ -252,19 +252,6 @@ export function useProgress() {
     })
   }, [persist])
 
-  const unlockPack = useCallback((packId, costXP) => {
-    setState(prev => {
-      if (prev.xp < costXP) return prev
-      const next = {
-        ...prev,
-        xp: prev.xp - costXP,
-        specialUnlocks: { ...(prev.specialUnlocks || {}), [packId]: true },
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
   const setDailyGoal = useCallback((xp) => {
     setState(prev => {
       const next = { ...prev, dailyGoal: xp }
@@ -356,7 +343,6 @@ export function useProgress() {
   return {
     state, hydrated,
     buyStreakFreeze, STREAK_FREEZE_COST_XP,
-    unlockPack,
     recordMistakes, completeLessonWithXP, completePractice,
     claimQuest, claimFriendQuest,
     setDailyGoal, markStreakMilestone, completeSpeedRound,
