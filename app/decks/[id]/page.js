@@ -230,32 +230,36 @@ export default function DeckPage() {
           <Button variant="secondary" href={`/study?list=deck:${id}`}>Practise without scheduling</Button>
         )}
 
-        <section className={styles.card}>
-          <h2 className={styles.cardTitle}>Add a card</h2>
-          <CardForm submitLabel="Add card" onSubmit={addCard} />
-        </section>
-
-        <section className={styles.form} aria-labelledby="cards-title">
-          <h2 id="cards-title" className={styles.groupTitle}>Cards</h2>
-          {cards.length > 5 && (
-            <input className={styles.input} type="search" value={query} placeholder="Search cards" aria-label="Search cards" onChange={e => setQuery(e.target.value)} />
-          )}
-          {cards.length === 0 && <p className={styles.muted}>No cards yet. Add one above or tap the plus next to any word on the site.</p>}
-          <div className={styles.list}>
-            {shown.map(card => (
-              <CardRow
-                key={card.id}
-                card={card}
-                now={now}
-                onEdit={() => setEditing(card)}
-                onToggleSuspend={() => toggleSuspend(card)}
-                onDelete={() => setConfirm({ kind: 'card', card })}
-              />
-            ))}
+        <div className={styles.split}>
+          <div className={styles.splitSide}>
+            <section className={styles.card}>
+              <h2 className={styles.cardTitle}>Add a card</h2>
+              <CardForm submitLabel="Add card" onSubmit={addCard} />
+            </section>
+            <div className={styles.settingsSlot}>
+              <DeckSettings deck={deck} onSaved={refresh} onDelete={() => setConfirm({ kind: 'deck' })} />
+            </div>
           </div>
-        </section>
-
-        <DeckSettings deck={deck} onSaved={refresh} onDelete={() => setConfirm({ kind: 'deck' })} />
+          <section className={`${styles.form} ${styles.cardsSlot}`} aria-labelledby="cards-title">
+            <h2 id="cards-title" className={styles.groupTitle}>Cards</h2>
+            {cards.length > 5 && (
+              <input className={styles.input} type="search" value={query} placeholder="Search cards" aria-label="Search cards" onChange={e => setQuery(e.target.value)} />
+            )}
+            {cards.length === 0 && <p className={styles.muted}>No cards yet. Add one above or tap the plus next to any word on the site.</p>}
+            <div className={styles.list}>
+              {shown.map(card => (
+                <CardRow
+                  key={card.id}
+                  card={card}
+                  now={now}
+                  onEdit={() => setEditing(card)}
+                  onToggleSuspend={() => toggleSuspend(card)}
+                  onDelete={() => setConfirm({ kind: 'card', card })}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   )

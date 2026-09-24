@@ -35,7 +35,7 @@ export default function LettersPage() {
   return (
     <div className={styles.page}>
       <PageHeader backHref="/practice" backLabel="Practice" title="Letters" />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${styles.wide}`}>
         <div className={styles.summary}>
           <div className={styles.summaryText}>
             <span className={styles.summaryTitle}>The Bulgarian alphabet</span>

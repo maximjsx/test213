@@ -90,3 +90,15 @@
 .danger { color: var(--red); }
 
 .error { font-size: var(--fs-sm); font-weight: 800; color: var(--red); }
+
+/* Deck page. Phones: add form, cards, then settings (the side column
+   dissolves so `order` can interleave). Desktop: forms beside the list. */
+.split { display: flex; flex-direction: column; gap: 16px; }
+.splitSide { display: contents; }
+.cardsSlot { order: 1; }
+.settingsSlot { order: 2; }
+@media (min-width: 1100px) {
+  .main:has(.split) { max-width: 1080px; padding: 28px 32px 64px; }
+  .split { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 24px; align-items: start; }
+  .split .splitSide { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 88px; }
+}

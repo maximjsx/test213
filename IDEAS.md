@@ -34,3 +34,8 @@ Bot: Браво, точно така.
 
 - A small forum: questions about grammar, words, slang ("what does X really mean", "is this rude"), answers voted up, native speakers marked. Could attach to a word, a lesson, a wiki page or a glossary entry so questions sit next to the content they are about.
 - Keep it small: threads, replies, votes, report button, moderation by builder users. User data in Mongo like everything else.
+
+## Bulgarian typing test
+
+- A typing test in Cyrillic: words per minute and accuracy on real Bulgarian text (course sentences, glossary words, song lines), with a keyboard map for the Bulgarian phonetic and BDS layouts shown on screen.
+- Modes: 30/60 second sprints, a letters-only warm-up for learners new to the layout, and a leaderboard or personal best. Could earn coins like the speed round and feed words typed wrong into a deck.

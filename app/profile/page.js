@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { useProgress, peekLocalProgress, clearLocalProgress } from '../../hooks/useProgress'
 import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
+import PageHeader from '../../components/ui/PageHeader'
 import InstallButton from '../../components/InstallButton'
 import Achievements from '../../components/Achievements'
 import LoadingBear from '../../components/LoadingBear'
@@ -237,186 +238,192 @@ function ProfileInner() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.topRow}>
-        <div className={styles.topLinks}>
-          <Link href="/voice" className={styles.voiceLink}><img src="/icons/microphone.png" alt="" width={18} height={18} /> Record audio</Link>
-        </div>
-      </div>
+      <PageHeader backHref={null} title="Profile">
+        <Link href="/voice" className={styles.voiceLink}><img src="/icons/microphone.png" alt="" width={18} height={18} /> Record audio</Link>
+      </PageHeader>
 
-      <div className={user ? styles.hero : styles.card}>
-        {user ? (
-          <>
-            <div className={styles.avatarWrap}>
-              {user.avatarUrl
-                ? <img src={user.avatarUrl} alt="" className={styles.avatar} width={88} height={88} />
-                : <Bear mood="happy" size={88} />}
-            </div>
+      <div className={styles.layout}>
+        <div className={styles.sideCol}>
+          <section className={user ? styles.hero : styles.card}>
+            {user ? (
+              <>
+                <div className={styles.avatarWrap}>
+                  {user.avatarUrl
+                    ? <img src={user.avatarUrl} alt="" className={styles.avatar} width={88} height={88} />
+                    : <Bear mood="happy" size={88} />}
+                </div>
 
-            {nameEdit === null ? (
-              <div className={styles.nameRow}>
-                <h1 className={styles.name}>{user.username}</h1>
-                <button className={styles.editBtn} onClick={() => { setNameEdit(user.username); setNameError('') }}>edit</button>
-              </div>
-            ) : (
-              <div className={styles.editRow}>
-                <input
-                  className={styles.nameInput}
-                  value={nameEdit}
-                  maxLength={20}
-                  onChange={e => setNameEdit(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && saveUsername()}
-                  autoFocus
-                />
-                <button className={styles.saveBtn} onClick={saveUsername} disabled={saving}>SAVE</button>
-                <button className={styles.cancelBtn} onClick={() => setNameEdit(null)}>✕</button>
-              </div>
-            )}
-            {nameError && <div className={styles.error}>{nameError}</div>}
+                {nameEdit === null ? (
+                  <div className={styles.nameRow}>
+                    <h1 className={styles.name}>{user.username}</h1>
+                    <button className={styles.editBtn} onClick={() => { setNameEdit(user.username); setNameError('') }}>edit</button>
+                  </div>
+                ) : (
+                  <div className={styles.editRow}>
+                    <input
+                      className={styles.nameInput}
+                      value={nameEdit}
+                      maxLength={20}
+                      onChange={e => setNameEdit(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && saveUsername()}
+                      autoFocus
+                    />
+                    <button className={styles.saveBtn} onClick={saveUsername} disabled={saving}>SAVE</button>
+                    <button className={styles.cancelBtn} onClick={() => setNameEdit(null)}>✕</button>
+                  </div>
+                )}
+                {nameError && <div className={styles.error}>{nameError}</div>}
 
-            <div className={styles.joined}>Joined {fmtDate(user.createdAt)}</div>
+                <div className={styles.joined}>Joined {fmtDate(user.createdAt)}</div>
 
-            <div className={styles.statsHeading}>Statistics</div>
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <CoinIcon size={22} />
-                <div className={styles.statVal}>{coinsSince(state.coinsByDay)}</div>
-                <div className={styles.statLbl}>Coins earned</div>
-              </div>
-              <div className={styles.stat}>
-                <img src="/icons/fire.png" alt="" width={22} height={22} />
-                <div className={styles.statVal}>{state.streak}</div>
-                <div className={styles.statLbl}>Day streak</div>
-              </div>
-              <div className={styles.stat}>
-                <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
-                <div className={styles.statVal}>{lessonsDone}</div>
-                <div className={styles.statLbl}>Lessons</div>
-              </div>
-              <div className={styles.stat}>
-                <img src="/icons/shield.png" alt="" width={22} height={22} />
-                <div className={styles.statVal}>{state.streakFreezes || 0}</div>
-                <div className={styles.statLbl}>Freezes</div>
-              </div>
-            </div>
+                {localDiffersFromAccount && (
+                  <div className={styles.localNote}>
+                    <div className={styles.localNoteTitle}>Local device stats</div>
+                    <div className={styles.localNoteDetail}>
+                      This browser also has {localSnapshot.coins || 0} coins and {localLessonsDone} lessons stored outside
+                      your account. It's kept separate and untouched.
+                    </div>
+                  </div>
+                )}
 
-            <Achievements state={state} />
+                <InstallButton />
 
-            {friendsData && (friendsData.incoming.length > 0 || friendsData.friends.length > 0 || friendsData.outgoing.length > 0) && (
-              <div className={styles.friendsSection}>
-                {friendsData.incoming.length > 0 && (
-                  <>
-                    <div className={styles.friendsLabel}>Friend requests</div>
-                    {friendsData.incoming.map(f => (
-                      <div key={f.username} className={styles.friendRow}>
-                        <Link href={`/u/${f.username}`} className={styles.friendInfo}>
-                          {f.avatarUrl
-                            ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
-                            : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
-                          <span className={styles.friendName}>{f.username}</span>
-                        </Link>
-                        <div className={styles.friendBtns}>
-                          <button className={styles.acceptBtn} onClick={() => friendAction(f.username, 'accept')}>ACCEPT</button>
-                          <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'decline')}>
-                            <img src="/icons/gray_x.png" alt="decline" width={14} height={14} />
-                          </button>
-                        </div>
+                <button className={styles.logoutBtn} onClick={logout}>SIGN OUT</button>
+
+                <div className={styles.dangerZone}>
+                  {!confirmDelete ? (
+                    <button className={styles.deleteBtn} onClick={() => setConfirmDelete(true)}>Delete account</button>
+                  ) : (
+                    <div className={styles.deleteConfirm}>
+                      <div className={styles.deleteConfirmText}>
+                        This permanently deletes your account, progress, friends, and certificates. Approved voice recordings stay in the course without your name. This cannot be undone.
                       </div>
-                    ))}
-                  </>
-                )}
-                {friendsData.friends.length > 0 && (
-                  <>
-                    <div className={styles.friendsLabel}>Friends · {friendsData.friends.length}</div>
-                    {friendsData.friends.map(f => (
-                      <Link key={f.username} href={`/u/${f.username}`} className={styles.friendRow}>
-                        <span className={styles.friendInfo}>
-                          {f.avatarUrl
-                            ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
-                            : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
-                          <span className={styles.friendName}>{f.username}</span>
-                          {f.streak >= 3 && (
-                            <span className={styles.friendStreak}><img src="/icons/fire.png" alt="" width={13} height={13} />{f.streak}</span>
-                          )}
-                        </span>
-                        <span className={styles.friendCoins}>{f.coins} coins</span>
+                      <div className={styles.deleteConfirmBtns}>
+                        <button className={styles.deleteConfirmBtn} onClick={deleteAccount} disabled={deleting}>
+                          {deleting ? 'DELETING…' : 'YES, DELETE'}
+                        </button>
+                        <button className={styles.deleteCancelBtn} onClick={() => setConfirmDelete(false)} disabled={deleting}>Cancel</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <Bear mood="happy" size={100} />
+                <h1 className={styles.name}>Claim your account</h1>
+                <p className={styles.signinText}>
+                  Your progress currently lives only in this browser. Sign in with Discord to back it up,
+                  use it on other devices and appear on the leaderboard.
+                </p>
+                {oauthError && <div className={styles.error}>Sign in failed ({oauthError}), please try again.</div>}
+                <a href="/api/auth/login" className={styles.discordBtn}>
+                  <DiscordIcon />
+                  SIGN IN WITH DISCORD
+                </a>
+                <div className={styles.localStats}>
+                  On this device: {state.coins} coins · {lessonsDone} lessons · {state.streak} day streak
+                </div>
+              </>
+            )}
+          </section>
+        </div>
+
+        <div className={styles.mainCol}>
+          {user && (
+            <section className={styles.panel}>
+              <div className={styles.statsHeading}>Statistics</div>
+              <div className={styles.stats}>
+                <div className={styles.stat}>
+                  <CoinIcon size={22} />
+                  <div className={styles.statVal}>{coinsSince(state.coinsByDay)}</div>
+                  <div className={styles.statLbl}>Coins earned</div>
+                </div>
+                <div className={styles.stat}>
+                  <img src="/icons/fire.png" alt="" width={22} height={22} />
+                  <div className={styles.statVal}>{state.streak}</div>
+                  <div className={styles.statLbl}>Day streak</div>
+                </div>
+                <div className={styles.stat}>
+                  <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
+                  <div className={styles.statVal}>{lessonsDone}</div>
+                  <div className={styles.statLbl}>Lessons</div>
+                </div>
+                <div className={styles.stat}>
+                  <img src="/icons/shield.png" alt="" width={22} height={22} />
+                  <div className={styles.statVal}>{state.streakFreezes || 0}</div>
+                  <div className={styles.statLbl}>Freezes</div>
+                </div>
+              </div>
+            </section>
+          )}
+          <section className={styles.panel}>
+            <Achievements state={state} />
+          </section>
+          {friendsData && (friendsData.incoming.length > 0 || friendsData.friends.length > 0 || friendsData.outgoing.length > 0) && (
+            <section className={`${styles.panel} ${styles.friendsSection}`}>
+              {friendsData.incoming.length > 0 && (
+                <>
+                  <div className={styles.friendsLabel}>Friend requests</div>
+                  {friendsData.incoming.map(f => (
+                    <div key={f.username} className={styles.friendRow}>
+                      <Link href={`/u/${f.username}`} className={styles.friendInfo}>
+                        {f.avatarUrl
+                          ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
+                          : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
+                        <span className={styles.friendName}>{f.username}</span>
                       </Link>
-                    ))}
-                  </>
-                )}
-                {friendsData.outgoing.length > 0 && (
-                  <>
-                    <div className={styles.friendsLabel}>Sent requests</div>
-                    {friendsData.outgoing.map(f => (
-                      <div key={f.username} className={styles.friendRow}>
-                        <Link href={`/u/${f.username}`} className={styles.friendInfo}>
-                          {f.avatarUrl
-                            ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
-                            : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
-                          <span className={styles.friendName}>{f.username}</span>
-                        </Link>
-                        <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'cancel')} title="Cancel request">
-                          <img src="/icons/gray_x.png" alt="cancel" width={14} height={14} />
+                      <div className={styles.friendBtns}>
+                        <button className={styles.acceptBtn} onClick={() => friendAction(f.username, 'accept')}>ACCEPT</button>
+                        <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'decline')}>
+                          <img src="/icons/gray_x.png" alt="decline" width={14} height={14} />
                         </button>
                       </div>
-                    ))}
-                  </>
-                )}
-              </div>
-            )}
-
-            {localDiffersFromAccount && (
-              <div className={styles.localNote}>
-                <div className={styles.localNoteTitle}>Local device stats</div>
-                <div className={styles.localNoteDetail}>
-                  This browser also has {localSnapshot.coins || 0} coins and {localLessonsDone} lessons stored outside
-                  your account. It's kept separate and untouched.
-                </div>
-              </div>
-            )}
-
-            <InstallButton />
-
-            <button className={styles.logoutBtn} onClick={logout}>SIGN OUT</button>
-
-            <div className={styles.dangerZone}>
-              {!confirmDelete ? (
-                <button className={styles.deleteBtn} onClick={() => setConfirmDelete(true)}>Delete account</button>
-              ) : (
-                <div className={styles.deleteConfirm}>
-                  <div className={styles.deleteConfirmText}>
-                    This permanently deletes your account, progress, friends, and certificates. Approved voice recordings stay in the course without your name. This cannot be undone.
-                  </div>
-                  <div className={styles.deleteConfirmBtns}>
-                    <button className={styles.deleteConfirmBtn} onClick={deleteAccount} disabled={deleting}>
-                      {deleting ? 'DELETING…' : 'YES, DELETE'}
-                    </button>
-                    <button className={styles.deleteCancelBtn} onClick={() => setConfirmDelete(false)} disabled={deleting}>Cancel</button>
-                  </div>
-                </div>
+                    </div>
+                  ))}
+                </>
               )}
-            </div>
-          </>
-        ) : (
-          <>
-            <Bear mood="happy" size={100} />
-            <h1 className={styles.name}>Claim your account</h1>
-            <p className={styles.signinText}>
-              Your progress currently lives only in this browser. Sign in with Discord to back it up,
-              use it on other devices and appear on the leaderboard.
-            </p>
-            {oauthError && <div className={styles.error}>Sign in failed ({oauthError}), please try again.</div>}
-            <a href="/api/auth/login" className={styles.discordBtn}>
-              <DiscordIcon />
-              SIGN IN WITH DISCORD
-            </a>
-            <div className={styles.localStats}>
-              On this device: {state.coins} coins · {lessonsDone} lessons · {state.streak} day streak
-            </div>
-            <Achievements state={state} />
-          </>
-        )}
+              {friendsData.friends.length > 0 && (
+                <>
+                  <div className={styles.friendsLabel}>Friends · {friendsData.friends.length}</div>
+                  {friendsData.friends.map(f => (
+                    <Link key={f.username} href={`/u/${f.username}`} className={styles.friendRow}>
+                      <span className={styles.friendInfo}>
+                        {f.avatarUrl
+                          ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
+                          : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
+                        <span className={styles.friendName}>{f.username}</span>
+                        {f.streak >= 3 && (
+                          <span className={styles.friendStreak}><img src="/icons/fire.png" alt="" width={13} height={13} />{f.streak}</span>
+                        )}
+                      </span>
+                      <span className={styles.friendCoins}>{f.coins} coins</span>
+                    </Link>
+                  ))}
+                </>
+              )}
+              {friendsData.outgoing.length > 0 && (
+                <>
+                  <div className={styles.friendsLabel}>Sent requests</div>
+                  {friendsData.outgoing.map(f => (
+                    <div key={f.username} className={styles.friendRow}>
+                      <Link href={`/u/${f.username}`} className={styles.friendInfo}>
+                        {f.avatarUrl
+                          ? <img src={f.avatarUrl} alt="" className={styles.friendAvatar} width={34} height={34} />
+                          : <span className={styles.friendAvatar}><Bear mood="idle" size={34} /></span>}
+                        <span className={styles.friendName}>{f.username}</span>
+                      </Link>
+                      <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'cancel')} title="Cancel request">
+                        <img src="/icons/gray_x.png" alt="cancel" width={14} height={14} />
+                      </button>
+                    </div>
+                  ))}
+                </>
+              )}
+            </section>
+          )}
+        </div>
       </div>
-
     </div>
   )
 }

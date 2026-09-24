@@ -59,7 +59,7 @@ export default function WordsPage() {
   return (
     <div className={styles.page}>
       <PageHeader backHref="/practice" backLabel="Practice" title="Words" />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${styles.wide}`}>
         <div className={styles.summary}>
           <div className={styles.summaryText}>
             <span className={styles.summaryTitle}>{learned.length} of {words.length} words learned</span>

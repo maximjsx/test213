@@ -1,9 +1,9 @@
-.section { width: 100%; margin-top: 22px; text-align: left; }
+.section { width: 100%; text-align: left; }
 .heading {
   font-size: 12px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--text-muted); margin-bottom: 10px;
 }
-.list { display: flex; flex-direction: column; gap: 8px; }
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
 .item {
   display: flex; align-items: center; gap: 14px;
   padding: 12px 14px; border-radius: var(--r);
