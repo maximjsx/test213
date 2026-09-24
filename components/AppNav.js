@@ -26,6 +26,11 @@ const ITEMS = [
     icon: icon(<><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11" /></>),
   },
   {
+    href: '/library', label: 'Library',
+    match: p => startsWithAny(p, ['/library', '/wiki', '/glossary']),
+    icon: icon(<><path d="M4 19.5V5a2 2 0 0 1 2-2h4v18H6a2 2 0 0 1-2-1.5Z" /><path d="M10 3h4v18h-4" /><path d="m15.5 4.2 3.9-1 2.6 16.5-3.9 1Z" /></>),
+  },
+  {
     href: '/leaderboard', label: 'Ranks',
     match: p => startsWithAny(p, ['/leaderboard']),
     icon: icon(<><path d="M8 21h8M12 17v4" /><path d="M7 4h10v6a5 5 0 0 1-10 0V4Z" /><path d="M7 6H4.5A1.5 1.5 0 0 0 3 7.5 4.5 4.5 0 0 0 7 12M17 6h2.5A1.5 1.5 0 0 1 21 7.5 4.5 4.5 0 0 1 17 12" /></>),
@@ -34,7 +39,7 @@ const ITEMS = [
 
 // Sections that get the app navigation. Lessons and the builder stay
 // full-screen so nothing invites leaving mid-exercise.
-const SHOW_ON = ['/topic', '/level', '/practice', '/words', '/letters', '/decks', '/leaderboard', '/profile', '/u']
+const SHOW_ON = ['/topic', '/level', '/practice', '/words', '/letters', '/decks', '/library', '/wiki', '/glossary', '/leaderboard', '/profile', '/u']
 const FULL_SCREEN = ['/practice/mistakes']
 
 export default function AppNav() {

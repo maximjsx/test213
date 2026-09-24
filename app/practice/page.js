@@ -7,7 +7,7 @@ import { ListSkeleton } from '../../components/PageSkeletons'
 import { PracticeMistakesLink, ArrowRight } from '../../components/home/ResumeCard'
 import ReviewCta from '../../components/decks/ReviewCta'
 import { useDecks } from '../../hooks/useDecks'
-import styles from './page.module.css'
+import styles from '../../components/Hub.module.css'
 
 function HubLink({ href, icon, title, sub }) {
   return (

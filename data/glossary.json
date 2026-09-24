@@ -1,0 +1,2524 @@
+[
+  {
+    "id": "barishte",
+    "bg": "Барище",
+    "senses": [
+      "Бурно празненство"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "wild feast, rowdy celebration",
+    "enReviewed": false
+  },
+  {
+    "id": "baruga",
+    "bg": "Баруга",
+    "senses": [
+      "Локва"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "puddle",
+    "enReviewed": false
+  },
+  {
+    "id": "bdya",
+    "bg": "Бдя",
+    "senses": [
+      "Бодърствам, не спя; внимателно следя; преносно - неспирно полагам грижи"
+    ],
+    "en": "to keep vigil, stay awake; watch over",
+    "enReviewed": false
+  },
+  {
+    "id": "bezvazvraten",
+    "bg": "Безвъзвратен",
+    "senses": [
+      "Който не може да се върне, не може да де предотврати"
+    ],
+    "en": "irreversible, gone for good",
+    "enReviewed": false
+  },
+  {
+    "id": "bezlichen",
+    "bg": "Безличен",
+    "senses": [
+      "Който е лишен от своеобразие, индивидуалност, характерни черти и особености"
+    ],
+    "en": "characterless, bland, faceless",
+    "enReviewed": false
+  },
+  {
+    "id": "bezochlivo",
+    "bg": "Безочливо",
+    "senses": [
+      "Нагло, безсрамно"
+    ],
+    "en": "brazenly, shamelessly",
+    "enReviewed": false
+  },
+  {
+    "id": "bezprekosloven",
+    "bg": "Безпрекословен",
+    "senses": [
+      "Който става без възражение, безропотен, покорен; който не търпи възражение, категоричен"
+    ],
+    "en": "unquestioning, unconditional",
+    "enReviewed": false
+  },
+  {
+    "id": "bezsmenno",
+    "bg": "Безсменно",
+    "senses": [
+      "Без смяна, сменяван"
+    ],
+    "en": "without a break, continuously (never replaced)",
+    "enReviewed": false
+  },
+  {
+    "id": "beztseremonen",
+    "bg": "Безцеремонен",
+    "senses": [
+      "Който е извън допустимите граници на вежливост и приличие"
+    ],
+    "en": "unceremonious, impolite, blunt",
+    "enReviewed": false
+  },
+  {
+    "id": "blagodat",
+    "bg": "Благодат",
+    "senses": [
+      "Изобилие от природни блага, полезни за човека или с благотворно въздействие върху него"
+    ],
+    "en": "abundance, bounty, blessing",
+    "enReviewed": false
+  },
+  {
+    "id": "bludkav",
+    "bg": "Блудкав",
+    "senses": [
+      "За храна, питие — който е неприятен на вкус, разводнен, без достатъчно хранителни материали и не се яде или пие с охота, безвкусен; преносно - който е лишен от дълбочина, оригиналност; безсъдържателен, повърхностен, празен"
+    ],
+    "en": "insipid, bland, watery (of food or drink)",
+    "enReviewed": false
+  },
+  {
+    "id": "bluzhdaya",
+    "bg": "Блуждая",
+    "senses": [
+      "Движа се, ходя без определена посока и цел; скитам се, лутам се, бродя; преносно - За очи, поглед или мисъл - преминавам от предмет на предмет, не се съсредоточавам върху нещо"
+    ],
+    "en": "to wander, roam; (of eyes, thoughts) to drift",
+    "enReviewed": false
+  },
+  {
+    "id": "blyan",
+    "bg": "Блян",
+    "senses": [
+      "Мислен образ на нещо, създадено от въображението, което е силно желано; мечта"
+    ],
+    "en": "daydream, cherished dream",
+    "enReviewed": false
+  },
+  {
+    "id": "bostan",
+    "bg": "Бостан",
+    "senses": [
+      "Място, засадено с дини и пъпеши; овощна градина"
+    ],
+    "en": "melon patch; orchard",
+    "enReviewed": false
+  },
+  {
+    "id": "boyazan",
+    "bg": "Боязън",
+    "senses": [
+      "Плахост, страх"
+    ],
+    "en": "fear, timidity",
+    "enReviewed": false
+  },
+  {
+    "id": "brod",
+    "bg": "Брод",
+    "senses": [
+      "Плитко място на река, удобно за преминаване"
+    ],
+    "en": "ford (shallow crossing of a river)",
+    "enReviewed": false
+  },
+  {
+    "id": "brozhenie",
+    "bg": "Брожение",
+    "senses": [
+      "Обществена проява на недоволство; вълнение"
+    ],
+    "en": "unrest, public ferment",
+    "enReviewed": false
+  },
+  {
+    "id": "brulya",
+    "bg": "Бруля",
+    "senses": [
+      "Удрям с прът, камък, подобни, за да сваля плодове от дърво",
+      "(обикновено за вятър) удрям, бия силно, шибам"
+    ],
+    "en": "to knock down fruit with a stick; (of wind) to lash",
+    "enReviewed": false
+  },
+  {
+    "id": "bukak",
+    "bg": "Букак",
+    "senses": [
+      "Гъсто израсли букови дървета на едно място"
+    ],
+    "en": "beech grove",
+    "enReviewed": false
+  },
+  {
+    "id": "valog",
+    "bg": "Валог",
+    "senses": [
+      "Широко място между ридове; долина",
+      "Вдлъбнато широко място на склон на планина"
+    ],
+    "en": "valley, dell; hollow on a mountainside",
+    "enReviewed": false
+  },
+  {
+    "id": "vedrina",
+    "bg": "Ведрина",
+    "senses": [
+      "Ясно време, когато грее слънце, няма облаци, мъгла и въздухът е чист, свеж; безоблачност; преносно - бодрост, жизнерадост, душевно спокойствие"
+    ],
+    "en": "clear, bright weather; cheerfulness, serenity",
+    "enReviewed": false
+  },
+  {
+    "id": "vezdesasht",
+    "bg": "Вездесъщ",
+    "senses": [
+      "Религиозна представа - който се намира навсякъде, навред; За човек - който много бързо отива от едно място на друго, успява да бъде на различни, на много места"
+    ],
+    "en": "omnipresent, ubiquitous",
+    "enReviewed": false
+  },
+  {
+    "id": "verolomen",
+    "bg": "Вероломен",
+    "senses": [
+      "Който изменя; подъл, коварен"
+    ],
+    "en": "treacherous, perfidious",
+    "enReviewed": false
+  },
+  {
+    "id": "vertep",
+    "bg": "Вертеп",
+    "senses": [
+      "Свърталище на развратници и престъпници"
+    ],
+    "en": "den of vice, den of thieves",
+    "enReviewed": false
+  },
+  {
+    "id": "videlina",
+    "bg": "Виделина",
+    "senses": [
+      "Осветление от някакъв източник; светлина, видело"
+    ],
+    "en": "light, brightness",
+    "enReviewed": false
+  },
+  {
+    "id": "vir",
+    "bg": "Вир",
+    "senses": [
+      "Дълбоко място в река или поток, където водата тече по-бавно"
+    ],
+    "en": "deep pool in a river",
+    "enReviewed": false
+  },
+  {
+    "id": "visokoparen",
+    "bg": "Високопарен",
+    "senses": [
+      "Който се отличава с изкуствена приповдигнатост"
+    ],
+    "en": "pompous, grandiloquent",
+    "enReviewed": false
+  },
+  {
+    "id": "vlas",
+    "bg": "Влас",
+    "senses": [
+      "Коса на човек"
+    ],
+    "tags": [
+      "обикновено се използва в множествено - власи"
+    ],
+    "en": "hair (on the head)",
+    "enReviewed": false
+  },
+  {
+    "id": "volnodumets",
+    "bg": "Волнодумец",
+    "senses": [
+      "Който мисли самостоятелно и не признава догми и авторитети; който открито казва това, което мисли; волномисленик"
+    ],
+    "en": "freethinker, outspoken person",
+    "enReviewed": false
+  },
+  {
+    "id": "vratolomen",
+    "bg": "Вратоломен",
+    "senses": [
+      "За място — който е много стръмен и дълбок и представлява опасност за живота"
+    ],
+    "en": "breakneck, perilously steep",
+    "enReviewed": false
+  },
+  {
+    "id": "vsevechen",
+    "bg": "Всевечен",
+    "senses": [
+      "Който е постоянен, траен и няма край във вековете; вечен"
+    ],
+    "en": "everlasting, eternal",
+    "enReviewed": false
+  },
+  {
+    "id": "vsue",
+    "bg": "Всуе",
+    "senses": [
+      "Напразно, напусто, безполезно"
+    ],
+    "en": "in vain, for nothing",
+    "enReviewed": false
+  },
+  {
+    "id": "vadvoryavam",
+    "bg": "Въдворявам",
+    "senses": [
+      "Чрез някакви мерки или принудително правя нещо да почне да съществува, да настане, да настъпи"
+    ],
+    "en": "to establish, impose (order, peace)",
+    "enReviewed": false
+  },
+  {
+    "id": "vazhdelen",
+    "bg": "Въжделен",
+    "senses": [
+      "Който е силно желан, многоочакван, мечтан"
+    ],
+    "en": "longed-for, coveted",
+    "enReviewed": false
+  },
+  {
+    "id": "vazbrana",
+    "bg": "Възбрана",
+    "senses": [
+      "Забрана"
+    ],
+    "en": "prohibition, ban",
+    "enReviewed": false
+  },
+  {
+    "id": "vazvishenie",
+    "bg": "Възвишение",
+    "senses": [
+      "Част от земната повърхност, която се издига не много високо над околната местност"
+    ],
+    "en": "rise, low hill, elevation",
+    "enReviewed": false
+  },
+  {
+    "id": "vazklik",
+    "bg": "Възклик",
+    "senses": [
+      "Възглас, възклицание"
+    ],
+    "en": "exclamation, cry",
+    "enReviewed": false
+  },
+  {
+    "id": "vaznisak",
+    "bg": "Възнисък",
+    "senses": [
+      "Който е по-нисък от обикновеното или отколкото се очаква"
+    ],
+    "en": "rather short, shortish",
+    "enReviewed": false
+  },
+  {
+    "id": "vapiya",
+    "bg": "Въпия",
+    "senses": [
+      "Надавам вой, крещя обикн. от силна мъка, страдание"
+    ],
+    "en": "to wail, cry out in anguish",
+    "enReviewed": false
+  },
+  {
+    "id": "varl",
+    "bg": "Върл",
+    "senses": [
+      "В съчетание със съществителни, назоваващи лица според някакъв признак - който е в най-висока, крайна степен това, което означава съществителното; най-голям"
+    ],
+    "en": "fierce, rabid, out-and-out (as in a sworn enemy)",
+    "enReviewed": false
+  },
+  {
+    "id": "vyal",
+    "bg": "Вял",
+    "senses": [
+      "Който изразява апатия, отсъствие на бодрост, енергия; преносно - който е лишен от изразителност; безизразен"
+    ],
+    "en": "listless, sluggish, dull",
+    "enReviewed": false
+  },
+  {
+    "id": "gledishte",
+    "bg": "Гледище",
+    "senses": [
+      "Начин на мислене, на възприемане, на мнение; становище, схващане, разбиране"
+    ],
+    "en": "point of view, standpoint",
+    "enReviewed": false
+  },
+  {
+    "id": "glab",
+    "bg": "Глъб",
+    "senses": [
+      "Дълбочина, дълбина, глъбина"
+    ],
+    "en": "depth, the deep",
+    "enReviewed": false
+  },
+  {
+    "id": "gmezh",
+    "bg": "Гмеж",
+    "senses": [
+      "Голямо множество от хора, животни, струпани в тясно пространство, които обикн. се движат хаотично, безредно; гъмжило",
+      "Хаотично, безредно, обикн. шумно движение, блъскане на много хора, превозни средства, предмети, които са струпани на ограничено по размери място"
+    ],
+    "tags": [
+      "ж род"
+    ],
+    "en": "swarm, teeming crowd; bustle",
+    "enReviewed": false
+  },
+  {
+    "id": "gnet",
+    "bg": "Гнет",
+    "senses": [
+      "Жестоко потисничество над много хора, над дадено общество от някаква власт; робство, терор",
+      "Душевна потиснатост, угнетеност, притесненост, предизвикани от някакво тежко изживяване, мъчително чувство, мисъл и под"
+    ],
+    "en": "oppression, yoke; heavy-heartedness",
+    "enReviewed": false
+  },
+  {
+    "id": "golosloven",
+    "bg": "Голословен",
+    "senses": [
+      "Който не е подкрепен с доказателства или факти"
+    ],
+    "en": "unfounded, unsupported (claim)",
+    "enReviewed": false
+  },
+  {
+    "id": "gorest",
+    "bg": "Горест",
+    "senses": [
+      "скръб"
+    ],
+    "en": "grief, sorrow",
+    "enReviewed": false
+  },
+  {
+    "id": "gorak",
+    "bg": "Горък",
+    "senses": [
+      "Горчив"
+    ],
+    "en": "bitter",
+    "enReviewed": false
+  },
+  {
+    "id": "gryadusht",
+    "bg": "Грядущ",
+    "senses": [
+      "Който ще настъпи, ще дойде, ще бъде; идващ, бъдещ"
+    ],
+    "en": "coming, future, to come",
+    "enReviewed": false
+  },
+  {
+    "id": "doba",
+    "bg": "Доба",
+    "senses": [
+      "Определен период, час от година, месец, денонощие и т. н.; време"
+    ],
+    "en": "season, time of day or year",
+    "enReviewed": false
+  },
+  {
+    "id": "dokle",
+    "bg": "Докле",
+    "senses": [
+      "Докато"
+    ],
+    "en": "until, while (archaic)",
+    "enReviewed": false
+  },
+  {
+    "id": "dolnoproben",
+    "bg": "Долнопробен",
+    "senses": [
+      "Който е от ниско качество; който се характеризира с низки морални качества"
+    ],
+    "en": "low-grade, cheap; base, vulgar",
+    "enReviewed": false
+  },
+  {
+    "id": "dostolepie",
+    "bg": "Достолепие",
+    "senses": [
+      "Качество на човек с повишено самочувствие или с авторитет; достойнство"
+    ],
+    "en": "dignity, stateliness",
+    "enReviewed": false
+  },
+  {
+    "id": "drebnav",
+    "bg": "Дребнав",
+    "senses": [
+      "Който придава прекалено значение на незначителни, несъществени неща"
+    ],
+    "en": "petty, nitpicking",
+    "enReviewed": false
+  },
+  {
+    "id": "drum",
+    "bg": "Друм",
+    "senses": [
+      "Насока, поле за дейност или за развитие; път; шосе"
+    ],
+    "en": "road, way; path in life",
+    "enReviewed": false
+  },
+  {
+    "id": "draznoven",
+    "bg": "Дръзновен",
+    "senses": [
+      "Който проявява или изразява смелост, дързост; дързък"
+    ],
+    "en": "daring, bold",
+    "enReviewed": false
+  },
+  {
+    "id": "dabrava",
+    "bg": "Дъбрава",
+    "senses": [
+      "Млада гора"
+    ],
+    "en": "oak grove, young forest",
+    "enReviewed": false
+  },
+  {
+    "id": "ednostranchiv",
+    "bg": "Едностранчив",
+    "senses": [
+      "За възглед, за разбиране, за мнение - който не засяга, не отразява нещата в тяхната пълнота, който е насочен само към една страна, една посока; който е развит само в една посока, ограничен"
+    ],
+    "en": "one-sided, biased",
+    "enReviewed": false
+  },
+  {
+    "id": "esnaf",
+    "bg": "Еснаф",
+    "senses": [
+      "Духовно ограничен човек, затворен в кръга на битовите си интереси и на ежедневието си"
+    ],
+    "en": "philistine, narrow-minded person",
+    "enReviewed": false
+  },
+  {
+    "id": "estestvo",
+    "bg": "Естество",
+    "senses": [
+      "Самата същност; това, което е присъщо на нещата"
+    ],
+    "en": "nature, essence",
+    "enReviewed": false
+  },
+  {
+    "id": "efimeren",
+    "bg": "Ефимерен",
+    "senses": [
+      "Който е краткотраен, мимолетен"
+    ],
+    "en": "ephemeral, fleeting",
+    "enReviewed": false
+  },
+  {
+    "id": "ehiden",
+    "bg": "Ехиден",
+    "senses": [
+      "Язвителен, злорад, лукав"
+    ],
+    "en": "snide, malicious, venomous",
+    "enReviewed": false
+  },
+  {
+    "id": "ehtezh",
+    "bg": "Ехтеж",
+    "senses": [
+      "Продължителен, силен и тъп звук, шум, обикновено придружен с ехо; ехтене, екот, кънтеж, кънтене"
+    ],
+    "en": "resounding echo, rumble",
+    "enReviewed": false
+  },
+  {
+    "id": "zhizneradost",
+    "bg": "Жизнерадост",
+    "senses": [
+      "Радост, бодрост, доволство от живота"
+    ],
+    "en": "joy of life, zest for life",
+    "enReviewed": false
+  },
+  {
+    "id": "zhilka",
+    "bg": "Жилка",
+    "senses": [
+      "Тънък кръвоносен съд, който прозира под кожата",
+      "Тънки самородни ивици от друг цвят в минерал, дърво и др"
+    ],
+    "en": "vein; streak (in stone or wood)",
+    "enReviewed": false
+  },
+  {
+    "id": "zabvenie",
+    "bg": "Забвение",
+    "senses": [
+      "Забрава"
+    ],
+    "en": "oblivion",
+    "enReviewed": false
+  },
+  {
+    "id": "zazoryavane",
+    "bg": "Зазоряване",
+    "senses": [
+      "Разсъмване; по време на изгрев"
+    ],
+    "en": "daybreak, dawn",
+    "enReviewed": false
+  },
+  {
+    "id": "zalisiya",
+    "bg": "Залисия",
+    "senses": [
+      "Заетост на вниманието с нещо, което поражда разсеяност по отношение на други неща; Второстепенна работа, грижа, която поглъща времето и вниманието"
+    ],
+    "en": "distraction, busyness that absorbs you",
+    "enReviewed": false
+  },
+  {
+    "id": "zarevo",
+    "bg": "Зарево",
+    "senses": [
+      "Отблясък от ярка светлина, от пожар, при изгрев или залез слънце и под.; сияние"
+    ],
+    "en": "glow (of fire, dawn or sunset)",
+    "enReviewed": false
+  },
+  {
+    "id": "zareyan",
+    "bg": "Зареян",
+    "senses": [
+      "Който е отправен някъде безцелно",
+      "който се рее, носи в пространството без определена посока"
+    ],
+    "en": "aimless, drifting, gazing into the distance",
+    "enReviewed": false
+  },
+  {
+    "id": "zvanak",
+    "bg": "Звънък",
+    "senses": [
+      "За глас, смях, песен и под. – който е ясен, силен, обикн. приятен за слуха; звънлив, звучен"
+    ],
+    "en": "ringing, clear (of a voice or laugh)",
+    "enReviewed": false
+  },
+  {
+    "id": "zimornichav",
+    "bg": "Зиморничав",
+    "senses": [
+      "Който не може да понася студ, чувствителен е към студ"
+    ],
+    "en": "sensitive to cold",
+    "enReviewed": false
+  },
+  {
+    "id": "zlak",
+    "bg": "Злак",
+    "senses": [
+      "Растения, трева със свеж, зелен цвят"
+    ],
+    "en": "fresh green grass, verdure",
+    "enReviewed": false
+  },
+  {
+    "id": "zlokoben",
+    "bg": "Злокобен",
+    "senses": [
+      "Зловещ"
+    ],
+    "en": "ominous, sinister",
+    "enReviewed": false
+  },
+  {
+    "id": "zlach",
+    "bg": "Злъч",
+    "senses": [
+      "Силна ненавист, омраза; злоба, язвителност, жлъч"
+    ],
+    "en": "bile, spite, venom",
+    "enReviewed": false
+  },
+  {
+    "id": "znamenit",
+    "bg": "Знаменит",
+    "senses": [
+      "Който се е прочул, придобил е голяма слава,; който изпъква, отличава се със своите качества и достойнства; за ден, празник, вечер и под. – който е важен, значителен и е оставил трайна следа в съзнанието на някого; паметен, бележит, изтъкнат, именит; )#"
+    ],
+    "en": "famous, eminent; memorable",
+    "enReviewed": false
+  },
+  {
+    "id": "znoen",
+    "bg": "Зноен",
+    "senses": [
+      "Който е много горещ, жежък; пламенен"
+    ],
+    "en": "sweltering, scorching; ardent",
+    "enReviewed": false
+  },
+  {
+    "id": "znoy",
+    "bg": "Зной",
+    "senses": [
+      "Силна лятна горещина; жега, пек"
+    ],
+    "en": "sweltering heat",
+    "enReviewed": false
+  },
+  {
+    "id": "zrak",
+    "bg": "Зрак",
+    "senses": [
+      "Слаба, разсеяна светлина, сбор от слаби, разсеяни светлинни лъчи",
+      "зрение"
+    ],
+    "en": "faint light, glimmer; eyesight",
+    "enReviewed": false
+  },
+  {
+    "id": "idiliya",
+    "bg": "Идилия",
+    "senses": [
+      "Утопия"
+    ],
+    "en": "idyll, utopia",
+    "enReviewed": false
+  },
+  {
+    "id": "izdevatelstvo",
+    "bg": "Издевателство",
+    "senses": [
+      "Извънредно жестоко, унизително действие спрямо някого или нещо, обикновено възвишено, свято; гавра"
+    ],
+    "en": "abuse, mockery, outrage",
+    "enReviewed": false
+  },
+  {
+    "id": "izlishak",
+    "bg": "Излишък",
+    "senses": [
+      "Това, което е в повече, отколкото е потребно, необходимо"
+    ],
+    "en": "surplus, excess",
+    "enReviewed": false
+  },
+  {
+    "id": "izroden",
+    "bg": "Изроден",
+    "senses": [
+      "Който е загубил качествата, характерни за рода, вида си и е придобил други, неприсъщи за него, обикн. много по-лоши",
+      "Който е лишен от морал и нравствени добродетели и предизвиква отвращение, погнуса, омраза",
+      "Който се е видоизменил, променил, като е загубил своите характерни качества, свойства и вид и обикн. се е превърнал в нещо по-лошо"
+    ],
+    "en": "degenerate; depraved",
+    "enReviewed": false
+  },
+  {
+    "id": "izstaplenie",
+    "bg": "Изстъпление",
+    "senses": [
+      "Загуба на контрол над себе си; действия, извършени в такова състояние"
+    ],
+    "en": "outburst, frenzy, loss of self-control",
+    "enReviewed": false
+  },
+  {
+    "id": "inoskazanie",
+    "bg": "Иносказание",
+    "senses": [
+      "Израз или разказ, в който се съдържа и допълнителен, скрит смисъл; алегория"
+    ],
+    "en": "allegory",
+    "enReviewed": false
+  },
+  {
+    "id": "kisha",
+    "bg": "Киша",
+    "senses": [
+      "Влага при продължителни дъждове"
+    ],
+    "en": "wet weather from long rains, slush",
+    "enReviewed": false
+  },
+  {
+    "id": "knigovishte",
+    "bg": "Книговище",
+    "senses": [
+      "Библиотека"
+    ],
+    "en": "library (archaic)",
+    "enReviewed": false
+  },
+  {
+    "id": "kozan",
+    "bg": "Козън",
+    "senses": [
+      "Злонамерени, тайни и коварни замисли, интриги"
+    ],
+    "tags": [
+      "по-често се употребява в множествено число - козни"
+    ],
+    "en": "intrigue, scheme",
+    "enReviewed": false
+  },
+  {
+    "id": "kolennopreklonen",
+    "bg": "Коленнопреклонен",
+    "senses": [
+      "За молба, молитва и под. — който е много силен, дълбок, горещ",
+      "иронично Който е изпълнен с раболепие и угодничество; унизителен"
+    ],
+    "en": "fervent (plea); (ironic) servile",
+    "enReviewed": false
+  },
+  {
+    "id": "korist",
+    "bg": "Корист",
+    "senses": [
+      "Материална изгода"
+    ],
+    "en": "gain, self-interest",
+    "enReviewed": false
+  },
+  {
+    "id": "koso",
+    "bg": "Косо",
+    "senses": [
+      "Под ъгъл, под наклон, наклонено, полегато; отстрани, странично"
+    ],
+    "en": "at an angle, obliquely; askance",
+    "enReviewed": false
+  },
+  {
+    "id": "kostolomen",
+    "bg": "Костоломен",
+    "senses": [
+      "Който троши кости; съкрушителен"
+    ],
+    "en": "bone-breaking, crushing",
+    "enReviewed": false
+  },
+  {
+    "id": "kraychets",
+    "bg": "Крайчец",
+    "senses": [
+      "Умалително на „край“"
+    ],
+    "en": "tip, little edge",
+    "enReviewed": false
+  },
+  {
+    "id": "krasnorechie",
+    "bg": "Красноречие",
+    "senses": [
+      "Способност да се говори ясно, изразително, убедително"
+    ],
+    "en": "eloquence",
+    "enReviewed": false
+  },
+  {
+    "id": "krepak",
+    "bg": "Крепък",
+    "senses": [
+      "Който се отличава със здравина, устойчивост, сила; здрав, як, силен; Който е резултат на вътрешна убеденост; непоколебим; Който е дълбок и спокоен, ободрителен; здрав"
+    ],
+    "en": "sturdy, strong; firm, steadfast",
+    "enReviewed": false
+  },
+  {
+    "id": "krehak",
+    "bg": "Крехък",
+    "senses": [
+      "Който е чуплив, трошлив, неустойчив"
+    ],
+    "en": "fragile, brittle",
+    "enReviewed": false
+  },
+  {
+    "id": "kreya",
+    "bg": "Крея",
+    "senses": [
+      "Губя свежест, бодрост, линея, вехна, западам; преносно - съществувам, макар и в слаба степен, не изчезвам, не се губя"
+    ],
+    "en": "to wither, languish",
+    "enReviewed": false
+  },
+  {
+    "id": "krupen",
+    "bg": "Крупен",
+    "senses": [
+      "Който е голям по размери, обхват, едър",
+      "който е изключително важен",
+      "който е сред първенците в областта си"
+    ],
+    "en": "large, major, prominent",
+    "enReviewed": false
+  },
+  {
+    "id": "krashen",
+    "bg": "Кръшен",
+    "senses": [
+      "За тяло, снага — който се вие, огъва красиво, грациозно, гъвкав, грациозен",
+      "За глас, говор, смях и под. — който е с богата интонация; гъвкав, звучен, игрив"
+    ],
+    "en": "lithe, graceful; melodious (of a voice)",
+    "enReviewed": false
+  },
+  {
+    "id": "kyutane",
+    "bg": "Кютане",
+    "senses": [
+      "Стоене, мълчене"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "keeping quiet, lying low",
+    "enReviewed": false
+  },
+  {
+    "id": "lakonichen",
+    "bg": "Лаконичен",
+    "senses": [
+      "Кратък, сбит"
+    ],
+    "en": "laconic, terse",
+    "enReviewed": false
+  },
+  {
+    "id": "lamtezh",
+    "bg": "Ламтеж",
+    "senses": [
+      "Силен стремеж към нещо; ламтене"
+    ],
+    "en": "craving, greed for something",
+    "enReviewed": false
+  },
+  {
+    "id": "lani",
+    "bg": "Лани",
+    "senses": [
+      "Миналата година"
+    ],
+    "en": "last year",
+    "enReviewed": false
+  },
+  {
+    "id": "lapavitsa",
+    "bg": "Лапавица",
+    "senses": [
+      "Валеж от сняг и дъжд едновременно"
+    ],
+    "en": "sleet",
+    "enReviewed": false
+  },
+  {
+    "id": "lezheren",
+    "bg": "Лежерен",
+    "senses": [
+      "Който е спокоен, отпуснат"
+    ],
+    "en": "relaxed, laid-back",
+    "enReviewed": false
+  },
+  {
+    "id": "lekovit",
+    "bg": "Лековит",
+    "senses": [
+      "Лечебен"
+    ],
+    "en": "healing, medicinal",
+    "enReviewed": false
+  },
+  {
+    "id": "leleya",
+    "bg": "Лелея",
+    "senses": [
+      "Съкровено пазя, тая в душата си нещо; грижа се, пазя някого"
+    ],
+    "en": "to cherish, nurture",
+    "enReviewed": false
+  },
+  {
+    "id": "livvam",
+    "bg": "Ливвам",
+    "senses": [
+      "Сипвам изведнъж, изсипвам, изливам цялото количество от някаква течност някъде; руквам"
+    ],
+    "usage": "Пише се с двойно В само в сегашно време",
+    "en": "to pour out all at once",
+    "enReviewed": false
+  },
+  {
+    "id": "lih",
+    "bg": "Лих",
+    "senses": [
+      "Който е бърз, буен, напорист",
+      "Опак, опърничав, капризен, чуден, странен",
+      "Печален",
+      "Нечетен"
+    ],
+    "en": "fiery, impetuous; contrary; sad; odd (number)",
+    "enReviewed": false
+  },
+  {
+    "id": "lono",
+    "bg": "Лоно",
+    "senses": [
+      "Вътрешна област на нещо, в която е съсредоточена жизнената му същност, обикн. като естествена среда за съществуване",
+      "За тихо, спокойно място, кът, среда, където човек може да намери спокойствие, единомислие, може да се приюти, да намери закрила"
+    ],
+    "en": "bosom, heart (of nature); quiet haven",
+    "enReviewed": false
+  },
+  {
+    "id": "lashtyasht",
+    "bg": "Лъщящ",
+    "senses": [
+      "който блести, искри"
+    ],
+    "en": "shining, gleaming",
+    "enReviewed": false
+  },
+  {
+    "id": "lyatos",
+    "bg": "Лятос",
+    "senses": [
+      "През лятото изобщо, всяко лято; лете, лятоска"
+    ],
+    "en": "in the summer, every summer",
+    "enReviewed": false
+  },
+  {
+    "id": "mayak",
+    "bg": "Маяк",
+    "senses": [
+      "Съоръжение, обикн. висока кула с мощно сигнално светлинно устройство, издигната по крайбрежия, скали и др. за ориентиране на кораби или за отбелязване на опасни за плаване места през нощта или при мъгла; фар",
+      "Нещо, което очертава, сочи правилната, вярната посока на развитие; пътеводител"
+    ],
+    "en": "lighthouse, beacon",
+    "enReviewed": false
+  },
+  {
+    "id": "merzheleya-se",
+    "bg": "Мержелея се",
+    "senses": [
+      "Виждам се, очертавам се неясно, смътно, като през мъгла или мрежа; мержелея, мъждукам"
+    ],
+    "en": "to loom faintly, show dimly",
+    "enReviewed": false
+  },
+  {
+    "id": "merzost",
+    "bg": "Мерзост",
+    "senses": [
+      "Изказване или постъпка, които предизвикват отвращение, възмущение"
+    ],
+    "en": "vile act or remark, abomination",
+    "enReviewed": false
+  },
+  {
+    "id": "merodaven",
+    "bg": "Меродавен",
+    "senses": [
+      "Който е сигурен, достоверен; официален, авторитетен"
+    ],
+    "en": "authoritative, reliable",
+    "enReviewed": false
+  },
+  {
+    "id": "metsenatstvo",
+    "bg": "Меценатство",
+    "senses": [
+      "Покровителстване и материално издържане на творци на науката или изкуството"
+    ],
+    "en": "patronage of the arts and sciences",
+    "enReviewed": false
+  },
+  {
+    "id": "mignovenie",
+    "bg": "Мигновение",
+    "senses": [
+      "Миг, момент"
+    ],
+    "en": "instant, moment",
+    "enReviewed": false
+  },
+  {
+    "id": "mrakobesie",
+    "bg": "Мракобесие",
+    "senses": [
+      "Възгледи и поведение, които са враждебни на прогреса, свободата, просветата и културата; мракобесничест"
+    ],
+    "en": "obscurantism",
+    "enReviewed": false
+  },
+  {
+    "id": "mazga",
+    "bg": "Мъзга",
+    "senses": [
+      "Растителен сок, обикн. под кората на дърво",
+      "Живителен сок, жизнена сила"
+    ],
+    "en": "sap; vital force",
+    "enReviewed": false
+  },
+  {
+    "id": "navazbog",
+    "bg": "Навъзбог",
+    "senses": [
+      "Много високо, нагоре във висините"
+    ],
+    "en": "sky-high, up to the heavens",
+    "enReviewed": false
+  },
+  {
+    "id": "nayden",
+    "bg": "Найден",
+    "senses": [
+      "Намерен"
+    ],
+    "en": "found (foundling)",
+    "enReviewed": false
+  },
+  {
+    "id": "nanos",
+    "bg": "Нанос",
+    "senses": [
+      "Слой от пръст, тиня, пясък, чакъл и др. материали, утаен от водите на река, както и натрупан от изветряне на скали или от свличане на ледници"
+    ],
+    "en": "silt, alluvial deposit",
+    "enReviewed": false
+  },
+  {
+    "id": "napet",
+    "bg": "Напет",
+    "senses": [
+      "За човек - който е строен, изправен; висок, гиздав; добре сложен"
+    ],
+    "en": "upright, well-built, dashing",
+    "enReviewed": false
+  },
+  {
+    "id": "nasluka",
+    "bg": "Наслука",
+    "senses": [
+      "Без определена, предварително избрана посока или място; наслуки",
+      "Без предварително обмисляне, нагласа; непреднамерено"
+    ],
+    "en": "at random, haphazardly",
+    "enReviewed": false
+  },
+  {
+    "id": "nahodchiv",
+    "bg": "Находчив",
+    "senses": [
+      "Който лесно намира изход от трудно положение; съобразителен"
+    ],
+    "en": "resourceful, quick-witted",
+    "enReviewed": false
+  },
+  {
+    "id": "nevedom",
+    "bg": "Неведом",
+    "senses": [
+      "Който е непознат, неизвестен, тайнствен"
+    ],
+    "en": "unknown, mysterious",
+    "enReviewed": false
+  },
+  {
+    "id": "nevolya",
+    "bg": "Неволя",
+    "senses": [
+      "Живот, състояние, при което се понасят страдания, грижи, лишения, несполуки и под.; нещастие, беда"
+    ],
+    "en": "hardship, misfortune",
+    "enReviewed": false
+  },
+  {
+    "id": "nevyam",
+    "bg": "Невям",
+    "senses": [
+      "Сякаш, като че ли, може би"
+    ],
+    "en": "as if, seemingly, perhaps",
+    "enReviewed": false
+  },
+  {
+    "id": "nega",
+    "bg": "Нега",
+    "senses": [
+      "Състояние на отмаляване, прималяване, предизвикано от силно любовно преживяване, копнеж, желание, страст",
+      "Състояние на пълно спокойствие и отпускане, свързано обикн. с приятни усещания и чувство на наслада, задоволство, блаженство"
+    ],
+    "en": "languor, bliss",
+    "enReviewed": false
+  },
+  {
+    "id": "neimoveren",
+    "bg": "Неимоверен",
+    "senses": [
+      "Проявен в изключителна степен"
+    ],
+    "en": "tremendous, incredible",
+    "enReviewed": false
+  },
+  {
+    "id": "neistovo",
+    "bg": "Неистово",
+    "senses": [
+      "Необичайно силно, неудържимо"
+    ],
+    "en": "frantically, furiously",
+    "enReviewed": false
+  },
+  {
+    "id": "neminuem",
+    "bg": "Неминуем",
+    "senses": [
+      "Който е неизбежен, който непременно ще стане"
+    ],
+    "en": "inevitable",
+    "enReviewed": false
+  },
+  {
+    "id": "nemotiya",
+    "bg": "Немотия",
+    "senses": [
+      "Липса на достатъчно материални средства, необходими за съществувание; беднотия, бедност, сиромашия"
+    ],
+    "en": "poverty, destitution",
+    "enReviewed": false
+  },
+  {
+    "id": "nenadeen",
+    "bg": "Ненадеен",
+    "senses": [
+      "Който не е очакван; неочакван, внезапен, изненадващ"
+    ],
+    "en": "unexpected, sudden",
+    "enReviewed": false
+  },
+  {
+    "id": "nepreriven",
+    "bg": "Непреривен",
+    "senses": [
+      "Непрекъснат"
+    ],
+    "en": "uninterrupted, continuous",
+    "enReviewed": false
+  },
+  {
+    "id": "nepristapen",
+    "bg": "Непристъпен",
+    "senses": [
+      "Който не може да се изкачи, не може да се превземе; преносно - който избягва близост с други хора"
+    ],
+    "en": "inaccessible, impregnable; aloof",
+    "enReviewed": false
+  },
+  {
+    "id": "nepriyazan",
+    "bg": "Неприязън",
+    "senses": [
+      "Враждебност към някого или нещо"
+    ],
+    "en": "hostility, dislike",
+    "enReviewed": false
+  },
+  {
+    "id": "nerazriven",
+    "bg": "Неразривен",
+    "senses": [
+      "Който е вечен и неразрушим"
+    ],
+    "en": "unbreakable, inseparable",
+    "enReviewed": false
+  },
+  {
+    "id": "neumel",
+    "bg": "Неумел",
+    "senses": [
+      "Който не притежава умение, способност, похват за нещо; несръчен, непохватен; неспособен"
+    ],
+    "en": "clumsy, unskilled",
+    "enReviewed": false
+  },
+  {
+    "id": "nechestivets",
+    "bg": "Нечестивец",
+    "senses": [
+      "Човек, който е от нехристиянско вероизповедание, нехристиянин, неверник; преносно - който е безчестен, непочтен, подъл"
+    ],
+    "en": "infidel; scoundrel",
+    "enReviewed": false
+  },
+  {
+    "id": "nichkom",
+    "bg": "Ничком",
+    "senses": [
+      "По очи, с лице надолу, върху земята; съвсем нисък поклон"
+    ],
+    "en": "face down, prostrate",
+    "enReviewed": false
+  },
+  {
+    "id": "obidchiv",
+    "bg": "Обидчив",
+    "senses": [
+      "Който се обижда лесно"
+    ],
+    "en": "touchy, easily offended",
+    "enReviewed": false
+  },
+  {
+    "id": "obitel",
+    "bg": "Обител",
+    "senses": [
+      "Старинно - манастир; преносно - място (сграда, помещение и под.), което някой обитава, където някой живее или пребивава; жилище) [думата е в женски род]"
+    ],
+    "en": "monastery; abode, dwelling",
+    "enReviewed": false
+  },
+  {
+    "id": "oblazyavam",
+    "bg": "Облазявам",
+    "senses": [
+      "Мисля някого за блажен, честит или казвам някому, че е блажен, честит; облажавам"
+    ],
+    "en": "to call someone blessed or lucky",
+    "enReviewed": false
+  },
+  {
+    "id": "obozrim",
+    "bg": "Обозрим",
+    "senses": [
+      "Който може да се обхване с поглед, да се огледа"
+    ],
+    "en": "surveyable, within view",
+    "enReviewed": false
+  },
+  {
+    "id": "obuslavyam",
+    "bg": "Обуславям",
+    "senses": [
+      "Съм, бивам условие за"
+    ],
+    "en": "to determine, be the condition for",
+    "enReviewed": false
+  },
+  {
+    "id": "obyatiya",
+    "bg": "Обятия",
+    "senses": [
+      "Прегръдка"
+    ],
+    "en": "embrace, arms",
+    "enReviewed": false
+  },
+  {
+    "id": "okat",
+    "bg": "Окат",
+    "senses": [
+      "Който може да вижда, има зрение; преносно - Който може да предвижда, да преценява добре обстоятелства; образован, учен, просветен"
+    ],
+    "en": "sharp-eyed; discerning, learned",
+    "enReviewed": false
+  },
+  {
+    "id": "omerzenie",
+    "bg": "Омерзение",
+    "senses": [
+      "Отвращение, погнуса"
+    ],
+    "en": "disgust, loathing",
+    "enReviewed": false
+  },
+  {
+    "id": "osanka",
+    "bg": "Осанка",
+    "senses": [
+      "Външен вид, стойка, излъчване на тялото"
+    ],
+    "en": "bearing, posture",
+    "enReviewed": false
+  },
+  {
+    "id": "oskaden",
+    "bg": "Оскъден",
+    "senses": [
+      "Който е в малко или недостатъчно количество"
+    ],
+    "en": "scarce, meagre",
+    "enReviewed": false
+  },
+  {
+    "id": "otvednazh",
+    "bg": "Отведнъж",
+    "senses": [
+      "Изведнъж; от пръв път, от един път"
+    ],
+    "en": "all at once; at the first attempt",
+    "enReviewed": false
+  },
+  {
+    "id": "otvergnat",
+    "bg": "Отвергнат",
+    "senses": [
+      "Отхвърлен, презрян; отвъргнат."
+    ],
+    "en": "rejected, spurned",
+    "enReviewed": false
+  },
+  {
+    "id": "otvesen",
+    "bg": "Отвесен",
+    "senses": [
+      "Много стръмен"
+    ],
+    "en": "sheer, steep",
+    "enReviewed": false
+  },
+  {
+    "id": "otklik",
+    "bg": "Отклик",
+    "senses": [
+      "Отговор на зов, на обръщение; отзив, отзвук; преносно - проява на отзивчивост, съчувствено отношение; Отражение, следа на нещо преживяно"
+    ],
+    "en": "response, echo; sympathy",
+    "enReviewed": false
+  },
+  {
+    "id": "otkaslechen",
+    "bg": "Откъслечен",
+    "senses": [
+      "За звукове, шум, говор и под. — който е съставен от несвързани, откъснати една от друга части; несвързан, откъснат"
+    ],
+    "en": "fragmentary, disjointed",
+    "enReviewed": false
+  },
+  {
+    "id": "otlomka",
+    "bg": "Отломка",
+    "senses": [
+      "Отчупена част от нещо"
+    ],
+    "en": "fragment, broken piece",
+    "enReviewed": false
+  },
+  {
+    "id": "otraden",
+    "bg": "Отраден",
+    "senses": [
+      "Радостен, приятен, утешителен"
+    ],
+    "en": "gratifying, comforting",
+    "enReviewed": false
+  },
+  {
+    "id": "otrivist",
+    "bg": "Отривист",
+    "senses": [
+      "Рязък, отсечен"
+    ],
+    "en": "abrupt, clipped",
+    "enReviewed": false
+  },
+  {
+    "id": "paradigma",
+    "bg": "Парадигма",
+    "senses": [
+      "Съвкупността от формите на една дума; образец, модел"
+    ],
+    "en": "paradigm; set of word forms",
+    "enReviewed": false
+  },
+  {
+    "id": "past",
+    "bg": "Паст",
+    "senses": [
+      "Уста на звяр; голям, широк отвор"
+    ],
+    "en": "jaws, maw",
+    "enReviewed": false
+  },
+  {
+    "id": "pietet",
+    "bg": "Пиетет",
+    "senses": [
+      "Дълбоко уважение, почит"
+    ],
+    "en": "reverence, deep respect",
+    "enReviewed": false
+  },
+  {
+    "id": "plavno",
+    "bg": "Плавно",
+    "senses": [
+      "Което няма резки преходи; отмерено, ритмично"
+    ],
+    "en": "smoothly, steadily",
+    "enReviewed": false
+  },
+  {
+    "id": "podatka",
+    "bg": "Податка",
+    "senses": [
+      "Съдържащи се в текст сведения, данни за определени (обикновено) исторически събития, народни обичаи и др"
+    ],
+    "en": "historical record, mention in a source",
+    "enReviewed": false
+  },
+  {
+    "id": "podem",
+    "bg": "Подем",
+    "senses": [
+      "Възход, развой, напредък"
+    ],
+    "en": "upswing, rise, boom",
+    "enReviewed": false
+  },
+  {
+    "id": "pokvara",
+    "bg": "Поквара",
+    "senses": [
+      "Нравствено падение, нравствена разруха, упадък на нравите и морала; деморализация"
+    ],
+    "en": "depravity, corruption",
+    "enReviewed": false
+  },
+  {
+    "id": "pokrusa",
+    "bg": "Покруса",
+    "senses": [
+      "Мъчително, неприятно чувство на тъга, потиснатост, безнадеждност, безсилие; мъка, терзание"
+    ],
+    "en": "despair, grief",
+    "enReviewed": false
+  },
+  {
+    "id": "ponastoyashtem",
+    "bg": "Понастоящем",
+    "senses": [
+      "Сега, в този момент"
+    ],
+    "en": "at present, currently",
+    "enReviewed": false
+  },
+  {
+    "id": "poprishte",
+    "bg": "Поприще",
+    "senses": [
+      "Област, сфера на действие, изява; занятие, професия; остаряло - място, където се извършва, става нещо; път"
+    ],
+    "en": "field, career, calling",
+    "enReviewed": false
+  },
+  {
+    "id": "porez",
+    "bg": "Порез",
+    "senses": [
+      "Внезапна тежка беда или щета"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "calamity, heavy loss",
+    "enReviewed": false
+  },
+  {
+    "id": "poriv",
+    "bg": "Порив",
+    "senses": [
+      "Внезапна проява на чувство, желание; стремеж, устрем"
+    ],
+    "en": "impulse, surge (of feeling)",
+    "enReviewed": false
+  },
+  {
+    "id": "poritsanie",
+    "bg": "Порицание",
+    "senses": [
+      "Силно неодобрение, осъждане, укоряване; порицаване"
+    ],
+    "en": "reprimand, censure",
+    "enReviewed": false
+  },
+  {
+    "id": "poshal",
+    "bg": "Пошъл",
+    "senses": [
+      "Който е безвкусен, долнопробен или низък, извратен в нравствено отношение"
+    ],
+    "en": "vulgar, tasteless, trite",
+    "enReviewed": false
+  },
+  {
+    "id": "preves",
+    "bg": "Превес",
+    "senses": [
+      "превъзходство, надмощие, предимство"
+    ],
+    "en": "superiority, upper hand",
+    "enReviewed": false
+  },
+  {
+    "id": "prevazhozhdam",
+    "bg": "Превъзхождам",
+    "senses": [
+      "Имам по-стойностни качесва; надминавам, превишавам"
+    ],
+    "en": "to surpass, excel",
+    "enReviewed": false
+  },
+  {
+    "id": "predtecha",
+    "bg": "Предтеча",
+    "senses": [
+      "Предвестник, предшественик"
+    ],
+    "en": "forerunner, precursor",
+    "enReviewed": false
+  },
+  {
+    "id": "predyavyavam",
+    "bg": "Предявявам",
+    "senses": [
+      "Официално изразявам, изказвам желание или искане, за нещо"
+    ],
+    "en": "to present, put forward (a claim)",
+    "enReviewed": false
+  },
+  {
+    "id": "prezhen",
+    "bg": "Прежен",
+    "senses": [
+      "Предишен, минал, отминал"
+    ],
+    "en": "former, bygone",
+    "enReviewed": false
+  },
+  {
+    "id": "preinachavam",
+    "bg": "Преиначавам",
+    "senses": [
+      "Предавам, представям невярно, в друг вид, по друг начин нещо, обикн. с някаква цел; изопачавам, изменям, променям"
+    ],
+    "en": "to distort, twist",
+    "enReviewed": false
+  },
+  {
+    "id": "prelom",
+    "bg": "Прелом",
+    "senses": [
+      "Рязка промяна, противоположен развой; обрат"
+    ],
+    "en": "turning point",
+    "enReviewed": false
+  },
+  {
+    "id": "premezhdie",
+    "bg": "Премеждие",
+    "senses": [
+      "Опасна случка или събитие, представляващо изпитание или опасност за живота или за съществуването на някого, нещо, което е завършило благополучно, без трагични последствия"
+    ],
+    "en": "ordeal, narrow escape",
+    "enReviewed": false
+  },
+  {
+    "id": "pridatak",
+    "bg": "Придатък",
+    "senses": [
+      "Нещо, което е придадена част към друго или е допълнителен, страничен елемент от някакво по-голямо цяло"
+    ],
+    "en": "appendage, add-on",
+    "enReviewed": false
+  },
+  {
+    "id": "pritoma",
+    "bg": "Притома",
+    "senses": [
+      "Състояние на отмаляване, слабост, предизвикано от силно любовно преживяване или от усещане за много приятно изживяване; нега, отмала"
+    ],
+    "en": "languor, swoon",
+    "enReviewed": false
+  },
+  {
+    "id": "prishtyavka",
+    "bg": "Прищявка",
+    "senses": [
+      "Внезапно и силно, но краткотрайно за нещо; каприз"
+    ],
+    "en": "whim, caprice",
+    "enReviewed": false
+  },
+  {
+    "id": "proizvolen",
+    "bg": "Произволен",
+    "senses": [
+      "Неоснователен, лишен от логичност; случаен"
+    ],
+    "en": "arbitrary",
+    "enReviewed": false
+  },
+  {
+    "id": "prolom",
+    "bg": "Пролом",
+    "senses": [
+      "Тесен естествен проход между скали; пробив"
+    ],
+    "en": "gorge, gap; breach",
+    "enReviewed": false
+  },
+  {
+    "id": "pronizvasht",
+    "bg": "Пронизващ",
+    "senses": [
+      "Преносно - внезапно остро неприятно усещане; краткотрайна болка"
+    ],
+    "en": "piercing",
+    "enReviewed": false
+  },
+  {
+    "id": "proseka",
+    "bg": "Просека",
+    "senses": [
+      "Дълга ивица изсечена площ в гора, през която минава път, електропровод, ски писта и под",
+      "Място, прорязано, просечено като вдлъбнатина"
+    ],
+    "en": "forest clearing, cutting",
+    "enReviewed": false
+  },
+  {
+    "id": "profanen",
+    "bg": "Профанен",
+    "senses": [
+      "Който се отнася до бита на хората, до обикновения, всекидневния, делничния живот"
+    ],
+    "en": "mundane, secular, everyday",
+    "enReviewed": false
+  },
+  {
+    "id": "pryam",
+    "bg": "Прям",
+    "senses": [
+      "Откровен, открит, искрен"
+    ],
+    "en": "straightforward, frank",
+    "enReviewed": false
+  },
+  {
+    "id": "palchishta",
+    "bg": "Пълчища",
+    "senses": [
+      "преносно - голямо множество от хора, които се движат неорганизирано, безредно"
+    ],
+    "tags": [
+      "предимно в мн число"
+    ],
+    "en": "hordes",
+    "enReviewed": false
+  },
+  {
+    "id": "rabolepie",
+    "bg": "Раболепие",
+    "senses": [
+      "Прекалена или престорена любезност за извличане на собствени облаги"
+    ],
+    "en": "servility, obsequiousness",
+    "enReviewed": false
+  },
+  {
+    "id": "radushie",
+    "bg": "Радушие",
+    "senses": [
+      "Сърдечност, дружелюбност, непринудена любезност при посрещане на гости; радушност"
+    ],
+    "en": "cordiality, warm welcome",
+    "enReviewed": false
+  },
+  {
+    "id": "razvigor",
+    "bg": "Развигор",
+    "senses": [
+      "Топъл пролетен вятър, който развива, разлиства гората"
+    ],
+    "en": "warm spring wind",
+    "enReviewed": false
+  },
+  {
+    "id": "razkovniche",
+    "bg": "Разковниче",
+    "senses": [
+      "Трева, билка или цвете, което според народните вярвания има магическа сила и носи щастие на онзи, който го намери или притежава; преносно - магическо, тайно средство за постигане на успех и щастие, ключ"
+    ],
+    "en": "magic herb that opens every lock; key to success",
+    "enReviewed": false
+  },
+  {
+    "id": "razmirie",
+    "bg": "Размирие",
+    "senses": [
+      "Отсъствие на вътрешен мир и ред в една държава, област и под. поради избухнали там масови протести, обществени вълнения, бунтове",
+      "размирица, безредица"
+    ],
+    "en": "unrest, turmoil",
+    "enReviewed": false
+  },
+  {
+    "id": "raznoboy",
+    "bg": "Разнобой",
+    "senses": [
+      "Наличие на различни мнения, схващания, позиции и под. по определен въпрос, липса на единство, на съгласие; разногласие"
+    ],
+    "en": "discord, disagreement",
+    "enReviewed": false
+  },
+  {
+    "id": "razsip",
+    "bg": "Разсип",
+    "senses": [
+      "Фаза на Луната след пълнолуние и трета четвърт, когато лунният сърп намалява, изтънява и напълно се изгубва при настъпването на новолуние"
+    ],
+    "en": "waning moon",
+    "enReviewed": false
+  },
+  {
+    "id": "raztuha",
+    "bg": "Разтуха",
+    "senses": [
+      "Освобождаване, разсейване от мрачни мисли и от лошо, потискащо настроение; разведряване",
+      "Утеха, утешение, успокоение"
+    ],
+    "en": "distraction from gloom; solace",
+    "enReviewed": false
+  },
+  {
+    "id": "rakitak",
+    "bg": "Ракитак",
+    "senses": [
+      "Много ракити , израснали на едно място, които образуват едно цяло"
+    ],
+    "tags": [
+      "вид дребна върба"
+    ],
+    "en": "willow thicket",
+    "enReviewed": false
+  },
+  {
+    "id": "rezka",
+    "bg": "Резка",
+    "senses": [
+      "Продълговата следа от срязване върху някаква повърхност"
+    ],
+    "en": "notch, cut, slit",
+    "enReviewed": false
+  },
+  {
+    "id": "rehav",
+    "bg": "Рехав",
+    "senses": [
+      "Рядък",
+      "мрежест"
+    ],
+    "en": "sparse, thin; loose-knit",
+    "enReviewed": false
+  },
+  {
+    "id": "romon",
+    "bg": "Ромон",
+    "senses": [
+      "Тих, еднообразен и напевен шум, който се чува при плискане на течаща вода (рекичка, поток и др.) или при дъжд"
+    ],
+    "en": "babbling, murmur (of water)",
+    "enReviewed": false
+  },
+  {
+    "id": "rohkav",
+    "bg": "Рохкав",
+    "senses": [
+      "За пръст, почва, сняг и др. — който се състои от дребни частици, които не са плътно прилепнали една до друга и между тях има повече въздух; рохък, сипкав, пръхкав, ровкав, ровък"
+    ],
+    "en": "loose, crumbly, powdery (soil, snow)",
+    "enReviewed": false
+  },
+  {
+    "id": "ruslo",
+    "bg": "Русло",
+    "senses": [
+      "Корито на река; преносно - път, посока на развитие, на протичане на нещо"
+    ],
+    "en": "riverbed; course, channel",
+    "enReviewed": false
+  },
+  {
+    "id": "samovglabyavam-se",
+    "bg": "Самовглъбявам се",
+    "senses": [
+      "Съсредоточавам изцяло вниманието си върху своите мисли, настроения и то така, че се откъсвам от заобикалящата ме действителност"
+    ],
+    "en": "to become absorbed in oneself",
+    "enReviewed": false
+  },
+  {
+    "id": "samozhiv",
+    "bg": "Саможив",
+    "senses": [
+      "Който предпочита да живее далече от хората в самота, в уединение и избягва социалните контакти; асоциален"
+    ],
+    "en": "reclusive, unsociable",
+    "enReviewed": false
+  },
+  {
+    "id": "samozvanets",
+    "bg": "Самозванец",
+    "senses": [
+      "Който сам се провъзгласява за някакъв, без да има право за това"
+    ],
+    "en": "impostor, pretender",
+    "enReviewed": false
+  },
+  {
+    "id": "svetotatstvo",
+    "bg": "Светотатство",
+    "senses": [
+      "Крадене, кражба на храмово, църковно имущество; преносно -  нарушаване или незачитане на морални закони и правила на поведение, подигравка с нещо почитано; кощунство"
+    ],
+    "en": "sacrilege",
+    "enReviewed": false
+  },
+  {
+    "id": "svistya",
+    "bg": "Свистя",
+    "senses": [
+      "Издавам рязък, остър звук при движението си във въздуха"
+    ],
+    "en": "to whistle, whizz",
+    "enReviewed": false
+  },
+  {
+    "id": "svoeobrazen",
+    "bg": "Своеобразен",
+    "senses": [
+      "Обратното на безличен; този, който се различава от другите"
+    ],
+    "en": "distinctive, original",
+    "enReviewed": false
+  },
+  {
+    "id": "svoystven",
+    "bg": "Свойствен",
+    "senses": [
+      "Който е характерен за нещо или някого."
+    ],
+    "en": "characteristic, typical",
+    "enReviewed": false
+  },
+  {
+    "id": "svra",
+    "bg": "Свра",
+    "senses": [
+      "Слагам, поставям нещо някъде, обикн. в нещо тясно или под друго нещо; свирам"
+    ],
+    "en": "to tuck, stash away",
+    "enReviewed": false
+  },
+  {
+    "id": "svyan",
+    "bg": "Свян",
+    "senses": [
+      "Чувство на стеснение, неудобство пред другите; срам"
+    ],
+    "en": "shyness, bashfulness",
+    "enReviewed": false
+  },
+  {
+    "id": "sepvam",
+    "bg": "Сепвам",
+    "senses": [
+      "Правя или ставам причина някой неочаквано, изведнъж да прекъсне съня си, да се събуди рязко, внезапно; стрясвам, стряскам",
+      "Изтръгвам някого рязко, изведнъж от състояние на унес, замисленост, забрава; стрясвам, стряскам",
+      "преносно - За звук, шум, глас и др. – нарушавам тишината, спокойствието, което цари наоколо, като прозвучавам изведнъж, рязко и силно някъде, в пространството",
+      "преносно - За мисъл, обстоятелство и под. – накарвам някого внезапно да се смути, да се обезпокои, да изпадне в размисъл",
+      "поетично - Предизвиквам дълбоко вълнение у някого внезапно, ненадейно; развълнувам"
+    ],
+    "en": "to startle, jolt awake",
+    "enReviewed": false
+  },
+  {
+    "id": "seten",
+    "bg": "Сетен",
+    "senses": [
+      "Последен"
+    ],
+    "en": "last, final",
+    "enReviewed": false
+  },
+  {
+    "id": "skveren",
+    "bg": "Скверен",
+    "senses": [
+      "Който буди погнуса, отвращение; гаден"
+    ],
+    "en": "vile, foul",
+    "enReviewed": false
+  },
+  {
+    "id": "skvern",
+    "bg": "Скверн",
+    "senses": [
+      "Място, действие, което буди погнуса, отвращение",
+      "скверно"
+    ],
+    "tags": [
+      "ж род"
+    ],
+    "en": "filth, foulness",
+    "enReviewed": false
+  },
+  {
+    "id": "skudoumie",
+    "bg": "Скудоумие",
+    "senses": [
+      "Умствена ограниченост; глупост"
+    ],
+    "en": "narrow-mindedness, stupidity",
+    "enReviewed": false
+  },
+  {
+    "id": "slana",
+    "bg": "Слана",
+    "senses": [
+      "Заледена през студени нощи роса, която покрива предметите във вид на тънък снежен пласт"
+    ],
+    "en": "hoarfrost",
+    "enReviewed": false
+  },
+  {
+    "id": "slobodiya",
+    "bg": "Слободия",
+    "senses": [
+      "Прекалена свобода; безделие"
+    ],
+    "en": "licence, idleness",
+    "enReviewed": false
+  },
+  {
+    "id": "snemam",
+    "bg": "Снемам",
+    "senses": [
+      "Премествам нещо от по-високо на по-ниско място; свалям"
+    ],
+    "en": "to take down, remove",
+    "enReviewed": false
+  },
+  {
+    "id": "snizhoditelen",
+    "bg": "Снизходителен",
+    "senses": [
+      "Който не е много взискателен; който изразява пренебрежителност, високомерност"
+    ],
+    "en": "lenient; condescending",
+    "enReviewed": false
+  },
+  {
+    "id": "snob",
+    "bg": "Сноб",
+    "senses": [
+      "Човек с бедни духовни интереси и неблагороден произход, който се стреми да изглежда като аристократ или интелектуалец"
+    ],
+    "en": "snob",
+    "enReviewed": false
+  },
+  {
+    "id": "snosen",
+    "bg": "Сносен",
+    "senses": [
+      "Който може да се понася, да се търпи"
+    ],
+    "en": "tolerable, bearable",
+    "enReviewed": false
+  },
+  {
+    "id": "snoshenie",
+    "bg": "Сношение",
+    "senses": [
+      "Поддържане на връзки, отношения с някого"
+    ],
+    "en": "dealings, contact",
+    "enReviewed": false
+  },
+  {
+    "id": "sparvam",
+    "bg": "Спарвам",
+    "senses": [
+      "Правя нещо да повехне, да посърне"
+    ],
+    "en": "to wilt, scorch",
+    "enReviewed": false
+  },
+  {
+    "id": "spletnya",
+    "bg": "Сплетня",
+    "senses": [
+      "Специално измислен и разпространяван за злепоставяне факт или случка; интрига"
+    ],
+    "en": "piece of gossip, intrigue",
+    "enReviewed": false
+  },
+  {
+    "id": "sporadichen",
+    "bg": "Спорадичен",
+    "senses": [
+      "Който се появява от време на време"
+    ],
+    "en": "sporadic",
+    "enReviewed": false
+  },
+  {
+    "id": "spohozhdane",
+    "bg": "Спохождане",
+    "senses": [
+      "Посещаване за кратко време; навестяване"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "brief visit, coming upon",
+    "enReviewed": false
+  },
+  {
+    "id": "sprihav",
+    "bg": "Сприхав",
+    "senses": [
+      "Който лесно се поддава на гнева, който бързо избухва; избухлив, гневлив, раздразнителен, невъздържан"
+    ],
+    "en": "irritable, hot-tempered",
+    "enReviewed": false
+  },
+  {
+    "id": "sreta",
+    "bg": "Срета",
+    "senses": [
+      "щастие"
+    ],
+    "en": "happiness, good luck",
+    "enReviewed": false
+  },
+  {
+    "id": "straden",
+    "bg": "Страден",
+    "senses": [
+      "Който много е страдал; изтерзан, изстрадал"
+    ],
+    "en": "long-suffering",
+    "enReviewed": false
+  },
+  {
+    "id": "starnishte",
+    "bg": "Стърнище",
+    "senses": [
+      "Ожъната и още неизорана нива"
+    ],
+    "en": "stubble field",
+    "enReviewed": false
+  },
+  {
+    "id": "sueta",
+    "bg": "Суета",
+    "senses": [
+      "Се определя като прекомерна вяра в собствените възможности или привлекателността спрямо други хора"
+    ],
+    "en": "vanity, conceit",
+    "enReviewed": false
+  },
+  {
+    "id": "suhoezhbina",
+    "bg": "Сухоежбина",
+    "senses": [
+      "Несготвена и суха храна, която се яде направо, обикн. при пътуване"
+    ],
+    "en": "dry food, cold rations",
+    "enReviewed": false
+  },
+  {
+    "id": "saveshtanie",
+    "bg": "Съвещание",
+    "senses": [
+      "Колективно обсъждане на някакъв въпрос"
+    ],
+    "en": "meeting, conference",
+    "enReviewed": false
+  },
+  {
+    "id": "sazertsanie",
+    "bg": "Съзерцание",
+    "senses": [
+      "Унесено, мечтателно наблюдение"
+    ],
+    "en": "contemplation",
+    "enReviewed": false
+  },
+  {
+    "id": "sanovidenie",
+    "bg": "Съновидение",
+    "senses": [
+      "Образи, видения, които човек вижда, когато спи; сън"
+    ],
+    "en": "dream, vision in sleep",
+    "enReviewed": false
+  },
+  {
+    "id": "saratnik",
+    "bg": "Съратник",
+    "senses": [
+      "Другар по обществена борба или дейност"
+    ],
+    "en": "comrade-in-arms, ally",
+    "enReviewed": false
+  },
+  {
+    "id": "sasashtestvuvane",
+    "bg": "Съсъществуване",
+    "senses": [
+      "Състояние на две или повече неща, които съществуват едновременно или във взаимно отношение"
+    ],
+    "en": "coexistence",
+    "enReviewed": false
+  },
+  {
+    "id": "tanturest",
+    "bg": "Тантурест",
+    "senses": [
+      "Който е дебел и нисък"
+    ],
+    "en": "short and plump, tubby",
+    "enReviewed": false
+  },
+  {
+    "id": "tematika",
+    "bg": "Тематика",
+    "senses": [
+      "Съвкупност от теми"
+    ],
+    "en": "subject matter, themes",
+    "enReviewed": false
+  },
+  {
+    "id": "tlenen",
+    "bg": "Тленен",
+    "senses": [
+      "Който подлежи на гниене, на разлагане; не вечен"
+    ],
+    "en": "perishable, mortal",
+    "enReviewed": false
+  },
+  {
+    "id": "trevyasvam",
+    "bg": "Тревясвам",
+    "senses": [
+      "Покривам се с трева, обраствам с трева; обхваща ме трева"
+    ],
+    "en": "to become overgrown with grass",
+    "enReviewed": false
+  },
+  {
+    "id": "trizhdi",
+    "bg": "Трижди",
+    "senses": [
+      "Триж, три пъти"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "thrice",
+    "enReviewed": false
+  },
+  {
+    "id": "triklet",
+    "bg": "Триклет",
+    "senses": [
+      "Много пъти проклет"
+    ],
+    "en": "thrice-cursed",
+    "enReviewed": false
+  },
+  {
+    "id": "tshteslavie",
+    "bg": "Тщеславие",
+    "senses": [
+      "Непрекъснат стремеж към слава и изтъкване на достойнствата; славолюбие"
+    ],
+    "en": "vainglory, vanity",
+    "enReviewed": false
+  },
+  {
+    "id": "tadyava",
+    "bg": "Тъдява",
+    "senses": [
+      "По тези места; тук, наоколо"
+    ],
+    "tags": [
+      "диалект"
+    ],
+    "en": "hereabouts, around here",
+    "enReviewed": false
+  },
+  {
+    "id": "ugneten",
+    "bg": "Угнетен",
+    "senses": [
+      "Измъчен, изстрадал"
+    ],
+    "en": "downtrodden, depressed",
+    "enReviewed": false
+  },
+  {
+    "id": "uklonchiv",
+    "bg": "Уклончив",
+    "senses": [
+      "За отговор, обяснение — който е лишен от прямота; неясен, неопределен"
+    ],
+    "en": "evasive, noncommittal",
+    "enReviewed": false
+  },
+  {
+    "id": "umozrenie",
+    "bg": "Умозрение",
+    "senses": [
+      "Разсъждение, което се получава по пътя на размишление и съзерцание, а не чрез опит."
+    ],
+    "en": "speculation, abstract reasoning",
+    "enReviewed": false
+  },
+  {
+    "id": "usoe",
+    "bg": "Усое",
+    "senses": [
+      "Неогрявано от слънце, сенчесто, хладно място"
+    ],
+    "en": "shady spot",
+    "enReviewed": false
+  },
+  {
+    "id": "usoen",
+    "bg": "Усоен",
+    "senses": [
+      "Който слабо се огрява от слънцето; мрачен, влажен"
+    ],
+    "en": "shady, sunless",
+    "enReviewed": false
+  },
+  {
+    "id": "ustoi",
+    "bg": "Устои",
+    "senses": [
+      "Опора, основа"
+    ],
+    "tags": [
+      "само в множествено"
+    ],
+    "en": "foundations, pillars (of society)",
+    "enReviewed": false
+  },
+  {
+    "id": "ushtarb",
+    "bg": "Ущърб",
+    "senses": [
+      "Накърняване, вреда, щета"
+    ],
+    "en": "detriment, harm",
+    "enReviewed": false
+  },
+  {
+    "id": "uyut",
+    "bg": "Уют",
+    "senses": [
+      "Чувство, предизвикано от приятна обстановка, удобство и задушевност"
+    ],
+    "en": "coziness, comfort",
+    "enReviewed": false
+  },
+  {
+    "id": "frenetichen",
+    "bg": "Френетичен",
+    "senses": [
+      "Който е много силен, много буен; възторжен, ентусиазиран"
+    ],
+    "en": "frenzied, frantic",
+    "enReviewed": false
+  },
+  {
+    "id": "hvarley",
+    "bg": "Хвърлей",
+    "senses": [
+      "Разстояние, което изминава хвърлен камък или изстрелян куршум"
+    ],
+    "en": "a stone's throw",
+    "enReviewed": false
+  },
+  {
+    "id": "hrisim",
+    "bg": "Хрисим",
+    "senses": [
+      "Който е кротък, смирен, покорен"
+    ],
+    "en": "meek, docile",
+    "enReviewed": false
+  },
+  {
+    "id": "chvor",
+    "bg": "Чвор",
+    "senses": [
+      "Основа на клон в стъблото на дърво или в греда, дъска; чеп, сък"
+    ],
+    "en": "knot (in wood)",
+    "enReviewed": false
+  },
+  {
+    "id": "chevrast",
+    "bg": "Чевръст",
+    "senses": [
+      "Който е пъргав и сръчен"
+    ],
+    "en": "nimble, deft",
+    "enReviewed": false
+  },
+  {
+    "id": "chrezvichaen",
+    "bg": "Чрезвичаен",
+    "senses": [
+      "Крайно необичаен"
+    ],
+    "en": "extraordinary; emergency",
+    "enReviewed": false
+  },
+  {
+    "id": "chuvstven",
+    "bg": "Чувствен",
+    "senses": [
+      "Който е склонен към плътски удоволствия, наслади"
+    ],
+    "en": "sensual",
+    "enReviewed": false
+  },
+  {
+    "id": "chukar",
+    "bg": "Чукар",
+    "senses": [
+      "Труднодостъпна скала или скално струпване"
+    ],
+    "en": "crag, rocky outcrop",
+    "enReviewed": false
+  },
+  {
+    "id": "shumka",
+    "bg": "Шумка",
+    "senses": [
+      "Лист от широколистно дърво"
+    ],
+    "en": "leaf (of a deciduous tree)",
+    "enReviewed": false
+  },
+  {
+    "id": "shurtya",
+    "bg": "Шуртя",
+    "senses": [
+      "Тека, изтичам с непрекъснат еднообразен шум"
+    ],
+    "en": "to gush, trickle noisily",
+    "enReviewed": false
+  },
+  {
+    "id": "shtrabka",
+    "bg": "Щръбка",
+    "senses": [
+      "Неравност, отчупено място по острието на сечиво, по ръба на съд и др"
+    ],
+    "en": "nick, chip (in a blade or rim)",
+    "enReviewed": false
+  },
+  {
+    "id": "yuveliren",
+    "bg": "Ювелирен",
+    "senses": [
+      "Който се отнася до изделия от благородни метали и скъпоценни камъни; преносно - прецизен, изящен"
+    ],
+    "en": "jewellery; meticulous, exquisite",
+    "enReviewed": false
+  },
+  {
+    "id": "yudol",
+    "bg": "Юдол",
+    "senses": [
+      "Долина, бездна"
+    ],
+    "en": "vale, valley; abyss",
+    "enReviewed": false
+  },
+  {
+    "id": "yalov",
+    "bg": "Ялов",
+    "senses": [
+      "Безплоден, безрезултатен",
+      "който не ражда"
+    ],
+    "en": "barren, sterile; fruitless",
+    "enReviewed": false
+  }
+]

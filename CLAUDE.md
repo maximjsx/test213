@@ -39,6 +39,11 @@ Terminology: a **level** in code is a **topic** in the UI. A topic has lessons, 
 2. Publish: either Export JSON, run `bun run add-topic file.json`, commit and push; or the super-admin's Publish button, which commits `data/<id>.json` and `data/course.js` to master through the GitHub API (`GITHUB_TOKEN`, `GITHUB_REPO`, optional `GITHUB_BRANCH`). Both run the same checks in `lib/publishTopic.js`. Course content only ever lives in repo files.
 3. Lesson and exercise ids must be unique across the course, since progress and mistakes are stored by id.
 
+Wiki and glossary content are plain files too:
+
+- `data/wiki/*.md` plus `data/wiki/index.json` (`{ slug, title, parent, warning? }`). Edit the Markdown directly; `scripts/import-wiki.js <zip>` re-imports the old Outline export and replaces everything. Wiki uploads live in `public/wiki`.
+- `data/glossary.json`: literary words. Set `enReviewed: true` once an English gloss is checked. `scripts/import-glossary.js <txt>` re-parses the source list and keeps existing glosses.
+
 ## Adding an exercise type
 
 1. `components/exercises/NewType.js`, props: `exercise, onAnswer, onPendingChange, checkTrigger, disabled, levelColor`.

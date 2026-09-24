@@ -1,3 +1,4 @@
+/* Tab hub pages (Practice, Library): grouped rows of big links */
 .page { min-height: 100vh; background: var(--bg); }
 .main { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; display: flex; flex-direction: column; gap: 24px; }
 

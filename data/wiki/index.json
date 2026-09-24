@@ -1,0 +1,359 @@
+[
+  {
+    "slug": "the-alphabet",
+    "title": "The alphabet (Азбуката)",
+    "parent": ""
+  },
+  {
+    "slug": "vocabulary",
+    "title": "Vocabulary",
+    "parent": ""
+  },
+  {
+    "slug": "interesting-rules",
+    "title": "Interesting rules",
+    "parent": ""
+  },
+  {
+    "slug": "history",
+    "title": "History (История)",
+    "parent": ""
+  },
+  {
+    "slug": "important-bulgarian-holidays",
+    "title": "Important Bulgarian Holidays (Важни български официални празници)",
+    "parent": ""
+  },
+  {
+    "slug": "music",
+    "title": "Music (музика)",
+    "parent": ""
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/music",
+    "title": "Music (Музика)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "books",
+    "title": "Books (книги)",
+    "parent": ""
+  },
+  {
+    "slug": "bulgarian-content-creators",
+    "title": "Bulgarian content creators",
+    "parent": ""
+  },
+  {
+    "slug": "other-online-resources",
+    "title": "Other online resources",
+    "parent": ""
+  },
+  {
+    "slug": "bad-stuff",
+    "title": "Bad stuff (не влизай тук)",
+    "parent": "",
+    "warning": true
+  },
+  {
+    "slug": "interesting-rules/az-sam-vs-sam",
+    "title": "\"аз съм\" vs. \"съм\"",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "interesting-rules/li-vs-da-ne-bi-da",
+    "title": "\"ли\" vs. \"да не би да\"",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "vocabulary/interesting-words",
+    "title": "(Interesting words) Интересни думи",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/sentences/personal-questions",
+    "title": "(Personal) questions",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "vocabulary/adjectives",
+    "title": "Adjectives (Прилагателни)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "other-online-resources/practice-interactions/ai-prompts",
+    "title": "AI Prompts",
+    "parent": "other-online-resources/practice-interactions"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/animals",
+    "title": "Animals (Животни)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/beach",
+    "title": "Beach (Плаж)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/bulgarian-version-of-words-that-even-bulgarians-no-longer-know",
+    "title": "Bulgarian version of words that even Bulgarians no longer know",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/city",
+    "title": "City (град)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/clothing",
+    "title": "Clothing (Дрехи)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/colors",
+    "title": "Colors (Цветове)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/commands-orders",
+    "title": "Commands/Orders (Команди)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/comparatives-quantities-other",
+    "title": "Comparatives, Quantities & Other",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/cooking",
+    "title": "Cooking (Готвене)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "interesting-rules/diminutives",
+    "title": "Diminutives",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "interesting-rules/double-negatives",
+    "title": "Double Negatives",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "interesting-rules/dropping-the-subject-shorter",
+    "title": "Dropping the subject (Shorter)",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "vocabulary/sentences/emergencies",
+    "title": "Emergencies (спешни случаи)",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "vocabulary/sentences/family",
+    "title": "Family (Семейство)",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "history/famous-bulgarian-people",
+    "title": "Famous bulgarian people (Известни български хора)",
+    "parent": "history"
+  },
+  {
+    "slug": "vocabulary/filler-and-prompting-words",
+    "title": "Filler and prompting words.",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/food",
+    "title": "Food (Храна)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/football",
+    "title": "Football (Футбол)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/sentences/goodbye",
+    "title": "Goodbye",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "vocabulary/sentences/greeting",
+    "title": "Greeting (Поздрав)",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/sport/gym",
+    "title": "GYM",
+    "parent": "vocabulary/list-of-nouns/sport"
+  },
+  {
+    "slug": "vocabulary/sentences/hobbies",
+    "title": "Hobbies (Хобита)",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/human-body",
+    "title": "Human body (тяло)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/idioms",
+    "title": "Idioms",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "the-alphabet/latinized-bulgarian",
+    "title": "Latinized bulgarian",
+    "parent": "the-alphabet"
+  },
+  {
+    "slug": "interesting-rules/linguistic-constructions-with-impersonal-predicative-forms",
+    "title": "Linguistic Constructions with Impersonal-Predicative Forms",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns",
+    "title": "List of Nouns",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/nature",
+    "title": "Nature (Природа)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/numbers",
+    "title": "Numbers (Числа)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/phrases",
+    "title": "Phrases (Изрази)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "other-online-resources/practice-interactions",
+    "title": "Practice interactions",
+    "parent": "other-online-resources"
+  },
+  {
+    "slug": "vocabulary/prepositions",
+    "title": "Prepositions (Предлози)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "the-alphabet/printed",
+    "title": "Printed",
+    "parent": "the-alphabet"
+  },
+  {
+    "slug": "vocabulary/pronouns",
+    "title": "Pronouns (Местоимения)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "bad-stuff/really-bad-stuff",
+    "title": "Really bad stuff (нищо за теб)",
+    "parent": "bad-stuff",
+    "warning": true
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/restaurant",
+    "title": "Restaurant (Ресторант)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/sentences/restaurant",
+    "title": "Restaurant (Ресторант)",
+    "parent": "vocabulary/sentences"
+  },
+  {
+    "slug": "interesting-rules/role-of-definite-articles",
+    "title": "Role of Definite Articles",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/school",
+    "title": "School (Училище)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/sentences",
+    "title": "Sentences (Изречения)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "other-online-resources/practice-interactions/ai-prompts/situation-based-prompt",
+    "title": "Situation based prompt",
+    "parent": "other-online-resources/practice-interactions/ai-prompts"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/social-media",
+    "title": "Social media (Социални медии)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/space",
+    "title": "Space (Космос)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/sport",
+    "title": "Sport (Спорт)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "vocabulary/synonyms",
+    "title": "Synonyms",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/time",
+    "title": "Time (Време)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/to-say",
+    "title": "To say",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "interesting-rules/variable-in-the-bulgarian-language",
+    "title": "Variable \"я\" in the Bulgarian Language",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "vocabulary/verbs",
+    "title": "Verbs (Глаголи)",
+    "parent": "vocabulary"
+  },
+  {
+    "slug": "vocabulary/list-of-nouns/weather",
+    "title": "Weather (Времето)",
+    "parent": "vocabulary/list-of-nouns"
+  },
+  {
+    "slug": "",
+    "title": "Wiki",
+    "parent": null
+  },
+  {
+    "slug": "the-alphabet/written",
+    "title": "Written",
+    "parent": "the-alphabet"
+  },
+  {
+    "slug": "interesting-rules/nyama",
+    "title": "Няма",
+    "parent": "interesting-rules"
+  },
+  {
+    "slug": "interesting-rules/sas-ili-s",
+    "title": "със или с",
+    "parent": "interesting-rules"
+  }
+]

@@ -34,3 +34,19 @@
   .table { font-size: 13px; }
   .table th, .table td { padding: 8px 10px; }
 }
+
+.hr { border: 0; border-top: 2px solid var(--border); margin: 6px 0; }
+.link { color: var(--blue); font-weight: 800; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.link:hover { color: var(--text); }
+.mark { background: var(--yellow-bg); color: var(--yellow); padding: 0 4px; border-radius: 4px; font-weight: 800; }
+.pre {
+  padding: 12px 14px; border-radius: var(--r);
+  background: var(--surface); border: 2px solid var(--border);
+  font-size: var(--fs-sm); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.figure { display: flex; flex-direction: column; gap: 6px; }
+.image { max-width: 100%; height: auto; border-radius: var(--r); border: 2px solid var(--border); background: var(--surface); }
+.audio { width: 100%; }
+.caption { font-size: var(--fs-xs); font-weight: 700; color: var(--text-dim); overflow-wrap: anywhere; }
+.list .list { margin-top: 5px; }
+.table td.addCell { width: 44px; padding-top: 4px; padding-bottom: 4px; }

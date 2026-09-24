@@ -20,6 +20,7 @@
     "ws": "^8.21.0"
   },
   "devDependencies": {
+    "fflate": "^0.8.3",
     "jimp": "^1.6.1"
   }
 }

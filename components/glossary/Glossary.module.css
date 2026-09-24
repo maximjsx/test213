@@ -1,0 +1,43 @@
+.search {
+  width: 100%; padding: 12px 14px; border-radius: var(--r);
+  background: var(--surface); border: 2px solid var(--border);
+  font-size: var(--fs-md); font-weight: 700; color: var(--text);
+}
+.search:focus { outline: none; border-color: var(--blue); }
+
+.letters { display: flex; flex-wrap: wrap; gap: 6px; }
+.letter {
+  min-width: 34px; height: 34px; padding: 0 6px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--r2); background: var(--surface); border: 2px solid var(--border);
+  font-size: var(--fs-sm); font-weight: 900; color: var(--text-muted);
+}
+.letter:hover { border-color: var(--border-hi); color: var(--text); }
+.count { font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+
+.list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.entry {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px 16px; border-radius: var(--r-lg);
+  background: var(--surface); border: 2px solid var(--border);
+  scroll-margin-top: 80px;
+}
+.head { display: flex; align-items: flex-start; gap: 12px; }
+.speak {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-hi); border: 2px solid var(--border-hi);
+}
+.speak:hover { background: var(--border); }
+.words { flex: 1; min-width: 0; }
+.bg { font-size: var(--fs-lg); font-weight: 900; color: var(--text); line-height: 1.2; }
+.en { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--fs-base); font-weight: 800; color: var(--teal); }
+.draft {
+  padding: 0 6px; border-radius: var(--r-pill); border: 1.5px solid var(--border-hi);
+  font-size: 10px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-dim);
+}
+.senses { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-base); font-weight: 600; color: var(--text); line-height: 1.5; }
+.senses li::marker { color: var(--text-dim); font-weight: 800; }
+.sense { font-size: var(--fs-base); font-weight: 600; color: var(--text); line-height: 1.5; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+.tag { padding: 1px 8px; border-radius: var(--r-pill); background: var(--surface-hi); font-size: var(--fs-xs); font-weight: 900; }

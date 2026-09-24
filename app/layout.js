@@ -94,6 +94,8 @@ export default function RootLayout({ children }) {
         <div className={styles.appShell}>
           <div className={styles.content}>{children}</div>
           <footer className={styles.footer}>
+            <Link href="/wiki" className={styles.footerLink}>Wiki</Link>
+            <Link href="/glossary" className={styles.footerLink}>Literary words</Link>
             <Link href="/builder" className={styles.footerLink}>Level Builder</Link>
             <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
             <Link href="/terms" className={styles.footerLink}>Terms</Link>
