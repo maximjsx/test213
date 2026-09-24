@@ -286,3 +286,14 @@
   .shopBuyBtn { min-width: 0; padding: 10px 14px; font-size: 13px; }
   .shopOwnedBadge { padding: 8px 6px; font-size: 13px; }
 }
+
+/* Wide screens have room to name the header icons. Scoped under .headerStats
+   so it outranks the base .shopBtn rule regardless of source order. */
+.iconLabel { display: none; }
+@media (min-width: 1000px) {
+  .headerStats .shopBtn:has(.iconLabel) {
+    width: auto; padding: 0 14px 0 9px; gap: 7px; border-radius: 999px;
+  }
+  .headerStats .shopBtn:has(.iconLabel):hover { transform: translateY(-1px); }
+  .headerStats .iconLabel { display: inline; font-size: 14px; font-weight: 900; color: var(--text); }
+}

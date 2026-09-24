@@ -23,7 +23,12 @@
 }
 
 @media (max-width: 680px) {
-  /* The fixed bottom tab bar strands this footer below the fold on mobile.
-     Hide it here; the legal links are surfaced inside the Profile tab instead. */
+  /* Inside lessons there is no tab bar and the runner fills the screen, so the
+     footer stays hidden there. On tab pages it sits above the fixed bar. */
   .footer { display: none; }
+  body:has([data-bottom-nav]) .footer {
+    display: flex;
+    gap: 10px 20px;
+    padding: 16px 16px calc(116px + env(safe-area-inset-bottom) + 16px);
+  }
 }

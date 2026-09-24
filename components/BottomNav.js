@@ -43,7 +43,7 @@ export default function BottomNav() {
   if (!showOn) return null
 
   return (
-    <nav className={styles.nav}>
+    <nav className={styles.nav} data-bottom-nav>
       {ITEMS.map(it => {
         const active = it.match(pathname)
         return (

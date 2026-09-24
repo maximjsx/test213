@@ -234,15 +234,18 @@ export default function HomePage() {
               <span className={styles.streakNum}>{state.streak}</span>
             </button>
             <XpCounter xp={state.xp} />
-            <button className={styles.shopBtn} onClick={() => setShowQuests(true)} title="Daily quests">
-              <img src="/icons/another_star.png" alt="quests" width={26} height={26} />
+            <button className={styles.shopBtn} onClick={() => setShowQuests(true)} title="Daily quests" aria-label={claimable ? `Daily quests, ${claimable} ready to claim` : 'Daily quests'}>
+              <img src="/icons/another_star.png" alt="" width={26} height={26} />
+              <span className={styles.iconLabel}>Quests</span>
               {claimable > 0 && <span className={styles.questBadge}>{claimable}</span>}
             </button>
-            <button className={styles.shopBtn} onClick={() => setShowShop(true)} title="Shop">
-              <img src="/icons/gift_box.png" alt="Shop" width={28} height={28} />
+            <button className={styles.shopBtn} onClick={() => setShowShop(true)} title="Shop" aria-label="Shop">
+              <img src="/icons/gift_box.png" alt="" width={28} height={28} />
+              <span className={styles.iconLabel}>Shop</span>
             </button>
-            <Link href="/leaderboard" className={`${styles.shopBtn} ${styles.leaderboardLink}`} title="Leaderboard">
-              <img src="/icons/trophy.png" alt="leaderboard" width={26} height={26} />
+            <Link href="/leaderboard" className={`${styles.shopBtn} ${styles.leaderboardLink}`} title="Leaderboard" aria-label="Leaderboard">
+              <img src="/icons/trophy.png" alt="" width={26} height={26} />
+              <span className={styles.iconLabel}>Ranks</span>
             </Link>
             {user ? (
               <Link href="/profile" className={`${styles.shopBtn} ${styles.profileLink}`} title={user.username}>
