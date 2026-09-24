@@ -1,0 +1,21 @@
+.page { min-height: 100vh; background: var(--bg); }
+.main { max-width: 760px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 20px; }
+.mainWide { max-width: 1200px; }
+.title { font-size: var(--fs-xl); font-weight: 900; color: var(--text); line-height: 1.2; }
+.muted { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); line-height: 1.5; }
+.empty { padding: 24px; border-radius: var(--r-lg); border: 2px dashed var(--border); text-align: center; font-weight: 800; color: var(--text-muted); }
+
+.section { display: flex; flex-direction: column; gap: 10px; }
+.sectionTitle { padding: 0 4px; font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.card {
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: var(--r-lg); background: var(--surface); border: 2px solid var(--border);
+  transition: border-color 0.15s, transform 0.12s;
+}
+.card:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+.thumb { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--surface-hi); }
+.cardBody { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; }
+.cardTitle { font-size: var(--fs-base); font-weight: 900; color: var(--text); overflow-wrap: anywhere; }
+.cardMeta { display: flex; align-items: center; gap: 8px; font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+.level { padding: 0 6px; border-radius: var(--r-pill); background: var(--blue-bg); color: var(--blue); font-size: var(--fs-xs); font-weight: 900; }

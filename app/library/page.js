@@ -13,6 +13,7 @@ export const metadata = {
 
 const SECTIONS = [
   { href: '/wiki', icon: '/icons/open_book.png', title: 'Wiki', sub: `${WIKI_PAGES.length} pages: vocabulary lists, phrases, grammar rules, history, music` },
+  { href: '/watch', icon: '/icons/microphone.png', title: 'Watch and listen', sub: 'Real videos and songs with Bulgarian and English subtitles' },
   { href: '/glossary', icon: '/icons/another_star.png', title: 'Literary words', sub: `${GLOSSARY.length} rare and bookish words with definitions` },
 ]
 

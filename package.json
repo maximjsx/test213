@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "add-topic": "bun scripts/add-topic.js"
+    "add-topic": "bun scripts/add-topic.js",
+    "add-media": "bun --env-file=.env.local scripts/add-media.js"
   },
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",

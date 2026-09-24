@@ -5,7 +5,7 @@ import home from './home/Home.module.css'
 // Placeholders shaped like the real pages, shown while progress loads, so
 // content fades in where it will actually sit instead of after a spinner.
 
-const PATH_OFFSETS = [0, 56, 84, 56]
+const GRID_BUBBLES = 6
 
 // Uses the home page's own layout classes so every card lands where the real
 // one will, on phones (one column) and desktop (path plus sidebar).
@@ -31,9 +31,9 @@ export function HomeSkeleton() {
             </div>
             <Skeleton height={50} radius="var(--r)" />
           </div>
-          <div className={`${styles.homePath} ${home.oTree}`}>
-            {PATH_OFFSETS.map((dx, i) => (
-              <div key={i} className={styles.bubble} style={{ transform: `translateX(${dx}px)` }}>
+          <div className={`${styles.homeGrid} ${home.oTree}`}>
+            {Array.from({ length: GRID_BUBBLES }, (_, i) => (
+              <div key={i} className={styles.bubble}>
                 <Skeleton width={120} height={120} circle />
                 <Skeleton width={90} height={16} />
               </div>

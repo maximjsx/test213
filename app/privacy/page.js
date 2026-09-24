@@ -50,7 +50,7 @@ export default function PrivacyPage() {
         <section>
           <h2>Signing In With Discord</h2>
           <p>
-            When you sign in, Discord shares your Discord user ID, username, display name, avatar, and the list of servers you are in. From that list we keep only whether you are in the few servers that unlock special topics. We
+            Videos on the Watch pages are embedded from YouTube in privacy-enhanced mode (youtube-nocookie.com); YouTube receives your IP address and player activity when you press play. When you sign in, Discord shares your Discord user ID, username, display name, avatar, and the list of servers you are in. From that list we keep only whether you are in the few servers that unlock special topics. We
             never receive your email address or password. We store these together with a username you can change,
             your synced progress (lessons, coins, streaks, quests, daily coin history), and Discord access tokens. We use
             the tokens only to refresh your name and avatar every few hours, so your profile stays current.
