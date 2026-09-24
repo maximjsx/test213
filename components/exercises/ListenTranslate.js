@@ -54,7 +54,7 @@ export default function ListenTranslate({ exercise, onAnswer, onPendingChange, c
           title="Listen again"
           disabled={disabled}
         >
-          <img src="/icons/speaker.png" alt="🔊" width={36} height={36} />
+          <img src="/icons/speaker.png" alt="Listen again" width={36} height={36} />
         </button>
         <p className={styles.listenHint}>Tap to listen again</p>
       </div>

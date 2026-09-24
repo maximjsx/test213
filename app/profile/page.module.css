@@ -5,7 +5,7 @@
 
 .page {
   max-width:520px;margin:0 auto;padding:24px 20px 60px;
-  font-family:'Nunito', sans-serif;
+  font-family:var(--font-nunito), sans-serif;
 }
 
 @media (max-width: 680px) {
@@ -85,7 +85,7 @@
 .nameInput:focus { border-color:var(--blue); }
 .saveBtn {
   font-size:13px;font-weight:900;padding:10px 16px;border-radius:var(--r2);
-  background:var(--green);color:#fff;box-shadow:0 3px 0 var(--green-press);
+  background:var(--green);color:var(--on-accent);box-shadow:0 3px 0 var(--green-press);
 }
 .saveBtn:active { transform:translateY(2px);box-shadow:0 0 0 var(--green-press); }
 .cancelBtn {
@@ -141,7 +141,7 @@ a.friendRow:hover { border-color:var(--border-hi); }
 .acceptBtn {
   font-size:12px;font-weight:900;letter-spacing:0.3px;
   padding:8px 14px;border-radius:var(--r2);
-  background:var(--green);color:#fff;
+  background:var(--green);color:var(--on-accent);
   box-shadow:0 3px 0 var(--green-press);
 }
 .acceptBtn:active { transform:translateY(2px);box-shadow:0 0 0 var(--green-press); }
@@ -198,7 +198,7 @@ a.friendRow:hover { border-color:var(--border-hi); }
   margin-top:20px;width:100%;
   font-size:15px;font-weight:900;letter-spacing:0.5px;
   padding:16px;border-radius:var(--r);
-  background:var(--green);color:#fff;
+  background:var(--green);color:var(--on-accent);
   box-shadow:0 4px 0 var(--green-press);
   transition:transform 0.1s,box-shadow 0.1s;
 }

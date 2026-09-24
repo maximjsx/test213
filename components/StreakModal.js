@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { dayKey } from '../hooks/useProgress'
 import Chevron from './Chevron'
+import { useDialog } from '../hooks/useDialog'
 import styles from './StreakModal.module.css'
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -11,6 +12,7 @@ export default function StreakModal({ state, onClose }) {
   const now = new Date()
   const [view, setView] = useState({ y: now.getFullYear(), m: now.getMonth() })
   const activeDays = state.activeDays || {}
+  const cardRef = useDialog(onClose)
 
   const first = new Date(view.y, view.m, 1)
   const daysInMonth = new Date(view.y, view.m + 1, 0).getDate()
@@ -31,8 +33,8 @@ export default function StreakModal({ state, onClose }) {
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.card} onClick={e => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
+      <div className={styles.card} ref={cardRef} role="dialog" aria-modal="true" aria-label="Streak calendar" onClick={e => e.stopPropagation()}>
+        <button className={styles.close} onClick={onClose}><img src="/icons/gray_x.png" alt="Close" width={20} height={20} /></button>
 
         <div className={styles.hero}>
           <img src="/icons/fire.png" alt="" width={44} height={44} />
@@ -47,9 +49,9 @@ export default function StreakModal({ state, onClose }) {
         </div>
 
         <div className={styles.monthNav}>
-          <button className={styles.navBtn} onClick={() => shiftMonth(-1)}><Chevron size={15} /></button>
+          <button className={styles.navBtn} onClick={() => shiftMonth(-1)} aria-label="Previous month"><Chevron size={15} /></button>
           <span className={styles.monthLabel}>{MONTHS[view.m]} {view.y}</span>
-          <button className={styles.navBtn} onClick={() => shiftMonth(1)} disabled={isCurrentMonth}><Chevron dir="right" size={15} /></button>
+          <button className={styles.navBtn} onClick={() => shiftMonth(1)} disabled={isCurrentMonth} aria-label="Next month"><Chevron dir="right" size={15} /></button>
         </div>
 
         <div className={styles.grid}>

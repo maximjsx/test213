@@ -11,7 +11,7 @@
   border: 2px solid var(--border-hi);
   border-radius: 18px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-  font-family: 'Nunito', sans-serif;
+  font-family: var(--font-nunito), sans-serif;
   animation: slideUp 0.28s ease;
 }
 
@@ -30,7 +30,7 @@
   flex-shrink: 0;
   font-size: 13px; font-weight: 900; letter-spacing: 0.4px;
   padding: 10px 16px; border-radius: 12px;
-  background: var(--teal); color: #fff;
+  background: var(--teal); color: var(--on-accent);
   box-shadow: 0 3px 0 color-mix(in srgb, var(--teal) 60%, #000);
 }
 .installBtn:active { transform: translateY(2px); box-shadow: 0 0 0 color-mix(in srgb, var(--teal) 60%, #000); }

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import BuilderGate from '../../components/builder/BuilderGate'
 import AdminUsersPanel from '../../components/builder/AdminUsersPanel'
 import AdminFilesPanel from '../../components/builder/AdminFilesPanel'
+import { clickable } from '../../lib/a11y'
 import styles from './page.module.css'
 
 function loadLevels() {
@@ -158,7 +159,7 @@ export default function BuilderDashboard() {
       )}
       <div className={styles.header}>
         <Link href="/" className={styles.backBtn}>
-          <img src="/icons/gray_x.png" alt="✕" width={18} height={18} />
+          <img src="/icons/gray_x.png" alt="Back to course" width={18} height={18} />
         </Link>
         <h1 className={styles.pageTitle}>Level Builder</h1>
         <div className={styles.headerActions}>
@@ -218,7 +219,7 @@ export default function BuilderDashboard() {
           <>
             <div className={styles.grid}>
               {levels.map(level => (
-                <div key={level.id} className={styles.card} onClick={() => router.push('/builder/' + level.id)} style={{ cursor: 'pointer' }}>
+                <div key={level.id} className={styles.card} {...clickable(() => router.push('/builder/' + level.id))} style={{ cursor: 'pointer' }}>
                   <div className={styles.cardTop} style={{ background: level.color }}>
                     <span className={styles.cardIcon}>{level.icon}</span>
                   </div>

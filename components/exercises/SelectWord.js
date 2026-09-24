@@ -3,6 +3,7 @@ import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
 import { speakText, hapticTap } from '../../lib/audio'
 import BulgarianSentence, { parseWordHints } from './BulgarianSentence'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 export default function SelectWord({ exercise, onAnswer, onPendingChange, checkTrigger, disabled }) {
@@ -71,6 +72,7 @@ export default function SelectWord({ exercise, onAnswer, onPendingChange, checkT
         {choices.map(c => (
           <button
             key={c}
+            lang={langOf(c)}
             className={tileClass(c)}
             onClick={() => select(c)}
             disabled={disabled || checked}

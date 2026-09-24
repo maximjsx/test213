@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
 import { parseCourseFromFilename, deleteMedia } from '../../lib/media'
+import { clickable } from '../../lib/a11y'
 import styles from './AdminFilesPanel.module.css'
 
 function fmtSize(n) {
@@ -132,7 +133,7 @@ export default function AdminFilesPanel() {
 
   return (
     <div className={styles.panel}>
-      <div className={styles.head} onClick={() => setOpen(o => !o)}>
+      <div className={styles.head} aria-expanded={open} {...clickable(() => setOpen(o => !o))}>
         <span className={styles.headTitle}>Media files</span>
         <span className={styles.badge}>ADMIN</span>
         <span className={styles.spacer} />
@@ -224,7 +225,7 @@ function FileGrid({ files, onDelete }) {
             <img src={f.url} alt="" className={styles.thumb} loading="lazy" />
           ) : f.kind === 'audio' ? (
             <button className={styles.thumbAudio} onClick={() => { try { new Audio(f.url).play().catch(() => {}) } catch {} }} title="Play">
-              <img src="/icons/speaker.png" alt="🔊" />
+              <img src="/icons/speaker.png" alt="Play" />
             </button>
           ) : (
             <div className={styles.thumbAudio}><span className={styles.kindTag}>{f.kind}</span></div>

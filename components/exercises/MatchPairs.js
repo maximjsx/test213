@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react'
 import { shuffle } from '../../lib/checker'
 import { speakText, hapticTap, hapticWrong } from '../../lib/audio'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 export default function MatchPairs({ exercise, onAnswer, disabled }) {
@@ -71,6 +72,7 @@ export default function MatchPairs({ exercise, onAnswer, disabled }) {
           {leftItems.map(item => (
             <button
               key={item.id}
+              lang={langOf(item.val)}
               className={`${styles.matchChip}
                 ${isLeftMatched(item.id) ? styles.chipMatched
                   : selLeftId === item.id ? styles.chipSel
@@ -86,6 +88,7 @@ export default function MatchPairs({ exercise, onAnswer, disabled }) {
           {rightItems.map(item => (
             <button
               key={item.id}
+              lang={langOf(item.val)}
               className={`${styles.matchChip}
                 ${isRightMatched(item.id) ? styles.chipMatched
                   : selRightId === item.id ? styles.chipSel

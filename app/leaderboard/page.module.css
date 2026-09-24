@@ -1,6 +1,6 @@
 .page {
   max-width:520px;margin:0 auto;padding:24px 20px 60px;
-  font-family:'Nunito', sans-serif;
+  font-family:var(--font-nunito), sans-serif;
 }
 
 @media (max-width: 680px) {

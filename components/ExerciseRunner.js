@@ -17,6 +17,7 @@ import ImageMatch from './exercises/ImageMatch'
 import ImageName from './exercises/ImageName'
 import ImageMultipleChoice from './exercises/ImageMultipleChoice'
 import Bear from './Bear'
+import { useDialog } from '../hooks/useDialog'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
 import styles from './ExerciseRunner.module.css'
 
@@ -41,6 +42,25 @@ const EXERCISE_MAP = {
 
 // Exercises that self-complete on interaction and have no CHECK button
 const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
+
+function QuitConfirm({ onQuit, onCancel }) {
+  const cardRef = useDialog(onCancel)
+  return (
+    <div className={styles.quitModalOverlay}>
+      <div className={styles.quitModalCard} ref={cardRef} role="alertdialog" aria-modal="true" aria-labelledby="quit-title" aria-describedby="quit-text">
+        <div className={styles.quitModalBear}>
+          <Bear mood="sad" size={80} />
+        </div>
+        <h3 id="quit-title" className={styles.quitModalTitle}>Quit lesson?</h3>
+        <p id="quit-text" className={styles.quitModalText}>
+          You'll have to start this lesson over from the beginning if you quit now.
+        </p>
+        <button className={styles.quitConfirmBtn} onClick={onQuit}>QUIT</button>
+        <button className={styles.quitCancelBtn} onClick={onCancel} data-autofocus>KEEP LEARNING</button>
+      </div>
+    </div>
+  )
+}
 
 export default function ExerciseRunner({ lesson, level, exercises, onComplete, onQuit }) {
   const [queue, setQueue] = useState(exercises)
@@ -170,29 +190,17 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
 
   return (
     <div className={styles.wrap}>
-      {showQuitConfirm && (
-        <div className={styles.quitModalOverlay}>
-          <div className={styles.quitModalCard}>
-            <div className={styles.quitModalBear}>
-              <Bear mood="sad" size={80} />
-            </div>
-            <h3 className={styles.quitModalTitle}>Quit lesson?</h3>
-            <p className={styles.quitModalText}>
-              You'll have to start this lesson over from the beginning if you quit now.
-            </p>
-            <button className={styles.quitConfirmBtn} onClick={onQuit}>QUIT</button>
-            <button className={styles.quitCancelBtn} onClick={() => setShowQuitConfirm(false)}>KEEP LEARNING</button>
-          </div>
-        </div>
-      )}
+      {showQuitConfirm && <QuitConfirm onQuit={onQuit} onCancel={() => setShowQuitConfirm(false)} />}
 
       <div className={styles.topBar}>
         <div className={styles.topBarInner}>
-          <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
+          <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="Quit lesson" width={20} height={20} /></button>
           <button
             className={`${styles.muteBtn} ${ttsMuted ? styles.muteBtnOff : ''}`}
             onClick={() => { setTTSMuted(!ttsMuted); setTtsMuted(!ttsMuted) }}
             title={ttsMuted ? 'Unmute audio' : 'Mute audio'}
+            aria-label="Mute audio"
+            aria-pressed={ttsMuted}
           >
             {ttsMuted ? '🔇' : '🔊'}
           </button>
@@ -263,7 +271,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
                 className={`${styles.useKeyboardBtn} ${useKeyboard ? styles.useKeyboardActive : ''}`}
                 onClick={() => setUseKeyboard(v => !v)}
               >
-                <span className={styles.keyboardIcon}><img src="/icons/keyboard.png" alt="⌨" width={24} height={24} /></span>
+                <span className={styles.keyboardIcon}><img src="/icons/keyboard.png" alt="" width={24} height={24} /></span>
                 <span className={styles.keyboardLabel}>{useKeyboard ? 'USE TILES' : 'USE KEYBOARD'}</span>
               </button>
             )}

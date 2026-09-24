@@ -29,7 +29,7 @@
 .tabOn { background: var(--surface-hi); color: var(--text); }
 .badge {
   min-width: 20px; padding: 0 6px; border-radius: 999px;
-  background: var(--orange); color: #fff; font-size: 12px; line-height: 20px;
+  background: var(--orange); color: var(--on-accent); font-size: 12px; line-height: 20px;
 }
 
 .progress {
@@ -109,7 +109,7 @@
 
 .saveBtn {
   padding: 9px 20px; border-radius: var(--r);
-  background: var(--green); color: #fff;
+  background: var(--green); color: var(--on-accent);
   font-size: 14px; font-weight: 900; letter-spacing: 0.3px;
   box-shadow: 0 4px 0 var(--green-press);
   transition: transform 0.1s, box-shadow 0.1s;

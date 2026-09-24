@@ -201,7 +201,7 @@
 
 .textarea {
   background: var(--surface-hi); border: 2px solid var(--border);
-  color: var(--text); font-size: 13px; font-family: 'Nunito', monospace;
+  color: var(--text); font-size: 13px; font-family: var(--font-nunito), monospace;
   padding: 10px 12px; border-radius: var(--r2); outline: none; resize: vertical;
   transition: border-color 0.15s; width: 100%; line-height: 1.6;
 }

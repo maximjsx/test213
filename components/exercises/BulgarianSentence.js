@@ -21,7 +21,7 @@ export default function BulgarianSentence({ text, wordMap = {}, className }) {
   const tokens = text.split(/(\s+)/)
 
   return (
-    <span className={className}>
+    <span className={className} lang="bg">
       {tokens.map((token, i) => {
         if (/^\s+$/.test(token)) return <span key={i}> </span>
         const clean = token.replace(/[.,!?;:«»„"'()\-]/g, '').toLowerCase()

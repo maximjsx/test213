@@ -39,7 +39,7 @@
   flex-shrink:0;
   font-size:12px; font-weight:900; letter-spacing:0.6px;
   padding:11px 16px; border-radius:999px;
-  background:var(--blue); color:#fff;
+  background:var(--blue); color:var(--on-accent);
   box-shadow:0 3px 0 #0f83bd;
   transition:transform 0.1s, box-shadow 0.1s;
   white-space:nowrap;
@@ -167,7 +167,7 @@
 
 .shopBuyBtn {
   padding:10px 20px; border-radius:var(--r2); border:2px solid transparent; cursor:pointer;
-  background:var(--teal); color:#fff;
+  background:var(--teal); color:var(--on-accent);
   font-size:14px; font-weight:900; letter-spacing:0.3px;
   box-shadow:0 3px 0 var(--teal-press);
   transition:transform 0.1s, box-shadow 0.1s, filter 0.15s;
@@ -206,7 +206,7 @@
   padding:8px 16px; background:var(--green-bg); border-radius:999px;
 }
 .packCardBuyBtn {
-  font-size:14px; font-weight:900; color:#fff;
+  font-size:14px; font-weight:900; color:var(--on-accent);
   padding:10px 20px; border-radius:999px;
   background:var(--teal); border:none; cursor:pointer;
   box-shadow:0 3px 0 var(--teal-press);

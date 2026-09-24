@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { playClip } from '../../lib/audio'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 export default function Introduce({ exercise, onPendingChange, checkTrigger, onAnswer }) {
@@ -28,7 +29,7 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
       <p className={styles.label}>{exercise.label || 'NEW'}</p>
 
       <div className={styles.introduceCard}>
-        <div className={styles.introduceLetterRow}>
+        <div className={styles.introduceLetterRow} lang={langOf(upper)}>
           {showBothCases ? (
             <>
               <span className={styles.introduceLetter}>{upper}</span>
@@ -52,7 +53,7 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
             onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })}
             title="Listen again"
           >
-            <img src="/icons/speaker.png" alt="🔊" width={22} height={22} />
+            <img src="/icons/speaker.png" alt="" width={22} height={22} />
             <span>Listen again</span>
           </button>
         )}

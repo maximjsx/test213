@@ -4,6 +4,7 @@ import { flushSync } from 'react-dom'
 import { shuffle, checkAnswer } from '../../lib/checker'
 import { playClip, speakText, hapticTap } from '../../lib/audio'
 import BulgarianSentence, { parseWordHints } from './BulgarianSentence'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 function FlyingWord({ word, fromX, fromY, toX, toY, width, height, chipStyle }) {
@@ -243,7 +244,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
         </h2>
         {(exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) && (
           <button className={styles.ttsInline} onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })} title="Listen">
-            <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
+            <img src="/icons/speaker.png" alt="Listen" width={20} height={20} />
           </button>
         )}
       </div>
@@ -282,6 +283,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
                     draggable={!disabled}
                     onDragStart={e => onDragStartAnswer(e, item)}
                     onClick={e => removeWord(item, e.currentTarget)}
+                    lang={langOf(item.word)}
                     disabled={disabled}
                   >
                     {item.word}
@@ -308,6 +310,7 @@ export default function WordBank({ exercise, onAnswer, onPendingChange, checkTri
                   draggable={!disabled && !isPlaceholder}
                   onDragStart={e => onDragStartBank(e, item)}
                   onClick={e => addWord(item, e.currentTarget)}
+                  lang={langOf(item.word)}
                   disabled={disabled || isPlaceholder}
                 >
                   {item.word}

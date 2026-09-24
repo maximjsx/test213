@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   background: var(--bg);
-  font-family: 'Nunito', sans-serif;
+  font-family: var(--font-nunito), sans-serif;
   /* Circular (iris) reveal: the whole overlay is clipped to a big circle, then
      collapses to a point at the centre to wipe the app in — cleaner than a fade */
   clip-path: circle(150% at 50% 50%);

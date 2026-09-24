@@ -1,11 +1,20 @@
 import './globals.css'
 import Link from 'next/link'
+import { Nunito } from 'next/font/google'
 import BottomNav from '../components/BottomNav'
 import InstallBanner from '../components/InstallBanner'
 import Splash from '../components/Splash'
 import styles from './layout.module.css'
 
 const BASE_URL = 'https://learn.bulgarian.dev'
+
+// Served from our own domain at build time, so visitors never contact Google
+const nunito = Nunito({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '600', '700', '800', '900'],
+  variable: '--font-nunito',
+  display: 'swap',
+})
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
@@ -52,16 +61,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={nunito.variable}>
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body>
         <div className={styles.appShell}>
           <div className={styles.content}>{children}</div>
           <footer className={styles.footer}>
-            <Link href="/builder" className={styles.footerLink}>🏗️ Level Builder</Link>
+            <Link href="/builder" className={styles.footerLink}>Level Builder</Link>
             <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
             <a href="https://legal.bulgarian.dev/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Legal Notice</a>
             <a href="https://discord.gg/gnuh77Dxgm" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Discord</a>

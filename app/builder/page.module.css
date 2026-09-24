@@ -30,7 +30,7 @@
 .importBtn:hover { border-color: var(--border-hi); color: var(--text); }
 .importBtn:active { transform: translateY(1px); }
 .createBtn {
-  background: var(--green); color: #fff; font-weight: 800; font-size: 14px;
+  background: var(--green); color: var(--on-accent); font-weight: 800; font-size: 14px;
   padding: 8px 18px; border-radius: var(--r2); border: none;
   box-shadow: 0 4px 0 var(--green-press);
   transition: filter 0.1s, transform 0.1s, box-shadow 0.1s; white-space: nowrap;
@@ -67,7 +67,7 @@
 .importError { font-size: 13px; color: var(--red); font-weight: 700; }
 .importActions { display: flex; gap: 8px; }
 .importSubmit {
-  background: var(--blue); color: #fff; font-weight: 800; font-size: 14px;
+  background: var(--blue); color: var(--on-accent); font-weight: 800; font-size: 14px;
   padding: 9px 20px; border-radius: var(--r2); border: none;
   box-shadow: 0 4px 0 #1a6abf;
   transition: filter 0.1s, transform 0.1s, box-shadow 0.1s;
@@ -94,7 +94,7 @@
 .emptyText { font-size: 20px; font-weight: 800; color: var(--text); }
 .emptyHint { font-size: 14px; color: var(--text-muted); max-width: 420px; line-height: 1.6; }
 .createBtnLg {
-  margin-top: 8px; background: var(--green); color: #fff;
+  margin-top: 8px; background: var(--green); color: var(--on-accent);
   font-weight: 800; font-size: 16px; padding: 14px 32px;
   border-radius: var(--r); border: none;
   box-shadow: 0 4px 0 var(--green-press);

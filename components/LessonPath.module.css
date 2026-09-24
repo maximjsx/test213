@@ -124,7 +124,7 @@
 .tooltipBtn {
   display:block; width:100%; text-align:center; cursor:pointer;
   border-radius:var(--r2);
-  padding:14px 10px; font-size:17px; font-weight:900; color:#fff;
+  padding:14px 10px; font-size:17px; font-weight:900; color:var(--on-accent);
   letter-spacing:0.5px; transition:filter 0.15s, transform 0.1s;
   border:none;
 }

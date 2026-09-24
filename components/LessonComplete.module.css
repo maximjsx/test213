@@ -81,7 +81,7 @@
 
 .tileHead {
   font-size:11px; font-weight:900; letter-spacing:1px; text-transform:uppercase;
-  color:#fff; padding:5px 6px;
+  color:var(--on-accent); padding:5px 6px;
 }
 .tileBody {
   display:flex; align-items:center; justify-content:center; gap:5px;
@@ -124,7 +124,7 @@
 .continueBtn {
   flex:1;
   padding:15px; border-radius:var(--r); border:none;
-  font-size:16px; font-weight:900; color:#fff; letter-spacing:0.5px;
+  font-size:16px; font-weight:900; color:var(--on-accent); letter-spacing:0.5px;
   cursor:pointer; transition:transform 0.1s, box-shadow 0.1s, filter 0.15s;
 }
 .continueBtn:hover { filter:brightness(1.05); }

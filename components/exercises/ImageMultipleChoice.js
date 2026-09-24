@@ -2,6 +2,7 @@
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
 import { playClip, speakText, hapticTap } from '../../lib/audio'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 // Show a picture, pick the correct Bulgarian word/phrase from text choices.
@@ -50,6 +51,7 @@ export default function ImageMultipleChoice({ exercise, onAnswer, onPendingChang
           return (
             <button
               key={choice}
+              lang={langOf(choice)}
               className={`${styles.choice} ${styles[state]}`}
               onClick={() => select(choice)}
               disabled={disabled || checked}

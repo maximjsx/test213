@@ -14,7 +14,7 @@
   margin-top:10px;
   font-size:15px;font-weight:900;letter-spacing:0.5px;
   padding:14px 32px;border-radius:var(--r);
-  background:var(--blue);color:#fff;
+  background:var(--blue);color:var(--on-accent);
   box-shadow:0 4px 0 #0f83bd;
   transition:transform 0.1s,box-shadow 0.1s;
 }

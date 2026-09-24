@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { COURSE } from '../data/course'
 import { useProgress } from '../hooks/useProgress'
 import { useAuth } from '../hooks/useAuth'
+import { useDialog } from '../hooks/useDialog'
 import { claimableQuestCount } from '../lib/quests'
 import { unlockAudio } from '../lib/audio'
 import QuestsModal from '../components/QuestsModal'
@@ -39,20 +40,21 @@ function findResumeLesson(isLessonComplete, isLessonUnlocked) {
 }
 
 function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, onClose }) {
+  const cardRef = useDialog(onClose)
   return (
     <div className={styles.shopOverlay} onClick={onClose}>
-      <div className={styles.shopCard} onClick={e => e.stopPropagation()}>
-        <button className={styles.shopClose} onClick={onClose}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
+      <div className={styles.shopCard} ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="shop-title" onClick={e => e.stopPropagation()}>
+        <button className={styles.shopClose} onClick={onClose}><img src="/icons/gray_x.png" alt="Close" width={20} height={20} /></button>
         <div className={styles.shopEmoji}><img src="/icons/gift_box.png" alt="shop" width={52} height={52} /></div>
-        <h2 className={styles.shopTitle}>Shop</h2>
+        <h2 id="shop-title" className={styles.shopTitle}>Shop</h2>
         <div className={styles.shopStats}>
-          <span><img src="/icons/lightning.png" alt="⚡" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.xp} XP available</span>
+          <span><img src="/icons/lightning.png" alt="" width={16} height={16} style={{ verticalAlign: 'middle', marginRight: 4 }} />{state.xp} XP available</span>
         </div>
 
         <div className={styles.shopSectionLabel}>Streak</div>
         <div className={styles.shopItem}>
           <div className={styles.shopItemInfo}>
-            <span className={styles.shopItemIcon}><img src="/icons/shield.png" alt="🛡" width={26} height={26} /></span>
+            <span className={styles.shopItemIcon}><img src="/icons/shield.png" alt="" width={26} height={26} /></span>
             <div>
               <div className={styles.shopItemName}>Streak Freeze</div>
               <div className={styles.shopItemCost}>{STREAK_FREEZE_COST_XP} XP · Have: {state.streakFreezes || 0}</div>
@@ -73,7 +75,7 @@ function ShopModal({ state, buyStreakFreeze, STREAK_FREEZE_COST_XP, unlockPack, 
           return (
             <div key={pack.id} className={`${styles.shopItem} ${owned ? styles.shopItemOwned : ''}`}>
               <div className={styles.shopItemInfo}>
-                <span className={styles.shopItemIcon}>{pack.icon}</span>
+                <span className={styles.shopItemIcon} aria-hidden="true">{pack.icon}</span>
                 <div>
                   <div className={styles.shopItemName}>{pack.name}</div>
                   <div className={styles.shopItemCost}>{owned ? 'Unlocked' : `${pack.costXP} XP`}</div>
@@ -138,7 +140,7 @@ function XpCounter({ xp }) {
   }, [xp])
   return (
     <div className={styles.xp}>
-      <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="⚡" width={24} height={24} /></span>
+      <span className={styles.xpIcon}><img src="/icons/lightning.png" alt="" width={24} height={24} /></span>
       <span className={styles.xpNum}>{display} XP</span>
       {delta && <span key={delta.key} className={styles.xpDelta}>+{delta.amount}</span>}
     </div>
@@ -182,15 +184,15 @@ export default function HomePage() {
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <div className={styles.logo}>
-            <img src="/icons/bulgarian_flag.png" alt="🇧🇬" className={styles.logoFlag} width={34} height={34} />
+            <img src="/icons/bulgarian_flag.png" alt="" className={styles.logoFlag} width={34} height={34} />
             <span className={styles.logoName}>
               Learn Bulgarian
               <sup className={styles.betaBadge}>Beta</sup>
             </span>
           </div>
           <div className={styles.headerStats}>
-            <button className={`${styles.streak} ${styles.statBtn} ${streakAtRisk ? styles.streakAtRisk : ''}`} onClick={() => setShowStreak(true)} title="Streak calendar">
-              <span className={styles.streakFlame}><img src="/icons/fire.png" alt="🔥" width={26} height={26} /></span>
+            <button className={`${styles.streak} ${styles.statBtn} ${streakAtRisk ? styles.streakAtRisk : ''}`} onClick={() => setShowStreak(true)} title="Streak calendar" aria-label={`${state.streak} day streak, open calendar`}>
+              <span className={styles.streakFlame}><img src="/icons/fire.png" alt="" width={26} height={26} /></span>
               <span className={styles.streakNum}>{state.streak}</span>
             </button>
             <XpCounter xp={state.xp} />
@@ -199,7 +201,7 @@ export default function HomePage() {
               {claimable > 0 && <span className={styles.questBadge}>{claimable}</span>}
             </button>
             <button className={styles.shopBtn} onClick={() => setShowShop(true)} title="Shop">
-              <img src="/icons/gift_box.png" alt="🎁" width={28} height={28} />
+              <img src="/icons/gift_box.png" alt="Shop" width={28} height={28} />
             </button>
             <Link href="/leaderboard" className={`${styles.shopBtn} ${styles.leaderboardLink}`} title="Leaderboard">
               <img src="/icons/trophy.png" alt="leaderboard" width={26} height={26} />
@@ -249,7 +251,7 @@ export default function HomePage() {
               const { owned, canAfford } = packView(state, pack)
               return (
                 <div key={pack.id} className={`${styles.packCard} ${owned ? styles.packOwned : ''}`}>
-                  <div className={styles.packCardIcon}>{pack.icon}</div>
+                  <div className={styles.packCardIcon} aria-hidden="true">{pack.icon}</div>
                   <div className={styles.packCardName}>{pack.name}</div>
                   <div className={styles.packCardDesc}>{pack.desc}</div>
                   {owned

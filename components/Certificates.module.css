@@ -11,7 +11,7 @@
 .seal {
   flex-shrink:0;
   width:64px; height:64px; border-radius:50%;
-  background:var(--teal); color:#fff;
+  background:var(--teal); color:var(--on-accent);
   display:flex; align-items:center; justify-content:center;
   font-size:22px; font-weight:900;
   box-shadow:0 4px 0 var(--teal-press), inset 0 0 0 4px var(--teal), inset 0 0 0 6px rgba(255,255,255,0.7);
@@ -38,7 +38,7 @@
   padding:11px 18px; border-radius:var(--r);
   transition:transform 0.1s, box-shadow 0.1s, filter 0.15s;
 }
-.claimBtn { background:var(--teal); color:#fff; box-shadow:0 4px 0 var(--teal-press); }
+.claimBtn { background:var(--teal); color:var(--on-accent); box-shadow:0 4px 0 var(--teal-press); }
 .claimBtn:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 0 var(--teal-press); }
 .claimBtn:active:not(:disabled) { transform:translateY(4px); box-shadow:0 0 0 var(--teal-press); }
 .claimBtn:disabled { filter:grayscale(0.6) brightness(0.8); cursor:not-allowed; }
@@ -46,7 +46,7 @@
 .viewBtn { background:var(--surface); color:var(--teal); border:2px solid var(--teal); box-shadow:0 4px 0 var(--teal-press); }
 .viewBtn:hover { transform:translateY(-1px); box-shadow:0 5px 0 var(--teal-press); }
 
-.signInBtn { background:var(--blue); color:#fff; box-shadow:0 4px 0 #0f83bd; }
+.signInBtn { background:var(--blue); color:var(--on-accent); box-shadow:0 4px 0 #0f83bd; }
 .signInBtn:hover { transform:translateY(-1px); box-shadow:0 5px 0 #0f83bd; }
 
 .claimForm { display:flex; flex-direction:column; gap:6px; }

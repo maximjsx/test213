@@ -105,14 +105,6 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2>Third-Party Services</h2>
-          <p>
-            We use Google Fonts to load the Nunito typeface. Google may log the request to serve the font.
-            See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a> for details.
-          </p>
-        </section>
-
-        <section>
           <h2>Children's Privacy</h2>
           <p>
             Learn Bulgarian does not knowingly collect any data from children under 13. Because no personal

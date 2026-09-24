@@ -2,6 +2,7 @@
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
 import { playClip, speakText, hapticTap } from '../../lib/audio'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 export default function MultipleChoice({ exercise, onAnswer, onPendingChange, checkTrigger, disabled, levelColor }) {
@@ -53,7 +54,7 @@ export default function MultipleChoice({ exercise, onAnswer, onPendingChange, ch
       <div className={styles.promptRow}>
         {(exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) && (
           <button className={styles.ttsInline} onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })} title="Listen">
-            <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
+            <img src="/icons/speaker.png" alt="Listen" width={20} height={20} />
           </button>
         )}
         <h2 className={styles.question}>{exercise.question}</h2>
@@ -69,6 +70,7 @@ export default function MultipleChoice({ exercise, onAnswer, onPendingChange, ch
           return (
             <button
               key={choice}
+              lang={langOf(choice)}
               className={`${isCyrillicCards ? styles.cyrillicCard : styles.choice} ${styles[state]}`}
               onClick={() => select(choice)}
               disabled={disabled || checked}

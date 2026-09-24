@@ -61,7 +61,7 @@ export default function LevelPage() {
     <div className={styles.page}>
       <div className={styles.topBar} style={{ borderBottom: `3px solid ${level.color}` }}>
         <div className={styles.topBarInner}>
-          <button className={styles.backBtn} onClick={() => router.back()}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
+          <button className={styles.backBtn} onClick={() => router.back()}><img src="/icons/gray_x.png" alt="Back" width={20} height={20} /></button>
           <span className={styles.topTitle}>Notes</span>
           <div style={{ width: 36 }} />
         </div>

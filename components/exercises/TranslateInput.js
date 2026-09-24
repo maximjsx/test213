@@ -74,7 +74,7 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
         </h2>
         {(exercise.audio?.url || (exercise.tts && /[Ѐ-ӿ]/.test(exercise.tts))) && (
           <button className={styles.ttsInline} onClick={() => playClip({ audio: exercise.audio, text: exercise.tts })} title="Listen">
-            <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
+            <img src="/icons/speaker.png" alt="Listen" width={20} height={20} />
           </button>
         )}
       </div>
@@ -102,8 +102,9 @@ export default function TranslateInput({ exercise, onAnswer, onPendingChange, ch
             onClick={handleSpeech}
             disabled={disabled || listening || submitted}
             title="Speak your answer"
+            aria-label={listening ? 'Listening' : 'Speak your answer'}
           >
-            {listening ? '⏹' : <img src="/icons/microphone.png" alt="🎤" width={22} height={22} />}
+            {listening ? '⏹' : <img src="/icons/microphone.png" alt="" width={22} height={22} />}
           </button>
         )}
       </div>

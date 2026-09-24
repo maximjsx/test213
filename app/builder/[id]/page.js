@@ -7,6 +7,7 @@ import { AudioField, ImageField } from '../../../components/builder/MediaControl
 import TopicArt from '../../../components/TopicArt'
 import BuilderGate from '../../../components/builder/BuilderGate'
 import Link from 'next/link'
+import { clickable } from '../../../lib/a11y'
 import styles from './page.module.css'
 
 const uid = () => Math.random().toString(36).slice(2, 9)
@@ -931,7 +932,7 @@ export default function LevelEditor() {
       {/* ── top bar ── */}
       <div className={styles.topBar}>
         <Link href="/builder" className={styles.backBtn} title="Back to Builder">
-          <img src="/icons/gray_x.png" alt="✕" width={18} height={18} />
+          <img src="/icons/gray_x.png" alt="Back to builder" width={18} height={18} />
         </Link>
         <div className={styles.topCenter}>
           <span className={styles.topLevel} style={{ color: level.color }}>{level.icon}</span>
@@ -1055,7 +1056,7 @@ export default function LevelEditor() {
             return (
               <div key={lesson.id} className={`${styles.lessonCard} ${isOpen ? styles.lessonCardOpen : ''}`}>
                 {/* lesson header */}
-                <div className={styles.lessonHeader} onClick={() => setExpandedLessons(prev => { const next = new Set(prev); if (next.has(li)) next.delete(li); else next.add(li); return next })}>
+                <div className={styles.lessonHeader} aria-expanded={isOpen} {...clickable(() => setExpandedLessons(prev => { const next = new Set(prev); if (next.has(li)) next.delete(li); else next.add(li); return next }))}>
                   <div className={styles.lessonHeaderLeft}>
                     <span className={styles.lessonNumBadge}>{li + 1}</span>
                     <span className={styles.lessonTitle}>{lesson.title}</span>
@@ -1090,7 +1091,7 @@ export default function LevelEditor() {
                       const isExOpen = exSet.has(ei)
                       return (
                         <div key={ex.id || ei} className={`${styles.exCard} ${isExOpen ? styles.exCardOpen : ''}`}>
-                          <div className={styles.exHeader} onClick={() => toggleEx(li, ei)}>
+                          <div className={styles.exHeader} aria-expanded={isExOpen} {...clickable(() => toggleEx(li, ei))}>
                             <div className={styles.exHeaderLeft}>
                               <span className={styles.exTypeBadge}>
                                 {typeInfo?.icon} {typeInfo?.label || ex.type}

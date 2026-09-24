@@ -59,7 +59,7 @@
   display:flex;align-items:center;justify-content:center;
   font-size:12.5px;font-weight:800;color:var(--text-muted);
 }
-.dayActive { background:var(--orange);color:#fff; }
+.dayActive { background:var(--orange);color:var(--on-accent); }
 .dayFrozen { background:var(--blue-bg);color:var(--blue);border:1.5px solid var(--blue); }
 .dayToday  { outline:2px solid var(--border-hi);outline-offset:1px; }
 

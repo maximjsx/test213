@@ -38,7 +38,7 @@
   padding: 14px 28px;
   border-radius: var(--r);
   background: var(--green);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 15px;
   font-weight: 900;
   letter-spacing: 0.5px;

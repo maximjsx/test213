@@ -47,7 +47,7 @@ export default function ImageSelect({ exercise, onAnswer, onPendingChange, check
       <p className={styles.label}>WHICH PICTURE?</p>
       <div className={styles.imageListenRow}>
         <button className={styles.ttsBtn} onClick={play} title="Listen again">
-          <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
+          <img src="/icons/speaker.png" alt="" width={20} height={20} />
           <span>{exercise.prompt || 'Listen'}</span>
         </button>
       </div>

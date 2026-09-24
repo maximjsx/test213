@@ -1,16 +1,18 @@
 'use client'
 import Bear from './Bear'
 import { hapticTap } from '../lib/audio'
+import { useDialog } from '../hooks/useDialog'
 import styles from './QuestsModal.module.css'
 
 export default function QuestsModal({ quests, claimQuest, onClose }) {
   const items = quests?.items || []
+  const cardRef = useDialog(onClose)
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.card} onClick={e => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose}><img src="/icons/gray_x.png" alt="✕" width={20} height={20} /></button>
+      <div className={styles.card} ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="quests-title" onClick={e => e.stopPropagation()}>
+        <button className={styles.close} onClick={onClose}><img src="/icons/gray_x.png" alt="Close" width={20} height={20} /></button>
         <div className={styles.bear}><Bear mood="happy" size={72} /></div>
-        <h2 className={styles.title}>Daily Quests</h2>
+        <h2 id="quests-title" className={styles.title}>Daily Quests</h2>
         <p className={styles.sub}>New quests every day at midnight</p>
 
         {items.map(q => {

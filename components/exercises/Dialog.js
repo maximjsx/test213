@@ -2,6 +2,7 @@
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { checkAnswer, shuffle } from '../../lib/checker'
 import { playClipBlocking, speakText, hapticTap } from '../../lib/audio'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 const PAUSE_AFTER_LINE = 500 // ms of silence between lines
@@ -121,7 +122,7 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
             className={`${styles.dialogLine} ${isRight ? styles.dialogLineB : styles.dialogLineA}`}
           >
             <div className={styles.dialogAvatar}>{speakerMap[line.speaker]?.name || line.speaker}</div>
-            <div className={styles.dialogBubble}>{line.text}</div>
+            <div className={styles.dialogBubble} lang={langOf(line.text)}>{line.text}</div>
           </div>
           )
         })}
@@ -147,6 +148,7 @@ export default function Dialog({ exercise, onAnswer, onPendingChange, checkTrigg
               {shuffledChoices.map(c => (
                 <button
                   key={c}
+                  lang={langOf(c)}
                   className={choiceClass(c)}
                   onClick={() => selectChoice(c)}
                   disabled={disabled || checked}

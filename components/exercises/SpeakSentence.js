@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { playClip, startSpeechRecognition } from '../../lib/audio'
 import { transliterateInput } from '../../lib/checker'
+import { langOf } from '../../lib/lang'
 import styles from './Exercise.module.css'
 
 function normalizeSpeech(str) {
@@ -421,9 +422,9 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
       <div className={styles.speakBubbleRow}>
         <div className={styles.speakBubble}>
           <button className={styles.speakBubbleAudioBtn} onClick={() => playClip({ audio: exercise.audio, text: target })} title="Listen again">
-            <img src="/icons/speaker.png" alt="🔊" width={20} height={20} />
+            <img src="/icons/speaker.png" alt="Listen again" width={20} height={20} />
           </button>
-          <span className={styles.speakBubbleText}>{target}</span>
+          <span className={styles.speakBubbleText} lang={langOf(target)}>{target}</span>
         </div>
       </div>
 
@@ -440,7 +441,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
           onClick={handleSpeak}
           disabled={disabled || phase === 'processing' || succeeded}
         >
-          <img src="/icons/microphone.png" alt="🎤" width={24} height={24} />
+          <img src="/icons/microphone.png" alt="" width={24} height={24} />
           <span>{btnLabel}</span>
         </button>
       ) : (
