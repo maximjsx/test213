@@ -27,4 +27,4 @@ Same rules apply to "в" and "във".
 * **Written**: Strict rules.
 * **Spoken**: More flexible.
 
-> In written poetry this rule is often discarded in favour of better rythm
+> In written poetry this rule is often discarded in favour of better rhythm

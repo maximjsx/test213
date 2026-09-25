@@ -1,21 +1,10 @@
-### Rule for Restructuring Sentences
+The verb ending already shows who does it, so the subject pronoun (**аз**, **ти**, **той**...) is usually left out. Keep it only for emphasis or contrast.
 
-In Bulgarian, you can drop the subject and reflexive pronouns without changing the sentence's meaning.
+The short words **се**, **ми**, **ти**, **го** and **съм** can't start a sentence. When the pronoun goes, they don't disappear, they move after the verb.
 
-### Examples
+* **"Аз се казвам Иван."** → **"Казвам се Иван."** (My name is Ivan.)
+* **"Аз ще отида на кино."** → **"Ще отида на кино."** (I will go to the cinema.)
+* **"Ти се смееш много."** → **"Смееш се много."** (You laugh a lot.)
+* **"Той ми даде книгата."** → **"Даде ми книгата."** (He gave me the book.)
 
-* **"Аз се казвам..."** or **"Казвам се..."**
-  * **Meaning**: "My name is..."
-  * **Example**:
-    * "Аз се казвам Иван." (I am called Ivan.)
-    * "Казвам се Иван." (I am called Ivan.)
-* **"Аз ще отида..."** or **"Ще отида..."**
-  * **Meaning**: "I will go..."
-  * **Example**:
-    * "Аз ще отида на кино." (I will go to the cinema.)
-    * "Ще отида на кино." (I will go to the cinema.)
-* **"Ти се смееш..."** or **"Смееш се..."**
-  * **Meaning**: "You are laughing..."
-  * **Example**:
-    * "Ти се смееш много." (You are laughing a lot.)
-    * "Смееш се много." (You are laughing a lot.)
+Never start with the short word: "Се казвам Иван" and "Ми даде книгата" are wrong.

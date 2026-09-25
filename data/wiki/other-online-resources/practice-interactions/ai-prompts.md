@@ -2,7 +2,7 @@
 
 You can use AI to practice but ==be cautious with it cause it can be wrong.==
 
-<https://chat.bggpt.ai/> is a chatgpt based chat AI which answers in bulgarian by default.
+<https://chat.bggpt.ai/> is a Bulgarian chat AI made by INSAIT (built on Google Gemma, not ChatGPT). It answers in Bulgarian by default.
 
 ---
 

@@ -31,4 +31,4 @@ If any condition is unmet, "я" changes to "е."
 
 **References** The text cites various sources, including dictionaries and grammar references, to support its explanations of the yat rule and its exceptions.
 
-[Source & more detailed information (in bulgarian](https://bg.wikipedia.org/wiki/Променливо_„я"))
+[Source and more detail (in Bulgarian)](https://bg.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BC%D0%B5%D0%BD%D0%BB%D0%B8%D0%B2%D0%BE_%E2%80%9E%D1%8F%E2%80%9C)

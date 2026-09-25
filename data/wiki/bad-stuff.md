@@ -86,7 +86,7 @@ For educational purposes only. Most of these are very offensive, so know them to
 | Пишка | Dick |
 | Кур | Cock |
 | Курва | Whore |
-| Путка майна | Cunt |
+| Путка майна | Vulgar "dude", said in anger or between friends; also "the middle of nowhere" |
 | Майка ти | Your mom |
 | Да ти еба майката / Еба ти майката | Fuck your mother |
 | Ебал съм ти майката | I fucked your mother |

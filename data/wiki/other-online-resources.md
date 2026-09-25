@@ -20,13 +20,13 @@
 ### Dictionaries and tools
 
 * [Bulgarian dictionary](https://rechnik.chitanka.info/)
-* [Беров](https://beron.mon.bg/): official spelling dictionary
+* [БЕРОН](https://beron.mon.bg/): official spelling dictionary
 * [Тълковен речник](https://talkoven.onlinerechnik.com/): explanatory dictionary
 * [Български етимологичен речник](https://ibl.bas.bg/rbe/): where words come from
 * [IBL language questions](https://ibl.bas.bg/ezikovi_spravki/): tricky grammar rules answered
 * [PONS dictionary](https://en.pons.com/translate)
 * [DeepL translator](https://www.deepl.com/en/translator)
-* [BgGPT](https://chat.bggpt.ai): Bulgarian chat AI
+* [BgGPT](https://chat.bggpt.ai): Bulgarian chat AI by INSAIT
 * [Typing test](https://10fastfingers.com/typing-test/bulgarian)
 
 ### For Bulgarians
