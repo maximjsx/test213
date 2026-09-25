@@ -52,7 +52,6 @@
 
 * [Teach Yourself Bulgarian](https://github.com/Bulgarian-language-learning/bulgarian-language-resources/blob/main/static/learning-resources/Teach_Yourself_Bulgarian.pdf?raw=true) (PDF)
 * [Bulgarian Grammar in Charts](https://www.amazon.com/Grammar-Matters-Bulgarian-Charts-ebook/dp/B00KVIB5CS/)
-* [Bulgarian reference grammar](https://inozmi.spilnotv.com/books/sprak/bg/stand_alone_bulgarian.pdf) (PDF)
 
 ### Community
 
