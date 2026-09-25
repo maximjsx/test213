@@ -1,0 +1,20 @@
+.card {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 16px;
+  background: var(--surface); border: 2px solid var(--border); border-radius: var(--r-lg);
+}
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.label { font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+.more { font-size: var(--fs-sm); font-weight: 800; color: var(--blue); }
+.more:hover { text-decoration: underline; }
+.head { display: flex; align-items: center; gap: 12px; }
+.speak {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-hi); border: 2px solid var(--border);
+}
+.speak:hover { border-color: var(--border-hi); }
+.words { flex: 1; min-width: 0; }
+.bg { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1.2; overflow-wrap: anywhere; }
+.en { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+.sense { font-size: var(--fs-sm); font-weight: 700; color: var(--text-dim); line-height: 1.45; }

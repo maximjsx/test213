@@ -14,6 +14,7 @@ import ReviewCta from '../components/decks/ReviewCta'
 import { useDecks } from '../hooks/useDecks'
 import ResumeCard, { PracticeMistakesLink } from '../components/home/ResumeCard'
 import PracticeLinks from '../components/home/PracticeLinks'
+import WordOfTheDay from '../components/home/WordOfTheDay'
 import ShopModal from '../components/home/ShopModal'
 import UnlockTopicModal from '../components/home/UnlockTopicModal'
 import QuestsModal from '../components/QuestsModal'
@@ -137,6 +138,7 @@ export default function HomePage() {
           <ReviewCta className={styles.oReview} count={dueCount} />
           <PracticeMistakesLink className={styles.oMistakes} count={mistakeCount} />
           <PracticeLinks className={styles.oTiles} />
+          <WordOfTheDay className={styles.oWord} />
         </aside>
       </div>
     </div>

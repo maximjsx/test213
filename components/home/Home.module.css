@@ -31,8 +31,9 @@
 .oReview   { order: 3; }
 .oMistakes { order: 4; }
 .oTiles    { order: 5; }
-.oTree     { order: 6; }
-.oCerts    { order: 7; }
+.oWord     { order: 6; }
+.oTree     { order: 7; }
+.oCerts    { order: 8; }
 
 @media (max-width: 520px) {
   .logoName { display: none; }
