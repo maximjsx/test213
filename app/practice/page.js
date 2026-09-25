@@ -57,6 +57,7 @@ export default function PracticePage() {
           <h2 id="browse" className={styles.groupTitle}>Review what you know</h2>
           <HubLink href="/words" icon={img('/icons/open_book.png')} title="Words" sub={`${learnedWords} of ${WORDS.length} learned, with audio`} />
           <HubLink href="/letters" icon={<span className={styles.glyph} lang="bg">Аа</span>} title="Letters" sub={`${learnedLetters} of ${LETTERS.length} letters, tap to hear them`} />
+          <HubLink href="/practice/handwriting" icon={img('/icons/another_star.png')} title="Handwriting" sub="Write the letters by hand, in print and cursive" />
         </section>
 
         <section className={styles.group} aria-labelledby="grammar">
