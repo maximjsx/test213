@@ -26,7 +26,7 @@ export default function QuestsModal({ quests, claimQuest, user, friendQuestClaim
                 </div>
               </div>
               {q.claimed ? (
-                <div className={styles.claimedTag}><img src="/icons/green_checkmark.png" alt="" width={16} height={16} /></div>
+                <div className={styles.claimedTag}><img src="/icons/check.svg" alt="" width={16} height={16} /></div>
               ) : done ? (
                 <button className={styles.claimBtn} onClick={() => { hapticTap(); claimQuest(q.id) }}>
                   +{q.reward.amount} {q.reward.type === 'coins' && <CoinIcon size={16} />}

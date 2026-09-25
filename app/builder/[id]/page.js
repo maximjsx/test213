@@ -255,7 +255,7 @@ export default function LevelEditor() {
 
       <div className={styles.topBar}>
         <Link href="/builder" className={styles.backBtn} title="Back to Builder">
-          <img src="/icons/gray_x.png" alt="Back to builder" width={18} height={18} />
+          <img src="/icons/close.svg" alt="Back to builder" width={18} height={18} />
         </Link>
         <div className={styles.topCenter}>
           <span className={styles.topLevel} style={{ color: level.color }}>{level.icon}</span>

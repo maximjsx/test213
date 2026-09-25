@@ -41,7 +41,7 @@ export default function InstallBanner() {
   return (
     <div className={styles.wrap} role="dialog" aria-label="Install app">
       <button className={styles.close} onClick={close} aria-label="Dismiss">
-        <img src="/icons/gray_x.png" alt="" width={16} height={16} />
+        <img src="/icons/close.svg" alt="" width={16} height={16} />
       </button>
       <div className={styles.bear}><Bear mood="happy" size={52} /></div>
       <div className={styles.body}>

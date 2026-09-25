@@ -34,7 +34,7 @@ function ModalCard({ title, label, icon, onClose, dismissable = true, accent, ro
       >
         {dismissable && (
           <button className={styles.close} onClick={onClose} aria-label="Close">
-            <img src="/icons/gray_x.png" alt="" width={18} height={18} />
+            <img src="/icons/close.svg" alt="" width={18} height={18} />
           </button>
         )}
         {icon && <div className={styles.icon}>{icon}</div>}

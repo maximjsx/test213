@@ -177,7 +177,7 @@ function Round({ pool, onFinish }) {
       <div className={styles.playTop}>
         <Clock remaining={remaining} />
         <span className={styles.score} aria-live="polite">
-          <img src="/icons/green_checkmark.png" alt="" width={20} height={20} />{matches}
+          <img src="/icons/check.svg" alt="" width={20} height={20} />{matches}
         </span>
       </div>
       <div className={styles.board}>

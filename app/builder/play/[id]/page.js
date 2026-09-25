@@ -28,7 +28,7 @@ export default function BuilderPlayPage() {
       <div className={styles.topBar} style={{ borderBottom: `3px solid ${level.color}` }}>
         <div className={styles.topBarInner}>
           <button className={styles.backBtn} onClick={() => router.push('/builder')}>
-            <img src="/icons/gray_x.png" alt="Back to builder" width={18} height={18} />
+            <img src="/icons/close.svg" alt="Back to builder" width={18} height={18} />
           </button>
           <span className={styles.topTitle}>Play Preview</span>
           <Link href={'/builder/' + id} className={styles.editLink}>Edit</Link>

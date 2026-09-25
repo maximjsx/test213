@@ -82,7 +82,7 @@ export default function PublicProfilePage() {
               <div className={styles.statLbl}>Day streak</div>
             </div>
             <div className={styles.stat}>
-              <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
+              <img src="/icons/check.svg" alt="" width={22} height={22} />
               <div className={styles.statVal}>{user.lessonsCount}</div>
               <div className={styles.statLbl}>Lessons</div>
             </div>
@@ -107,7 +107,7 @@ export default function PublicProfilePage() {
             {relationship === 'friends' && (
               <div className={styles.friendsRow}>
                 <span className={styles.friendsTag}>
-                  <img src="/icons/green_checkmark.png" alt="" width={16} height={16} /> FRIENDS
+                  <img src="/icons/check.svg" alt="" width={16} height={16} /> FRIENDS
                 </span>
                 <button className={styles.removeBtn} onClick={() => act('remove')} disabled={busy}>Remove</button>
               </div>

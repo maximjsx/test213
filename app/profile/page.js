@@ -196,7 +196,7 @@ function ProfileInner() {
 
                 <div className={styles.stats}>
                   <div className={styles.stat}>
-                    <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
+                    <img src="/icons/check.svg" alt="" width={22} height={22} />
                     <div className={styles.statVal}>{localLessonsDone}</div>
                     <div className={styles.statLbl}>Lessons</div>
                   </div>
@@ -342,7 +342,7 @@ function ProfileInner() {
                   <div className={styles.statLbl}>Day streak</div>
                 </div>
                 <div className={styles.stat}>
-                  <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
+                  <img src="/icons/check.svg" alt="" width={22} height={22} />
                   <div className={styles.statVal}>{lessonsDone}</div>
                   <div className={styles.statLbl}>Lessons</div>
                 </div>
@@ -373,7 +373,7 @@ function ProfileInner() {
                       <div className={styles.friendBtns}>
                         <button className={styles.acceptBtn} onClick={() => friendAction(f.username, 'accept')}>ACCEPT</button>
                         <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'decline')}>
-                          <img src="/icons/gray_x.png" alt="decline" width={14} height={14} />
+                          <img src="/icons/close.svg" alt="decline" width={14} height={14} />
                         </button>
                       </div>
                     </div>
@@ -411,7 +411,7 @@ function ProfileInner() {
                         <span className={styles.friendName}>{f.username}</span>
                       </Link>
                       <button className={styles.declineBtn} onClick={() => friendAction(f.username, 'cancel')} title="Cancel request">
-                        <img src="/icons/gray_x.png" alt="cancel" width={14} height={14} />
+                        <img src="/icons/close.svg" alt="cancel" width={14} height={14} />
                       </button>
                     </div>
                   ))}

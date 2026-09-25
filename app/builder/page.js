@@ -117,7 +117,7 @@ export default function BuilderDashboard() {
       )}
       <div className={styles.header}>
         <Link href="/" className={styles.backBtn}>
-          <img src="/icons/gray_x.png" alt="Back to course" width={18} height={18} />
+          <img src="/icons/close.svg" alt="Back to course" width={18} height={18} />
         </Link>
         <h1 className={styles.pageTitle}>Topic Builder</h1>
         <SyncStatus />

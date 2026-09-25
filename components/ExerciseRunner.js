@@ -189,7 +189,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
 
       <div className={styles.topBar}>
         <div className={styles.topBarInner}>
-          <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/gray_x.png" alt="Quit lesson" width={20} height={20} /></button>
+          <button className={styles.quitBtn} onClick={() => setShowQuitConfirm(true)}><img src="/icons/close.svg" alt="Quit lesson" width={20} height={20} /></button>
           <button
             className={`${styles.muteBtn} ${ttsMuted ? styles.muteBtnOff : ''}`}
             onClick={() => { setTTSMuted(!ttsMuted); setTtsMuted(!ttsMuted) }}
@@ -238,7 +238,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
           <div className={styles.feedbackInner}>
             <div className={styles.feedbackLeft}>
               <div className={`${styles.feedbackIcon} ${feedback.ok === true ? styles.iconOk : feedback.ok === 'skip' ? styles.iconSkip : styles.iconBad}`}>
-                <img src={feedback.ok === true ? '/icons/green_checkmark.png' : '/icons/gray_x.png'} alt={feedback.ok === true ? '✓' : '✗'} width={22} height={22} />
+                <img src={feedback.ok === true ? '/icons/check.svg' : '/icons/close.svg'} alt={feedback.ok === true ? '✓' : '✗'} width={22} height={22} />
               </div>
               <div>
                 <div className={styles.feedbackTitle}>{feedback.ok === true ? 'Correct!' : feedback.ok === 'skip' ? 'Skipped!' : 'Incorrect'}</div>

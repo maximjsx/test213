@@ -71,7 +71,7 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
         aria-label={`${displayTitle}${isComplete ? ', completed' : !isUnlocked ? ', locked' : ''}`}
         aria-expanded={showTooltip}
       >
-        {isComplete ? <span className={styles.nodeCheck}><img src="/icons/green_checkmark.png" alt="" width={44} height={44} /></span>
+        {isComplete ? <span className={styles.nodeCheck}><img src="/icons/check.svg" alt="" width={44} height={44} /></span>
           : !isUnlocked ? <span className={styles.lockIcon}><img src="/icons/lock.png" alt="" width={36} height={36} /></span>
           : <span className={styles.nodeNum}>{lessonNum}</span>}
       </button>

@@ -147,7 +147,7 @@ export default function CertificatePage() {
       <Link href="/" className={styles.backBtn}><Chevron /> Home</Link>
 
       <div className={styles.status}>
-        <img src="/icons/green_checkmark.png" alt="" width={18} height={18} />
+        <img src="/icons/check.svg" alt="" width={18} height={18} />
         Verified certificate
       </div>
 

@@ -163,7 +163,7 @@ export default function LessonComplete({ lesson, level, score, coinsEarned, onCo
                 <div key={ex.id} className={styles.mistakeItem}>
                   {isPrev && <div className={styles.prevBadge}>Previous mistake</div>}
                   <div className={styles.mistakeQ}>{q}</div>
-                  <div className={styles.mistakeA}><img src="/icons/green_checkmark.png" alt="" width={14} height={14} style={{ verticalAlign: 'middle', marginRight: 5 }} />{a}</div>
+                  <div className={styles.mistakeA}><img src="/icons/check.svg" alt="" width={14} height={14} style={{ verticalAlign: 'middle', marginRight: 5 }} />{a}</div>
                 </div>
               )
             })}

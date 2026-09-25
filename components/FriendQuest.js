@@ -88,7 +88,7 @@ export default function FriendQuest({ myAvatarUrl, claimedWeek, onClaim }) {
           <div className={styles.fqSplit}>You {data.myCoins} · {data.partner.username} {data.partner.coins} coins</div>
         </div>
         {claimed ? (
-          <div className={styles.claimedTag}><img src="/icons/green_checkmark.png" alt="Claimed" width={16} height={16} /></div>
+          <div className={styles.claimedTag}><img src="/icons/check.svg" alt="Claimed" width={16} height={16} /></div>
         ) : done ? (
           <button className={styles.claimBtn} onClick={() => { hapticTap(); onClaim(data.week, data.reward) }}>+{data.reward} coins</button>
         ) : (

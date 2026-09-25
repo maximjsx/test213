@@ -61,7 +61,7 @@ function ImportPageInner() {
     <div className={styles.page}>
       <div className={styles.topBar}>
         <Link href="/builder" className={styles.backBtn}>
-          <img src="/icons/gray_x.png" alt="Back to builder" width={18} height={18} />
+          <img src="/icons/close.svg" alt="Back to builder" width={18} height={18} />
         </Link>
         <span className={styles.topTitle}>Shared Topic</span>
         <div style={{ width: 34 }} />
