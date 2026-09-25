@@ -2,12 +2,12 @@
 |----|----|
 | купа | bowl |
 | чиния | plate |
-| кана | pot |
-| кастрюля | saucepan |
+| кана | jug |
+| тенджера | pot |
 | тиган | frying pan |
-| казанче | small pot |
+| казанче | small cauldron |
 | чаша | cup |
-| чашка | mug |
+| чашка | small cup |
 | купичка | small bowl |
 | вилица | fork |
 | лъжица | spoon |
@@ -20,20 +20,16 @@
 | капак | lid |
 | дъска за рязане | cutting board |
 | ренде | grater |
-| терка | grater |
 | щипка | pinch |
 | мерителна чаша | measuring cup |
 | мерителна лъжица | measuring spoon |
 | термометър | thermometer |
 | таймер | timer |
-| кухненски кърпич | kitchen towel |
+| кухненска кърпа | kitchen towel |
 | гъба | sponge |
-| пералня | sink |
-| сешоар | hairdryer |
+| мивка | sink |
 | тава | baking sheet |
 | форма за печене | baking mold |
-| противен | oven tray |
-| капак за фурна | oven glove |
-| капачка | lid |
+| ръкавица за фурна | oven glove |
+| капачка | cap (of a bottle) |
 | лъжичка | teaspoon |
-| вилица | fork |

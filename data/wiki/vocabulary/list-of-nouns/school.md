@@ -9,28 +9,24 @@
 | писмено | written |
 | изпит | exam |
 | оценка | grade |
-| ръководство | guidance |
-| писмена работа | essay |
+| съчинение | essay |
 | дъска | board |
 | раница | backpack |
 | училищен автобус | school bus |
 | кабинет | classroom |
-| ръководство | guidance |
 | предмет | subject |
-| спортен план | gym |
-| музикално звено | music |
+| физическо възпитание (физическо) | PE, gym class |
+| музика | music (subject) |
 | библиотека | library |
-| маса | desk |
+| чин | desk |
 | стол | chair |
 | азбука | alphabet |
-| звън | bell |
-| време | time |
+| звънец | bell |
 | директор | principal |
-| извънкласна работа | homework |
+| домашна работа (домашно) | homework |
 | общежитие | dormitory |
-| обед | lunch |
+| обяд | lunch |
 | почивка | break |
 | писмо | letter |
-| молитва | prayer |
-| специален час | class |
+| час | lesson, class period |
 | спортен план | gym |

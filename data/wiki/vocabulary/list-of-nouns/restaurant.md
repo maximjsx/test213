@@ -2,7 +2,7 @@
 |----|----|
 | меню | menu |
 | храна | food |
-| бакшиш? | tip |
+| бакшиш | tip |
 | маса | table |
 | резервация | reservation |
 | десерт | dessert |
@@ -36,7 +36,7 @@
 | вежливост | politeness |
 | вкус | taste |
 | аромат | aroma |
-| минавка | skewer |
+| шиш | skewer |
 | ястие | dish |
 | риба | fish |
 | месо | meat |
@@ -61,7 +61,7 @@
 | яйце | egg |
 | кафе | coffee |
 | чай | tea |
-| сметанове | whipped cream |
+| бита сметана | whipped cream |
 | сок | juice |
 | шампанско | champagne |
 | коктейл | cocktail |
@@ -70,7 +70,7 @@
 | колбаси | sausages |
 | салам | salami |
 | морска храна | seafood |
-| кебапче | kebab |
+| кебапче | kebapche (grilled minced-meat roll) |
 | сос | dip |
 | чайник | teapot |
 | капучино | cappuccino |

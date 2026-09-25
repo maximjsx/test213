@@ -11,7 +11,7 @@
 | Ж ж | Zhuh | s as in 'pleasure' | Schh (Wie **==G==**elatine/==G==elee/==G==enie ausgesprochen) |
 | З з | Zuh | z as in 'zigzag' | Sh/Zh |
 | И и | Eee | i as in 'india' | Ih |
-| Й й | Ekratko | y as in 'yes' | Ih-kraht-ko |
+| Й й | I kratko (Ee krahtko) | y as in 'yes' | Ih-kraht-ko |
 | К к | Kuh | k as in 'king' | Kh |
 | Л л | Luh | l as in 'label' | Lh |
 | М м | Muh | m as in 'man | Mh |

@@ -37,7 +37,6 @@
 | пъстър | variegated |
 | черешов | cherry |
 | ментов | mint |
-| персийски | persian |
 | бронзов | bronze |
 | вишнев | maroon |
 | шампанско | champagne |
@@ -51,23 +50,19 @@
 | нефритен | jade |
 | шоколадов | chocolate |
 | карминен | carmine |
-| лавандулов | lavender |
 | мъглив | misty |
 | нощносин | midnight blue |
-| слива | plum |
+| сливов | plum |
 | керемиден | brick |
 | гранатов | garnet |
 | боровинков | blueberry |
-| вишнев | cherry |
-| пембен | fuchsia |
+| пембен | pink (colloquial, from Turkish) |
 | аметистов | amethyst |
-| шампанско | champagne |
 | корал | coral |
 | мента | mint |
 | металик | metallic |
-| пушек | smoke |
+| опушен | smoky |
 | пролетнозелен | spring green |
-| канела | cinnamon |
 | леден | icy |
 | пустинен | desert |
 | горски | forest |
@@ -76,20 +71,10 @@
 | пергаментен | parchment |
 | малинов | raspberry |
 | глинен | clay |
-| боровинков | blueberry |
 | топазен | topaz |
 | изумруден | emerald |
-| карминен | carmine |
-| нефритен | jade |
 | кралскосин | royal blue |
 | индигов | indigo |
-| бордо | burgundy |
-| топазен | topaz |
-| пепеляв | ashen |
 | есенен | autumnal |
-| дивясливен | wild olive |
-| виолетов | violet |
-| индигов | indigo |
 | магнолиев | magnolia |
-| металик | metallic |
 | канелен | cinnamon |

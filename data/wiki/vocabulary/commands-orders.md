@@ -16,7 +16,7 @@
 | Остани тук! | Stay here |
 | Излез! | Go out |
 | Влез! | Come in |
-| Направи го! | Do this |
+| Направи го! | Do it |
 | Изключи го! | Turn it off |
 | Включи го! | Turn it on |
 | Чети! | Read |
@@ -31,13 +31,13 @@
 | Върни се! | Come back |
 | Карай! | Drive |
 | Плувай! | Swim |
-| Качвай се! | Climb |
+| Качвай се! | Get in / Climb up |
 | Играй! | Play |
 | Танцувай! | Dance |
 | Пей! | Sing |
 | Говори! | Speak |
 | Усети! | Feel |
-| Довери се! | Trust |
+| Довери ми се! | Trust me |
 | Откажи се! | Give up |
 | Опитай се! | Try |
 | Успокой се! | Calm down |

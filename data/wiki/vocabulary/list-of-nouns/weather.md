@@ -10,67 +10,51 @@
 | влага | humidity |
 | суша | drought |
 | капка | drop |
-| слънчев удар | sunburn |
+| слънчев удар | sunstroke |
 | светкавица | lightning |
 | горещина | heat |
 | студ | cold |
 | облачност | cloudiness |
-| тумор | fog |
 | вятър | wind |
 | проливен дъжд | downpour |
-| мъгла | mist |
+| мъгла | fog, mist |
 | леден | icy |
 | изсветляване | clearing |
-| замъгляване | haze |
-| град | sleet |
-| кипят | steam |
+| мараня | heat haze |
+| суграшица | sleet |
+| пара | steam |
 | охлаждане | cooling |
-| изсичане | cut |
-| бурята | the storm |
 | ураган | hurricane |
 | гръмотевична буря | thunderstorm |
 | лавина | avalanche |
 | вихрушка | whirlwind |
-| слаба студ | chill |
-| изгряващо слънце | sunrise |
-| залягащо слънце | sunset |
-| бури | storms |
+| хлад | chill |
+| изгрев | sunrise |
+| залез | sunset |
 | мраз | frost |
 | гръм | thunder |
-| блик | flash |
-| сляпата мъгла | dense fog |
+| проблясък | flash |
+| гъста мъгла | dense fog |
 | бушуващ ураган | raging hurricane |
 | монсун | monsoon |
-| смерч | whirlpool |
-| гръмка страшна буря | loud scary storm |
+| водовъртеж | whirlpool |
 | светлина | light |
 | мрак | darkness |
-| хипербуря | hyperstorm |
 | топлина | warmth |
 | студен дъжд | cold rain |
 | дъждовни капки | raindrops |
-| ледовита буря | icy storm |
+| ледена буря | ice storm |
 | влажност | moisture |
-| зной | sweat |
-| усилване | intensification |
-| застрашаване | threat |
-| затруднение | hindrance |
+| зной | scorching heat |
 | прегряване | overheating |
-| замръзналост | frostbite |
-| превръзка | bandage |
-| дълбоката студа | deep freeze |
-| изсичане | cutting |
-| удар | impact |
-| хранителна верига | food chain |
-| екосистема | ecosystem |
+| измръзване | frostbite |
+| лют студ | bitter cold |
 | вълна | wave |
 | ерозия | erosion |
-| порив | gust |
+| порив на вятъра | gust |
 | атмосфера | atmosphere |
 | климат | climate |
 | прогноза | forecast |
 | студен вятър | cold wind |
 | заледеняване | icing |
-| кръговрат | circulation |
-| парене | steaming |
-| капещ дъжд | drizzling |
+| ръмеж | drizzle |

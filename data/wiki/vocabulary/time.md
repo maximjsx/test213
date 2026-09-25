@@ -21,26 +21,25 @@
 | много скоро | very soon |
 | днеска | today (colloquial) |
 | късно | late |
-| вчера вечерта | last night |
-| късно следващия месец | late next month |
+| снощи / вчера вечерта | last night |
+| в края на следващия месец | late next month |
 | в този момент | at the moment |
 | по-късно | later |
 | изведнъж | suddenly |
 | наскоро | recently |
 | когато е готово | whenever it's ready |
-| ——- | just now |
+| току-що | just now |
 | след седмица | in a week |
 | миналата седмица | last week |
 | късно вечерта | late evening |
 | навреме | on time |
 | откакто | ever since |
-| Наскоро | recently |
 | Всяка седмица | every week |
 | Тази вечер | this evening |
 | Всяка сутрин | every morning |
 | Скоро | soon |
 | Преди час | an hour ago |
-| Днес вечерта | tonight |
+| Довечера | tonight |
 | През миналата година | last year |
 | По-късно тази седмица | later this week |
 | Веднага | immediately |

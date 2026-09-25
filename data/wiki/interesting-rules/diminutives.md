@@ -16,7 +16,7 @@ Diminutives in Bulgarian are used to express affection, familiarity, or smallnes
 1. **"Иван" (Ivan)** becomes **"Иванчо" (Ivancho)** – a cute way to refer to a friend named Ivan.
 2. **"Мария" (Maria)** becomes **"Марийка" (Mariyka)** – an affectionate way to call Maria.
 3. **"Димитър" (Dimitar)** becomes **"Дими" (Dimi)** – a friendly, casual nickname for Dimitar.
-4. **"Анна" (Anna)** becomes **"Анчето" (Ancheto)** – a sweet diminutive for Anna.
+4. **"Ана" (Ana)** becomes **"Анче" (Anche)**, a sweet diminutive for Ana.
 5. **"Виктор"** (Victor) becomes **"Вики" (Viki)** – a casual and friendly way to refer to Victor.
 
 ### Usage

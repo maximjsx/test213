@@ -18,7 +18,7 @@
 | Той ми каза да чакам | He told me to wait |
 | Какво казаха по новините? | What did they say on the news? |
 | Можеш ли да ми кажеш часа? | Can you tell me the time? |
-| Какво си казал на нея? | What did you tell her? |
+| Какво ѝ каза? | What did you tell her? |
 | Те ми казаха да не го правя | They told me not to do it |
 | Тя ми каза да дойда | She told me to come |
 | Казвам ти, че е важно | I'm telling you it's important |
@@ -28,7 +28,7 @@
 | Можеш ли да ми кажеш адреса? | Can you tell me the address? |
 | Казаха ми, че си тук | They told me you are here |
 | Той каза, че ще дойде | He said he will come |
-| Казах й, че я обичам | I told her I love her |
+| Казах ѝ, че я обичам | I told her I love her |
 | Какво каза шефът ти? | What did your boss say? |
 | Казвам ти, че съм добре | I'm telling you I'm fine |
 | Какво казаха лекарите? | What did the doctors say? |
@@ -36,7 +36,7 @@
 | Можеш ли да ми кажеш как да стигна до там? | Can you tell me how to get there? |
 | Те ми казаха истината | They told me the truth |
 | Какво каза полицаят? | What did the policeman say? |
-| Казах й, че съжалявам | I told her I'm sorry |
+| Казах ѝ, че съжалявам | I told her I'm sorry |
 | Какво казаха учениците? | What did the students say? |
 | Тя каза, че ще помогне | She said she will help |
 | Казах им да не се притесняват | I told them not to worry |

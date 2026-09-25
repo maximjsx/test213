@@ -47,7 +47,7 @@
 | хамстер | hamster |
 | катерица | squirrel |
 | ягуар | jaguar |
-| ламя | dragon |
+| ламя | dragon-like monster from folklore |
 | пеперуда | butterfly |
 | муха | fly |
 | прилеп | bat |
@@ -70,22 +70,21 @@
 | пеликан | pelican |
 | миеща мечка | raccoon |
 | лемур | lemur |
-| мармозетка | marmoset |
+| игрунка | marmoset |
 | ехидна | echidna |
-| ехолот | echolocating bat |
-| белка | ferret |
-| белка-каймани | capybara |
+| пор / фретка | ferret |
+| капибара | capybara |
 | норка | mink |
 | ласка | weasel |
-| писана | tabby cat |
-| иглена акула | dogfish |
+| писана | kitty (affectionate word for a cat) |
+| бодлива акула | dogfish |
 | риба-меч | swordfish |
 | риба-чук | hammerhead shark |
 | костур | perch |
 | платика | bream |
-| орел риба | osprey |
+| орел рибар | osprey |
 | вълчица | she-wolf |
-| арктически лисица | arctic fox |
-| фокусник | sea lion |
+| полярна лисица | arctic fox |
+| морски лъв | sea lion |
 | морж | walrus |
 | тюлен | seal |

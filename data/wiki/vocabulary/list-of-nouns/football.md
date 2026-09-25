@@ -25,27 +25,26 @@
 | корнер | corner |
 | голмайстор | top scorer |
 | дузпа | penalty |
-| шпагат | tackle |
-| резервен | substitute |
+| шпагат | sliding tackle |
+| резерва | substitute |
 | фен | fan |
 | атака | attack |
 | защита | defense |
 | турнир | tournament |
 | първенство | championship |
 | тренер | coach |
-| карта | card |
+| картон | card |
 | червен картон | red card |
 | жълт картон | yellow card |
 | контраатака | counter-attack |
 | пас | pass |
 | удар | shot |
-| връзки | ties |
+| връзки | shoelaces |
 | фаул | foul |
 | централна линия | halfway line |
 | купа | cup |
 | тъч | throw-in |
-| тренировка | practice |
-| лента | tape |
+| капитанска лента | captain's armband |
 | греда | crossbar |
 | мрежа | net |
 | съблекалня | locker room |

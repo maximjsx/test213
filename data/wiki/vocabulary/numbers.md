@@ -33,20 +33,18 @@
 | **Random numbers:** | **Случайни числа:** |
 | **31** | Тридесет и едно |
 | **234** | Двеста тридесет и четири |
-| 31 | Тридесет и едно |
-| 234 | Двеста тридесет и четири |
 | 1025 | Хиляда двадесет и пет |
 | 2.45 | Две цяло и четиридесет и пет стотни |
 | 0.43 | Нула цяло и четиридесет и три стотни |
 
-### Examples for annual figures (Jahreszahlen) (Годишни цифри)
+### Years (Години)
 
 | Year | Bulgarian | English |
 |----|----|----|
 | **1990** | Хиляда деветстотин и деветдесета година | Nineteen ninety |
 | **2024** | Две хиляди двадесет и четвърта година | Two thousand twenty-four |
 | **1985** | Хиляда деветстотин осемдесет и пета година | Nineteen eighty-five |
-| **2000** | Две хилядната година | Two thousand |
+| **2000** | Двехилядната година | Two thousand |
 | **2021** | Две хиляди двадесет и първа година | Two thousand twenty-one |
 | **2050** | Две хиляди и петдесета година | Two thousand fifty |
 
@@ -89,7 +87,6 @@
 
 ### Times
 
-Verstanden, hier ist die Tabelle mit den zusätzlichen Zeilen:
 
 | Bulgarian | English |
 |----|----|
@@ -118,12 +115,12 @@ Verstanden, hier ist die Tabelle mit den zusätzlichen Zeilen:
 
 | Bulgarian | English |
 |----|----|
-| двойка | couple |
+| двойка | pair, couple |
 | тройка | trio |
 | четворка | quartet |
-| петица | group of five |
-| шестица | group of six |
-| седмица | group of seven |
-| осмица | group of eight |
-| деветка | group of nine |
-| десетка | group of ten |
+| петорка | group of five |
+| шесторка | group of six |
+| седморка | group of seven |
+| осморка | group of eight |
+| деветорка | group of nine |
+| десеторка | group of ten |

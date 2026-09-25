@@ -13,19 +13,19 @@
 | Нуждаете ли се от помощ? | Do you need help? |
 | Чувате ли ме? | Can you hear me? |
 | Къде ви боли? | Where does it hurt? |
-| Аз съм ранен/а. | I am injured. |
+| Ранен/а съм. | I am injured. |
 | Трябва ни лекар. | We need a doctor. |
 | Има ли лекар тук? | Is there a doctor here? |
 | Тук е опасно. | It is dangerous here. |
-| Избягайте! | Run away! |
+| Бягайте! | Run away! |
 | Стойте далеч! | Stay away! |
 | Пожар! | Fire! |
 | Има ли аптечка? | Is there a first aid kit? |
-| Дишай дълбоко. | Breathe deeply. |
-| Успокой се. | Calm down. |
+| Дишайте дълбоко. | Breathe deeply. |
+| Успокойте се. | Calm down. |
 | Някой да ми помогне! | Someone help me! |
 | Спрете! | Stop! |
 | Не се чувствам добре. | I don't feel well. |
 | Къде е изходът? | Where is the exit? |
 | Имам нужда от вода. / Трябва ми вода. / Нуждая се от вода. | I need water. |
-| Чакай! | Wait! |
+| Чакайте! | Wait! |

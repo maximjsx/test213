@@ -46,8 +46,8 @@
 | паста | pasta |
 | макарони | macaroni |
 | спагети | spaghetti |
-| лютеница | lutenica |
-| сирене | cheese |
+| лютеница | lyutenitsa (pepper and tomato relish) |
+| сирене | white brine cheese |
 | кашкавал | yellow cheese |
 | масло | butter |
 | кисело мляко | yogurt |
@@ -62,12 +62,11 @@
 | мида | mussel |
 | омар | lobster |
 | калмар | squid |
-| хляб | bread |
 | тесто | dough |
 | сладкиш | pastry |
 | торта | cake |
 | бисквита | biscuit |
-| кекс | muffin |
+| кекс | sponge loaf cake |
 | палачинка | pancake |
 | сладолед | ice cream |
 | шоколад | chocolate |
@@ -88,8 +87,6 @@
 | кардамон | cardamom |
 | куркума | turmeric |
 | шафран | saffron |
-| карфиол | cauliflower |
-| гъба | mushroom |
 | зехтин | olive oil |
 | олио | sunflower oil |
 | оцет | vinegar |

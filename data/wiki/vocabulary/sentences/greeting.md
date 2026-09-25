@@ -10,7 +10,7 @@
 | Какво правиш, брато? *(informal)* | What are you up to, bro? |
 | Как си, пич? *(informal)* | How are you, dude? |
 | Какво ново, маце? | What's new, babe? |
-| Дълго време не сме се виждали! | Long time no see! |
+| Отдавна не сме се виждали! | Long time no see! |
 | Всичко наред ли е? | All good? |
 | Как върви? | How's it going? |
 | Как вървят нещата? | How are things going? |

@@ -17,7 +17,7 @@
 | бански | swimsuit |
 | слънчеви очила | sunglasses |
 | плажен стол | beach chair |
-| охлаждаща чанта | cooler bag |
+| хладилна чанта | cooler bag |
 | замък от пясък | sandcastle |
 | слънцезащитен крем | sunscreen |
 | лято | summer |
@@ -63,8 +63,8 @@
 | къмпинг | camping |
 | открит душ | outdoor shower |
 | водни спортове | water sports |
-| плажен празник | beach party |
-| каскет | cap |
+| плажно парти | beach party |
+| шапка с козирка | cap |
 | обгорен | sunburned |
 | морски кон | seahorse |
 | излизане | outing |

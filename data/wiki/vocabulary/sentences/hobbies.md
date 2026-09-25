@@ -10,10 +10,10 @@
 | Уча в музикална школа. | I go to music school. |
 | Танцувам балет, откакто бях малка/малък. | I've been dancing ballet since I was little. |
 | Играя на китара и пея. | I play guitar and sing. |
-| Уча в спортен клуб и тренирам всеки ден. | I go to a sports club and train every day. |
+| Ходя в спортен клуб и тренирам всеки ден. | I go to a sports club and train every day. |
 | Ходя на йога и медитация. | I go to yoga and meditation. |
 | Изучавам чужди езици в свободното си време. | I study foreign languages in my free time. |
-| Уча в група за рисуване. | I attend a drawing group. |
+| Ходя на курс по рисуване. | I attend a drawing class. |
 | Боядисвам мебели и ги преустройвам. | I paint furniture and remodel it. |
 | Обичам да готвя различни ястия. | I love cooking different dishes. |
 | Играя на пиано в свободното си време. | I play piano in my free time. |

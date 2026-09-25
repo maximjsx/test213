@@ -22,17 +22,17 @@
 | Ледник | Glacier |
 | Пещера | Cave |
 | Поле | Field |
-| Бара | Pond |
+| Езерце | Pond |
 | Дърво | Tree |
 | Скала | Cliff |
 | Язовир | Reservoir |
-| Шумар | Woods |
+| Горичка | Woods |
 | Скални образувания | Rock formations |
 | Коралов риф | Coral reef |
 | Пясъчна дюна | Sand dune |
 | Поляна | Glade |
 | Равнина | Plain |
-| Щурец | Squirrel |
+| Катерица | Squirrel |
 | Орел | Eagle |
 | Мечка | Bear |
 | Пума | Puma |

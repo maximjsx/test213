@@ -20,7 +20,7 @@
 | Гледам | To watch |
 | Гледам | To look |
 | Намирам | To find |
-| Губя / Падам | To lose |
+| Губя | To lose |
 | Печеля / Побеждавам | To win |
 | Играя | To play |
 | Танцувам | To dance |

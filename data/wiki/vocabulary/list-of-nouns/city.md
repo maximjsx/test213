@@ -44,7 +44,7 @@
 | поща | post office |
 | хотел | hotel |
 | хостел | hostel |
-| квартира | apartment |
+| квартира | rented flat, lodgings |
 | къща за гости | guesthouse |
 | клуб | club |
 | бар | bar |
@@ -60,11 +60,10 @@
 | пристанище | port |
 | търговски център | mall |
 | фитнес | gym |
-| градинка | garden |
-| площадка | playground |
+| градинка | small park |
+| детска площадка | playground |
 | кръстовище | intersection |
 | тунел | tunnel |
-| свързване | connection |
 | кръчма | tavern |
 | ателие | studio |
 | дворец | palace |
@@ -80,20 +79,18 @@
 | фонтани | fountains |
 | пътека | path |
 | стълбище | staircase |
-| свързващ път | link road |
 | стар град | old town |
 | нов град | new town |
 | промишлена зона | industrial area |
 | полицейски участък | police station |
 | пожарна | fire station |
-| градски съвет | city council |
+| общински съвет | city council |
 | затвор | prison |
 | детска градина | kindergarten |
-| игрище | field |
+| игрище | sports ground |
 | площадка за скейтборд | skate park |
 | автосалон | car showroom |
 | автосервиз | car service |
 | автомивка | car wash |
 | такси | taxi |
-| свързване | connection |
 | зала | hall |

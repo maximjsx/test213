@@ -40,11 +40,11 @@
 | сандали | sandals |
 | чехли | slippers |
 | маратонки | running shoes |
-| якета | windbreaker |
+| ветровка | windbreaker |
 | термобельо | thermal wear |
 | бельо без шевове | seamless underwear |
 | жилетка | vest |
-| корсаж | corset |
+| корсет | corset |
 | халат | robe |
 | кимоно | kimono |
 | елек | waistcoat |
@@ -64,16 +64,16 @@
 | чорапогащи | pantyhose |
 | спортно бюстие | sports bra |
 | джапанки | flip-flops |
-| мускулестка | muscle shirt |
+| потник | tank top |
 | комбинезон за ски | ski suit |
 | хидрокостюм | wetsuit |
 | шапка с козирка | cap |
-| шапка с пискюл | beanie with pompom |
+| шапка с помпон | beanie with pompom |
 | брич | breeches |
 | кожух | sheepskin coat |
 | термояке | thermal jacket |
 | гетри | leg warmers |
-| манто | trench coat |
+| шлифер | trench coat |
 | пухенка | down jacket |
 | вълнена шапка | woolen hat |
 | риза с дълъг ръкав | long sleeve shirt |
@@ -81,15 +81,15 @@
 | гащеризон без ръкави | sleeveless jumpsuit |
 | балеринки | ballet flats |
 | клин | leggings |
-| кюлоти | culottes |
+| пола-панталон | culottes |
 | шорти за плуване | swim trunks |
 | вълнена жилетка | wool cardigan |
 | карирана риза | plaid shirt |
 | туника | tunic |
 | сарафан | pinafore |
 | болеро | bolero |
-| костюм за бал | ball gown |
-| кимоно за баня | bathrobe |
+| бална рокля | ball gown |
+| хавлиен халат | bathrobe |
 | шорти за сън | sleep shorts |
 | пелерина | cape |
 | палто с качулка | coat with hood |
@@ -100,7 +100,6 @@
 | облекло за танци | dance wear |
 | маскараден костюм | costume |
 | спортен сутиен | sports bra |
-| прашка | sling |
 | защитен костюм | protective suit |
 | антибактериално бельо | antibacterial underwear |
 | тениска с яка | polo shirt |

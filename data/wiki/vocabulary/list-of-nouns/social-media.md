@@ -4,7 +4,7 @@
 | профил | profile |
 | фор ю пейдж | for you page |
 | тикток | TikTok |
-| стория | story |
+| стори | story |
 | абонати | subscribers |
 | последователи/абонати | followers |
 | бутон за лайк | like button |
@@ -12,7 +12,7 @@
 | приложение | app |
 | коментар | comment |
 | пост | post |
-| емотиконка | emoji |
+| емоджи | emoji |
 | видеоклип | video clip |
 | социална мрежа | social network |
 | инфлуенсър | influencer |
@@ -20,22 +20,22 @@
 | връзка | link |
 | лента | feed |
 | вирусен | viral |
-| тенденция | trend |
+| тренд / тенденция | trend |
 | лайв | live |
 | известие | notification |
 | качване | upload |
 | сваляне | download |
 | съобщение | message |
 | таг | tag |
-| инфлуенс | influence |
+| влияние | influence |
 | креатор | creator |
 | съдържание | content |
 | профилна снимка | profile picture |
 | хаштаг | hashtag |
-| директно | direct |
+| лично съобщение | direct message |
 | галерия | gallery |
 | реклама | advertisement |
-| анализ | analytics |
+| статистика | analytics |
 | стикер | sticker |
 | редактиране | editing |
 | история | history |

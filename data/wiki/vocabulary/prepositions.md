@@ -15,7 +15,7 @@
 | преди | before |
 | след | after |
 | между | between |
-| до тук | up to here |
+| дотук | up to here |
 | някъде | somewhere |
 | никъде | nowhere |
 | навсякъде | everywhere |
@@ -27,7 +27,7 @@
 | по-горе | higher |
 | надолу | downwards |
 | нагоре | upwards |
-| навън | outwards |
+| навън | out, outside |
 | навътре | inwards |
 | над | over |
 | под | under |
@@ -35,7 +35,7 @@
 | до | to |
 | в/ъв | in |
 | на | on |
-| из | out of |
+| из | around, throughout (из града, around the city) |
 | с/ъс | with |
 | без | without |
 | за | for |
@@ -45,7 +45,6 @@
 | под | below |
 | до | until |
 | след | after |
-| пред | before |
 | срещу | against/opposite .. |
 | вътре | inside |
 | извън | outside |

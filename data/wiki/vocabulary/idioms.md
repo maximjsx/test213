@@ -23,26 +23,26 @@
 | Както и да се въртиш, задникът ти все е отзад | NaN | No matter how you turn, your ass is always in the back. |
 | След дъжд – качулка | NaN | It's too late (You put your hood on after the rain). |
 | Взел клечка да бие мечка | NaN | He's completely unprepared (He's trying to beat a bear with a stick). |
-| Още Петко нероден, а шапката му шият | NaN | Slow down (Petko isn't born yet but they're making him a hat). |
+| Още Петко нероден, а шапката му шият | NaN | Don't count your chickens before they hatch (Petko isn't born yet but they're sewing his hat). |
 | Видяла жабата, че коват вола и тя вдигнала крак | NaN | A frog trying to fit in where it doesn't belong. |
 | Гладна мечка, хоро не играе | NaN | A hungry bear doesn't dance (You can't expect anything from someone without giving something in return). |
-| Присмял се хърбел на щърбел | NaN | Don't mock others (The skinny guy laughed at the guy without teeth). |
+| Присмял се хърбел на щърбел | NaN | The pot calling the kettle black (The toothless one laughed at the gap-toothed one). |
 | Две жени – цял пазар | NaN | Two women make a whole market (A saying indicating women can be noisy or gossip a lot). |
-| На всяко гърне мерудия | NaN | Someone who wants to be involved in everything (FOMO). |
+| На всяко гърне мерудия | NaN | Someone who pokes their nose into everything (A pinch of parsley in every pot). |
 | Яде като мечка, работи като буболечка | NaN | You're lazy (You eat like a bear and work like a bug). |
-| Да би мирно стояло, не би чудо видяло | NaN | Go out there and experience the world (If you sit still, you won't witness a miracle). |
+| Да би мирно стояло, не би чудо видяло | NaN | You brought the trouble on yourself (If it had kept still, it would not have seen trouble). Said when someone meddles and gets hurt. |
 | От мухата прави слон | NaN | You're exaggerating (You're making an elephant out of a fly). |
-| Главата му побеля, а умът му не дойде | NaN | He's immature (His head turned white but he never got a piece of mind). |
-| Всека жаба да си знае гьола | NaN | Know your place (Every frog should know its puddle). |
-| Умислил се като свиня по коледа | NaN | He's worried (Deep in thought like a fat pig before Christmas). |
+| Главата му побеля, а умът му не дойде | NaN | He's immature (His hair turned white, but wisdom never came). |
+| Всяка жаба да си знае гьола | NaN | Know your place (Every frog should know its puddle). |
+| Умислил се като свиня по Коледа | NaN | He's worried (Deep in thought like a pig before Christmas). |
 | Лепят му се като мухи на мед | NaN | A playboy (Women stick to him like flies on honey). |
 | Две дини под една мишница не се носят | NaN | You're taking on too much or being greedy (Don't carry two watermelons under one arm). |
-| Ailyak (ай-ляк) | NaN | The art of doing everything slowly, with no rush, enjoying life (Untranslatable). |
+| Айляк | NaN | The art of doing everything slowly, with no rush, enjoying life (Untranslatable, typical of Plovdiv). |
 | Да четеш конско евангелие | NaN | To scold somebody for doing something wrong (To read the horse gospel). |
 | Яхвам метлата | NaN | To get furious (To ride the broom). |
-| Та пушек се вдига | NaN | To do something intensely (In smoke, smoke is rising). |
+| Та пушек се вдига | NaN | To do something intensely (So hard that smoke rises). |
 | Течен хляб | Liquid bread | Slang for beer. |
-| Чеша се където не ме сърби | NaN | To scratch where it doesn't itch (To try to get away with something wrong but can't hide the truth). |
+| Чеша се, където не ме сърби | NaN | To do or talk about something needless and ask for trouble (To scratch where it doesn't itch). |
 | За черни дни | For black days | To save something for hypothetical bad times. |
 | На баба ти хвърчилото | NaN | To tell someone who is talking nonsense that you don't believe it (Your grandmother's kite). |
 | Не е цвете за мирисане | NaN | He's not a good person (He's not a flower to sniff). |

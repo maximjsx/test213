@@ -12,7 +12,7 @@
 | Привлекателен | Attractive |
 | Превъзходен | Excellent |
 | Елегантен | Elegant |
-| Снажен | Handsome |
+| Снажен | Tall and well-built |
 
 | Умен | Smart |
 |----|----|
@@ -21,37 +21,36 @@
 | Разумен | Reasonable |
 | Проницателен | Insightful |
 | Благоразумен | Prudent |
-| Ловък | Clever |
+| Ловък | Deft, nimble; crafty |
 | Находчив | Resourceful |
-| Схватлив | Gripping |
+| Схватлив | Quick to understand, quick-witted |
 | Просветен | Enlightened |
-| Начетен | Educated (German: Belesen? bzw. Gebildet..?) |
-| Грамотен | Educated |
+| Начетен | Well-read |
+| Грамотен | Literate |
 
 | Добър | Good |
 |----|----|
-| Благ, смирен, състрадателен, милостив, отзивчив, харен | Kind, humble, compassionate, merciful, helpful, charitable |
+| Благ, смирен, състрадателен, милостив, отзивчив, харен | Kind, humble, compassionate, merciful, helpful, good (харен is dialectal) |
 | Добродушен, добронамерен | Kind-hearted, good-natured |
 | Великодушен | Generous |
 | Приятен, мил, любезен, симпатичен, чудесен | Nice, kind, polite, sympathetic, wonderful |
 | Сърдечен, добросърдечен | Cordial, kind-hearted |
-| Свестен, разбран | Conscientious, understanding |
+| Свестен, разбран | Decent, sensible |
 | Отличен, прекрасен | Excellent, wonderful |
 
 | Уникален | Unique |
 |----|----|
 | Неповторим | Unique |
-| Изключителен | Exclusive |
+| Изключителен | Exceptional |
 | Забележителен | Notable |
 | Необикновен | Unusual |
-| Унимум | ? |
 
 | Невероятен | Amazing |
 |----|----|
-| Удивителен | Wonderful |
+| Удивителен | Astonishing |
 | Възхитителен | Delightful |
 | Поразителен | Striking |
-| Чудноват | Wonderful |
+| Чудноват | Odd, peculiar |
 | Превъзходен | Excellent |
 
 | Мечта | Dream (For example: My dream is to be \[…\]) |  |

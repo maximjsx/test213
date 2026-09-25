@@ -20,21 +20,21 @@
 | Плуване | Swimming |
 | Стрелба | Shooting |
 | Борба | Wrestling |
-| Стрелка | Arrow |
-| Плаване | Diving |
+| Стрела | Arrow |
+| Гмуркане | Diving |
 | Борд | Board |
 | Каяк | Kayak |
 | Стрелбище | Range |
 | Яхтинг | Yachting |
-| Топка за басейн | Pool ball |
-| Турник | Bar |
+| Билярдна топка | Pool ball |
+| Лост (за набиране) | Pull-up bar |
 | Ролери | Roller skates |
 | Парапланер | Paraglider |
-| Челна лодка | Canoe |
+| Кану | Canoe |
 | Конник | Horseman |
 | Топка за плажен волейбол | Beach volleyball ball |
 | Риболов | Fishing |
-| Кроссовки | Sneakers |
+| Маратонки | Sneakers |
 | Шапка | Cap |
 | Чорапи | Socks |
 | Яке | Jacket |

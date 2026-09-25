@@ -8,7 +8,7 @@
 | Марс | Mars |
 | Сатурн | Saturn |
 | Астероид | Asteroid |
-| Персеид | Meteor |
+| Метеор | Meteor |
 | Слънце | Sun |
 | Галактика | Galaxy |
 | Извънземно същество | Alien |
@@ -30,12 +30,12 @@
 | Космическа станция | Space station |
 | Марсоход | Rover |
 | Хабъл | Hubble |
-| Лунно космическо пристанище | Lunar module |
+| Лунен модул | Lunar module |
 | Полет в космоса | Space flight |
 | Гравитация | Gravity |
-| Интерпланетарен | Interplanetary |
+| Междупланетен | Interplanetary |
 | Вакуум | Vacuum |
-| Фюжън | Fusion |
+| Ядрен синтез | Fusion |
 | Планета | Planet |
 | Извънземен | Extraterrestrial |
 | Космическо време | Space weather |
@@ -43,27 +43,24 @@
 | Гравитационна вълна | Gravitational wave |
 | Планетарен пръстен | Planetary ring |
 | Астероиден пояс | Asteroid belt |
-| Космически дебрис | Space debris |
-| Астероидна стълба | Asteroid pole |
+| Космически отпадъци | Space debris |
 | Орбитален полет | Orbital flight |
-| Излъчване | Radiation |
-| Скъпоценна камък | Gemstone |
-| Температурна зона | Temperature zone |
+| Лъчение, радиация | Radiation |
 | Слънчев вятър | Solar wind |
 | Космическа мисия | Space mission |
-| Интерстеларен | Interstellar |
+| Междузвезден | Interstellar |
 | Планетарна мъглявина | Planetary nebula |
 | Супернова | Supernova |
 | Астрономия | Astronomy |
-| Космическо време | Space time |
-| Небула | Nebula |
+| Пространство-време | Spacetime |
+| Мъглявина | Nebula |
 | Космически летателен апарат | Spacecraft |
 | Междузвезден газ | Interstellar gas |
 | Звездно скопление | Star cluster |
-| Космическа експанзия | Cosmic expansion |
+| Разширение на Вселената | Cosmic expansion |
 | Извънземен живот | Extraterrestrial life |
 | Ракетна наука | Rocket science |
-| Планетарен обход | Planetary orbit |
+| Орбита на планета | Planetary orbit |
 | Червено изместване | Redshift |
 | Космическа физика | Space physics |
 | Астрономско наблюдение | Astronomical observation |
@@ -71,6 +68,5 @@
 | Лунна станция | Lunar station |
 | Космическа колонизация | Space colonization |
 | Метеоритен дъжд | Meteor shower |
-| Космически сонда | Space probe |
-| Магнитна поле | Magnetic field |
-| Първа космическа стъпка | Space milestone |
+| Космическа сонда | Space probe |
+| Магнитно поле | Magnetic field |

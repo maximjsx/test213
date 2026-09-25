@@ -13,7 +13,7 @@
 | брадичка | chin |
 | буза | cheek |
 | брада | beard |
-| врата | neck |
+| врат | neck |
 | рамо | shoulder |
 | гърди | chest |
 | ръка | arm |
@@ -22,14 +22,14 @@
 | пръст | finger |
 | нокът | nail |
 | корем | abdomen |
-| кръст | back |
+| гръб | back |
 | талия | waist |
 | дупе | buttocks |
 | бедро | thigh |
 | коляно | knee |
 | глезен | ankle |
 | пета | heel |
-| пръстен | toe |
+| пръст на крака | toe |
 | кожа | skin |
 | мозък | brain |
 | нерв | nerve |
@@ -41,9 +41,9 @@
 | кръв | blood |
 | клетка | cell |
 | лимфа | lymph |
-| дишане | breath |
+| дишане | breathing |
 | усещане | sensation |
-| чувство | sense |
+| сетиво | sense |
 | зрение | vision |
 | слух | hearing |
 | допир | touch |
@@ -52,7 +52,7 @@
 | глас | voice |
 | език | tongue |
 | гърло | throat |
-| десен | gum |
+| венец | gum |
 | трахея | trachea |
 | дясно ухо | right ear |
 | ляво ухо | left ear |
@@ -67,14 +67,12 @@
 | дясна китка | right wrist |
 | лява китка | left wrist |
 | белез | scar |
-| буца | buttock |
+| кръст | lower back |
 | длан | palm |
 | шия | neck |
 | корем | stomach |
-| патела | patella |
-| ходило | instep |
-| анатомия | anatomy |
-| дисциплина | discipline |
-| плечо | shoulder |
+| капачка на коляното | kneecap |
+| ходило | sole (of the foot) |
+| око | eye |
 
  ![](/wiki/vocabulary-list-of-nouns-human-body-1.png)

@@ -45,7 +45,7 @@
 ### Де
 
 * **Usage**: Used to amplify a request or command.
-* **Example**: Кажи ми, де! (Tell me, please!)
+* **Example**: Кажи ми, де! (Come on, tell me!)
 
 ### Нали
 

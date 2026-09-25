@@ -9,8 +9,8 @@
 | Колко струва това? | How much does this cost? |
 | Мога да платя. | I can pay. |
 | Какво предлагате? | What do you offer? |
-| Мога ли да получа менюто? | Can I have the menu, please? |
-| Какво е специалитетът на заведението? | What is the house specialty? |
+| Може ли менюто, моля? | Can I have the menu, please? |
+| Какъв е специалитетът на заведението? | What is the house specialty? |
 | Какво ще ядеш? | What will you eat? |
 | Вкусно ли беше? | Did it taste good? |
 | Мога ли да поръчам още едно? | Can I order another one? |
@@ -23,7 +23,7 @@
 | Колко време ще отнеме да се сервира храната? | How long will it take to serve the food? |
 | Имате ли дневно меню? | Do you have a daily menu? |
 | Предлагате ли безалкохолни напитки? | Do you offer non-alcoholic beverages? |
-| Мога ли да получа сметката, моля? | Can I have the bill, please? |
+| Може ли сметката, моля? | Can I have the bill, please? |
 | Ще желая още хляб, моля. | I would like more bread, please. |
 | Приемате ли кредитни карти? | Do you accept credit cards? |
 | Мога ли да взема остатъка за вкъщи? | Can I take the leftovers home? |
@@ -34,16 +34,16 @@
 | Може ли да ми донесете още вода? | Can you bring me more water? |
 | Имате ли детско меню? | Do you have a kids menu? |
 | Можете ли да ми предложите вино? | Can you suggest a wine to me? |
-| Какво е времето за обслужване на закуска? | What is the breakfast serving time? |
+| До колко часа се сервира закуска? | Until what time is breakfast served? |
 | Имате ли безглутенови ястия? | Do you have gluten-free dishes? |
-| Какъв е начинът на сервиране на напитките? | How are the drinks served? |
+| Как се сервират напитките? | How are the drinks served? |
 | Мога ли да пробвам това ястие? | Can I try this dish? |
 | Ще желая още сос за това ястие. | I want more sauce for this dish. |
-| Пожелавам ви приятен апетит! | Enjoy your meal! |
-| Мога ли да се обаждам, за да направя резервация? | Can I call to make a reservation? |
+| Добър апетит! | Enjoy your meal! |
+| Мога ли да се обадя за резервация? | Can I call to make a reservation? |
 | Харесва ли ви ресторантът? | Do you like the restaurant? |
 | Кога е най-зает ресторантът? | When is the restaurant busiest? |
-| Кой е последният час за обслужване? | What is the last serving time? |
+| До колко часа работите? | Until what time are you open? |
 | Мога ли да ви помоля за допълнителни съвети? | Can I please ask you for additional advice? |
 | Искам да платя в брой. | I want to pay in cash. |
 | Възнамерявам да остана за десерт. | I intend to stay for dessert. |
@@ -53,6 +53,3 @@
 | Беше много вкусно | It was very delicious |
 | Колко голяма е порцията? | How big is the portion? |
 | Колко голяма е една порция? | How big is a portion? |
-|  |  |
-|  |  |
-|  |  |

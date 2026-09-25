@@ -28,7 +28,7 @@
 | Къде си бил/била на почивка? | Where have you been on vacation? |
 | Кой е любимият ти празник? | What is your favorite holiday? |
 | Каква е мечтата ти? | What is your dream? |
-| Какво ти е зодията? | What is your zodiac sign? |
+| Каква ти е зодията? | What is your zodiac sign? |
 | Играеш ли на видеоигри? | Do you play video games? |
 | Какво искаш да правиш в бъдеще? | What do you want to do in the future? |
 | Имаш ли таланти? | Do you have any talents? |
@@ -42,13 +42,13 @@
 | Кой е любимият ти спорт? | What is your favorite sport? |
 | Къде обичаш да ходиш през свободното си време? | Where do you like to go in your free time? |
 | Имаш ли хоби? | Do you have a hobby? |
-| Коя е любимата ти телевизионна програма? | What is your favorite TV show? |
+| Кое е любимото ти предаване? | What is your favorite TV show? |
 | Къде си роден/родена? | Where were you born? |
 | Какви езици говориш? | What languages do you speak? |
 | Каква музика харесваш? | What kind of music do you like? |
 | Обичаш ли да танцуваш? | Do you like to dance? |
 | Имаш ли любима песен? | Do you have a favorite song? |
 | Обичаш ли изкуство? | Do you like art? |
-| Каква работа искаш да работиш? | What job do you want to do? |
+| Какво искаш да работиш? | What job do you want to do? |
 | Какво те интересува? | What interests you? |
 | Имаш ли приятели в чужбина? | Do you have friends abroad? |
