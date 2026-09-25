@@ -10,10 +10,6 @@ Not scheduled. Notes for a future session; check with the owner before building 
 - Discord reveal: everyone signs in with Discord, so after a game both players can agree (both must opt in) to reveal their Discord usernames to each other and keep talking there. Never reveal one-sided; the privacy page needs a line about it.
 - Study sessions: pick a friend (friends already exist in `friends` collection and friend quests), then review the same deck side by side or quiz each other.
 
-## Bulgaria gallery
-
-- A photo gallery on the About Bulgarian page or in the wiki: places, food, everyday life, signs and street text (good reading practice). Images on the storage API, captions in Bulgarian and English, credit and licence per photo.
-
 ## Translation prompts with native review
 
 Modelled on the Discord bot the community already uses:
