@@ -51,7 +51,7 @@ export default function AboutBulgarianPage() {
   return (
     <div className={styles.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_DATA) }} />
-      <PageHeader backHref="/library" backLabel="Library" title="About Bulgarian" />
+      <PageHeader backHref="/wiki" backLabel="Wiki" title="About Bulgarian" />
       <div className={styles.layout}>
         <main className={styles.article}>
           <header className={styles.intro}>
@@ -107,7 +107,7 @@ export default function AboutBulgarianPage() {
 
           <div className={styles.cta}>
             <Button href="/topic/alphabet" size="lg">Start with the alphabet</Button>
-            <Button href="/library" variant="secondary" size="lg">Browse the library</Button>
+            <Button href="/wiki" variant="secondary" size="lg">Browse the wiki</Button>
           </div>
 
           <section id="sources" className={styles.section}>

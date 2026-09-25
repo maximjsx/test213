@@ -1,3 +1,6 @@
+// A fresh short-lived key per request, never prerendered at build time
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   const key = process.env.SPEECHMATICS_API_KEY
   if (!key) return Response.json({ error: 'SPEECHMATICS_API_KEY not set' }, { status: 500 })

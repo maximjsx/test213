@@ -56,14 +56,14 @@ export default function WikiPage({ params }) {
   return (
     <div className={styles.page}>
       <PageHeader
-        backHref={parent ? `/wiki/${parent.slug}` : '/library'}
-        backLabel={parent ? shortTitle(parent.title) : 'Library'}
+        backHref={parent ? `/wiki/${parent.slug}` : '/wiki'}
+        backLabel={parent ? shortTitle(parent.title) : 'Wiki'}
         title={shortTitle(page.title)}
       />
       <div className={layout.layout}>
         <main className={styles.article}>
           <nav className={styles.crumbs} aria-label="Breadcrumb">
-            <Link href="/library">Library</Link>
+            <Link href="/wiki">Wiki</Link>
             {trail.map(p => <span key={p.slug}>/ <Link href={`/wiki/${p.slug}`}>{shortTitle(p.title)}</Link></span>)}
           </nav>
           <h1 className={styles.title}>{page.title}</h1>

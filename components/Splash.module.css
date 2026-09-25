@@ -6,11 +6,11 @@
   align-items: center;
   justify-content: center;
   background: var(--bg);
-  font-family: var(--font-nunito), sans-serif;
+  font-family: 'Nunito', sans-serif;
   /* Circular (iris) reveal: the whole overlay is clipped to a big circle, then
      collapses to a point at the centre to wipe the app in — cleaner than a fade */
   clip-path: circle(150% at 50% 50%);
-  transition: clip-path 0.5s cubic-bezier(0.6, 0, 0.3, 1), background 0.3s ease;
+  transition: clip-path 0.9s cubic-bezier(0.6, 0, 0.3, 1), background 0.3s ease;
   will-change: clip-path;
 }
 .overlay.out {
@@ -33,8 +33,8 @@
   opacity: 0;
   transform-origin: 50% 100%;
   animation:
-    popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.03s forwards,
-    flagWave 1.6s ease-in-out 0.35s infinite;
+    popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s forwards,
+    flagWave 1.6s ease-in-out 0.55s infinite;
 }
 @keyframes flagWave {
   0%, 100% { rotate: 0deg; }
@@ -47,20 +47,20 @@
   /* Pop in, then a celebratory sway that skews/tilts side to side and gives a
      little wave — deliberately different from the loading screen's vertical hop */
   animation:
-    bearIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both,
-    bearSway 1.5s ease-in-out 0.35s infinite;
+    bearIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    bearSway 1.5s ease-in-out 0.55s infinite;
 }
 
 /* On exit: the bear hops up then shrinks away, and the text scales down, all
    while the circle closes in around them */
 .out .bear {
-  animation: bearOut 0.45s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+  animation: bearOut 0.8s cubic-bezier(0.5, 0, 0.75, 0) forwards;
 }
 .out .title, .out .tagline {
-  animation: contentOut 0.3s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+  animation: contentOut 0.45s cubic-bezier(0.5, 0, 0.75, 0) forwards;
 }
 .out .flag {
-  animation: contentOut 0.25s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+  animation: contentOut 0.38s cubic-bezier(0.5, 0, 0.75, 0) forwards;
 }
 
 @keyframes bearOut {
@@ -80,7 +80,7 @@
   letter-spacing: -0.5px;
   color: var(--teal);
   opacity: 0;
-  animation: riseIn 0.3s ease 0.12s forwards;
+  animation: riseIn 0.5s ease 0.25s forwards;
 }
 
 .tagline {
@@ -88,7 +88,7 @@
   font-weight: 800;
   color: var(--text-muted);
   opacity: 0;
-  animation: riseIn 0.3s ease 0.2s forwards;
+  animation: riseIn 0.5s ease 0.4s forwards;
 }
 
 @keyframes bearIn {

@@ -105,12 +105,13 @@ export function useProgress() {
       save(result.state)
       return result
     }
-    post('/api/progress/action', { action, token, day: dayKey() }).then(server => {
+    // synced settles once the server has stored the action (for anything that reads it back)
+    const synced = post('/api/progress/action', { action, token, day: dayKey() }).then(server => {
       if (server.progress) return setState(server.progress)
       // Rejected: fall back to what the server has
-      fetch(`/api/progress?day=${dayKey()}`).then(r => r.json()).then(d => d.progress && setState(d.progress)).catch(() => {})
+      return fetch(`/api/progress?day=${dayKey()}`).then(r => r.json()).then(d => d.progress && setState(d.progress)).catch(() => {})
     })
-    return result
+    return { ...result, synced }
   }, [context])
 
   // Start of a timed activity. Accounts get a server token that must come

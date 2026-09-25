@@ -39,7 +39,7 @@ function MediaCard({ item }) {
 export default function WatchPage() {
   return (
     <div className={styles.page}>
-      <PageHeader backHref="/library" backLabel="Library" title="Watch and listen" />
+      <PageHeader backHref="/wiki" backLabel="Wiki" title="Watch and listen" />
       <main className={styles.main}>
         <h1 className={styles.title}>Watch and listen</h1>
         <p className={styles.muted}>

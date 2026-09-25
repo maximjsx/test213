@@ -16,7 +16,7 @@ export const metadata = {
 export default function GlossaryPage() {
   return (
     <div className={styles.page}>
-      <PageHeader backHref="/library" backLabel="Library" title="Literary words" />
+      <PageHeader backHref="/wiki" backLabel="Wiki" title="Literary words" />
       <div className={layout.layout}>
         <main className={styles.article}>
           <h1 className={styles.title}>Literary words</h1>

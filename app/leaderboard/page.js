@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Bear from '../../components/Bear'
 import Skeleton from '../../components/ui/Skeleton'
 import CoinIcon from '../../components/ui/CoinIcon'
+import TypingRanks from '../../components/typing/TypingRanks'
 import styles from './page.module.css'
 
 const PODIUM = ['rankGold', 'rankSilver', 'rankBronze']
@@ -12,6 +13,7 @@ const PERIODS = [
   { id: 'week',  label: 'WEEK' },
   { id: 'month', label: 'MONTH' },
   { id: 'all',   label: 'ALL TIME' },
+  { id: 'typing', label: 'TYPING' },
 ]
 
 function LeagueHeader({ league }) {
@@ -47,8 +49,14 @@ export default function LeaderboardPage() {
   const [cache, setCache] = useState({})
   const data = cache[period]
 
+  // ?tab=typing opens a board directly, e.g. from the typing test
   useEffect(() => {
-    if (cache[period]) return
+    const tab = new URLSearchParams(window.location.search).get('tab')
+    if (PERIODS.some(p => p.id === tab)) setPeriod(tab)
+  }, [])
+
+  useEffect(() => {
+    if (cache[period] || period === 'typing') return
     fetch(`/api/leaderboard?period=${period}`)
       .then(r => r.json())
       .then(d => setCache(c => ({ ...c, [period]: d })))
@@ -60,7 +68,7 @@ export default function LeaderboardPage() {
       <div className={styles.head}>
         <img src="/icons/trophy_with_star.png" alt="" width={56} height={56} />
         <h1 className={styles.title}>Leaderboard</h1>
-        <p className={styles.sub}>Top coin earners</p>
+        <p className={styles.sub}>{period === 'typing' ? 'Fastest Bulgarian typists' : 'Top coin earners'}</p>
       </div>
 
       <div className={styles.tabs}>
@@ -77,7 +85,7 @@ export default function LeaderboardPage() {
 
       {period === 'league' && data && <LeagueHeader league={data.league} />}
 
-      {data === undefined ? (
+      {period === 'typing' ? <TypingRanks /> : data === undefined ? (
         <div className={styles.list} aria-busy="true" aria-label="Loading leaderboard">
           {[0, 1, 2, 3, 4].map(i => <Skeleton key={i} height={64} radius="var(--r)" />)}
         </div>

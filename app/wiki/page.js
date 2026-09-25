@@ -9,9 +9,9 @@ import WikiTree from '../../components/library/WikiTree'
 import styles from '../../components/library/Library.module.css'
 
 export const metadata = {
-  title: 'Library: the Bulgarian language, explained',
+  title: 'Wiki: the Bulgarian language, explained',
   description: 'Read about Bulgarian: the Cyrillic alphabet, themed vocabulary lists, grammar notes, rare literary words, holidays, music and real videos with subtitles.',
-  alternates: { canonical: '/library' },
+  alternates: { canonical: '/wiki' },
 }
 
 function FeaturedCard({ card }) {
@@ -35,10 +35,10 @@ function SmallCard({ card }) {
   )
 }
 
-export default function LibraryPage() {
+export default function WikiHome() {
   return (
     <div className={styles.page}>
-      <PageHeader backHref={null} title="Library" />
+      <PageHeader backHref={null} title="Wiki" />
       <div className={styles.layout}>
         <main className={styles.primary}>
           <section className={styles.hero}>

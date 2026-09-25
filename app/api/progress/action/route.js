@@ -2,6 +2,7 @@ import { getSession } from '@/lib/auth'
 import { runAction, resolveToday } from '@/lib/progressStore'
 import { spendActivityToken } from '@/lib/activityTokens'
 import { SERVER_ONLY, TIMED } from '@/lib/progressEngine'
+import { recordTypingResult } from '@/lib/typingResults'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,8 +24,10 @@ export async function POST(req) {
       if (problem) return Response.json({ error: problem }, { status: 403 })
     }
 
-    const result = await runAction(session.discordId, action, resolveToday(day))
+    const today = resolveToday(day)
+    const result = await runAction(session.discordId, action, today)
     if (result.error) return Response.json({ error: result.error }, { status: 409 })
+    if (action.type === 'typingDone') await recordTypingResult(session.discordId, action, today)
     return Response.json({ progress: result.state, coins: result.coins })
   } catch (e) {
     console.error('progress action error:', e)

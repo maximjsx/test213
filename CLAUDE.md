@@ -71,5 +71,6 @@ Wiki and glossary content are plain files too:
 - `coins` is the one currency: a spendable balance, while rankings use coins earned per day (`coinsByDay`, `lib/coins.js`), so spending never lowers rank.
 - Special topics (`special: { price?, guild? }` on a level) show locked on home. They are registered in `data/special.js` (server only) instead of `data/course.js`; the browser gets `data/special-meta.json` (generated on build, no exercises) and fetches lessons from `/api/special/lesson/<id>`, which checks the unlock.
 - Timed rewards (lessons, practice, speed rounds, drills, typing) need the token from `/api/progress/start` issued when the activity began (`beginActivity` in useProgress); see `TIMED` in the engine. `lib/specialTopics.js` decides the lock; Discord server membership comes from the `guilds` OAuth scope, stored as `users.guildIds` (only servers the course references).
+- Typing test boards (length and text, `lib/typingBoards.js`) rank accounts only: the action route stores each accepted `typingDone` in `typing_results` (`lib/typingResults.js`), one best run per player, board and day.
 - `app/opengraph-image.js` runs on the edge runtime because `@vercel/og` in Node breaks on Windows paths.
 - `lib/storage.js` is server only (reads STORAGE_API_KEY). Never import it from a client component.

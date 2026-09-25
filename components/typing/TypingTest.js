@@ -2,28 +2,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { useProgress } from '../../hooks/useProgress'
 import { buildText, PHONETIC, KEY_ROWS, LATIN_LABEL, keyFor } from '../../lib/typing'
+import { TYPING_DURATIONS, TYPING_SOURCES, typingBoard } from '../../lib/typingBoards'
 import Button from '../ui/Button'
 import CoinIcon from '../ui/CoinIcon'
+import Segmented from './Segmented'
+import TypingLeaderboard from './TypingLeaderboard'
 import styles from './TypingTest.module.css'
 
-const DURATIONS = [30, 60]
-const SOURCES = [
-  { id: 'words', label: 'Words' },
-  { id: 'sentences', label: 'Sentences' },
-]
 const VISIBLE_WORDS = 36
-
-function Segmented({ options, value, onChange, label }) {
-  return (
-    <div className={styles.segmented} role="radiogroup" aria-label={label}>
-      {options.map(o => (
-        <button key={o.id} role="radio" aria-checked={value === o.id} className={`${styles.segment} ${value === o.id ? styles.segmentOn : ''}`} onClick={() => onChange(o.id)}>
-          {o.label}
-        </button>
-      ))}
-    </div>
-  )
-}
 
 function Word({ word, typed, state }) {
   if (state !== 'current') return <span className={`${styles.word} ${styles[state] || ''}`}>{word}</span>
@@ -75,6 +61,9 @@ export default function TypingTest({ extraWords }) {
   const [startedAt, setStartedAt] = useState(null)
   const [now, setNow] = useState(Date.now())
   const [outcome, setOutcome] = useState(null)
+  const [boardRefresh, setBoardRefresh] = useState(0)
+  const board = typingBoard(duration, source)
+  const bestWpm = state.typingBest?.[board] || 0
   const inputRef = useRef(null)
   const tokenRef = useRef(null)
 
@@ -99,16 +88,19 @@ export default function TypingTest({ extraWords }) {
     const correctWords = results.filter(r => r.ok)
     const correctChars = correctWords.reduce((n, r) => n + r.word.length + 1, 0)
     const summary = {
+      duration,
+      source,
       wpm: Math.round(correctChars / 5 / (duration / 60)),
       accuracy: keys.total ? Math.round((keys.correct / keys.total) * 100) : 0,
       words: correctWords.length,
     }
-    setOutcome({ ...summary, best: summary.wpm > (state.typingBest?.wpm || 0), coins: null })
+    setOutcome({ ...summary, best: summary.wpm > bestWpm, previousBest: bestWpm, coins: null })
     tokenRef.current.then(token => {
       const result = completeTyping(summary, token)
       setOutcome(o => ({ ...o, coins: result.coins || 0 }))
+      result.synced?.finally(() => setBoardRefresh(n => n + 1))
     })
-  }, [elapsed, startedAt, outcome, duration, results, keys, completeTyping, state.typingBest])
+  }, [elapsed, startedAt, outcome, duration, source, results, keys, completeTyping, bestWpm])
 
   const word = words[index] || ''
 
@@ -161,8 +153,8 @@ export default function TypingTest({ extraWords }) {
   return (
     <div className={styles.test}>
       <div className={styles.toolbar}>
-        <Segmented label="Length" options={DURATIONS.map(d => ({ id: d, label: `${d}s` }))} value={duration} onChange={setDuration} />
-        <Segmented label="Text" options={SOURCES} value={source} onChange={setSource} />
+        <Segmented label="Length" options={TYPING_DURATIONS.map(d => ({ id: d, label: `${d}s` }))} value={duration} onChange={setDuration} />
+        <Segmented label="Text" options={TYPING_SOURCES} value={source} onChange={setSource} />
         <label className={styles.toggle}>
           <input type="checkbox" checked={phonetic} onChange={e => { setPhonetic(e.target.checked); inputRef.current?.focus() }} />
           Type with a Latin keyboard
@@ -177,7 +169,7 @@ export default function TypingTest({ extraWords }) {
             <div className={styles.stat}><span className={styles.statValue}>{outcome.words}</span><span className={styles.statLabel}>correct words</span></div>
           </div>
           <p className={styles.resultNote}>
-            {outcome.best ? 'New personal best.' : `Your best: ${state.typingBest?.wpm || outcome.wpm} wpm.`}
+            {outcome.best ? 'New personal best.' : `Your best: ${outcome.previousBest} wpm.`}
             {outcome.coins > 0 && <> You earned <CoinIcon size={16} /> {outcome.coins}.</>}
           </p>
           <Button onClick={reset}>Try again</Button>
@@ -213,6 +205,8 @@ export default function TypingTest({ extraWords }) {
       )}
 
       {phonetic && !outcome && <Keyboard next={typed.length >= word.length ? ' ' : word[typed.length]} />}
+
+      <TypingLeaderboard board={board} refreshKey={boardRefresh} />
     </div>
   )
 }

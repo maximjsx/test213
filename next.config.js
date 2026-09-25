@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
-    return [{ source: '/wiki', destination: '/library', permanent: true }]
+    return [{ source: '/library', destination: '/wiki', permanent: true }]
   },
   experimental: {
     // Certificate PDFs read these at runtime via fs, which tracing can't see

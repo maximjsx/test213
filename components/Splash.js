@@ -7,9 +7,9 @@ import styles from './Splash.module.css'
 // Welcome splash shown once per full page load. It lives in the root layout, so
 // Next keeps it mounted across client-side navigations — it only replays on a
 // hard load / refresh, which is exactly "opening the website".
-// Short on purpose: it plays on every full load, so it must not feel like a wait
-const HOLD_MS = 600
-const CLOSE_MS = 500
+// The wait before the iris closes is kept short; the close itself plays in full
+const HOLD_MS = 700
+const CLOSE_MS = 950
 
 export default function Splash() {
   const [phase, setPhase] = useState('in') // in -> out -> gone
