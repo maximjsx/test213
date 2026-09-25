@@ -256,12 +256,6 @@
     "parent": "vocabulary"
   },
   {
-    "slug": "bad-stuff/really-bad-stuff",
-    "title": "Really bad stuff (нищо за теб)",
-    "parent": "bad-stuff",
-    "warning": true
-  },
-  {
     "slug": "vocabulary/list-of-nouns/restaurant",
     "title": "Restaurant (Ресторант)",
     "parent": "vocabulary/list-of-nouns"
