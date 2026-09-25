@@ -748,6 +748,15 @@
     "enReviewed": false
   },
   {
+    "id": "izdig",
+    "bg": "Издиг",
+    "senses": [
+      "Издигане; растеж"
+    ],
+    "en": "rise, growth",
+    "enReviewed": false
+  },
+  {
     "id": "izlishak",
     "bg": "Излишък",
     "senses": [
@@ -832,6 +841,15 @@
       "Материална изгода"
     ],
     "en": "gain, self-interest",
+    "enReviewed": false
+  },
+  {
+    "id": "koriya",
+    "bg": "Кория",
+    "senses": [
+      "Малка гора"
+    ],
+    "en": "grove, small wood",
     "enReviewed": false
   },
   {
@@ -1435,6 +1453,15 @@
     "enReviewed": false
   },
   {
+    "id": "otvred",
+    "bg": "Отвред",
+    "senses": [
+      "От всички страни; отвсякъде"
+    ],
+    "en": "from all sides, from everywhere",
+    "enReviewed": false
+  },
+  {
     "id": "otklik",
     "bg": "Отклик",
     "senses": [
@@ -1907,6 +1934,15 @@
     "enReviewed": false
   },
   {
+    "id": "rumya",
+    "bg": "Ръмя",
+    "senses": [
+      "За дъжд - валя, падам слабо, на ситни капки"
+    ],
+    "en": "to drizzle",
+    "enReviewed": false
+  },
+  {
     "id": "samovglabyavam-se",
     "bg": "Самовглъбявам се",
     "senses": [
@@ -2170,6 +2206,16 @@
     "enReviewed": false
   },
   {
+    "id": "strupey",
+    "bg": "Струпей",
+    "senses": [
+      "Лишей, пършей",
+      "Засъхнала кора на рана"
+    ],
+    "en": "scab; lichen, mange",
+    "enReviewed": false
+  },
+  {
     "id": "starnishte",
     "bg": "Стърнище",
     "senses": [
@@ -2344,6 +2390,15 @@
       "Разсъждение, което се получава по пътя на размишление и съзерцание, а не чрез опит."
     ],
     "en": "speculation, abstract reasoning",
+    "enReviewed": false
+  },
+  {
+    "id": "upovanie",
+    "bg": "Упование",
+    "senses": [
+      "Надежда"
+    ],
+    "en": "hope, trust",
     "enReviewed": false
   },
   {
