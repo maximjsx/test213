@@ -5,6 +5,7 @@ import { lookupEnglish } from '../../lib/lookup'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
 import AddToDeckButton from '../decks/AddToDeckButton'
 import Modal from '../ui/Modal'
+import Dictation from './Dictation'
 import styles from './MediaPlayer.module.css'
 
 const SPEEDS = [0.5, 0.75, 1]
@@ -58,6 +59,8 @@ export default function MediaPlayer({ media, track }) {
   const [showBg, setShowBg] = useState(true)
   const [showEn, setShowEn] = useState(true)
   const [word, setWord] = useState(null)
+  const [dictating, setDictating] = useState(false)
+  const [dictIndex, setDictIndex] = useState(0)
   const listRef = useRef(null)
   const { lines, words } = track
 
@@ -71,6 +74,31 @@ export default function MediaPlayer({ media, track }) {
     const l = loopLine.current
     if (l && time >= l.end) seek(l.start)
   }, [time, seek])
+
+  // Dictation plays one line and stops at its end
+  const stopAt = useRef(null)
+  useEffect(() => {
+    if (stopAt.current !== null && time >= stopAt.current) {
+      stopAt.current = null
+      pause()
+    }
+  }, [time, pause])
+  const playLine = i => {
+    stopAt.current = lines[i].end
+    seek(lines[i].start)
+  }
+
+  function toggleDictation() {
+    if (dictating) {
+      stopAt.current = null
+      setDictating(false)
+      return
+    }
+    pause()
+    setLooping(false)
+    setDictIndex(Math.max(0, current))
+    setDictating(true)
+  }
 
   // Jumping to a line while looping moves the loop to that line
   const goTo = i => {
@@ -109,7 +137,9 @@ export default function MediaPlayer({ media, track }) {
         </div>
 
         <div className={styles.now} aria-live="polite">
-          {line ? (
+          {dictating ? (
+            <Dictation lines={lines} index={dictIndex} onIndex={setDictIndex} onPlayLine={playLine} />
+          ) : line ? (
             <>
               {showBg && <p className={styles.nowBg}><Words text={line.bg} onWord={openWord} /></p>}
               {showEn && line.en && <p className={styles.nowEn}>{line.en}</p>}
@@ -132,6 +162,7 @@ export default function MediaPlayer({ media, track }) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" /></svg>
           </button>
           <ToggleButton on={looping} onClick={() => setLooping(v => !v)} label="Loop this line">Loop</ToggleButton>
+          <ToggleButton on={dictating} onClick={toggleDictation} label="Dictation: type each line you hear">Dictation</ToggleButton>
           <div className={styles.speeds} role="group" aria-label="Playback speed">
             {SPEEDS.map(s => (
               <ToggleButton key={s} on={speed === s} onClick={() => { setSpeed(s); setRate(s) }} label={`Speed ${s}x`}>{s}x</ToggleButton>
@@ -144,19 +175,21 @@ export default function MediaPlayer({ media, track }) {
         </div>
       </div>
 
-      <ol className={styles.transcript} ref={listRef} aria-label="Transcript">
-        {lines.map((l, i) => (
-          <li key={i} data-line={i} className={`${styles.line} ${i === current ? styles.lineOn : ''}`}>
-            <button className={styles.lineTime} onClick={() => goTo(i)} aria-label={`Play from line ${i + 1}`}>
-              {Math.floor(l.start / 60)}:{String(Math.floor(l.start % 60)).padStart(2, '0')}
-            </button>
-            <div className={styles.lineText}>
-              {showBg && <p className={styles.lineBg}><Words text={l.bg} onWord={openWord} /></p>}
-              {showEn && l.en && <p className={styles.lineEn}>{l.en}</p>}
-            </div>
-          </li>
-        ))}
-      </ol>
+      {!dictating && (
+        <ol className={styles.transcript} ref={listRef} aria-label="Transcript">
+          {lines.map((l, i) => (
+            <li key={i} data-line={i} className={`${styles.line} ${i === current ? styles.lineOn : ''}`}>
+              <button className={styles.lineTime} onClick={() => goTo(i)} aria-label={`Play from line ${i + 1}`}>
+                {Math.floor(l.start / 60)}:{String(Math.floor(l.start % 60)).padStart(2, '0')}
+              </button>
+              <div className={styles.lineText}>
+                {showBg && <p className={styles.lineBg}><Words text={l.bg} onWord={openWord} /></p>}
+                {showEn && l.en && <p className={styles.lineEn}>{l.en}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
       <p className={styles.keys}>Space play or pause, arrows previous or next line, L loop</p>
     </div>
   )

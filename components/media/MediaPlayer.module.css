@@ -69,3 +69,19 @@
   .transcript { max-height: calc(100vh - 140px); position: sticky; top: 24px; }
   .keys { grid-column: 1 / -1; }
 }
+
+.dictation { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.dictationTop { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.dictationCount { font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+.dictationForm { display: flex; gap: 8px; }
+.dictationInput {
+  flex: 1; min-width: 0; padding: 10px 12px; border-radius: var(--r);
+  background: var(--bg); border: 2px solid var(--border);
+  font-size: var(--fs-md); font-weight: 800; color: var(--text);
+}
+.dictationInput:focus { outline: none; border-color: var(--border-hi); }
+.dictationResult { font-size: var(--fs-lg); font-weight: 900; line-height: 1.4; }
+.heard { color: var(--teal); }
+.notHeard { color: var(--red); text-decoration: underline wavy; text-underline-offset: 4px; }
+.dictationScore { font-size: var(--fs-sm); font-weight: 800; color: var(--text-muted); }
+.dictationActions { display: flex; flex-wrap: wrap; gap: 8px; }
