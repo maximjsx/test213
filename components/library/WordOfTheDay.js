@@ -2,21 +2,16 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { dayKey } from '../../lib/days'
+import { dailyIndex } from '../../lib/dailyWord'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
 import AddToDeckButton from '../decks/AddToDeckButton'
 import styles from './Library.module.css'
-
-function hash(s) {
-  let h = 2166136261
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619)
-  return h >>> 0
-}
 
 // Same word for everyone on the same local day. Picked after mount, since the
 // static page cannot know the visitor's date.
 export default function WordOfTheDay({ words }) {
   const [word, setWord] = useState(null)
-  useEffect(() => setWord(words[hash(dayKey()) % words.length]), [words])
+  useEffect(() => setWord(words[dailyIndex(dayKey(), words.length)]), [words])
 
   return (
     <section className={styles.panel} aria-labelledby="wotd">
