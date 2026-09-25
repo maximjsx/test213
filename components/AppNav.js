@@ -40,7 +40,7 @@ const ITEMS = [
 // Sections that get the app navigation. Lessons and the builder stay
 // full-screen so nothing invites leaving mid-exercise.
 const SHOW_ON = ['/topic', '/level', '/practice', '/words', '/letters', '/decks', '/wiki', '/glossary', '/watch', '/about-bulgarian', '/leaderboard', '/profile', '/u']
-const FULL_SCREEN = ['/practice/mistakes']
+const FULL_SCREEN = ['/practice/mistakes', '/practice/aspect/drill']
 
 export default function AppNav() {
   const pathname = usePathname()

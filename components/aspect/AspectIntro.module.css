@@ -1,0 +1,46 @@
+.intro { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.card {
+  display: flex; flex-direction: column; gap: var(--sp-3);
+  padding: var(--sp-4); border-radius: var(--r-lg);
+  background: var(--surface); border: 2px solid var(--border);
+}
+.title { font-size: var(--fs-lg); font-weight: 900; color: var(--text); }
+.text { font-size: var(--fs-base); font-weight: 700; color: var(--text-muted); line-height: 1.55; }
+.text b { color: var(--text); }
+.text .ipf, .ipf { color: var(--blue); }
+.text .pf, .pf { color: var(--orange); }
+
+.examples { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); padding: 0; margin: 0 0 var(--sp-2); }
+.example { display: flex; align-items: center; gap: var(--sp-3); }
+.example > span { display: flex; flex-direction: column; }
+.speak {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: var(--r2);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-hi); border: 2px solid var(--border);
+}
+.speak:hover { border-color: var(--border-hi); }
+.exampleBg { font-size: var(--fs-md); font-weight: 900; color: var(--text); }
+.exampleEn { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+
+.tableHead, .pairWords {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--sp-3); align-items: baseline;
+}
+.tableHead {
+  padding: 0 calc(var(--sp-2) + 40px) 0 var(--sp-2);
+  font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+}
+.pairs { list-style: none; display: flex; flex-direction: column; padding: 0; margin: 0; }
+.pair { display: flex; align-items: center; gap: var(--sp-2); border-top: 1px solid var(--border); }
+.pairWords { flex: 1; min-width: 0; padding: var(--sp-2); border-radius: var(--r2); text-align: left; }
+.pairWords:hover { background: var(--surface-hi); }
+.pairIpf, .pairPf { font-size: var(--fs-md); font-weight: 900; overflow-wrap: anywhere; }
+.pairIpf { color: var(--blue); }
+.pairPf { color: var(--orange); }
+.pairEn { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+
+@media (max-width: 520px) {
+  .tableHead { grid-template-columns: 1fr 1fr; }
+  .pairWords { grid-template-columns: 1fr 1fr; row-gap: 0; }
+  .pairEn { grid-column: 1 / -1; }
+}

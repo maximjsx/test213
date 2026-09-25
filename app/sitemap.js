@@ -10,6 +10,7 @@ export default function sitemap() {
     { path: '/words', priority: 0.6 },
     { path: '/practice', priority: 0.5 },
     { path: '/practice/typing', priority: 0.6 },
+    { path: '/practice/aspect', priority: 0.6 },
     { path: '/wiki', priority: 0.8 },
     { path: '/about-bulgarian', priority: 0.8 },
     { path: '/glossary', priority: 0.7 },

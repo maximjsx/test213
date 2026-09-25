@@ -59,6 +59,11 @@ export default function PracticePage() {
           <HubLink href="/letters" icon={<span className={styles.glyph} lang="bg">Аа</span>} title="Letters" sub={`${learnedLetters} of ${LETTERS.length} letters, tap to hear them`} />
         </section>
 
+        <section className={styles.group} aria-labelledby="grammar">
+          <h2 id="grammar" className={styles.groupTitle}>Grammar</h2>
+          <HubLink href="/practice/aspect" icon={<span className={styles.glyph} lang="bg">я/а</span>} title="Verb aspect pairs" sub="купувам or купя? When to use which" />
+        </section>
+
         <section className={styles.group} aria-labelledby="games">
           <h2 id="games" className={styles.groupTitle}>Games</h2>
           <HubLink href="/speed?mode=words" icon={img('/icons/lightning.png')} title="Word speed round" sub="Match as many words as you can in 60 seconds" />
