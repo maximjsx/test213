@@ -5,6 +5,7 @@ import PageHeader from '../../../components/ui/PageHeader'
 import Markdown from '../../../components/ui/Markdown'
 import WikiList from '../../../components/wiki/WikiList'
 import VulgarGate from '../../../components/wiki/VulgarGate'
+import AlphabetGrid from '../../../components/wiki/AlphabetGrid'
 import WikiTree from '../../../components/library/WikiTree'
 import layout from '../../../components/library/Library.module.css'
 import styles from '../../../components/wiki/Wiki.module.css'
@@ -15,8 +16,20 @@ export function generateStaticParams() {
   return WIKI_PAGES.map(p => ({ slug: p.slug.split('/') }))
 }
 
+// A line like {{alphabet}} in a page's Markdown places an interactive block there
+const EMBEDS = { alphabet: AlphabetGrid }
+const EMBED_LINE = /^\{\{(\w+)\}\}$/m
+
+function WikiBody({ text }) {
+  return text.split(/^(\{\{\w+\}\})$/m).map((part, i) => {
+    const Embed = EMBEDS[part.match(EMBED_LINE)?.[1]]
+    if (Embed) return <Embed key={i} />
+    return part.trim() && <Markdown key={i} text={part} wordRows />
+  })
+}
+
 function describe(page, body) {
-  const text = body.replace(/[#>*=`|\[\]()!_-]+/g, ' ').replace(/\s+/g, ' ').trim()
+  const text = body.replace(EMBED_LINE, '').replace(/[#>*=`|\[\]()!_-]+/g, ' ').replace(/\s+/g, ' ').trim()
   return text.length > 40 ? `${text.slice(0, 155).replace(/\s\S*$/, '')}...` : `${page.title}: Bulgarian notes from the Learn Bulgarian wiki.`
 }
 
@@ -43,7 +56,7 @@ export default function WikiPage({ params }) {
   const body = wikiBody(slug).trim()
   const content = (
     <>
-      {body && <Markdown text={body} wordRows />}
+      {body && <WikiBody text={body} />}
       {children.length > 0 && (
         <section className={styles.section} aria-labelledby="subpages">
           <h2 id="subpages" className={styles.sectionTitle}>In this section</h2>

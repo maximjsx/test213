@@ -206,11 +206,6 @@
     "parent": "vocabulary"
   },
   {
-    "slug": "the-alphabet/latinized-bulgarian",
-    "title": "Latinized bulgarian",
-    "parent": "the-alphabet"
-  },
-  {
     "slug": "interesting-rules/linguistic-constructions-with-impersonal-predicative-forms",
     "title": "Linguistic Constructions with Impersonal-Predicative Forms",
     "parent": "interesting-rules"
@@ -244,11 +239,6 @@
     "slug": "vocabulary/prepositions",
     "title": "Prepositions (Предлози)",
     "parent": "vocabulary"
-  },
-  {
-    "slug": "the-alphabet/printed",
-    "title": "Printed",
-    "parent": "the-alphabet"
   },
   {
     "slug": "vocabulary/pronouns",
@@ -334,11 +324,6 @@
     "slug": "",
     "title": "Wiki",
     "parent": null
-  },
-  {
-    "slug": "the-alphabet/written",
-    "title": "Written",
-    "parent": "the-alphabet"
   },
   {
     "slug": "interesting-rules/nyama",

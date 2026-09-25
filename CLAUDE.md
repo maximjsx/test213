@@ -44,7 +44,7 @@ Media (`/watch`): `bun run add-media <youtube url> [--song] [--lyrics file.txt]`
 
 Wiki and glossary content are plain files too:
 
-- `data/wiki/*.md` plus `data/wiki/index.json` (`{ slug, title, parent, warning? }`). Edit the Markdown directly; `scripts/import-wiki.js <zip>` re-imports the old Outline export and replaces everything. Wiki uploads live in `public/wiki`.
+- `data/wiki/*.md` plus `data/wiki/index.json` (`{ slug, title, parent, warning? }`). Edit the Markdown directly; `scripts/import-wiki.js <zip>` re-imports the old Outline export and replaces everything. Wiki uploads live in `public/wiki`. A line like `{{alphabet}}` places an interactive block (`EMBEDS` in `app/wiki/[...slug]/page.js`).
 - `data/glossary.json`: literary words. Set `enReviewed: true` once an English gloss is checked. `scripts/import-glossary.js <txt>` re-parses the source list and keeps existing glosses.
 
 ## Adding an exercise type

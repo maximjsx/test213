@@ -13,7 +13,7 @@ export const metadata = {
 export default function ConverterPage() {
   return (
     <div className={hub.page}>
-      <PageHeader backHref="/wiki/the-alphabet/latinized-bulgarian" backLabel="Latinized Bulgarian" title="Converter" />
+      <PageHeader backHref="/wiki/the-alphabet" backLabel="The alphabet" title="Converter" />
       <main className={`${hub.single} ${styles.page}`}>
         <div className={styles.intro}>
           <h1 className={styles.title}>Latin to Cyrillic</h1>
