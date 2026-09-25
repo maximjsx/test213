@@ -75,7 +75,7 @@ For educational purposes only. Most of these are very offensive, so know them to
 | Еба си мамата! | Fuck! / Holy shit! (literally "I fuck my mom", said about yourself in anger or surprise) |
 | Наебах се | I'm fucked / I'm screwed |
 | Ебало | Face, mug (vulgar) |
-| Ебалник | Wanker |
+| Чекиджия | Wanker |
 | Шибаняк | Motherfucker |
 | Майната му! | Fuck it! |
 | Майната ти! | Fuck you! |
@@ -84,7 +84,7 @@ For educational purposes only. Most of these are very offensive, so know them to
 | Духач | Cocksucker |
 | Путьо | Pussy (coward) |
 | Пишка | Dick |
-| Хуй / Кур | Cock |
+| Кур | Cock |
 | Курва | Whore |
 | Путка майна | Cunt |
 | Майка ти | Your mom |
