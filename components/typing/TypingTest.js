@@ -45,7 +45,7 @@ function Keyboard({ next }) {
   )
 }
 
-export default function TypingTest({ extraWords }) {
+export default function TypingTest() {
   const { state, completeTyping, beginActivity } = useProgress()
   const [duration, setDuration] = useState(30)
   const [source, setSource] = useState('words')
@@ -53,7 +53,7 @@ export default function TypingTest({ extraWords }) {
   const [run, setRun] = useState(0)
   // Shuffled text is built in the browser only, so server and client render agree
   const [words, setWords] = useState([])
-  useEffect(() => { setWords(buildText(source, extraWords)) }, [source, extraWords, run])
+  useEffect(() => { setWords(buildText(source)) }, [source, run])
   const [index, setIndex] = useState(0)
   const [typed, setTyped] = useState('')
   const [results, setResults] = useState([])

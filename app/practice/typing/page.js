@@ -1,4 +1,3 @@
-import GLOSSARY from '../../../data/glossary.json'
 import PageHeader from '../../../components/ui/PageHeader'
 import TypingTest from '../../../components/typing/TypingTest'
 import styles from '../../../components/Hub.module.css'
@@ -9,15 +8,12 @@ export const metadata = {
   alternates: { canonical: '/practice/typing' },
 }
 
-// Single words from the glossary add some rarer letters to the mix
-const EXTRA_WORDS = GLOSSARY.map(g => g.bg).filter(w => !w.includes(' '))
-
 export default function TypingPage() {
   return (
     <div className={styles.page}>
       <PageHeader backHref="/practice" backLabel="Practice" title="Typing test" />
       <main className={styles.single}>
-        <TypingTest extraWords={EXTRA_WORDS} />
+        <TypingTest />
       </main>
     </div>
   )
