@@ -13,6 +13,7 @@ export default function sitemap() {
     { path: '/wiki', priority: 0.8 },
     { path: '/about-bulgarian', priority: 0.8 },
     { path: '/glossary', priority: 0.7 },
+    { path: '/converter', priority: 0.6 },
     { path: '/watch', priority: 0.6 },
     { path: '/leaderboard', priority: 0.4 },
     { path: '/privacy', priority: 0.1 },

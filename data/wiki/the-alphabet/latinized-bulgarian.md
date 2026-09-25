@@ -4,7 +4,7 @@
 
 tova ne e dobra ideq, no ako nqma druga optciq...
 
-Converter → <https://convert.bulgarian-wiki.eu/>
+Converter: [Latin to Cyrillic converter](/converter)
 
 | Cyrillic | Latinized |
 |----|----|

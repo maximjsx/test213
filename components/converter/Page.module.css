@@ -1,0 +1,7 @@
+.page { display: flex; flex-direction: column; gap: var(--sp-5); }
+.intro { display: flex; flex-direction: column; gap: var(--sp-2); }
+.title { font-size: var(--fs-xl); font-weight: 900; line-height: 1.2; color: var(--text); }
+.lead { font-size: var(--fs-base); font-weight: 600; line-height: 1.6; color: var(--text-muted); }
+.tip { font-size: var(--fs-sm); font-weight: 700; line-height: 1.6; color: var(--text-muted); }
+.tip a { color: var(--blue); font-weight: 900; }
+.tip a:hover { color: var(--text); }
