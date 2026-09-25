@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Marck_Script } from 'next/font/google'
+import localFont from 'next/font/local'
 import { LETTERS, WORDS } from '../../lib/words'
 import { PEN, layoutText, drawGuides, drawText, drawStrokes, scoreWriting } from '../../lib/handwriting'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
@@ -11,6 +12,16 @@ import styles from './Handwriting.module.css'
 
 // Upright cursive in the style taught in Bulgarian schools
 const cursive = Marck_Script({ weight: '400', subsets: ['cyrillic'], display: 'swap' })
+
+// Typeset а has two storeys, but people write the single-storey one, so Print
+// takes just that letter from Andika (SIL Open Font License, subset to U+0430)
+const handA = localFont({
+  src: './fonts/andika-a.woff2',
+  weight: '700',
+  variable: '--font-hand-a',
+  adjustFontFallback: false,
+  declarations: [{ prop: 'unicode-range', value: 'U+0430' }],
+})
 
 const ALPHABET = [...'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЬЮЯ']
 const KINDS = [{ id: 'letters', label: 'Letters' }, { id: 'words', label: 'Words' }, { id: 'sentences', label: 'Sentences' }]
@@ -71,13 +82,13 @@ export default function Handwriting() {
   const info = isLetter ? LETTERS.find(l => l.letter === upper) : null
   // Words and sentences are always traced, freehand text would never line up with the guide
   const tracing = !isLetter || mode === 'trace'
-  const fontClass = style === 'cursive' ? cursive.className : ''
+  const fontClass = style === 'cursive' ? cursive.className : styles.print
 
   useEffect(() => { setBest(readBest()) }, [])
 
   // The canvas needs the font's real family name and has to wait for it to load
   useEffect(() => {
-    const name = style === 'cursive' ? cursive.style.fontFamily : getComputedStyle(document.body).fontFamily
+    const name = style === 'cursive' ? cursive.style.fontFamily : `${handA.style.fontFamily}, ${getComputedStyle(document.body).fontFamily}`
     let alive = true
     document.fonts.load(`700 40px ${name}`, text).catch(() => {}).then(() => alive && setFamily(name))
     return () => { alive = false }
@@ -177,7 +188,7 @@ export default function Handwriting() {
   const noun = isLetter ? 'letter' : 'text'
 
   return (
-    <div className={styles.wrap}>
+    <div className={`${styles.wrap} ${handA.variable}`}>
       <div className={styles.toolbar}>
         <Segmented label="What to write" options={KINDS} value={kind} onChange={changeKind} />
         <Segmented label="Letter style" options={STYLES} value={style} onChange={setStyle} />

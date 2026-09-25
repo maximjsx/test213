@@ -1,3 +1,4 @@
+.print { font-family: var(--font-hand-a), var(--font-nunito), sans-serif; }
 .wrap { display: flex; flex-direction: column; gap: var(--sp-5); }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
 
