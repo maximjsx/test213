@@ -12,6 +12,7 @@ export default function sitemap() {
     { path: '/practice/typing', priority: 0.6 },
     { path: '/practice/aspect', priority: 0.6 },
     { path: '/practice/handwriting', priority: 0.6 },
+    { path: '/gallery', priority: 0.5 },
     { path: '/wiki', priority: 0.8 },
     { path: '/about-bulgarian', priority: 0.8 },
     { path: '/glossary', priority: 0.7 },

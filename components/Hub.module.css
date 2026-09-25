@@ -37,3 +37,7 @@
 /* A single tool on a hub (the typing test) */
 .single { max-width: 880px; margin: 0 auto; padding: var(--sp-5) var(--sp-4) var(--sp-7); }
 @media (min-width: 1100px) { .single { padding: var(--sp-6) var(--sp-6) var(--sp-8); } }
+
+/* A wide single tool, like the photo gallery */
+.wide { max-width: 1080px; margin: 0 auto; padding: var(--sp-5) var(--sp-4) var(--sp-7); }
+@media (min-width: 1100px) { .wide { padding: var(--sp-6) var(--sp-6) var(--sp-8); } }
