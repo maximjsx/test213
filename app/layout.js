@@ -97,7 +97,7 @@ export default function RootLayout({ children }) {
             <Link href="/wiki" className={styles.footerLink}>Wiki</Link>
             <Link href="/about-bulgarian" className={styles.footerLink}>About Bulgarian</Link>
             <Link href="/practice/typing" className={styles.footerLink}>Typing test</Link>
-            <Link href="/builder" className={styles.footerLink}>Level Builder</Link>
+            <Link href="/builder" className={styles.footerLink}>Topic Builder</Link>
             <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
             <Link href="/terms" className={styles.footerLink}>Terms</Link>
             <a href="https://legal.bulgarian.dev/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>Legal Notice</a>

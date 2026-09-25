@@ -39,8 +39,8 @@ export default function BuilderGate({ children }) {
         {!state.loggedIn ? (
           <>
             <div className={styles.emoji}>🔒</div>
-            <h1 className={styles.title}>Log in to build levels</h1>
-            <p className={styles.text}>The Level Builder is only available to authorized accounts. Sign in with Discord to continue.</p>
+            <h1 className={styles.title}>Log in to build topics</h1>
+            <p className={styles.text}>The Topic Builder is only available to authorized accounts. Sign in with Discord to continue.</p>
             <a className={styles.loginBtn} href="/api/auth/login">Log in with Discord</a>
           </>
         ) : (

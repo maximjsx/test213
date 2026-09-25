@@ -25,7 +25,7 @@ Without these, the site works exactly as before, local-only.
 
 ## Adding content
 
-Topics are built in the Level Builder at `/builder`, which flags anything a learner would trip over (missing answers, choices without the answer, half-filled pairs). When a topic has no warnings left:
+Topics are built in the Topic Builder at `/builder`, which flags anything a learner would trip over (missing answers, choices without the answer, half-filled pairs). When a topic has no warnings left:
 
 ```bash
 bun run add-topic path/to/exported-level.json

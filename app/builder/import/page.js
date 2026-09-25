@@ -14,9 +14,9 @@ function ImportPageInner() {
 
   useEffect(() => {
     const d = params.get('d')
-    if (!d) { setError('No level data found in this URL.'); return }
+    if (!d) { setError('No topic data found in this URL.'); return }
     const decoded = decodeLevel(d)
-    if (!decoded || !decoded.title) { setError('Could not decode level data. The link may be corrupted.'); return }
+    if (!decoded || !decoded.title) { setError('Could not decode topic data. The link may be corrupted.'); return }
     setLevel(decoded)
   }, [params])
 
@@ -35,8 +35,8 @@ function ImportPageInner() {
     <div className={styles.page}>
       <div className={styles.center}>
         <div className={styles.doneEmoji}>✓</div>
-        <h2 className={styles.doneTitle}>Level added!</h2>
-        <p className={styles.doneSub}>"{level.title}" is now in your Level Builder.</p>
+        <h2 className={styles.doneTitle}>Topic added!</h2>
+        <p className={styles.doneSub}>"{level.title}" is now in your Topic Builder.</p>
         <div className={styles.doneActions}>
           <Link href="/builder" className={styles.btnPrimary}>Go to Builder</Link>
         </div>
@@ -53,7 +53,7 @@ function ImportPageInner() {
     </div>
   )
 
-  if (!level) return <div className={styles.loading}>Decoding level…</div>
+  if (!level) return <div className={styles.loading}>Decoding topic…</div>
 
   const totalExercises = countExercises(level)
 
@@ -63,7 +63,7 @@ function ImportPageInner() {
         <Link href="/builder" className={styles.backBtn}>
           <img src="/icons/gray_x.png" alt="Back to builder" width={18} height={18} />
         </Link>
-        <span className={styles.topTitle}>Shared Level</span>
+        <span className={styles.topTitle}>Shared Topic</span>
         <div style={{ width: 34 }} />
       </div>
 
@@ -98,7 +98,7 @@ function ImportPageInner() {
                 </button>
               )}
               <button className={styles.addBtn} onClick={addToMyLevels}>
-                Add to My Levels
+                Add to My Topics
               </button>
             </div>
             <Link href="/builder" className={styles.skipLink}>View Builder without adding</Link>

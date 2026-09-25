@@ -227,7 +227,7 @@ export default function LevelEditor() {
   if (!ready) return <div className={styles.loading}>Loading…</div>
   if (!level) return (
     <div className={styles.notFound}>
-      Level not found.{' '}
+      Topic not found.{' '}
       <Link href="/builder" className={styles.link}>Back to Builder</Link>
     </div>
   )
@@ -240,7 +240,7 @@ export default function LevelEditor() {
         <Modal
           role="alertdialog"
           size="sm"
-          title={confirmDelete.type === 'level' ? 'Delete level?' : 'Delete lesson?'}
+          title={confirmDelete.type === 'level' ? 'Delete topic?' : 'Delete lesson?'}
           onClose={() => setConfirmDelete(null)}
         >
           <ModalText>
@@ -280,7 +280,7 @@ export default function LevelEditor() {
             {exportFlash ? 'Exported!' : 'Export JSON'}
           </button>
           <PublishButton level={level} className={styles.exportBtn} />
-          <button className={styles.deleteTopBtn} onClick={() => setConfirmDelete({ type: 'level', label: level.title })} title="Delete level">
+          <button className={styles.deleteTopBtn} onClick={() => setConfirmDelete({ type: 'level', label: level.title })} title="Delete topic">
             🗑️
           </button>
         </div>
@@ -295,7 +295,7 @@ export default function LevelEditor() {
         <div className={maximized === 'settings' ? styles.sectionFull : styles.section}>
           <div className={`${styles.sectionToggleRow} ${maximized === 'settings' ? styles.sectionFullHeader : ''}`}>
             <button className={styles.sectionToggle} onClick={() => maximized !== 'settings' && setShowSettings(v => !v)}>
-              <span className={styles.sectionToggleLabel}>Level Settings</span>
+              <span className={styles.sectionToggleLabel}>Topic Settings</span>
               <span className={`${styles.chevron} ${(showSettings || maximized === 'settings') ? styles.chevronUp : ''}`} />
             </button>
             <button className={styles.maximizeBtn} onClick={() => setMaximized(v => v === 'settings' ? null : 'settings')} title={maximized === 'settings' ? 'Minimize' : 'Expand'}>
@@ -307,7 +307,7 @@ export default function LevelEditor() {
             <div className={maximized === 'settings' ? styles.sectionFullBody : styles.sectionBody}>
               <div className={styles.settingsGrid}>
                 <FieldRow label="Title">
-                  <input className={styles.input} value={level.title} placeholder="Level title" onChange={e => updateLevel({ title: e.target.value })} />
+                  <input className={styles.input} value={level.title} placeholder="Topic title" onChange={e => updateLevel({ title: e.target.value })} />
                 </FieldRow>
                 <FieldRow label="Subtitle">
                   <input className={styles.input} value={level.subtitle} placeholder="Short description" onChange={e => updateLevel({ subtitle: e.target.value })} />
@@ -354,7 +354,7 @@ export default function LevelEditor() {
                     {level.notes?.trim() ? <Markdown text={level.notes} /> : <p className={styles.notesEmpty}>Nothing to preview yet.</p>}
                   </div>
                 )}
-                <div className={styles.fieldHint}>Shown in the level Notes page. {'Supports ## headings, | tables |, - and 1. lists, > tips, **bold**, *italic*, `code`'}</div>
+                <div className={styles.fieldHint}>Shown on the topic's Notes page. {'Supports ## headings, | tables |, - and 1. lists, > tips, **bold**, *italic*, `code`'}</div>
               </div>
             </div>
           )}

@@ -90,7 +90,7 @@ export default function BuilderDashboard() {
     }
 
     if (!level || typeof level !== 'object' || !level.title) {
-      setImportError('Could not read level. Paste raw JSON or a share link.')
+      setImportError('Could not read topic. Paste raw JSON or a share link.')
       return
     }
 
@@ -107,7 +107,7 @@ export default function BuilderDashboard() {
     <BuilderGate>
     <div className={styles.page}>
       {confirmDeleteLevel && (
-        <Modal role="alertdialog" size="sm" title="Delete level?" onClose={() => setConfirmDeleteLevel(null)}>
+        <Modal role="alertdialog" size="sm" title="Delete topic?" onClose={() => setConfirmDeleteLevel(null)}>
           <ModalText>"{confirmDeleteLevel.title}" and all its lessons will be permanently removed.</ModalText>
           <ModalActions>
             <Button variant="danger" block onClick={() => deleteLevel(confirmDeleteLevel.id)}>Delete</Button>
@@ -119,14 +119,14 @@ export default function BuilderDashboard() {
         <Link href="/" className={styles.backBtn}>
           <img src="/icons/gray_x.png" alt="Back to course" width={18} height={18} />
         </Link>
-        <h1 className={styles.pageTitle}>Level Builder</h1>
+        <h1 className={styles.pageTitle}>Topic Builder</h1>
         <SyncStatus />
         <div className={styles.headerActions}>
           <Link href="/voice" className={styles.importBtn}>Voice studio</Link>
           <button className={styles.importBtn} onClick={() => { setShowImport(v => !v); setImportError('') }}>
             Import
           </button>
-          <button className={styles.createBtn} onClick={createLevel}>+ New Level</button>
+          <button className={styles.createBtn} onClick={createLevel}>+ New Topic</button>
         </div>
       </div>
 
@@ -153,7 +153,7 @@ export default function BuilderDashboard() {
           {importError && <p className={styles.importError}>{importError}</p>}
           <div className={styles.importActions}>
             <button className={styles.importSubmit} onClick={doImport} disabled={!importText.trim()}>
-              Import Level
+              Import Topic
             </button>
             <button className={styles.importCancel} onClick={() => { setShowImport(false); setImportText(''); setImportError('') }}>
               Cancel
@@ -168,11 +168,11 @@ export default function BuilderDashboard() {
         {levels.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.emptyEmoji}>🏗️</div>
-            <p className={styles.emptyText}>No custom levels yet.</p>
+            <p className={styles.emptyText}>No custom topics yet.</p>
             <p className={styles.emptyHint}>
-              Create a level, add lessons and exercises, then share it via URL or export as JSON.
+              Create a topic, add lessons and exercises, then share it via URL or export as JSON.
             </p>
-            <button className={styles.createBtnLg} onClick={createLevel}>Create First Level</button>
+            <button className={styles.createBtnLg} onClick={createLevel}>Create First Topic</button>
           </div>
         ) : (
           <>
@@ -209,7 +209,7 @@ export default function BuilderDashboard() {
                         <button
                           className={styles.deleteBtn}
                           onClick={() => setConfirmDeleteLevel({ id: level.id, title: level.title })}
-                          title="Delete level"
+                          title="Delete topic"
                         >
                           <TrashIcon />
                         </button>
@@ -219,7 +219,7 @@ export default function BuilderDashboard() {
                 </div>
               ))}
             </div>
-            <button className={styles.createBtnRow} onClick={createLevel}>+ Create Another Level</button>
+            <button className={styles.createBtnRow} onClick={createLevel}>+ Create Another Topic</button>
           </>
         )}
       </div>

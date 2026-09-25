@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import styles from './BuilderGate.module.css'
 
-// Super-admin only: manage which Discord IDs can access the Level Builder.
+// Super-admin only: manage which Discord IDs can access the Topic Builder.
 // Renders nothing for non-admins.
 export default function AdminUsersPanel() {
   const [isAdmin, setIsAdmin] = useState(false)

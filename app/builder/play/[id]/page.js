@@ -19,7 +19,7 @@ export default function BuilderPlayPage() {
   if (!ready) return <div className={styles.loading}>Loading…</div>
   if (!level) return (
     <div className={styles.loading}>
-      Level not found. <Link href="/builder" className={styles.link}>← Builder</Link>
+      Topic not found. <Link href="/builder" className={styles.link}>← Builder</Link>
     </div>
   )
 
