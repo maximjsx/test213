@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useProgress } from '../../hooks/useProgress'
-import { buildText, PHONETIC, KEY_ROWS, LATIN_LABEL, keyFor } from '../../lib/typing'
+import { buildText, LAYOUTS, LATIN_LABEL, keyFor } from '../../lib/typing'
 import { TYPING_DURATIONS, TYPING_SOURCES, typingBoard } from '../../lib/typingBoards'
 import Button from '../ui/Button'
 import CoinIcon from '../ui/CoinIcon'
+import AddToDeckButton from '../decks/AddToDeckButton'
 import Segmented from './Segmented'
 import TypingLeaderboard from './TypingLeaderboard'
 import styles from './TypingTest.module.css'
@@ -24,15 +25,39 @@ function Word({ word, typed, state }) {
   )
 }
 
-function Keyboard({ next }) {
-  const nextKey = keyFor(next)
+const TEXT_OPTIONS = [...TYPING_SOURCES, { id: 'letters', label: 'Letters' }]
+const KEYBOARD_OPTIONS = [
+  { id: 'phonetic', label: 'Phonetic' },
+  { id: 'bds', label: 'BDS' },
+  { id: 'native', label: 'My own' },
+]
+const LAYOUT_KEY = 'typingLayout'
+
+function savedLayout() {
+  try {
+    const value = localStorage.getItem(LAYOUT_KEY)
+    return KEYBOARD_OPTIONS.some(o => o.id === value) ? value : null
+  } catch {
+    return null
+  }
+}
+
+// Words typed wrong, without the punctuation of sentence mode, ready to save to a deck
+function missedWords(results) {
+  const words = results.filter(r => !r.ok).map(r => r.word.replace(/[^\p{L}-]/gu, '')).filter(Boolean)
+  return [...new Set(words)].slice(0, 12)
+}
+
+function Keyboard({ layout, next }) {
+  const { keys, rows } = LAYOUTS[layout]
+  const nextKey = keyFor(layout, next)
   return (
-    <div className={styles.keyboard} aria-hidden="true">
-      {KEY_ROWS.map((row, r) => (
+    <div className={styles.keyboard} style={{ '--cols': Math.max(...rows.map(r => r.length)) }} aria-hidden="true">
+      {rows.map((row, r) => (
         <div key={r} className={styles.keyRow} style={{ paddingLeft: `${r * 14}px` }}>
           {row.map(code => (
             <span key={code} className={`${styles.key} ${code === nextKey ? styles.keyNext : ''}`}>
-              <span className={styles.keyBg}>{PHONETIC[code]}</span>
+              <span className={styles.keyBg}>{keys[code]}</span>
               <span className={styles.keyLatin}>{LATIN_LABEL(code)}</span>
             </span>
           ))}
@@ -49,7 +74,8 @@ export default function TypingTest() {
   const { state, completeTyping, beginActivity } = useProgress()
   const [duration, setDuration] = useState(30)
   const [source, setSource] = useState('words')
-  const [phonetic, setPhonetic] = useState(true)
+  const [layout, setLayout] = useState('phonetic')
+  useEffect(() => { setLayout(l => savedLayout() || l) }, [])
   const [run, setRun] = useState(0)
   // Shuffled text is built in the browser only, so server and client render agree
   const [words, setWords] = useState([])
@@ -62,8 +88,9 @@ export default function TypingTest() {
   const [now, setNow] = useState(Date.now())
   const [outcome, setOutcome] = useState(null)
   const [boardRefresh, setBoardRefresh] = useState(0)
+  const warmUp = source === 'letters'
   const board = typingBoard(duration, source)
-  const bestWpm = state.typingBest?.[board] || 0
+  const bestWpm = warmUp ? 0 : state.typingBest?.[board] || 0
   const inputRef = useRef(null)
   const tokenRef = useRef(null)
 
@@ -94,13 +121,18 @@ export default function TypingTest() {
       accuracy: keys.total ? Math.round((keys.correct / keys.total) * 100) : 0,
       words: correctWords.length,
     }
-    setOutcome({ ...summary, best: summary.wpm > bestWpm, previousBest: bestWpm, coins: null })
+    const missed = warmUp ? [] : missedWords(results)
+    if (warmUp) {
+      setOutcome({ ...summary, missed, coins: 0 })
+      return
+    }
+    setOutcome({ ...summary, missed, best: summary.wpm > bestWpm, previousBest: bestWpm, coins: null })
     tokenRef.current.then(token => {
       const result = completeTyping(summary, token)
       setOutcome(o => ({ ...o, coins: result.coins || 0 }))
       result.synced?.finally(() => setBoardRefresh(n => n + 1))
     })
-  }, [elapsed, startedAt, outcome, duration, source, results, keys, completeTyping, bestWpm])
+  }, [elapsed, startedAt, outcome, duration, source, warmUp, results, keys, completeTyping, bestWpm])
 
   const word = words[index] || ''
 
@@ -108,7 +140,7 @@ export default function TypingTest() {
     if (startedAt) return
     setStartedAt(Date.now())
     setNow(Date.now())
-    tokenRef.current = beginActivity('typing', 'typing')
+    if (!warmUp) tokenRef.current = beginActivity('typing', 'typing')
   }
 
   function commit() {
@@ -133,7 +165,7 @@ export default function TypingTest() {
       return
     }
     if (e.ctrlKey || e.metaKey || e.altKey) return
-    const mapped = phonetic && PHONETIC[e.code]
+    const mapped = LAYOUTS[layout]?.keys[e.code]
     if (mapped) {
       e.preventDefault()
       type(e.shiftKey ? mapped.toUpperCase() : mapped)
@@ -165,6 +197,12 @@ export default function TypingTest() {
     else setTyped(value)
   }
 
+  function chooseLayout(id) {
+    setLayout(id)
+    try { localStorage.setItem(LAYOUT_KEY, id) } catch {}
+    inputRef.current?.focus()
+  }
+
   const first = Math.max(0, index - 6)
   const shown = words.slice(first, first + VISIBLE_WORDS)
 
@@ -172,11 +210,8 @@ export default function TypingTest() {
     <div className={styles.test}>
       <div className={styles.toolbar}>
         <Segmented label="Length" options={TYPING_DURATIONS.map(d => ({ id: d, label: `${d}s` }))} value={duration} onChange={setDuration} />
-        <Segmented label="Text" options={TYPING_SOURCES} value={source} onChange={setSource} />
-        <label className={styles.toggle}>
-          <input type="checkbox" checked={phonetic} onChange={e => { setPhonetic(e.target.checked); inputRef.current?.focus() }} />
-          Type with a Latin keyboard
-        </label>
+        <Segmented label="Text" options={TEXT_OPTIONS} value={source} onChange={setSource} />
+        <Segmented label="Keyboard layout" options={KEYBOARD_OPTIONS} value={layout} onChange={chooseLayout} />
       </div>
 
       {outcome ? (
@@ -187,9 +222,24 @@ export default function TypingTest() {
             <div className={styles.stat}><span className={styles.statValue}>{outcome.words}</span><span className={styles.statLabel}>correct words</span></div>
           </div>
           <p className={styles.resultNote}>
-            {outcome.best ? 'New personal best.' : `Your best: ${outcome.previousBest} wpm.`}
+            {warmUp
+              ? 'Warm-up runs are not ranked.'
+              : outcome.best ? 'New personal best.' : `Your best: ${outcome.previousBest} wpm.`}
             {outcome.coins > 0 && <> You earned <CoinIcon size={16} /> {outcome.coins}.</>}
           </p>
+          {outcome.missed.length > 0 && (
+            <div className={styles.missedBox}>
+              <h2 className={styles.missedTitle}>Words you missed</h2>
+              <ul className={styles.missedList}>
+                {outcome.missed.map(w => (
+                  <li key={w} className={styles.missedWord}>
+                    <span lang="bg">{w}</span>
+                    <AddToDeckButton size="sm" word={{ bg: w, source: { kind: 'custom', ref: 'typing' } }} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <Button onClick={reset}>Try again</Button>
         </section>
       ) : (
@@ -222,9 +272,11 @@ export default function TypingTest() {
         </section>
       )}
 
-      {phonetic && !outcome && <Keyboard next={typed.length >= word.length ? ' ' : word[typed.length]} />}
+      {layout !== 'native' && !outcome && <Keyboard layout={layout} next={typed.length >= word.length ? ' ' : word[typed.length]} />}
 
-      <TypingLeaderboard board={board} refreshKey={boardRefresh} />
+      {warmUp
+        ? <p className={styles.warmUpNote}>Letters is a warm-up for learning where the keys are. It has no leaderboard and earns no coins.</p>
+        : <TypingLeaderboard board={board} refreshKey={boardRefresh} />}
     </div>
   )
 }

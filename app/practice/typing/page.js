@@ -4,7 +4,7 @@ import styles from '../../../components/Hub.module.css'
 
 export const metadata = {
   title: 'Bulgarian typing test',
-  description: 'Test how fast you type in Bulgarian Cyrillic. Real words and sentences, 30 or 60 seconds, with an on-screen phonetic keyboard map.',
+  description: 'Test how fast you type in Bulgarian Cyrillic. Real words and sentences, 30 or 60 seconds, with an on-screen phonetic or BDS keyboard map and a letters warm-up.',
   alternates: { canonical: '/practice/typing' },
 }
 
