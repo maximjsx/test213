@@ -9,6 +9,7 @@ export default function sitemap() {
     { path: '/letters', priority: 0.8 },
     { path: '/words', priority: 0.6 },
     { path: '/practice', priority: 0.5 },
+    { path: '/practice/typing', priority: 0.6 },
     { path: '/library', priority: 0.8 },
     { path: '/about-bulgarian', priority: 0.8 },
     { path: '/glossary', priority: 0.7 },

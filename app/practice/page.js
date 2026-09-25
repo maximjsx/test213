@@ -50,7 +50,7 @@ export default function PracticePage() {
               ? `${decks.length} ${decks.length === 1 ? 'deck' : 'decks'}, reviewed on a smart schedule`
               : 'Save words and review them before you forget'}
           />
-          <HubLink href="/study?list=course" icon={img('/icons/keyboard.png')} title="Practise your words" sub="Flashcards, multiple choice, typing and listening" />
+          <HubLink href="/study?list=course" icon={img('/icons/heart_with_flame.png')} title="Practise your words" sub="Flashcards, multiple choice, typing and listening" />
         </section>
 
         <section className={styles.group} aria-labelledby="browse">
@@ -63,6 +63,7 @@ export default function PracticePage() {
           <h2 id="games" className={styles.groupTitle}>Games</h2>
           <HubLink href="/speed?mode=words" icon={img('/icons/lightning.png')} title="Word speed round" sub="Match as many words as you can in 60 seconds" />
           <HubLink href="/speed?mode=letters" icon={img('/icons/star.png')} title="Letter speed round" sub="Match letters to their sounds against the clock" />
+          <HubLink href="/practice/typing" icon={img('/icons/keyboard.png')} title="Typing test" sub="How fast can you type Cyrillic? 30 or 60 seconds" />
         </section>
       </main>
     </div>

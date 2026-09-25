@@ -18,7 +18,7 @@ export default function GlossaryPage() {
     <div className={styles.page}>
       <PageHeader backHref="/library" backLabel="Library" title="Literary words" />
       <div className={layout.layout}>
-        <main className={`${layout.primary} ${styles.article}`}>
+        <main className={styles.article}>
           <h1 className={styles.title}>Literary words</h1>
           <p className={styles.muted}>
             Rare, bookish and old Bulgarian words that make writing sound rich, each with its dictionary definition.

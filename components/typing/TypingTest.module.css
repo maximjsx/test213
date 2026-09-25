@@ -1,0 +1,79 @@
+.test { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+.segmented {
+  display: inline-flex; padding: var(--sp-1); gap: var(--sp-1);
+  border-radius: var(--r); background: var(--surface); border: 2px solid var(--border);
+}
+.segment {
+  min-width: 56px; padding: var(--sp-2) var(--sp-3); border-radius: var(--r2);
+  font-size: var(--fs-sm); font-weight: 900; color: var(--text-muted);
+}
+.segment:hover { color: var(--text); }
+.segmentOn, .segmentOn:hover { background: var(--teal-bg); color: var(--teal); }
+.toggle { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); font-weight: 800; color: var(--text-muted); cursor: pointer; }
+
+.board {
+  position: relative; display: flex; flex-direction: column; gap: var(--sp-4);
+  padding: var(--sp-5); border-radius: var(--r-lg);
+  background: var(--surface); border: 2px solid var(--border);
+  cursor: text;
+}
+.board:focus-within { border-color: var(--border-hi); }
+.status { display: flex; align-items: baseline; gap: var(--sp-2); }
+.timer { font-size: var(--fs-xl); font-weight: 900; color: var(--teal); font-variant-numeric: tabular-nums; }
+.hint { font-size: var(--fs-sm); font-weight: 800; color: var(--text-muted); }
+
+.text {
+  display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3);
+  font-size: 22px; font-weight: 800; line-height: 1.5; color: var(--text-dim);
+}
+.word { white-space: nowrap; }
+.done { color: var(--text-muted); }
+.missed { color: var(--red); text-decoration: underline wavy; text-underline-offset: 4px; }
+.current { color: var(--text); }
+.charOk { color: var(--teal); }
+.charBad { color: var(--red); background: var(--red-bg); border-radius: 2px; }
+.charNext { box-shadow: inset 0 -3px 0 var(--yellow); }
+
+/* The real input stays in the page for focus and mobile keyboards, but the
+   text above is what the learner reads */
+.input {
+  position: absolute; inset: auto 0 0 0; height: 1px; width: 1px;
+  opacity: 0; border: 0; padding: 0;
+}
+
+.result {
+  display: flex; flex-direction: column; align-items: center; gap: var(--sp-4); text-align: center;
+  padding: var(--sp-6) var(--sp-5); border-radius: var(--r-lg);
+  background: var(--surface); border: 2px solid var(--border);
+}
+.resultStats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); width: 100%; max-width: 480px; }
+.stat { display: flex; flex-direction: column; gap: var(--sp-1); }
+.statValue { font-size: 34px; font-weight: 900; color: var(--text); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.statLabel { font-size: var(--fs-xs); font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); }
+.resultNote { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--sp-1); font-size: var(--fs-base); font-weight: 700; color: var(--text-muted); }
+
+.keyboard { display: flex; flex-direction: column; align-items: center; gap: var(--sp-1); overflow-x: auto; padding-bottom: var(--sp-1); }
+.keyRow { display: flex; gap: var(--sp-1); }
+.key {
+  flex-shrink: 0; width: 40px; height: 44px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: var(--r2); background: var(--surface); border: 2px solid var(--border);
+  box-shadow: 0 2px 0 var(--border);
+}
+.keyBg { font-size: var(--fs-md); font-weight: 900; color: var(--text); line-height: 1; }
+.keyLatin { font-size: 10px; font-weight: 800; color: var(--text-dim); line-height: 1.2; }
+.keyNext { border-color: var(--yellow); background: var(--yellow-bg); }
+.keyNext .keyBg { color: var(--yellow); }
+.space { width: 240px; font-size: var(--fs-xs); font-weight: 900; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+@media (max-width: 520px) {
+  .text { font-size: 19px; }
+  .key { width: 30px; height: 38px; }
+  .keyBg { font-size: var(--fs-sm); }
+  .space { width: 160px; }
+}
+@media (hover: none) {
+  .keyboard { display: none; }
+}

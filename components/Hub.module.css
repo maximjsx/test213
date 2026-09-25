@@ -33,3 +33,7 @@
 .sub { font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
 .arrow { flex-shrink: 0; color: var(--text-dim); }
 .link:hover .arrow { color: var(--text); }
+
+/* A single tool on a hub (the typing test) */
+.single { max-width: 880px; margin: 0 auto; padding: var(--sp-5) var(--sp-4) var(--sp-7); }
+@media (min-width: 1100px) { .single { padding: var(--sp-6) var(--sp-6) var(--sp-8); } }

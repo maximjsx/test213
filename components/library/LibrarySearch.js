@@ -22,7 +22,7 @@ export default function LibrarySearch({ index }) {
         className={styles.searchInput}
         type="search"
         value={query}
-        placeholder="Search pages and words, in Bulgarian or English"
+        placeholder="Search pages and words"
         aria-label="Search the library"
         onChange={e => setQuery(e.target.value)}
       />

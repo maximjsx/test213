@@ -34,6 +34,17 @@
   --r-xl: 20px;
   --r-pill: 999px;
 
+  /* Spacing scale: every gap, padding and margin is one of these steps, so
+     related things sit half as far apart as unrelated ones */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
   --fs-xs:   11px;
   --fs-sm:   13px;
   --fs-base: 15px;

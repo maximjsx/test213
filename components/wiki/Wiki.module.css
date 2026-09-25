@@ -1,6 +1,6 @@
 .page { min-height: 100vh; background: var(--bg); }
 .main { max-width: 760px; margin: 0 auto; padding: 20px 16px 56px; display: flex; flex-direction: column; gap: 20px; }
-.article { gap: 20px; }
+.article { display: flex; flex-direction: column; gap: var(--sp-5); min-width: 0; }
 
 .crumbs { display: flex; flex-wrap: wrap; gap: 4px 8px; font-size: var(--fs-sm); font-weight: 800; color: var(--text-dim); }
 .crumbs a { color: var(--text-muted); }
@@ -44,3 +44,4 @@
 }
 .tile:hover { border-color: var(--border-hi); background: var(--surface-hi); transform: translateY(-1px); }
 .tileTitle { font-size: var(--fs-md); font-weight: 900; color: var(--text); }
+.crumbs + .title { margin-top: calc(var(--sp-3) * -1); }

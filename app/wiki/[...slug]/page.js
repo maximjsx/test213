@@ -61,7 +61,7 @@ export default function WikiPage({ params }) {
         title={shortTitle(page.title)}
       />
       <div className={layout.layout}>
-        <main className={`${layout.primary} ${styles.article}`}>
+        <main className={styles.article}>
           <nav className={styles.crumbs} aria-label="Breadcrumb">
             <Link href="/library">Library</Link>
             {trail.map(p => <span key={p.slug}>/ <Link href={`/wiki/${p.slug}`}>{shortTitle(p.title)}</Link></span>)}

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FEATURED_CARDS, CULTURE_CARDS, SEARCH_INDEX, DAILY_WORDS } from '../../lib/library'
+import { FEATURED_CARDS, CULTURE_CARDS, WARNING_CARD, SEARCH_INDEX, DAILY_WORDS } from '../../lib/library'
 import PageHeader from '../../components/ui/PageHeader'
 import Button from '../../components/ui/Button'
 import LibraryArt from '../../components/library/LibraryArt'
@@ -18,20 +18,19 @@ function FeaturedCard({ card }) {
   return (
     <Link href={card.href} className={styles.feature} style={{ '--card': card.color }}>
       <span className={styles.glyph} lang="bg" aria-hidden="true">{card.glyph}</span>
-      <span className={styles.featureBody}>
-        <span className={styles.cardTitle}>{card.title}</span>
-        <span className={styles.cardBlurb}>{card.blurb}</span>
-        {card.pages > 0 && <span className={styles.cardMeta}>{card.pages} pages</span>}
-      </span>
+      <span className={styles.cardTitle}>{card.title}</span>
+      <span className={styles.cardBlurb}>{card.blurb}</span>
+      <span className={styles.cardMeta}>{card.meta}</span>
     </Link>
   )
 }
 
 function SmallCard({ card }) {
   return (
-    <Link href={card.href} className={`${styles.small} ${card.warning ? styles.smallWarn : ''}`}>
+    <Link href={card.href} className={styles.small}>
       <span className={styles.cardTitle}>{card.title}</span>
       <span className={styles.cardBlurb}>{card.blurb}</span>
+      <span className={styles.cardMeta}>{card.meta}</span>
     </Link>
   )
 }
@@ -74,6 +73,15 @@ export default function LibraryPage() {
             <div className={styles.smalls}>
               {CULTURE_CARDS.map(card => <SmallCard key={card.href} card={card} />)}
             </div>
+            {WARNING_CARD && (
+              <Link href={WARNING_CARD.href} className={styles.warning}>
+                <span className={styles.warningTag}>18+</span>
+                <span className={styles.warningText}>
+                  <span className={styles.cardTitle}>{WARNING_CARD.title}</span>
+                  <span className={styles.cardBlurb}>{WARNING_CARD.blurb}</span>
+                </span>
+              </Link>
+            )}
           </section>
         </main>
 
