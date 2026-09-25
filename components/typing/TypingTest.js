@@ -140,6 +140,24 @@ export default function TypingTest() {
     }
   }
 
+  // Typing anywhere on the page goes to the test, without clicking the box first
+  const keyDownRef = useRef(onKeyDown)
+  keyDownRef.current = onKeyDown
+  useEffect(() => {
+    function onPageKey(e) {
+      const input = inputRef.current
+      if (!input || e.target === input || e.ctrlKey || e.metaKey || e.altKey) return
+      if (e.key.length !== 1 && e.key !== 'Backspace') return
+      if (e.target.closest?.('input, textarea, select, [contenteditable="true"]')) return
+      // Focusing during keydown sends the native character (a Bulgarian
+      // layout, backspace) into the input; mapped keys are handled here
+      input.focus()
+      keyDownRef.current(e)
+    }
+    window.addEventListener('keydown', onPageKey)
+    return () => window.removeEventListener('keydown', onPageKey)
+  }, [])
+
   function onChange(e) {
     // Only native typing lands here (a Bulgarian layout, or backspace)
     const value = e.target.value.replace(/\s/g, '')
