@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/auth'
 import { reviewQueue, recordReview, DAY_PATTERN } from '@/lib/decks'
+import { runAction, resolveToday } from '@/lib/progressStore'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,7 +30,9 @@ export async function POST(req) {
     }
     const result = await recordReview(session.discordId, cardId, grade, day)
     if (result.error) return Response.json(result, { status: 404 })
-    return Response.json(result)
+    // The reward is decided here, from the review just stored, never by the client
+    const reward = await runAction(session.discordId, { type: 'reviewsDone', count: 1 }, resolveToday(day))
+    return Response.json({ ...result, progress: reward.state })
   } catch (e) {
     console.error('review POST error:', e)
     return Response.json({ error: 'internal_error' }, { status: 500 })

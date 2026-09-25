@@ -93,7 +93,12 @@ function convert(markdown, uploadFor) {
     lines.push(line)
   }
   flushTable()
-  return fixHomoglyphs(lines.join('\n').replace(/\*\*\s*\*\*/g, '').replace(/\n{3,}/g, '\n\n').trim()) + '\n'
+  const text = lines.join('\n')
+    .replace(/\*\*\s*\*\*/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    // The old wiki domain is gone; its contact address moved
+    .replace(/info@bulgarian-wiki\.eu/g, 'info@bulgarian.dev')
+  return fixHomoglyphs(text.trim()) + '\n'
 }
 
 // Pages keyed by their path inside Public/Home, without ".md"

@@ -1,8 +1,10 @@
 'use client'
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useDecks, deckRequest } from '../../hooks/useDecks'
-import { useProgress, dayKey, REVIEW_COIN_CAP } from '../../hooks/useProgress'
+import { useProgress } from '../../hooks/useProgress'
+import { dayKey } from '../../lib/days'
+import { ECONOMY } from '../../lib/progressEngine'
 import { speakBulgarian, unlockAudio, hapticTap } from '../../lib/audio'
 import { GRADES, previewIntervals } from '../../lib/srs'
 import PageHeader from '../../components/ui/PageHeader'
@@ -16,7 +18,6 @@ import deckStyles from '../../components/decks/Decks.module.css'
 // Cards due again within this window (learning steps like "10m") come back
 // in the same session instead of waiting for the next visit.
 const LEARN_AHEAD_MS = 20 * 60000
-const REPORT_EVERY = 10
 
 function Flashcard({ card, revealed, onReveal, onGrade }) {
   const intervals = previewIntervals(card.fsrs, new Date(), card.retention)
@@ -72,13 +73,12 @@ function Flashcard({ card, revealed, onReveal, onGrade }) {
 function Review() {
   const deckId = useSearchParams().get('deck')
   const { status, refresh } = useDecks()
-  const { completeReviews } = useProgress()
+  const { syncFromServer } = useProgress()
   const [queue, setQueue] = useState(null)
   const [revealed, setRevealed] = useState(false)
   const [reviewed, setReviewed] = useState(0)
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(0)
-  const unreported = useRef(0)
 
   useEffect(() => {
     if (status !== 'ready') return
@@ -88,24 +88,15 @@ function Review() {
       .catch(() => setError('Your cards could not be loaded.'))
   }, [status, deckId])
 
-  const report = useCallback(() => {
-    completeReviews(unreported.current)
-    unreported.current = 0
-  }, [completeReviews])
-
-  // Whatever is left unreported still counts if the learner leaves early
-  useEffect(() => () => { if (unreported.current) report() }, [report])
-
   const grade = useCallback(async (g) => {
     const card = queue[0]
     setRevealed(false)
     setQueue(q => q.slice(1))
     setReviewed(n => n + 1)
-    unreported.current++
-    if (unreported.current >= REPORT_EVERY) report()
     setSaving(n => n + 1)
     try {
-      const { card: updated } = await deckRequest('/api/review', 'POST', { cardId: card.id, grade: g, day: dayKey() })
+      const { card: updated, progress } = await deckRequest('/api/review', 'POST', { cardId: card.id, grade: g, day: dayKey() })
+      syncFromServer(progress)
       if (new Date(updated.fsrs.due) - Date.now() < LEARN_AHEAD_MS) {
         setQueue(q => [...q, { ...updated, retention: card.retention }])
       }
@@ -114,15 +105,14 @@ function Review() {
     } finally {
       setSaving(n => n - 1)
     }
-  }, [queue, report])
+  }, [queue, syncFromServer])
 
   // A learning card may still be on its way back into the queue
   const done = queue && queue.length === 0 && saving === 0
   useEffect(() => {
     if (!done) return
-    report()
     refresh()
-  }, [done, report, refresh])
+  }, [done, refresh])
 
   if (status === 'loading' || (status === 'ready' && !queue && !error)) return <ListSkeleton rows={1} />
 
@@ -142,7 +132,7 @@ function Review() {
             <p className={deckStyles.emptyTitle}>{reviewed ? 'All done for now' : 'Nothing due right now'}</p>
             <p className={deckStyles.muted}>
               {reviewed
-                ? `You reviewed ${reviewed} ${reviewed === 1 ? 'card' : 'cards'}. Reviews earn a coin each, up to ${REVIEW_COIN_CAP} a day.`
+                ? `You reviewed ${reviewed} ${reviewed === 1 ? 'card' : 'cards'}. Reviews earn a coin each, up to ${ECONOMY.reviewCoinCap} a day.`
                 : 'Come back later, or add more words to your decks.'}
             </p>
             <Button href={back} variant="secondary">Back to decks</Button>

@@ -1,7 +1,7 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from './useAuth'
-import { dayKey } from './useProgress'
+import { dayKey } from '../lib/days'
 import { cardKey } from '../lib/srs'
 
 // Module-level store like useProgress/useAuth: every component sees the same

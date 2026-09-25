@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useMemo, useState, useEffect, Suspense } from 'react'
+import { useMemo, useState, useEffect, useRef, Suspense } from 'react'
 import Link from 'next/link'
 import { COURSE } from '../../../data/course'
 import { useProgress } from '../../../hooks/useProgress'
@@ -14,7 +14,6 @@ import styles from './page.module.css'
 const PRACTICE_LEVEL = { id: 'practice', title: 'Practice', color: '#1cb0f6' }
 const PRACTICE_LESSON = { id: 'practice', title: 'Mistake Practice', coins: 0 }
 const MAX_EXERCISES = 10
-const COINS_PER_CORRECT = 2
 
 function collectWrongExercises(wrongExercises) {
   const out = []
@@ -28,7 +27,8 @@ function collectWrongExercises(wrongExercises) {
 
 function PracticePageInner() {
   const router = useRouter()
-  const { state, hydrated, completePractice } = useProgress()
+  const { state, hydrated, completePractice, beginActivity } = useProgress()
+  const tokenRef = useRef(null)
 
   const [phase, setPhase] = useState('exercise')
   const [score, setScore] = useState({ correct: 0, total: 0, mistakes: [] })
@@ -40,6 +40,10 @@ function PracticePageInner() {
     return shuffle(collectWrongExercises(state.wrongExercises || {})).slice(0, MAX_EXERCISES)
     // Rebuild only per round so mid-session state updates don't reshuffle the queue
   }, [hydrated, round]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (hydrated) tokenRef.current = beginActivity('practice', 'mistakes')
+  }, [hydrated, round, beginActivity])
 
   // Same fake-loading beat as the lesson page so entry doesn't feel abrupt
   const [booting, setBooting] = useState(true)
@@ -61,20 +65,12 @@ function PracticePageInner() {
     )
   }
 
-  function handleComplete(finalScore) {
+  async function handleComplete(finalScore) {
     const wrongIds = [...new Set((finalScore.mistakes || []).map(m => m.id).filter(Boolean))]
     const correctIds = exercises.map(ex => ex.id).filter(id => !wrongIds.includes(id))
-    const perfect = finalScore.total > 0 && finalScore.correct === finalScore.total
-    const earned = correctIds.length * COINS_PER_CORRECT + (perfect ? 5 : 0)
-    const pct = finalScore.total > 0 ? finalScore.correct / finalScore.total : 0
-
     setScore(finalScore)
-    setCoinsEarned(earned)
-    completePractice(earned, {
-      accuracyPct: Math.round(pct * 100),
-      maxCombo: finalScore.maxCombo || 0,
-      perfect,
-    }, correctIds, wrongIds)
+    const result = completePractice(correctIds, wrongIds, finalScore.maxCombo || 0, await tokenRef.current)
+    setCoinsEarned(result.coins || 0)
     setPhase('complete')
   }
 

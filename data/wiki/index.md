@@ -14,4 +14,4 @@ We ==cannot guarantee== that everything in this ==wiki is 100% accurate== and th
 
 If you got any suggestions or found mistakes in this wiki, please send an email to:
 
-`info@bulgarian-wiki.eu`
+`info@bulgarian.dev`

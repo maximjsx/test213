@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation'
-import { LEVELS, findLevel } from '../../../lib/course'
+import { PUBLIC_LEVELS, findLevel } from '../../../lib/course'
 import PageHeader from '../../../components/ui/PageHeader'
 import Markdown from '../../../components/ui/Markdown'
 import Button from '../../../components/ui/Button'
 import styles from './page.module.css'
 
 export function generateStaticParams() {
-  return LEVELS.map(level => ({ id: level.id }))
+  return PUBLIC_LEVELS.map(level => ({ id: level.id }))
 }
 
 export function generateMetadata({ params }) {

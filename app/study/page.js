@@ -1,5 +1,5 @@
 'use client'
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useProgress } from '../../hooks/useProgress'
@@ -20,7 +20,6 @@ import styles from './page.module.css'
 import deckStyles from '../../components/decks/Decks.module.css'
 
 const STUDY_LEVEL = { id: 'study', title: 'Word practice', color: '#00bfa0' }
-const COINS_PER_CORRECT = 1
 
 // list=course | topic:<id> | deck:<id>  ->  { title, back, words } or null while loading
 function useWordList(list) {
@@ -138,9 +137,14 @@ function Study() {
   const list = params.get('list') || 'course'
   const mode = params.get('mode')
   const source = useWordList(list)
-  const { completePractice } = useProgress()
+  const { completeDrill, beginActivity } = useProgress()
   const [round, setRound] = useState(0)
   const [result, setResult] = useState(null)
+  const tokenRef = useRef(null)
+
+  useEffect(() => {
+    if (DRILL_MODES[mode]) tokenRef.current = beginActivity('drill', 'drill')
+  }, [mode, round, beginActivity])
 
   const exercises = useMemo(
     () => (source && DRILL_MODES[mode] && mode !== 'flashcards' ? buildDrill(source.words, mode) : []),
@@ -151,9 +155,8 @@ function Study() {
   const pickerHref = `/study?list=${encodeURIComponent(list)}`
   if (!DRILL_MODES[mode] || usableWords(source.words).length < MIN_DRILL_WORDS) return <ModePicker list={list} source={source} />
 
-  function finish(correct, total, maxCombo = 0, mistakes = []) {
-    const coins = correct * COINS_PER_CORRECT
-    completePractice(coins, { accuracyPct: total ? Math.round((correct / total) * 100) : 0, maxCombo, perfect: correct === total })
+  async function finish(correct, total, maxCombo = 0, mistakes = []) {
+    const { coins = 0 } = completeDrill(correct, total, maxCombo, await tokenRef.current)
     setResult({ score: { correct, total, maxCombo, mistakes }, coins })
   }
 

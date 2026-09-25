@@ -6,6 +6,7 @@ import { useProgress } from '../hooks/useProgress'
 import { useAuth } from '../hooks/useAuth'
 import { claimableQuestCount } from '../lib/quests'
 import { pendingMilestone } from '../lib/goals'
+import { dayKey } from '../lib/days'
 import { unlockAudio } from '../lib/audio'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeStats from '../components/home/HomeStats'
@@ -48,9 +49,10 @@ export default function HomePage() {
   if (!hydrated) return <HomeSkeleton />
 
   const resume = findResumeLesson(isLessonComplete, isLessonUnlocked, isTopicUnlocked)
-  const streakAtRisk = state.streak > 0 && state.lastActiveDay !== new Date().toDateString()
+  const today = dayKey()
+  const streakAtRisk = state.streak > 0 && state.lastActiveDay !== today
   const mistakeCount = Object.keys(state.wrongExercises || {}).length
-  const milestone = pendingMilestone(state)
+  const milestone = pendingMilestone(state, today)
   const stats = {
     state,
     streakAtRisk,

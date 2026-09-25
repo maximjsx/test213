@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "bun scripts/special-meta.js && next build",
     "start": "next start",
     "add-topic": "bun scripts/add-topic.js",
     "add-media": "bun --env-file=.env.local scripts/add-media.js"

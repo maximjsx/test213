@@ -1,63 +1,21 @@
-import getClientPromise from '@/lib/mongodb'
 import { getSession } from '@/lib/auth'
+import { loadProgress, refreshProgress, resolveToday } from '@/lib/progressStore'
 
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_KEYS = [
-  'lessons', 'coins', 'streak', 'lastActiveDay', 'streakFreezes',
-  'unlockedTopics', 'wrongExercises', 'skippedLevels', 'activeDays', 'coinsByDay', 'quests', 'startedAt',
-  'dailyGoal', 'streakMilestone', 'speedBest', 'friendQuestClaimed', 'reviewCoins',
-]
-const MAX_BYTES = 300_000
-
-function pickProgress(raw) {
-  const out = {}
-  for (const k of ALLOWED_KEYS) if (raw[k] !== undefined) out[k] = raw[k]
-  return out
-}
-
-export async function GET() {
-  const session = getSession()
-  if (!session) return Response.json({ error: 'unauthorized' }, { status: 401 })
-
-  const client = await getClientPromise()
-  const user = await client.db('bulgario').collection('users').findOne(
-    { discordId: session.discordId },
-    { projection: { _id: 0, progress: 1, updatedAt: 1 } }
-  )
-  return Response.json({ progress: user?.progress ?? null, updatedAt: user?.updatedAt ?? null })
-}
-
-export async function POST(req) {
+// GET ?day=YYYY-MM-DD: the account's progress with streaks and quests
+// brought up to date, or null for an account that has none yet
+export async function GET(req) {
   try {
     const session = getSession()
     if (!session) return Response.json({ error: 'unauthorized' }, { status: 401 })
-
-    const body = await req.json()
-    if (!body?.progress || typeof body.progress !== 'object') {
-      return Response.json({ error: 'no progress' }, { status: 400 })
-    }
-    const progress = pickProgress(body.progress)
-    if (JSON.stringify(progress).length > MAX_BYTES) {
-      return Response.json({ error: 'too large' }, { status: 413 })
-    }
-
-    const client = await getClientPromise()
-    await client.db('bulgario').collection('users').updateOne(
-      { discordId: session.discordId },
-      {
-        $set: {
-          progress,
-          coins: Number(progress.coins) || 0,
-          streak: Number(progress.streak) || 0,
-          lessonsCount: Object.keys(progress.lessons || {}).length,
-          updatedAt: new Date(),
-        },
-      }
-    )
-    return Response.json({ ok: true })
+    const today = resolveToday(new URL(req.url).searchParams.get('day'))
+    const { progress } = await loadProgress(session.discordId)
+    if (!progress) return Response.json({ progress: null })
+    const result = await refreshProgress(session.discordId, today)
+    return Response.json({ progress: result.state ?? progress })
   } catch (e) {
-    console.error('progress POST error:', e)
+    console.error('progress GET error:', e)
     return Response.json({ error: 'internal_error' }, { status: 500 })
   }
 }

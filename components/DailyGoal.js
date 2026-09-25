@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { DAILY_GOALS, DEFAULT_DAILY_GOAL } from '../lib/goals'
-import { dayKey } from '../hooks/useProgress'
+import { dayKey } from '../lib/days'
 import Modal, { ModalText } from './ui/Modal'
 import Button from './ui/Button'
 import CoinIcon from './ui/CoinIcon'

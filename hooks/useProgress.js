@@ -1,13 +1,17 @@
 'use client'
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { ensureQuests, applySessionToQuests } from '../lib/quests'
 import { useAuth } from './useAuth'
+import { applyAction, normalizeProgress, defaultProgress, ECONOMY } from '../lib/progressEngine'
+import { findLesson, findLevel } from '../lib/course'
 import { topicLock } from '../lib/specialTopics'
+import { FRIEND_QUEST_REWARD } from '../lib/goals'
+import { dayKey } from '../lib/days'
 
+// Guests keep progress in this browser and run the progress engine here.
+// Accounts send every change to the server as an action; the server runs the
+// same engine, decides the reward and returns the stored state. The browser
+// applies the action at once for a snappy UI, then takes the server's answer.
 const KEY = 'bulgario_progress'
-const STREAK_FREEZE_COST = 20
-// Card reviews pay 1 coin each, up to this many coins a day
-export const REVIEW_COIN_CAP = 20
 
 function load() {
   if (typeof window === 'undefined') return null
@@ -15,7 +19,6 @@ function load() {
 }
 
 function save(data) {
-  if (typeof window === 'undefined') return
   try {
     localStorage.setItem(KEY, JSON.stringify(data))
   } catch (e) {
@@ -23,379 +26,145 @@ function save(data) {
   }
 }
 
-// Read-only peek at this browser's local progress, independent of whether
-// an account is signed in. Used purely for the informational note on the
-// profile page — never merged or written back automatically.
+// Read-only peek at this browser's guest progress, for the profile page's
+// "move it to your account" offer
 export function peekLocalProgress() {
   return load()
 }
 
-// Called once the "convert to account" flow has uploaded local progress —
-// it now lives on the account, so the local copy is cleared to avoid a
-// stale duplicate sitting in this browser's storage.
 export function clearLocalProgress() {
   if (typeof window === 'undefined') return
   localStorage.removeItem(KEY)
 }
 
-function defaultState() {
-  return {
-    lessons: {},
-    coins: 0,
-    streak: 0,
-    lastActiveDay: null,
-    streakFreezes: 0,
-    unlockedTopics: {},
-    wrongExercises: {},
-    skippedLevels: {},
-    activeDays: {},
-    coinsByDay: {},
-    quests: null,
-    startedAt: null,
-  }
+async function post(url, body) {
+  const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  const data = await res.json().catch(() => ({}))
+  return res.ok ? data : { error: data.error || 'network' }
 }
 
-function normalize(raw) {
-  return ensureQuests(calcStreakBreak({ ...defaultState(), ...raw }))
-}
-
-// A break or used freeze found on load must be saved, or the server keeps
-// showing the old streak on the leaderboard and friend lists.
-function needsSave(raw, next) {
-  return (raw.streak || 0) !== next.streak || (raw.streakFreezes || 0) !== next.streakFreezes
-}
-
-function calcStreakBreak(state) {
-  if (!state.lastActiveDay || state.streak === 0) return state
-  const last = new Date(state.lastActiveDay)
-  const today = new Date()
-  const lastMidnight = new Date(last.getFullYear(), last.getMonth(), last.getDate())
-  const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-  const missedDays = Math.round((todayMidnight - lastMidnight) / 86400000) - 1
-  if (missedDays <= 0) return state
-  // Each freeze covers exactly one missed day
-  if ((state.streakFreezes || 0) < missedDays) return { ...state, streak: 0 }
-  const activeDays = { ...(state.activeDays || {}) }
-  for (let i = 1; i <= missedDays; i++) {
-    activeDays[dayKey(new Date(lastMidnight.getFullYear(), lastMidnight.getMonth(), lastMidnight.getDate() + i))] = 'frozen'
-  }
-  const yesterday = new Date(todayMidnight.getFullYear(), todayMidnight.getMonth(), todayMidnight.getDate() - 1)
-  return {
-    ...state,
-    streakFreezes: state.streakFreezes - missedDays,
-    lastActiveDay: yesterday.toDateString(),
-    activeDays,
-  }
-}
-
-// "2026-07-03" style key, local time
-export function dayKey(d = new Date()) {
-  const p = n => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`
-}
-
-// Earned history drives rankings, so only earning adds to it, never spending
-function earnedToday(state, coins) {
-  const byDay = state.coinsByDay || {}
-  return { ...byDay, [dayKey()]: (byDay[dayKey()] || 0) + coins }
-}
-
-// Marks today active, bumps streak once per day, applies session results to quests
-function applySession(current, coins, meta = {}) {
-  // Re-check the break here too: a tab left open across missed days was only
-  // normalized when it loaded.
-  const prev = calcStreakBreak(current)
-  const today = new Date().toDateString()
-  const wasToday = prev.lastActiveDay === today
-  const withQuests = ensureQuests(prev)
-  return {
-    ...withQuests,
-    coins: prev.coins + coins,
-    streak: wasToday ? prev.streak : prev.streak + 1,
-    lastActiveDay: today,
-    startedAt: prev.startedAt || Date.now(),
-    activeDays: { ...(prev.activeDays || {}), [dayKey()]: true },
-    coinsByDay: earnedToday(prev, coins),
-    quests: applySessionToQuests(withQuests.quests, { ...meta, coinsEarned: coins }),
-  }
-}
-
-// Module-level cache of the last hydrated progress. Switching tabs remounts
-// this hook; without the cache, `hydrated` would drop back to false (and for
-// signed-in users wait on a fresh /api/progress fetch) every time, flashing the
-// mascot loader. Instead we start from the last known state and refresh in the
-// background, so only a genuine first load shows the loader.
+// Module-level cache so a tab switch (remount) starts from the last known
+// state instead of flashing the loading skeleton
 let cachedState = null
 let cachedHydrated = false
 
 export function useProgress() {
   const { user, loading: authLoading } = useAuth()
-  const [state, setState] = useState(() => cachedState ?? defaultState())
+  const [state, setState] = useState(() => cachedState ?? defaultProgress())
   const [hydrated, setHydrated] = useState(cachedHydrated)
-  // 'local'   -> plain localStorage, exactly like a signed-out guest
-  // 'account' -> this account already has its own server progress; that
-  //              progress is authoritative and local storage is left alone
-  const modeRef = useRef('local')
+  const modeRef = useRef('local') // 'local' (guest) | 'account'
+  const stateRef = useRef(state)
+  stateRef.current = state
+  const guildIds = user?.guildIds
 
-  const persist = useCallback((next) => {
-    if (modeRef.current === 'account') {
-      fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress: next }),
-      }).catch(() => {})
-    } else {
-      save(next)
-    }
-  }, [])
-
-  // Decide the source of truth once auth is known. Local storage and the
-  // account are never auto-merged: an account only ever starts using local
-  // data through the explicit "convert" flow on the profile page (which
-  // only offers itself while the account has no progress of its own yet).
   useEffect(() => {
     if (authLoading) return
     let cancelled = false
     async function hydrate() {
       if (user) {
+        modeRef.current = 'account'
         try {
-          const res = await fetch('/api/progress')
+          const res = await fetch(`/api/progress?day=${dayKey()}`)
           const d = await res.json()
           if (cancelled) return
-          if (d.progress) {
-            modeRef.current = 'account'
-            const next = normalize(d.progress)
-            if (needsSave(d.progress, next)) persist(next)
-            setState(next)
-            setHydrated(true)
-            return
-          }
+          setState(normalizeProgress(d.progress || {}, dayKey()))
         } catch {
-          // fall through to local below
+          // keep what we had; actions still go to the server
         }
-      }
-      if (cancelled) return
-      modeRef.current = 'local'
-      const raw = load()
-      if (raw) {
-        const next = normalize(raw)
-        if (needsSave(raw, next)) persist(next)
+      } else {
+        modeRef.current = 'local'
+        const next = normalizeProgress(load() || {}, dayKey())
+        save(next)
         setState(next)
       }
-      setHydrated(true)
+      if (!cancelled) setHydrated(true)
     }
     hydrate()
     return () => { cancelled = true }
-  }, [user, authLoading, persist])
+  }, [user, authLoading])
 
-  // Mirror the latest values into the module cache so the next mount (a tab
-  // switch) can start from them instead of the loading state.
   useEffect(() => { cachedState = state }, [state])
   useEffect(() => { if (hydrated) cachedHydrated = true }, [hydrated])
 
-  const completeLesson = useCallback((lessonId, coins, meta = {}) => {
-    setState(prev => {
-      const next = {
-        ...applySession(prev, coins, { ...meta, isLesson: true }),
-        lessons: { ...prev.lessons, [lessonId]: { completed: true, completedAt: Date.now() } },
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
+  const context = useCallback(() => ({
+    today: dayKey(),
+    findLesson,
+    findLevel,
+    guildIds,
+    friendQuestReady: () => true, // the server checks the real totals
+    friendQuestReward: FRIEND_QUEST_REWARD,
+  }), [guildIds])
 
-  // Mistake practice session: clears fixed mistakes, keeps repeated ones
-  const completePractice = useCallback((coins, meta = {}, correctIds = [], wrongIds = []) => {
-    setState(prev => {
-      const wrongExercises = { ...prev.wrongExercises }
-      correctIds.forEach(id => { delete wrongExercises[id] })
-      wrongIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
-      const next = { ...applySession(prev, coins, { ...meta, isLesson: false }), wrongExercises }
-      persist(next)
-      return next
+  // Applies an action locally and, for accounts, on the server. Returns the
+  // local result ({ coins } or { error }) right away.
+  const dispatch = useCallback((action, token) => {
+    const result = applyAction(stateRef.current, action, context())
+    if (result.error) return result
+    setState(result.state)
+    if (modeRef.current === 'local') {
+      save(result.state)
+      return result
+    }
+    post('/api/progress/action', { action, token, day: dayKey() }).then(server => {
+      if (server.progress) return setState(server.progress)
+      // Rejected: fall back to what the server has
+      fetch(`/api/progress?day=${dayKey()}`).then(r => r.json()).then(d => d.progress && setState(d.progress)).catch(() => {})
     })
-  }, [persist])
+    return result
+  }, [context])
 
-  const claimQuest = useCallback((questId) => {
-    setState(prev => {
-      const items = prev.quests?.items
-      if (!items) return prev
-      const q = items.find(x => x.id === questId)
-      if (!q || q.claimed || q.progress < q.goal) return prev
-      const isCoins = q.reward.type === 'coins'
-      const next = {
-        ...prev,
-        coins: isCoins ? prev.coins + q.reward.amount : prev.coins,
-        coinsByDay: isCoins ? earnedToday(prev, q.reward.amount) : (prev.coinsByDay || {}),
-        streakFreezes: q.reward.type === 'freeze' ? (prev.streakFreezes || 0) + q.reward.amount : (prev.streakFreezes || 0),
-        quests: { ...prev.quests, items: items.map(x => x.id === questId ? { ...x, claimed: true } : x) },
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
+  // Start of a timed activity. Accounts get a server token that must come
+  // back with the result; guests need none.
+  const beginActivity = useCallback(async (kind, ref) => {
+    if (modeRef.current !== 'account') return null
+    const res = await post('/api/progress/start', { kind, ref })
+    return res.token || null
+  }, [])
 
-  const recordMistakes = useCallback((exerciseIds) => {
-    if (!exerciseIds?.length) return
-    setState(prev => {
-      const wrongExercises = { ...prev.wrongExercises }
-      exerciseIds.forEach(id => { wrongExercises[id] = (wrongExercises[id] || 0) + 1 })
-      const next = { ...prev, wrongExercises }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const buyStreakFreeze = useCallback(() => {
-    setState(prev => {
-      if (prev.coins < STREAK_FREEZE_COST) return prev
-      const next = {
-        ...prev,
-        coins: prev.coins - STREAK_FREEZE_COST,
-        streakFreezes: (prev.streakFreezes || 0) + 1,
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const guildIds = user?.guildIds
   const lockOf = useCallback(
-    (level) => topicLock(level, { unlockedTopics: state.unlockedTopics, guildIds }),
+    level => topicLock(level, { unlockedTopics: state.unlockedTopics, guildIds }),
     [state.unlockedTopics, guildIds]
   )
-  const isTopicUnlocked = useCallback((level) => !lockOf(level), [lockOf])
+  const isTopicUnlocked = useCallback(level => !lockOf(level), [lockOf])
 
-  // Spending only lowers the balance; coinsByDay is earned history, so a
-  // purchase never costs rank.
-  const unlockTopic = useCallback((level) => {
-    setState(prev => {
-      const lock = topicLock(level, { unlockedTopics: prev.unlockedTopics, guildIds })
-      const price = level.special?.price || 0
-      if (!lock?.needsCoins || lock.needsGuild || prev.coins < price) return prev
-      const next = {
-        ...prev,
-        coins: prev.coins - price,
-        unlockedTopics: { ...(prev.unlockedTopics || {}), [level.id]: new Date().toISOString() },
-      }
-      persist(next)
-      return next
-    })
-  }, [persist, guildIds])
-
-  // Reviews are reported in batches (every few cards and when the session
-  // ends) so a long review session is not one progress write per card.
-  const completeReviews = useCallback((count) => {
-    if (count <= 0) return
-    setState(prev => {
-      const today = dayKey()
-      const done = prev.reviewCoins?.day === today ? prev.reviewCoins.count : 0
-      const coins = Math.max(0, Math.min(count, REVIEW_COIN_CAP - done))
-      const next = {
-        ...applySession(prev, coins, { isLesson: false }),
-        reviewCoins: { day: today, count: done + count },
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const setDailyGoal = useCallback((coins) => {
-    setState(prev => {
-      const next = { ...prev, dailyGoal: coins }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const markStreakMilestone = useCallback((days) => {
-    setState(prev => {
-      const next = { ...prev, streakMilestone: days }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const completeSpeedRound = useCallback((mode, matches, coins) => {
-    setState(prev => {
-      const best = prev.speedBest || {}
-      const next = {
-        ...applySession(prev, coins, { isLesson: false }),
-        speedBest: { ...best, [mode]: Math.max(best[mode] || 0, matches) },
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const claimFriendQuest = useCallback((week, coins) => {
-    setState(prev => {
-      if (prev.friendQuestClaimed === week) return prev
-      const next = {
-        ...prev,
-        coins: prev.coins + coins,
-        coinsByDay: earnedToday(prev, coins),
-        friendQuestClaimed: week,
-      }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const isLessonComplete = useCallback((id) => !!state.lessons[id]?.completed, [state])
-
-  const skipLevel = useCallback((levelId) => {
-    setState(prev => {
-      const next = { ...prev, skippedLevels: { ...(prev.skippedLevels || {}), [levelId]: true } }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
-  const unskipLevel = useCallback((levelId) => {
-    setState(prev => {
-      const skippedLevels = { ...(prev.skippedLevels || {}) }
-      delete skippedLevels[levelId]
-      const next = { ...prev, skippedLevels }
-      persist(next)
-      return next
-    })
-  }, [persist])
-
+  const isLessonComplete = useCallback(id => !!state.lessons[id]?.completed, [state])
   const isLessonUnlocked = useCallback((levelLessons, idx) => {
-    // The first lesson of every level is always startable, so learners can jump
-    // straight into any section. Within a level, lessons still unlock in order.
+    // The first lesson of every topic is always open; within a topic, lessons
+    // unlock in order
     if (idx === 0) return true
     return !!state.lessons[levelLessons[idx - 1].id]?.completed
   }, [state])
-
-  const levelProgress = useCallback((levelLessons) => {
+  const levelProgress = useCallback(levelLessons => {
     const done = levelLessons.filter(l => state.lessons[l.id]?.completed).length
     return { done, total: levelLessons.length }
   }, [state])
 
-  const resetProgress = useCallback(() => {
-    const fresh = defaultState()
-    persist(fresh)
-    setState(fresh)
-  }, [persist])
-
-  // Used by the one-time "convert local progress to account" flow: uploads
-  // the given (local) state to become the account's progress and switches
-  // this session to account mode from then on.
-  const adoptAsAccount = useCallback((nextState) => {
-    modeRef.current = 'account'
-    setState(nextState)
-  }, [])
-
   return {
-    state, hydrated,
-    buyStreakFreeze, STREAK_FREEZE_COST,
-    unlockTopic, isTopicUnlocked, lockOf,
-    recordMistakes, completeLesson, completePractice, completeReviews,
-    claimQuest, claimFriendQuest,
-    setDailyGoal, markStreakMilestone, completeSpeedRound,
-    isLessonComplete, isLessonUnlocked, levelProgress,
-    skipLevel, unskipLevel, resetProgress, adoptAsAccount,
+    state,
+    hydrated,
+    isAccount: modeRef.current === 'account',
+    beginActivity,
+    STREAK_FREEZE_COST: ECONOMY.streakFreezeCost,
+    lockOf, isTopicUnlocked, isLessonComplete, isLessonUnlocked, levelProgress,
+
+    completeLesson: (lessonId, score, token) => dispatch({ type: 'lessonDone', lessonId, ...score }, token),
+    completePractice: (correctIds, wrongIds, maxCombo, token) => dispatch({ type: 'practiceDone', correctIds, wrongIds, maxCombo }, token),
+    completeSpeedRound: (mode, matches, token) => dispatch({ type: 'speedDone', mode, matches }, token),
+    completeDrill: (correct, total, maxCombo, token) => dispatch({ type: 'drillDone', correct, total, maxCombo }, token),
+    completeTyping: (result, token) => dispatch({ type: 'typingDone', ...result }, token),
+    claimQuest: questId => dispatch({ type: 'claimQuest', questId }),
+    claimFriendQuest: week => dispatch({ type: 'claimFriendQuest', week }),
+    buyStreakFreeze: () => dispatch({ type: 'buyFreeze' }),
+    // Buying special topics needs an account: guest coins live in the browser
+    unlockTopic: level => (modeRef.current === 'account' ? dispatch({ type: 'unlockTopic', levelId: level.id }) : { error: 'sign_in' }),
+    setDailyGoal: goal => dispatch({ type: 'setDailyGoal', goal }),
+    markStreakMilestone: days => dispatch({ type: 'markMilestone', days }),
+    skipLevel: levelId => dispatch({ type: 'skipLevel', levelId }),
+    unskipLevel: levelId => dispatch({ type: 'unskipLevel', levelId }),
+
+    // The server's word after something it did itself (a card review)
+    syncFromServer: progress => progress && setState(progress),
+    // After guest progress was imported into a new account
+    adoptAsAccount: progress => { modeRef.current = 'account'; setState(progress) },
   }
 }

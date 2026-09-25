@@ -16,7 +16,6 @@ const ROUND_MS = 60000
 const LOW_TIME_MS = 10000
 const COUNTDOWN_FROM = 3
 const ROWS = 5
-const MAX_COINS = 25
 
 const MODES = {
   words: {
@@ -204,7 +203,8 @@ function SpeedInner() {
   const params = useSearchParams()
   const modeId = params.get('mode') === 'letters' ? 'letters' : 'words'
   const mode = MODES[modeId]
-  const { state, hydrated, completeSpeedRound } = useProgress()
+  const { state, hydrated, completeSpeedRound, beginActivity } = useProgress()
+  const tokenRef = useRef(null)
   const [phase, setPhase] = useState('intro')
   const [result, setResult] = useState(null)
   const [roundKey, setRoundKey] = useState(0)
@@ -217,14 +217,14 @@ function SpeedInner() {
 
   function start() {
     unlockAudio()
+    tokenRef.current = beginActivity('speed', modeId)
     setRoundKey(k => k + 1)
     setPhase('countdown')
   }
 
-  function finish(matches) {
-    const coins = Math.min(MAX_COINS, Math.ceil(matches / 2))
+  async function finish(matches) {
+    const coins = matches > 0 ? completeSpeedRound(modeId, matches, await tokenRef.current).coins || 0 : 0
     setResult({ matches, coins, newBest: matches > best && matches > 0 })
-    if (matches > 0) completeSpeedRound(modeId, matches, coins)
     setPhase('done')
   }
 

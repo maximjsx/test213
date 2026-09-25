@@ -1,7 +1,8 @@
 import { currentBuilderStatus } from '@/lib/builderAccess'
-import { topicProblems, topicJson, registerTopic } from '@/lib/publishTopic'
+import { topicProblems, topicJson, registerTopic, unregisterTopic, registryFor, otherRegistry, specialMeta } from '@/lib/publishTopic'
 import { githubConfigured, readFile, commitFiles } from '@/lib/github'
-import { LEVELS } from '@/lib/course'
+import { ALL_LEVELS } from '@/lib/serverCourse'
+import { SPECIAL_LEVELS } from '@/data/special'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,17 +15,25 @@ export async function POST(req) {
     if (!status.isAdmin) return Response.json({ error: 'forbidden' }, { status: 403 })
 
     const { level, dryRun } = await req.json()
-    const problems = topicProblems(level, LEVELS)
+    const problems = topicProblems(level, ALL_LEVELS)
     if (problems.length) return Response.json({ problems }, { status: 422 })
 
-    const isNew = !LEVELS.some(l => l.id === level.id)
+    const isNew = !ALL_LEVELS.some(l => l.id === level.id)
     if (dryRun) return Response.json({ ok: true, isNew, configured: githubConfigured() })
     if (!githubConfigured()) return Response.json({ error: 'not_configured' }, { status: 503 })
 
-    const course = await readFile('data/course.js')
     const files = [{ path: `data/${level.id}.json`, content: topicJson(level) }]
-    const registered = registerTopic(course, level.id)
-    if (registered !== course) files.push({ path: 'data/course.js', content: registered })
+    for (const [registry, change] of [
+      [registryFor(level), s => registerTopic(s, level.id, registryFor(level))],
+      [otherRegistry(level), s => unregisterTopic(s, level.id, otherRegistry(level))],
+    ]) {
+      const before = await readFile(registry.path)
+      const after = change(before)
+      if (after !== before) files.push({ path: registry.path, content: after })
+    }
+    // The browser's view of special topics is rebuilt from the full list
+    const specials = [...SPECIAL_LEVELS.filter(l => l.id !== level.id), ...(level.special ? [level] : [])]
+    files.push({ path: 'data/special-meta.json', content: JSON.stringify(specials.map(specialMeta), null, 2) + '\n' })
 
     const url = await commitFiles(files, `${isNew ? 'Add' : 'Update'} topic: ${level.title}`)
     return Response.json({ ok: true, isNew, url })

@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { dayKey } from '../hooks/useProgress'
+import { dayKey } from '../lib/days'
 import Chevron from './Chevron'
 import Modal from './ui/Modal'
 import styles from './StreakModal.module.css'

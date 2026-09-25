@@ -12,6 +12,7 @@ import LoadingBear from '../../components/LoadingBear'
 import DiscordIcon from '../../components/ui/DiscordIcon'
 import CoinIcon from '../../components/ui/CoinIcon'
 import { coinsSince } from '../../lib/coins'
+import { dayKey } from '../../lib/days'
 import styles from './page.module.css'
 
 function fmtDate(d) {
@@ -78,10 +79,13 @@ function ProfileInner() {
     setConvertPhase('running')
     setConvertPct(0)
 
-    const upload = fetch('/api/progress', {
+    const upload = fetch('/api/progress/import', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ progress: state }),
+      body: JSON.stringify({ progress: localSnapshot, day: dayKey() }),
+    }).then(async res => {
+      if (!res.ok) throw new Error('upload failed')
+      return (await res.json()).progress
     })
 
     // Bar eases toward 90% while the upload runs, then snaps to 100 on finish
@@ -92,14 +96,13 @@ function ProfileInner() {
     }, 50)
 
     Promise.all([upload, new Promise(r => setTimeout(r, 2300))])
-      .then(([res]) => {
+      .then(([progress]) => {
         clearInterval(timer)
-        if (!res.ok) throw new Error('upload failed')
         setConvertPct(100)
-        adoptAsAccount(state)
+        adoptAsAccount(progress)
         clearLocalProgress()
         setLocalSnapshot(null)
-        setTimeout(() => { setServerProgress(state); setConvertPhase('done') }, 350)
+        setTimeout(() => { setServerProgress(progress); setConvertPhase('done') }, 350)
       })
       .catch(() => {
         clearInterval(timer)
@@ -150,12 +153,13 @@ function ProfileInner() {
   }
 
   const lessonsDone = Object.keys(state.lessons).length
-  const localHasProgress = state.coins > 0 || lessonsDone > 0
+  const localLessonsDone = localSnapshot ? Object.keys(localSnapshot.lessons || {}).length : 0
+  const localMistakes = localSnapshot ? Object.keys(localSnapshot.wrongExercises || {}).length : 0
+  const localHasProgress = localLessonsDone > 0
 
   // Purely informational: this account already has its own progress, and this
   // browser separately has local progress that was never linked to it. It's
   // never touched or merged automatically.
-  const localLessonsDone = localSnapshot ? Object.keys(localSnapshot.lessons || {}).length : 0
   const localDiffersFromAccount = user && serverProgress && localSnapshot
     && (localSnapshot.coins > 0 || localLessonsDone > 0)
     && (localSnapshot.coins !== state.coins || localLessonsDone !== lessonsDone)
@@ -167,70 +171,63 @@ function ProfileInner() {
   if (showConvert) {
     return (
       <div className={styles.page}>
-        <div className={styles.card}>
-          {convertPhase === 'done' ? (
-            <>
-              <Bear mood="cheer" size={100} />
-              <h1 className={styles.name}>Progress converted!</h1>
-              <p className={styles.signinText}>
-                Your progress now lives on your account and stays in sync automatically.
-                Signing in on another device brings it with you.
-              </p>
-              <button className={styles.convertBtn} onClick={() => setConvertSkipped(true)}>
-                GO TO PROFILE
-              </button>
-            </>
-          ) : (
-            <>
-              <Bear mood="happy" size={100} />
-              <h1 className={styles.name}>Welcome, {user.username}!</h1>
-              <p className={styles.signinText}>
-                You are signed in, but everything you earned so far is still saved only in this browser.
-                Convert it to your account so it is backed up and counts on the leaderboard.
-              </p>
+        <div className={styles.layout}>
+          <div className={styles.card}>
+            {convertPhase === 'done' ? (
+              <>
+                <Bear mood="cheer" size={100} />
+                <h1 className={styles.name}>Progress converted!</h1>
+                <p className={styles.signinText}>
+                  Your progress now lives on your account and stays in sync automatically.
+                  Signing in on another device brings it with you.
+                </p>
+                <button className={styles.convertBtn} onClick={() => setConvertSkipped(true)}>
+                  GO TO PROFILE
+                </button>
+              </>
+            ) : (
+              <>
+                <Bear mood="happy" size={100} />
+                <h1 className={styles.name}>Welcome, {user.username}!</h1>
+                <p className={styles.signinText}>
+                  You are signed in, but everything you earned so far is still saved only in this browser.
+                  Convert it to your account so it is backed up and counts on the leaderboard.
+                </p>
 
-              <div className={styles.stats}>
-                <div className={styles.stat}>
-                  <CoinIcon size={22} />
-                  <div className={styles.statVal}>{coinsSince(state.coinsByDay)}</div>
-                  <div className={styles.statLbl}>Coins earned</div>
-                </div>
-                <div className={styles.stat}>
-                  <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
-                  <div className={styles.statVal}>{lessonsDone}</div>
-                  <div className={styles.statLbl}>Lessons</div>
-                </div>
-                <div className={styles.stat}>
-                  <img src="/icons/fire.png" alt="" width={22} height={22} />
-                  <div className={styles.statVal}>{state.streak}</div>
-                  <div className={styles.statLbl}>Day streak</div>
-                </div>
-                <div className={styles.stat}>
-                  <img src="/icons/shield.png" alt="" width={22} height={22} />
-                  <div className={styles.statVal}>{state.streakFreezes || 0}</div>
-                  <div className={styles.statLbl}>Freezes</div>
-                </div>
-              </div>
-
-              {convertPhase === 'running' ? (
-                <div className={styles.convertBarWrap}>
-                  <div className={styles.convertBar}>
-                    <div className={styles.convertBarFill} style={{ width: `${convertPct}%` }} />
+                <div className={styles.stats}>
+                  <div className={styles.stat}>
+                    <img src="/icons/green_checkmark.png" alt="" width={22} height={22} />
+                    <div className={styles.statVal}>{localLessonsDone}</div>
+                    <div className={styles.statLbl}>Lessons</div>
                   </div>
-                  <div className={styles.convertBarLabel}>Converting… {convertPct}%</div>
+                  <div className={styles.stat}>
+                    <img src="/icons/broken_heart.png" alt="" width={22} height={22} />
+                    <div className={styles.statVal}>{localMistakes}</div>
+                    <div className={styles.statLbl}>Mistakes to fix</div>
+                  </div>
                 </div>
-              ) : (
-                <>
-                  <button className={styles.convertBtn} onClick={startConvert}>
-                    CONVERT PROGRESS
-                  </button>
-                  <button className={styles.convertSkip} onClick={() => setConvertSkipped(true)}>
-                    Not now
-                  </button>
-                </>
-              )}
-            </>
-          )}
+                <p className={styles.localStats}>Coins are recalculated from your finished lessons, since browser data can't be verified.</p>
+
+                {convertPhase === 'running' ? (
+                  <div className={styles.convertBarWrap}>
+                    <div className={styles.convertBar}>
+                      <div className={styles.convertBarFill} style={{ width: `${convertPct}%` }} />
+                    </div>
+                    <div className={styles.convertBarLabel}>Converting… {convertPct}%</div>
+                  </div>
+                ) : (
+                  <>
+                    <button className={styles.convertBtn} onClick={startConvert}>
+                      CONVERT PROGRESS
+                    </button>
+                    <button className={styles.convertSkip} onClick={() => setConvertSkipped(true)}>
+                      Not now
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     )

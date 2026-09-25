@@ -1,4 +1,4 @@
-import { LEVELS } from '../lib/course'
+import { PUBLIC_LEVELS } from '../lib/course'
 import { WIKI_PAGES } from '../lib/wiki'
 import { MEDIA } from '../lib/mediaLibrary'
 import { SITE_URL } from '../lib/seo'
@@ -17,7 +17,7 @@ export default function sitemap() {
     { path: '/privacy', priority: 0.1 },
     { path: '/terms', priority: 0.1 },
   ]
-  for (const level of LEVELS) {
+  for (const level of PUBLIC_LEVELS) {
     pages.push({ path: `/topic/${level.id}`, priority: 0.8 })
     pages.push({ path: `/level/${level.id}`, priority: 0.7 })
   }

@@ -47,6 +47,19 @@ function GuildStep({ guild, user, onCheck, onClose }) {
   )
 }
 
+// Coins bought as a guest live only in the browser, so buying needs an account
+function SignInStep({ price, onClose }) {
+  return (
+    <>
+      <ModalText>Special topics are bought with coins on your account. Sign in with Discord, then unlock it for <CoinIcon size={16} /> <strong>{price}</strong> coins.</ModalText>
+      <ModalActions>
+        <Button variant="secondary" onClick={onClose}>Not now</Button>
+        <Button href="/api/auth/login"><DiscordIcon size={18} /> Sign in</Button>
+      </ModalActions>
+    </>
+  )
+}
+
 function CoinStep({ level, coins, onUnlock, onClose }) {
   const price = level.special.price
   const missing = price - coins
@@ -82,7 +95,9 @@ export default function UnlockTopicModal({ level, lock, coins, user, onUnlock, o
       {level.subtitle && <ModalText>{level.subtitle}</ModalText>}
       {lock.needsGuild
         ? <GuildStep guild={level.special.guild} user={user} onCheck={onCheckGuild} onClose={onClose} />
-        : <CoinStep level={level} coins={coins} onUnlock={onUnlock} onClose={onClose} />}
+        : user
+          ? <CoinStep level={level} coins={coins} onUnlock={onUnlock} onClose={onClose} />
+          : <SignInStep price={level.special.price} onClose={onClose} />}
     </Modal>
   )
 }

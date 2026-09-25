@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { dayKey } from '../../hooks/useProgress'
+import { dayKey } from '../../lib/days'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
 import AddToDeckButton from '../decks/AddToDeckButton'
 import styles from './Library.module.css'

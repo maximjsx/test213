@@ -7,15 +7,19 @@ import styles from './Splash.module.css'
 // Welcome splash shown once per full page load. It lives in the root layout, so
 // Next keeps it mounted across client-side navigations — it only replays on a
 // hard load / refresh, which is exactly "opening the website".
+// Short on purpose: it plays on every full load, so it must not feel like a wait
+const HOLD_MS = 600
+const CLOSE_MS = 500
+
 export default function Splash() {
   const [phase, setPhase] = useState('in') // in -> out -> gone
 
   useEffect(() => {
-    const hold = setTimeout(() => setPhase('out'), 1050)
+    const hold = setTimeout(() => setPhase('out'), HOLD_MS)
     const done = setTimeout(() => {
       setPhase('gone')
       markSplashFinished() // let the page reveal itself (e.g. scroll to current lesson)
-    }, 2000) // after the ~0.9s iris close
+    }, HOLD_MS + CLOSE_MS)
     return () => { clearTimeout(hold); clearTimeout(done) }
   }, [])
 

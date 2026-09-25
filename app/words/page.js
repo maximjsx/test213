@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { LEVELS } from '../../lib/course'
+import { PUBLIC_LEVELS } from '../../lib/course'
 import { useProgress } from '../../hooks/useProgress'
 import { WORDS, MIN_SPEED_ITEMS, withStrength } from '../../lib/words'
 import { speakBulgarian, unlockAudio } from '../../lib/audio'
@@ -71,7 +71,7 @@ export default function WordsPage() {
           </div>
           <Button href="/speed?mode=words" aria-disabled={!canPlay}>Speed round</Button>
         </div>
-        {LEVELS.filter(l => l.id !== 'alphabet').map(level => (
+        {PUBLIC_LEVELS.filter(l => l.id !== 'alphabet').map(level => (
           <TopicWords key={level.id} level={level} words={words.filter(w => w.levelId === level.id)} />
         ))}
       </main>

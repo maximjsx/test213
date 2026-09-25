@@ -18,7 +18,8 @@ data/            Course content. One JSON file per topic ("level"), registered i
 lib/course.js    Every lookup over the course: findLevel, findLesson, resume lesson, exercise order, lesson XP.
 lib/levelSchema.js  Content validator shared by the builder UI and add-topic.
 lib/builderStore.js Builder levels in localStorage, share links, JSON export.
-hooks/useProgress.js  Learner state (XP, streak, lessons, mistakes, quests). localStorage for guests, /api/progress for accounts.
+hooks/useProgress.js  Learner state. Every change is an action run by lib/progressEngine.js: in the browser for guests,
+                      on the server for accounts (/api/progress/action), which alone decides coins and unlocks.
 hooks/useDecks.js     Decks and cards (account only). lib/decks.js is the server side, lib/srs.js wraps FSRS (ts-fsrs).
 lib/wordDrills.js     Turns any word list into lesson exercises for /study (flashcards, choice, typing, listening).
 components/decks/     AddToDeckButton (use it wherever a Bulgarian word appears), deck UI pieces.
@@ -68,6 +69,7 @@ Wiki and glossary content are plain files too:
 - Most pages are client components because progress lives in the browser. Metadata for them goes in a sibling `layout.js`.
 - `useProgress` and `useAuth` cache module-level state so tab switches don't flash loaders. Keep that when changing them.
 - `coins` is the one currency: a spendable balance, while rankings use coins earned per day (`coinsByDay`, `lib/coins.js`), so spending never lowers rank.
-- Special topics (`special: { price?, guild? }` on a level) show locked on home. `lib/specialTopics.js` decides the lock; Discord server membership comes from the `guilds` OAuth scope, stored as `users.guildIds` (only servers the course references).
+- Special topics (`special: { price?, guild? }` on a level) show locked on home. They are registered in `data/special.js` (server only) instead of `data/course.js`; the browser gets `data/special-meta.json` (generated on build, no exercises) and fetches lessons from `/api/special/lesson/<id>`, which checks the unlock.
+- Timed rewards (lessons, practice, speed rounds, drills, typing) need the token from `/api/progress/start` issued when the activity began (`beginActivity` in useProgress); see `TIMED` in the engine. `lib/specialTopics.js` decides the lock; Discord server membership comes from the `guilds` OAuth scope, stored as `users.guildIds` (only servers the course references).
 - `app/opengraph-image.js` runs on the edge runtime because `@vercel/og` in Node breaks on Windows paths.
 - `lib/storage.js` is server only (reads STORAGE_API_KEY). Never import it from a client component.
