@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth'
 import Bear from '../../components/Bear'
 import PageHeader from '../../components/ui/PageHeader'
 import InstallButton from '../../components/InstallButton'
+import ShareProfileButton from '../../components/ShareProfileButton'
 import Achievements from '../../components/Achievements'
 import LoadingBear from '../../components/LoadingBear'
 import DiscordIcon from '../../components/ui/DiscordIcon'
@@ -282,6 +283,8 @@ function ProfileInner() {
                     </div>
                   </div>
                 )}
+
+                <ShareProfileButton username={user.username} />
 
                 <InstallButton />
 
