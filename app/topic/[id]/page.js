@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { LEVELS, findLevelIndex, lessonHref } from '../../../lib/course'
@@ -14,14 +14,22 @@ import Button from '../../../components/ui/Button'
 import { TopicSkeleton } from '../../../components/PageSkeletons'
 import styles from './page.module.css'
 
+// Completions already celebrated in this tab, so coming back to the page or
+// a progress update from the server never replays the animation
+const celebrated = new Set()
+
 // The lesson finished in the last few seconds, so its node pops and its
 // connector draws in once when the learner lands back here.
-function recentlyCompleted(lessons) {
+function claimCelebration(lessons) {
   let best = null, bestAt = 0
   for (const [id, v] of Object.entries(lessons || {})) {
     if (v?.completedAt > bestAt) { bestAt = v.completedAt; best = id }
   }
-  return best && Date.now() - bestAt < 8000 ? best : null
+  if (!best || Date.now() - bestAt > 8000) return null
+  const key = `${best}:${bestAt}`
+  if (celebrated.has(key)) return null
+  celebrated.add(key)
+  return best
 }
 
 export default function TopicPage() {
@@ -31,7 +39,8 @@ export default function TopicPage() {
   const level = LEVELS[levelIndex]
   const router = useRouter()
   const currentRef = useRef(null)
-  const justCompletedId = useMemo(() => recentlyCompleted(state.lessons), [state.lessons])
+  // Decided once on arrival: later state changes must not restart it
+  const [justCompletedId] = useState(() => (hydrated ? claimCelebration(state.lessons) : null))
 
   const locked = hydrated && level && !isTopicUnlocked(level)
   useEffect(() => {

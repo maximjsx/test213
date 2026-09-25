@@ -109,53 +109,63 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
   )
 }
 
+function segmentPath(a, b) {
+  const midY = (a.y + b.y) / 2
+  return `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`
+}
+
 function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor, justCompletedId }) {
   const containerRef = useRef(null)
   const svgRef = useRef(null)
+  const drawnInRef = useRef(false)
 
   useEffect(() => {
     let frame = 0
+    // Paths are updated in place rather than recreated, so a redraw (resize,
+    // fonts, a progress update) never restarts the draw-in animation
     function draw() {
       const container = containerRef.current
       const svg = svgRef.current
       if (!container || !svg) return
       const cRect = container.getBoundingClientRect()
-      const buttons = container.querySelectorAll('button[data-lesson-node]')
-      const pts = Array.from(buttons).map(btn => {
+      const pts = Array.from(container.querySelectorAll('button[data-lesson-node]')).map(btn => {
         const r = btn.getBoundingClientRect()
         return { x: r.left + r.width / 2 - cRect.left, y: r.top + r.height / 2 - cRect.top }
       })
-      while (svg.firstChild) svg.removeChild(svg.firstChild)
-      if (pts.length < 2) return
-      for (let i = 0; i < pts.length - 1; i++) {
-        const a = pts[i], b = pts[i + 1]
-        const midY = (a.y + b.y) / 2
-        const d = `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`
-        const bothDone = isLessonComplete(lessons[i].id) && isLessonComplete(lessons[i + 1].id)
+      const count = Math.max(0, pts.length - 1)
+      while (svg.childNodes.length > count) svg.lastChild.remove()
+      while (svg.childNodes.length < count) {
         const el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        el.setAttribute('d', d)
         el.setAttribute('fill', 'none')
         el.setAttribute('stroke-linecap', 'round')
-        if (bothDone) {
-          el.setAttribute('stroke', levelColor)
-          el.setAttribute('stroke-width', '5')
-          el.setAttribute('opacity', '0.55')
-          // If this segment just became complete (touches the lesson finished
-          // moments ago), draw it in with a stroke-dashoffset sweep.
-          if (justCompletedId && (lessons[i].id === justCompletedId || lessons[i + 1].id === justCompletedId)) {
-            const len = el.getTotalLength()
-            el.style.strokeDasharray = String(len)
-            el.style.strokeDashoffset = String(len)
-            el.classList.add(styles.lineDraw)
-          }
-        } else {
+        svg.appendChild(el)
+      }
+      for (let i = 0; i < count; i++) {
+        const el = svg.childNodes[i]
+        el.setAttribute('d', segmentPath(pts[i], pts[i + 1]))
+        const bothDone = isLessonComplete(lessons[i].id) && isLessonComplete(lessons[i + 1].id)
+        if (!bothDone) {
           el.setAttribute('stroke', 'var(--border-hi)')
           el.setAttribute('stroke-width', '3')
           el.setAttribute('stroke-dasharray', '6 7')
           el.setAttribute('opacity', '0.45')
+          continue
         }
-        svg.appendChild(el)
+        el.setAttribute('stroke', levelColor)
+        el.setAttribute('stroke-width', '5')
+        el.setAttribute('opacity', '0.55')
+        el.removeAttribute('stroke-dasharray')
+        const touchesJustDone = justCompletedId && (lessons[i].id === justCompletedId || lessons[i + 1].id === justCompletedId)
+        if (el.classList.contains(styles.lineDraw)) {
+          el.style.strokeDasharray = String(el.getTotalLength())
+        } else if (touchesJustDone && !drawnInRef.current) {
+          const len = el.getTotalLength()
+          el.style.strokeDasharray = String(len)
+          el.style.strokeDashoffset = String(len)
+          el.classList.add(styles.lineDraw)
+        }
       }
+      if (justCompletedId) drawnInRef.current = true
     }
     // Coalesce bursts of resize/reflow events into a single draw per frame.
     function recompute() {
@@ -165,7 +175,7 @@ function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor, 
     recompute()
     window.addEventListener('resize', recompute)
     // Also redraw when the container itself changes size (font load, images
-    // decoding, lessons expanding) — window resize alone misses those.
+    // decoding, lessons expanding); window resize alone misses those.
     const ro = new ResizeObserver(recompute)
     if (containerRef.current) ro.observe(containerRef.current)
     return () => {
