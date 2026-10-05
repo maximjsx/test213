@@ -1,5 +1,6 @@
 import { deleteFile, storageConfigured } from '@/lib/storage'
 import { currentBuilderStatus } from '@/lib/builderAccess'
+import { forgetVoiceFiles } from '@/lib/voiceovers'
 
 // POST /api/storage/delete  { id: string }
 // Deletes a previously uploaded file from the storage-api service so re-recording
@@ -15,6 +16,7 @@ export async function POST(req) {
     const { id } = await req.json()
     if (!id) return Response.json({ error: 'no_id' }, { status: 400 })
     await deleteFile(id)
+    await forgetVoiceFiles([id])
     return Response.json({ ok: true })
   } catch (e) {
     console.error('storage delete error:', e)

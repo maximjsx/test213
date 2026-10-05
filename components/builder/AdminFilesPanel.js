@@ -2,6 +2,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { parseCourseFromFilename, deleteMedia } from '../../lib/media'
 import { clickable } from '../../lib/a11y'
+import { loadLevels } from '../../lib/builderStore'
+import { COURSE } from '../../data/course'
 import styles from './AdminFilesPanel.module.css'
 
 function fmtSize(n) {
@@ -28,10 +30,29 @@ async function downloadFile(url, name) {
     window.open(url, '_blank')
   }
 }
+const VOICE = '__voice__'
+const UNTAGGED = '__untagged__'
+const GROUP_TITLES = { [VOICE]: 'Voice recordings', [UNTAGGED]: 'Untagged / legacy files' }
+
 function loadCourseTitles() {
+  const titles = Object.fromEntries(COURSE.levels.map(l => [l.id, l.title]))
   try {
-    return Object.fromEntries(loadLevels().map(l => [l.id, l.title]))
+    for (const l of loadLevels()) titles[l.id] ||= l.title
+  } catch {}
+  return titles
+}
+
+// Voice studio files are named vo--<hash>; the live map tells which phrase each one says.
+async function loadVoiceNames() {
+  try {
+    const { map } = await fetch('/api/voiceovers', { cache: 'no-store' }).then(r => r.json())
+    return Object.fromEntries(Object.entries(map || {}).map(([key, url]) => [url.split('/').pop(), key]))
   } catch { return {} }
+}
+
+function groupOf(f) {
+  if (/^vo--/.test(f.filename || '')) return VOICE
+  return f.courseId || UNTAGGED
 }
 
 // Super-admin only: browse every stored media file, filter by type, group by the
@@ -47,6 +68,7 @@ export default function AdminFilesPanel() {
   const [view, setView] = useState('course') // 'course' | 'all'
   const [confirm, setConfirm] = useState(null) // { type:'course'|'file', id, label, count }
   const [titles, setTitles] = useState({})
+  const [voiceNames, setVoiceNames] = useState({})
 
   useEffect(() => {
     fetch('/api/builder/access').then(r => r.json()).then(d => setIsAdmin(!!d.isAdmin)).catch(() => {})
@@ -60,6 +82,7 @@ export default function AdminFilesPanel() {
       if (!res.ok) { setError(d.error || 'Failed to load files'); return }
       setFiles(d.files || [])
       setTitles(loadCourseTitles())
+      setVoiceNames(await loadVoiceNames())
     } catch { setError('Failed to load files') }
     finally { setLoading(false) }
   }
@@ -68,8 +91,9 @@ export default function AdminFilesPanel() {
 
   const decorated = useMemo(() => files.map(f => {
     const { courseId, name } = parseCourseFromFilename(f.filename)
-    return { ...f, courseId, displayName: name || f.filename || f.id }
-  }), [files])
+    const file = { ...f, courseId, displayName: voiceNames[f.id] || name || f.filename || f.id }
+    return { ...file, group: groupOf(file) }
+  }), [files, voiceNames])
 
   const filtered = useMemo(() => {
     let list = decorated
@@ -89,15 +113,14 @@ export default function AdminFilesPanel() {
   const groups = useMemo(() => {
     const m = new Map()
     for (const f of filtered) {
-      const key = f.courseId || '__untagged__'
-      if (!m.has(key)) m.set(key, [])
-      m.get(key).push(f)
+      if (!m.has(f.group)) m.set(f.group, [])
+      m.get(f.group).push(f)
     }
     return [...m.entries()]
       .map(([id, list]) => ({
         id,
-        untagged: id === '__untagged__',
-        title: id === '__untagged__' ? 'Untagged / legacy files' : (titles[id] || null),
+        special: !!GROUP_TITLES[id],
+        title: GROUP_TITLES[id] || titles[id] || null,
         files: list,
         bytes: list.reduce((n, f) => n + (f.size || 0), 0),
       }))
@@ -112,16 +135,16 @@ export default function AdminFilesPanel() {
     setFiles(prev => prev.filter(f => f.id !== id))
   }
 
-  async function doDeleteCourse(courseId) {
+  async function doDeleteGroup(group) {
     setConfirm(null)
     try {
       const res = await fetch('/api/storage/delete-course', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ courseId }),
+        body: JSON.stringify({ group }),
       })
       const d = await res.json()
-      if (res.ok) setFiles(prev => prev.filter(f => parseCourseFromFilename(f.filename).courseId !== courseId))
+      if (res.ok) setFiles(prev => prev.filter(f => groupOf({ ...f, ...parseCourseFromFilename(f.filename) }) !== group))
       else setError(d.error || 'Bulk delete failed')
     } catch { setError('Bulk delete failed') }
   }
@@ -174,14 +197,12 @@ export default function AdminFilesPanel() {
               <div key={g.id} className={styles.group}>
                 <div className={styles.groupHead}>
                   <span className={styles.groupTitle}>{g.title || 'Unknown course'}</span>
-                  {!g.untagged && <span className={styles.groupId}>{g.id}</span>}
+                  {!g.special && <span className={styles.groupId}>{g.id}</span>}
                   <span className={styles.spacer} />
                   <span className={styles.groupMeta}>{g.files.length} files · {fmtSize(g.bytes)}</span>
-                  {!g.untagged && (
-                    <button className={styles.delCourseBtn} onClick={() => setConfirm({ type: 'course', id: g.id, label: g.title || g.id, count: g.files.length })}>
-                      Delete all
-                    </button>
-                  )}
+                  <button className={styles.delCourseBtn} onClick={() => setConfirm({ type: 'course', id: g.id, label: g.title || g.id, count: g.files.length })}>
+                    Delete all
+                  </button>
                 </div>
                 <FileGrid files={g.files} onDelete={f => setConfirm({ type: 'file', id: f.id, label: f.displayName })} />
               </div>
@@ -201,10 +222,10 @@ export default function AdminFilesPanel() {
             </h3>
             <p className={styles.confirmText}>
               {confirm.type === 'course'
-                ? `Permanently delete all ${confirm.count} file(s) uploaded for "${confirm.label}". This cannot be undone and will break any lessons that reference them.`
+                ? `Permanently delete all ${confirm.count} file(s) in "${confirm.label}". This cannot be undone.${confirm.id === VOICE ? ' Lessons go back to computer voice for these words.' : ' Lessons that reference them will break.'}`
                 : `"${confirm.label}" will be permanently deleted from storage.`}
             </p>
-            <button className={styles.confirmDel} onClick={() => confirm.type === 'course' ? doDeleteCourse(confirm.id) : doDeleteFile(confirm.id)}>DELETE</button>
+            <button className={styles.confirmDel} onClick={() => confirm.type === 'course' ? doDeleteGroup(confirm.id) : doDeleteFile(confirm.id)}>DELETE</button>
             <button className={styles.confirmCancel} onClick={() => setConfirm(null)}>CANCEL</button>
           </div>
         </div>
