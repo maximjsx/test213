@@ -130,8 +130,112 @@
           "romanized": "mama"
         },
         {
-          "type": "match_pairs",
+          "type": "introduce",
           "id": "abc-1-13",
+          "label": "NEW WORD",
+          "display": "мама",
+          "translation": "mom",
+          "sublabel": "You just read your first Bulgarian word. Easy one: same as English.",
+          "tts": "мама"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-14",
+          "mode": "read",
+          "display": "КОТКА",
+          "choices": [
+            "котка",
+            "кокта",
+            "тотка"
+          ],
+          "answer": "котка",
+          "romanized": "kotka"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-15",
+          "label": "NEW WORD",
+          "display": "котка",
+          "translation": "cat",
+          "sublabel": "Picture a cat named Kotka.",
+          "tts": "котка"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-1-16",
+          "question": "Which one is the cat?",
+          "choices": [
+            "котка",
+            "мама"
+          ],
+          "answer": "котка"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-17",
+          "mode": "read",
+          "display": "татко",
+          "choices": [
+            "татко",
+            "такто",
+            "катко"
+          ],
+          "answer": "татко",
+          "romanized": "tatko"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-18",
+          "label": "NEW WORD",
+          "display": "татко",
+          "translation": "dad",
+          "sublabel": "Say it fast and it sounds a bit like \"daddy\".",
+          "tts": "татко"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-1-19",
+          "question": "Which one is dad?",
+          "choices": [
+            "татко",
+            "мама",
+            "котка"
+          ],
+          "answer": "татко"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-1-20",
+          "question": "What does мама mean?",
+          "choices": [
+            "mom",
+            "dad",
+            "cat"
+          ],
+          "answer": "mom"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-1-21",
+          "instruction": "Match each word to its meaning:",
+          "pairs": [
+            {
+              "left": "мама",
+              "right": "mom"
+            },
+            {
+              "left": "татко",
+              "right": "dad"
+            },
+            {
+              "left": "котка",
+              "right": "cat"
+            }
+          ]
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-1-22",
           "instruction": "Match each letter to its sound:",
           "pairs": [
             {
@@ -153,45 +257,30 @@
           ]
         },
         {
-          "type": "sound_choice",
-          "id": "abc-1-14",
-          "mode": "read",
-          "display": "КОТКА",
-          "choices": [
-            "котка",
-            "кокта",
-            "тотка"
-          ],
-          "answer": "котка",
-          "romanized": "kotka"
-        },
-        {
-          "type": "sound_choice",
-          "id": "abc-1-15",
-          "mode": "read",
-          "display": "татко",
-          "choices": [
-            "татко",
-            "такто",
-            "катко"
-          ],
-          "answer": "татко",
-          "romanized": "tatko"
-        },
-        {
           "type": "multiple_choice",
-          "id": "abc-1-16",
-          "question": "You just read your first Bulgarian word. What is a КОТКА?",
+          "id": "abc-1-23",
+          "question": "What does котка mean?",
           "choices": [
             "cat",
-            "coat",
-            "cake"
+            "dad",
+            "mom"
           ],
           "answer": "cat"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-1-17",
+          "id": "abc-1-24",
+          "question": "Who is татко?",
+          "choices": [
+            "dad",
+            "mom",
+            "cat"
+          ],
+          "answer": "dad"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-1-25",
           "question": "What is АТОМ?",
           "choices": [
             "atom",
@@ -202,7 +291,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-1-18",
+          "id": "abc-1-26",
           "mode": "listen",
           "choices": [
             "мак",
@@ -213,7 +302,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-1-19",
+          "id": "abc-1-27",
           "mode": "listen",
           "choices": [
             "тема",
@@ -224,7 +313,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-1-20",
+          "id": "abc-1-28",
           "answer": "мама",
           "prompt": "mom",
           "extras": [
@@ -234,7 +323,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-1-21",
+          "id": "abc-1-29",
           "answer": "котка",
           "prompt": "cat",
           "extras": [
@@ -245,7 +334,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-1-22",
+          "id": "abc-1-30",
           "answer": "татко",
           "prompt": "dad",
           "extras": [
@@ -255,7 +344,7 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-1-23",
+          "id": "abc-1-31",
           "tts": "котка"
         }
       ]
@@ -1408,8 +1497,28 @@
           "romanized": "shofyor (driver)"
         },
         {
-          "type": "match_pairs",
+          "type": "introduce",
           "id": "abc-5-16",
+          "label": "NEW WORD",
+          "display": "мечка",
+          "translation": "bear",
+          "sublabel": "Like the bear on this app.",
+          "tts": "мечка"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-17",
+          "question": "What is a мечка?",
+          "choices": [
+            "bear",
+            "cat",
+            "giraffe"
+          ],
+          "answer": "bear"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-5-18",
           "instruction": "Match the hissing letters:",
           "pairs": [
             {
@@ -1432,7 +1541,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-5-17",
+          "id": "abc-5-19",
           "instruction": "Do not let them fool you:",
           "pairs": [
             {
@@ -1455,7 +1564,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-18",
+          "id": "abc-5-20",
           "question": "What is ШОКОЛАД?",
           "choices": [
             "chocolate",
@@ -1466,7 +1575,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-19",
+          "id": "abc-5-21",
           "question": "What animal is a ЖИРАФ?",
           "choices": [
             "giraffe",
@@ -1477,7 +1586,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-20",
+          "id": "abc-5-22",
           "question": "What is ЦИРК?",
           "choices": [
             "circus",
@@ -1488,7 +1597,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-21",
+          "id": "abc-5-23",
           "question": "Careful: what country is ШВЕЦИЯ?",
           "choices": [
             "Sweden",
@@ -1499,7 +1608,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-22",
+          "id": "abc-5-24",
           "question": "How do you read ЩАСТИЕ (happiness)?",
           "choices": [
             "shtastie",
@@ -1510,7 +1619,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-5-23",
+          "id": "abc-5-25",
           "answer": "мечка",
           "prompt": "bear",
           "extras": [
@@ -1521,7 +1630,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-5-24",
+          "id": "abc-5-26",
           "answer": "шоколад",
           "prompt": "chocolate",
           "extras": [
@@ -1532,7 +1641,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-5-25",
+          "id": "abc-5-27",
           "answer": "пица",
           "prompt": "pizza",
           "extras": [
@@ -1543,12 +1652,12 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-5-26",
+          "id": "abc-5-28",
           "tts": "щастие"
         },
         {
           "type": "speak_sentence",
-          "id": "abc-5-27",
+          "id": "abc-5-29",
           "tts": "шоколад"
         }
       ]
