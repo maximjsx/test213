@@ -4,8 +4,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import BuilderGate from '../../components/builder/BuilderGate'
 import SyncStatus from '../../components/builder/SyncStatus'
-import AdminUsersPanel from '../../components/builder/AdminUsersPanel'
-import AdminFilesPanel from '../../components/builder/AdminFilesPanel'
 import { loadLevels, syncLevels, addLevel, deleteLevel as removeLevel, newLevel, newLevelId, countExercises, shareUrl, decodeLevel, copyText } from '../../lib/builderStore'
 import Modal, { ModalText, ModalActions } from '../../components/ui/Modal'
 import Button from '../../components/ui/Button'
@@ -122,6 +120,7 @@ export default function BuilderDashboard() {
         <h1 className={styles.pageTitle}>Topic Builder</h1>
         <SyncStatus />
         <div className={styles.headerActions}>
+          <Link href="/admin" className={styles.importBtn}>Admin</Link>
           <Link href="/voice" className={styles.importBtn}>Voice studio</Link>
           <button className={styles.importBtn} onClick={() => { setShowImport(v => !v); setImportError('') }}>
             Import
@@ -163,8 +162,6 @@ export default function BuilderDashboard() {
       )}
 
       <div className={styles.content}>
-        <AdminUsersPanel />
-        <AdminFilesPanel />
         {levels.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.emptyEmoji}>🏗️</div>

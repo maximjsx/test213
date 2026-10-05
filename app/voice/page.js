@@ -3,10 +3,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { COURSE } from '../../data/course'
 import { collectPhrases } from '../../lib/voicePhrases'
+import { readShare, sharedPhrases, describeShare } from '../../lib/voiceShare'
 import { fetchStudio, uploadVoice, reviewVoice, mergeVoiceover } from '../../lib/voiceStudio'
 import RecordCard from '../../components/voice/RecordCard'
 import ReviewQueue from '../../components/voice/ReviewQueue'
 import VoiceAgreement from '../../components/voice/VoiceAgreement'
+import ShareLinkModal from '../../components/voice/ShareLinkModal'
+import ShareBanner from '../../components/voice/ShareBanner'
 import Chevron from '../../components/Chevron'
 import styles from '../../components/voice/Voice.module.css'
 
@@ -40,27 +43,46 @@ function indexVoiceovers(voiceovers, myId) {
   return { approved, mine, pending, pendingByKey }
 }
 
-function SignIn() {
+function SignIn({ request, count }) {
+  const next = typeof window === 'undefined' ? '/voice' : window.location.pathname + window.location.search
   return (
     <div className={styles.signIn}>
       <img src="/icons/microphone.png" alt="" width={56} height={56} />
-      <h1 className={styles.signInTitle}>Help voice the course</h1>
+      <h1 className={styles.signInTitle}>{request ? 'You have been asked to record' : 'Help voice the course'}</h1>
+      {request && (
+        <div className={styles.signInRequest}>
+          <b>{request.title}</b>
+          <span>{count} {count === 1 ? 'phrase' : 'phrases'}{request.subtitle ? `, ${request.subtitle}` : ''}</span>
+        </div>
+      )}
       <p className={styles.signInText}>
         Record words and sentences in your own voice. Every recording plays in all the lessons that use it.
         Sign in with Discord to start.
       </p>
-      <a className={styles.discordBtn} href="/api/auth/login">Log in with Discord</a>
+      <a className={styles.discordBtn} href={`/api/auth/login?next=${encodeURIComponent(next)}`}>Log in with Discord</a>
     </div>
+  )
+}
+
+function LinkIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" />
+      <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
+    </svg>
   )
 }
 
 export default function VoiceStudio() {
   const allPhrases = useMemo(() => collectPhrases(COURSE.levels), [])
   const [topic, setTopic] = useState('all')
-  const phrases = useMemo(
-    () => topic === 'all' ? allPhrases : allPhrases.filter(p => p.uses.some(u => u.levelId === topic)),
-    [allPhrases, topic]
-  )
+  const [share, setShare] = useState(null)
+  const [sharing, setSharing] = useState(false)
+  const phrases = useMemo(() => {
+    if (share) return sharedPhrases(allPhrases, share)
+    return topic === 'all' ? allPhrases : allPhrases.filter(p => p.uses.some(u => u.levelId === topic))
+  }, [allPhrases, topic, share])
+  const request = useMemo(() => share && describeShare(share, COURSE.levels), [share])
   const [studio, setStudio] = useState(null)
   const [voiceovers, setVoiceovers] = useState([])
   const [saving, setSaving] = useState({})
@@ -79,9 +101,16 @@ export default function VoiceStudio() {
   }
   useEffect(load, [])
   useEffect(() => {
+    setShare(readShare(window.location.search))
     const saved = savedTopic()
     if (COURSE.levels.some(l => l.id === saved)) setTopic(saved)
   }, [])
+
+  function leaveShare() {
+    window.history.replaceState(null, '', '/voice')
+    setShare(null)
+    setCurrentKey(null)
+  }
 
   function pickTopic(id) {
     setTopic(id)
@@ -146,7 +175,7 @@ export default function VoiceStudio() {
 
   if (loadError) return <div className={styles.loading}>Could not load the voice studio. Refresh to try again.</div>
   if (!studio) return <div className={styles.loading}>Loading...</div>
-  if (!studio.loggedIn) return <SignIn />
+  if (!studio.loggedIn) return <SignIn request={request} count={phrases.length} />
   if (!studio.agreed) return <VoiceAgreement onAccept={() => setStudio(s => ({ ...s, agreed: true }))} />
 
   const recorded = counts.done
@@ -157,6 +186,7 @@ export default function VoiceStudio() {
       <header className={styles.header}>
         <Link href="/" className={styles.backBtn}><Chevron /> Course</Link>
         <h1 className={styles.title}>Voice studio</h1>
+        {canReview && <button className={styles.shareBtn} onClick={() => setSharing(true)}><LinkIcon /> Share</button>}
         {canReview && (
           <div className={styles.tabs}>
             <button className={`${styles.tab} ${tab === 'record' ? styles.tabOn : ''}`} onClick={() => setTab('record')}>Record</button>
@@ -167,10 +197,21 @@ export default function VoiceStudio() {
         )}
       </header>
 
-      <div className={styles.progress}>
+      {sharing && (
+        <ShareLinkModal
+          phrases={allPhrases}
+          statusOf={statusOf}
+          initialTopic={share?.topic || topic}
+          onClose={() => setSharing(false)}
+        />
+      )}
+
+      {request && <ShareBanner request={request} count={phrases.length} recorded={counts.done + counts.pending} onLeave={leaveShare} />}
+
+      {!request && <div className={styles.progress}>
         <div className={styles.progressBar}><div className={styles.progressFill} style={{ width: `${phrases.length ? (recorded / phrases.length) * 100 : 0}%` }} /></div>
         <span className={styles.progressText}>{recorded} of {phrases.length} recorded</span>
-      </div>
+      </div>}
 
       {tab === 'review' && canReview ? (
         <ReviewQueue pending={index.pending} approved={index.approved} onDecide={decide} />
@@ -190,16 +231,18 @@ export default function VoiceStudio() {
               />
             ) : (
               <div className={styles.emptyState}>
-                {filter === 'missing' && !q ? 'Everything here has a recording. Nice work.' : 'Nothing matches these filters.'}
+                {filter === 'missing' && !q ? (share ? 'All done. Thank you for recording these!' : 'Everything here has a recording. Nice work.') : 'Nothing matches these filters.'}
               </div>
             )}
           </main>
 
           <aside className={styles.side}>
-            <select className={styles.search} value={topic} onChange={e => pickTopic(e.target.value)}>
-              <option value="all">All topics</option>
-              {COURSE.levels.map(l => <option key={l.id} value={l.id}>{l.title}</option>)}
-            </select>
+            {!share && (
+              <select className={styles.search} value={topic} onChange={e => pickTopic(e.target.value)}>
+                <option value="all">All topics</option>
+                {COURSE.levels.map(l => <option key={l.id} value={l.id}>{l.title}</option>)}
+              </select>
+            )}
             <div className={styles.chips}>
               {FILTERS.map(f => (
                 <button key={f.id} className={`${styles.chip} ${filter === f.id ? styles.chipOn : ''}`} onClick={() => setFilter(f.id)}>

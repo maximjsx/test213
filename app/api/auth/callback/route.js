@@ -64,7 +64,9 @@ export async function GET(req) {
     }
 
     cookies().set(SESSION_COOKIE, createSessionToken(me.id), sessionCookieOptions())
-    return Response.redirect(`${home}/profile?login=1`, 302)
+    const next = cookies().get('oauth_next')?.value
+    cookies().delete('oauth_next')
+    return Response.redirect(next ? `${home}${next}` : `${home}/profile?login=1`, 302)
   } catch (e) {
     console.error('OAuth callback error:', e)
     return Response.redirect(`${home}/profile?error=internal`, 302)

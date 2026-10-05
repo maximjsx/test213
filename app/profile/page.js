@@ -41,6 +41,7 @@ function ProfileInner() {
   const [convertSkipped, setConvertSkipped] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [isTeam, setIsTeam] = useState(false)
 
   const oauthError = params.get('error')
 
@@ -58,6 +59,10 @@ function ProfileInner() {
   // Read-only peek at this browser's local storage, purely to show an
   // informational note. Never merged into the account automatically.
   useEffect(() => { setLocalSnapshot(peekLocalProgress()) }, [])
+  useEffect(() => {
+    if (!user) return
+    fetch('/api/builder/access').then(r => r.json()).then(d => setIsTeam(!!d.allowed)).catch(() => {})
+  }, [user?.discordId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function loadFriends() {
     fetch('/api/friends')
@@ -237,6 +242,7 @@ function ProfileInner() {
   return (
     <div className={styles.page}>
       <PageHeader backHref={null} title="Profile">
+        {isTeam && <Link href="/admin" className={styles.adminLink}><img src="/icons/shield.png" alt="" width={18} height={18} /> Admin</Link>}
         <Link href="/voice" className={styles.voiceLink}><img src="/icons/microphone.png" alt="" width={18} height={18} /> Record audio</Link>
       </PageHeader>
 

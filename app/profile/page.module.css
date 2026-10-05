@@ -28,6 +28,12 @@
   padding:8px 12px;border-radius:var(--r2);
 }
 .voiceLink:hover { background:var(--surface-hi); }
+.adminLink {
+  display:flex;align-items:center;gap:6px;white-space:nowrap;
+  font-size:14px;font-weight:900;color:var(--orange);
+  padding:8px 12px;border-radius:var(--r2);
+}
+.adminLink:hover { background:var(--surface-hi); }
 
 .card {
   background:var(--surface);border:2px solid var(--border);border-radius:20px;
