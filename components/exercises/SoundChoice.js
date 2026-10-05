@@ -79,7 +79,10 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
           ))}
         </div>
       ) : (
-        <div className={isLetters ? styles.cyrillicGrid : styles.choiceList}>
+        <div
+          className={isLetters ? styles.cyrillicGrid : styles.choiceList}
+          style={isLetters ? { gridTemplateColumns: `repeat(${choices.length}, 1fr)` } : undefined}
+        >
           {choices.map(choice => (
             <button
               key={choice}
