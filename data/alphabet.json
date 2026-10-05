@@ -4,7 +4,7 @@
   "subtitle": "All 30 letters, starting with the ones you know",
   "color": "#1cb0f6",
   "icon": "Аа",
-  "notes": "## How this topic works\n\nBulgarian has 30 letters and every one always makes the same sound. Instead of going А to Я, the lessons start with the letters you already know and add three new ones at a time. Every new letter comes with one word that sounds like English, so you can read real words from the very first lesson.\n\n| Lesson | New letters | Words |\n|--------|-------------|-------|\n| Letters you know | А М О Т К Е | мама, атом, котка, татко |\n| Fake friends | Р С Н | метро, текст, Монако |\n| More fake friends | В У Х | Москва, сауна, хаос |\n| Greek lookalikes | П Л Д | парк, лампа, дом |\n| More Greek lookalikes | Г Ф И | гол, фото, такси |\n| New shapes | Б З Я | банан, зебра, Япония |\n| More new shapes | Ъ Й Ю | България, йога, меню |\n| The hissing letters | Ш Щ Ж | шоколад, борщ, жираф |\n| More hissing letters | Ц Ч Ь | пица, чипс, шофьор |\n| Tricky twins | none | Telling look-alikes apart |\n| Read real Bulgarian | none | Signs, menus and city names |\n\n## The fake friends\n\nThese six trip up every English speaker:\n\n| Looks like | Is | Sounds like |\n|------------|----|-------------|\n| P | Р р | rolled r |\n| C | С с | s |\n| H | Н н | n |\n| B | В в | v |\n| y | У у | oo |\n| X | Х х | h, as in \"loch\" |\n\nSo РЕСТОРАНТ is \"restorant\", not \"pectopaht\".\n\n## All 30 letters\n\n| Letter | Sound | Word |\n|--------|-------|------|\n| А а | \"a\" as in father | мама (mom) |\n| Б б | \"b\" as in banana | банан (banana) |\n| В в | \"v\" as in van | Москва (Moscow) |\n| Г г | \"g\" as in goal | гол (goal) |\n| Д д | \"d\" as in door | дом (house) |\n| Е е | \"e\" as in bed | метро (metro) |\n| Ж ж | \"zh\", the s in measure | жираф (giraffe) |\n| З з | \"z\" as in zebra | зебра (zebra) |\n| И и | \"ee\" as in see | такси (taxi) |\n| Й й | \"y\" as in boy | йога (yoga) |\n| К к | \"k\" as in kit | котка (cat) |\n| Л л | \"l\" as in lamp | лампа (lamp) |\n| М м | \"m\" as in map | мама (mom) |\n| Н н | \"n\" as in net | Монако (Monaco) |\n| О о | \"o\" as in or | атом (atom) |\n| П п | \"p\" as in park | парк (park) |\n| Р р | rolled r | метро (metro) |\n| С с | \"s\" as in sun | текст (text) |\n| Т т | \"t\" as in top | татко (dad) |\n| У у | \"oo\" as in moon | сауна (sauna) |\n| Ф ф | \"f\" as in photo | фото (photo) |\n| Х х | \"h\", as in loch | хаос (chaos) |\n| Ц ц | \"ts\" as in pizza | пица (pizza) |\n| Ч ч | \"ch\" as in chips | чипс (chips) |\n| Ш ш | \"sh\" as in shop | шоколад (chocolate) |\n| Щ щ | \"sht\" as in ashtray | борщ (borscht) |\n| Ъ ъ | \"uh\" as in but | България (Bulgaria) |\n| Ь ь | only in ьо, says \"yo\" | шофьор (driver) |\n| Ю ю | \"yu\" as in you | меню (menu) |\n| Я я | \"ya\" as in yard | Япония (Japan) |\n\n## Tips\n\n- No silent letters: read every letter, left to right.\n- Ш is sh, Щ is sh with a tail, which adds a t: sht.\n- Й is И with a hat, a quick y. Ь never sounds on its own.",
+  "notes": "## How this topic works\n\nBulgarian has 30 letters and every one always makes the same sound. Instead of going А to Я, the lessons start with the letters you already know and add three new ones at a time. Every new letter comes with one word that sounds like English, so you can read real words from the very first lesson.\n\n| Lesson | New letters | Words |\n|--------|-------------|-------|\n| Letters you know | А М О Т К Е | мама, атом, котка, татко |\n| Fake friends | Р С Н | метро, текст, Монако |\n| More fake friends | В У Х | Москва, сауна, хаос |\n| Greek lookalikes | П Л Д | парк, лампа, дом |\n| More Greek lookalikes | Г Ф И | гол, фото, такси |\n| New shapes | Б З Я | банан, зебра, Япония |\n| More new shapes | Ъ Й Ю | България, йога, меню |\n| The hissing letters | Ш Щ Ж | шоколад, защо, жираф |\n| More hissing letters | Ц Ч Ь | пица, чипс, шофьор |\n| Tricky twins | none | Telling look-alikes apart |\n| Read real Bulgarian | none | Signs, menus and city names |\n\n## The fake friends\n\nThese six trip up every English speaker:\n\n| Looks like | Is | Sounds like |\n|------------|----|-------------|\n| P | Р р | rolled r |\n| C | С с | s |\n| H | Н н | n |\n| B | В в | v |\n| y | У у | oo |\n| X | Х х | h, as in \"loch\" |\n\nSo РЕСТОРАНТ is \"restorant\", not \"pectopaht\".\n\n## All 30 letters\n\n| Letter | Sound | Word |\n|--------|-------|------|\n| А а | \"a\" as in father | мама (mom) |\n| Б б | \"b\" as in banana | банан (banana) |\n| В в | \"v\" as in van | Москва (Moscow) |\n| Г г | \"g\" as in goal | гол (goal) |\n| Д д | \"d\" as in door | дом (house) |\n| Е е | \"e\" as in bed | метро (metro) |\n| Ж ж | \"zh\", the s in measure | жираф (giraffe) |\n| З з | \"z\" as in zebra | зебра (zebra) |\n| И и | \"ee\" as in see | такси (taxi) |\n| Й й | \"y\" as in boy | йога (yoga) |\n| К к | \"k\" as in kit | котка (cat) |\n| Л л | \"l\" as in lamp | лампа (lamp) |\n| М м | \"m\" as in map | мама (mom) |\n| Н н | \"n\" as in net | Монако (Monaco) |\n| О о | \"o\" as in or | атом (atom) |\n| П п | \"p\" as in park | парк (park) |\n| Р р | rolled r | метро (metro) |\n| С с | \"s\" as in sun | текст (text) |\n| Т т | \"t\" as in top | татко (dad) |\n| У у | \"oo\" as in moon | сауна (sauna) |\n| Ф ф | \"f\" as in photo | фото (photo) |\n| Х х | \"h\", as in loch | хаос (chaos) |\n| Ц ц | \"ts\" as in pizza | пица (pizza) |\n| Ч ч | \"ch\" as in chips | чипс (chips) |\n| Ш ш | \"sh\" as in shop | шоколад (chocolate) |\n| Щ щ | \"sht\" as in ashtray | защо (why) |\n| Ъ ъ | \"uh\" as in but | България (Bulgaria) |\n| Ь ь | no sound; only in ьо, which says \"yo\" | шофьор (driver) |\n| Ю ю | \"yu\" as in you | меню (menu) |\n| Я я | \"ya\" as in yard | Япония (Japan) |\n\n## Tips\n\n- No silent letters: read every letter, left to right.\n- Ш is sh, Щ is sh with a tail, which adds a t: sht.\n- Й is И with a hat, a quick y. Ь never sounds on its own.",
   "lessons": [
     {
       "id": "alph-1",
@@ -1850,23 +1850,45 @@
           "label": "NEW LETTER",
           "display": "Щ",
           "sublabel": "\"sht\" as in \"ashtray\"",
-          "mnemonic": "Ш with a little tail, and the tail adds a t: sht. You will see it in БОРЩ, the red beet soup.",
+          "mnemonic": "Ш with a little tail, and the tail adds a t: sht. You will see it in ЗАЩО.",
           "tts": "Щ"
         },
         {
-          "type": "multiple_choice",
+          "type": "sound_choice",
           "id": "abc-8-09",
-          "question": "What is БОРЩ?",
+          "mode": "read",
+          "display": "ЗАЩО",
           "choices": [
-            "borscht",
+            "защо",
+            "шоколад",
+            "дом"
+          ],
+          "answer": "защо",
+          "romanized": "zashto"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-8-10",
+          "label": "NEW WORD",
+          "display": "защо",
+          "translation": "why",
+          "sublabel": "One of the words you will use most. Защо? Why?",
+          "tts": "защо"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-8-11",
+          "question": "What does защо mean?",
+          "choices": [
+            "why",
             "chocolate",
             "yoga"
           ],
-          "answer": "borscht"
+          "answer": "why"
         },
         {
           "type": "sound_choice",
-          "id": "abc-8-10",
+          "id": "abc-8-12",
           "mode": "read",
           "display": "Щ",
           "choices": [
@@ -1878,29 +1900,29 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-8-11",
+          "id": "abc-8-13",
           "mode": "listen",
           "choices": [
-            "борщ",
+            "защо",
             "дом",
             "парк"
           ],
-          "answer": "борщ"
+          "answer": "защо"
         },
         {
           "type": "spell_word",
-          "id": "abc-8-12",
-          "answer": "борщ",
-          "prompt": "borscht",
+          "id": "abc-8-14",
+          "answer": "защо",
+          "prompt": "why",
           "extras": [
             "ш",
             "с"
           ],
-          "tts": "борщ"
+          "tts": "защо"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-8-13",
+          "id": "abc-8-15",
           "question": "Remember? Which one is Japan?",
           "choices": [
             "Япония",
@@ -1911,7 +1933,7 @@
         },
         {
           "type": "introduce",
-          "id": "abc-8-14",
+          "id": "abc-8-16",
           "label": "NEW LETTER",
           "display": "Ж",
           "sublabel": "\"zh\", the \"s\" in \"measure\"",
@@ -1920,7 +1942,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-8-15",
+          "id": "abc-8-17",
           "question": "What animal is a ЖИРАФ?",
           "choices": [
             "giraffe",
@@ -1931,7 +1953,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-8-16",
+          "id": "abc-8-18",
           "mode": "listen",
           "choices": [
             "жираф",
@@ -1942,7 +1964,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-8-17",
+          "id": "abc-8-19",
           "answer": "жираф",
           "prompt": "giraffe",
           "extras": [
@@ -1953,7 +1975,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-8-18",
+          "id": "abc-8-20",
           "instruction": "Match each letter to its sound:",
           "pairs": [
             {
@@ -1976,7 +1998,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-8-19",
+          "id": "abc-8-21",
           "question": "ЩАСТИЕ means happiness. How do you read it?",
           "choices": [
             "shtastie",
@@ -1987,7 +2009,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-8-20",
+          "id": "abc-8-22",
           "instruction": "Match each word to its meaning:",
           "pairs": [
             {
@@ -1995,8 +2017,8 @@
               "right": "chocolate"
             },
             {
-              "left": "борщ",
-              "right": "borscht"
+              "left": "защо",
+              "right": "why"
             },
             {
               "left": "жираф",
@@ -2010,7 +2032,7 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-8-21",
+          "id": "abc-8-23",
           "tts": "шоколад"
         }
       ]
@@ -2028,7 +2050,7 @@
           "choices": [
             "chocolate",
             "giraffe",
-            "borscht"
+            "why"
           ],
           "answer": "chocolate"
         },
@@ -2058,7 +2080,7 @@
           "question": "What is ПИЦА?",
           "choices": [
             "pizza",
-            "borscht",
+            "why",
             "chocolate"
           ],
           "answer": "pizza"
@@ -2082,7 +2104,7 @@
           "mode": "listen",
           "choices": [
             "пица",
-            "борщ",
+            "защо",
             "такси"
           ],
           "answer": "пица"
@@ -2156,8 +2178,8 @@
           "id": "abc-9-13",
           "label": "NEW LETTER",
           "display": "Ь",
-          "sublabel": "\"yo\", but only in \"ьо\"",
-          "mnemonic": "A silent helper that only comes before о: ьо says yo. You will see it in ШОФЬОР, from \"chauffeur\": a driver.",
+          "sublabel": "no sound of its own",
+          "mnemonic": "Ь makes no sound by itself. A 1945 spelling reform removed almost all of them, so today it only ever comes before о, and ьо says \"yo\". It is rare: one of the few words with it is ШОФЬОР, from \"chauffeur\": a driver.",
           "tts": "шофьор"
         },
         {
@@ -2246,8 +2268,8 @@
               "right": "driver"
             },
             {
-              "left": "борщ",
-              "right": "borscht"
+              "left": "защо",
+              "right": "why"
             }
           ]
         },
@@ -2316,11 +2338,11 @@
           "id": "abc-10-04",
           "mode": "listen",
           "choices": [
-            "борщ",
+            "защо",
             "пица",
             "чипс"
           ],
-          "answer": "борщ"
+          "answer": "защо"
         },
         {
           "type": "spell_word",
