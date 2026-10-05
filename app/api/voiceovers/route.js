@@ -8,7 +8,7 @@ export async function GET() {
     const col = await voiceoversCollection()
     const docs = await col.find({ status: 'approved' }, { projection: { _id: 0, key: 1, url: 1 } }).toArray()
     const map = Object.fromEntries(docs.map(d => [d.key, d.url]))
-    return Response.json({ map }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=600' } })
+    return Response.json({ map }, { headers: { 'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30' } })
   } catch (e) {
     console.error('voiceovers GET error:', e)
     return Response.json({ map: {} }, { status: 500 })

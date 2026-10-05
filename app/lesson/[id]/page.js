@@ -2,6 +2,7 @@
 import { useParams, useRouter } from 'next/navigation'
 import { useMemo, useState, useRef, useEffect } from 'react'
 import { findLesson, orderExercises } from '../../../lib/course'
+import { refreshVoiceMap } from '../../../lib/audio'
 import { useProgress } from '../../../hooks/useProgress'
 import ExerciseRunner from '../../../components/ExerciseRunner'
 import LessonComplete from '../../../components/LessonComplete'
@@ -43,6 +44,8 @@ export default function LessonPage() {
   const [booting, setBooting] = useState(true)
   const prevWrongIdsRef = useRef({})
   const tokenRef = useRef(null)
+
+  useEffect(refreshVoiceMap, [])
 
   useEffect(() => {
     const t = setTimeout(() => setBooting(false), INTRO_MS)
