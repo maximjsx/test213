@@ -169,6 +169,18 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         stopped = true
       }
 
+      // Grade the moment the live transcript already says the whole target
+      function passIfDone(heard) {
+        if (stopped || !speechMatches(heard, target, { threshold })) return false
+        cleanup()
+        setLivePreview('')
+        setLastSpoken(heard)
+        setSucceeded(true)
+        onAnswer(true)
+        setPhase('idle')
+        return true
+      }
+
       ws.onopen = () => {
         ws.send(JSON.stringify({
           message: 'StartRecognition',
@@ -226,11 +238,14 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         }
 
         if (msg.message === 'AddPartial' && msg.metadata?.transcript) {
-          setLivePreview(msg.metadata.transcript.trim())
+          const partial = msg.metadata.transcript.trim()
+          if (passIfDone(`${finalTranscript} ${partial}`.trim())) return
+          setLivePreview(partial)
         }
 
         if (msg.message === 'AddTranscript' && msg.metadata?.transcript) {
           finalTranscript += (finalTranscript ? ' ' : '') + msg.metadata.transcript.trim()
+          if (passIfDone(finalTranscript)) return
           setLivePreview('')
         }
 
@@ -390,7 +405,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         else interim += e.results[i][0].transcript
       }
       if (interim) lastInterim = interim
-      setLivePreview((finalTranscript + interim).trim())
+      const heard = (finalTranscript + interim).trim()
+      // Already said in full: grade now instead of waiting out the silence
+      if (speechMatches(heard, target)) { finalTranscript = heard; return process() }
+      setLivePreview(heard)
       silenceTimer = setTimeout(process, 1500)
     }
 
@@ -428,8 +446,10 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </div>
       </div>
 
-      {livePreview && !lastSpoken && (
-        <p className={styles.speakRetryMsg} style={{ opacity: 0.5 }}>{livePreview}</p>
+      {succeeded && lastSpoken ? (
+        <p className={`${styles.speakHeard} ${styles.speakHeardOk}`} lang="bg">{lastSpoken}</p>
+      ) : livePreview && !lastSpoken && (
+        <p className={styles.speakHeard} lang="bg">{livePreview}</p>
       )}
       {failed && (
         <p className={styles.speakRetryMsg}>Try again!</p>

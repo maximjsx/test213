@@ -269,6 +269,11 @@
   text-align:center; padding:20px; line-height:1.6;
   border:2px dashed var(--border); border-radius:var(--r);
 }
+.speakHeard {
+  font-size:16px; color:var(--blue); font-weight:700;
+  margin-bottom:20px; text-align:center;
+}
+.speakHeardOk { color:var(--green); }
 .speakRetryMsg {
   font-size:14px; color:var(--red); font-weight:600;
   margin-bottom:20px; text-align:center;
