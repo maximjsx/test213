@@ -23,6 +23,12 @@ const KINDS = [
   { id: 'sentence', label: 'Sentences' },
 ]
 
+const TOPIC_KEY = 'voiceTopic'
+
+function savedTopic() {
+  try { return localStorage.getItem(TOPIC_KEY) || 'all' } catch { return 'all' }
+}
+
 function indexVoiceovers(voiceovers, myId) {
   const approved = {}, mine = {}, pendingByKey = {}
   const pending = []
@@ -49,7 +55,12 @@ function SignIn() {
 }
 
 export default function VoiceStudio() {
-  const phrases = useMemo(() => collectPhrases(COURSE.levels), [])
+  const allPhrases = useMemo(() => collectPhrases(COURSE.levels), [])
+  const [topic, setTopic] = useState('all')
+  const phrases = useMemo(
+    () => topic === 'all' ? allPhrases : allPhrases.filter(p => p.uses.some(u => u.levelId === topic)),
+    [allPhrases, topic]
+  )
   const [studio, setStudio] = useState(null)
   const [voiceovers, setVoiceovers] = useState([])
   const [saving, setSaving] = useState({})
@@ -67,6 +78,16 @@ export default function VoiceStudio() {
       .catch(() => setLoadError(true))
   }
   useEffect(load, [])
+  useEffect(() => {
+    const saved = savedTopic()
+    if (COURSE.levels.some(l => l.id === saved)) setTopic(saved)
+  }, [])
+
+  function pickTopic(id) {
+    setTopic(id)
+    setCurrentKey(null)
+    try { localStorage.setItem(TOPIC_KEY, id) } catch {}
+  }
 
   const canReview = !!studio?.canReview
   const index = useMemo(() => indexVoiceovers(voiceovers, studio?.myId), [voiceovers, studio?.myId])
@@ -147,7 +168,7 @@ export default function VoiceStudio() {
       </header>
 
       <div className={styles.progress}>
-        <div className={styles.progressBar}><div className={styles.progressFill} style={{ width: `${(recorded / phrases.length) * 100}%` }} /></div>
+        <div className={styles.progressBar}><div className={styles.progressFill} style={{ width: `${phrases.length ? (recorded / phrases.length) * 100 : 0}%` }} /></div>
         <span className={styles.progressText}>{recorded} of {phrases.length} recorded</span>
       </div>
 
@@ -175,6 +196,10 @@ export default function VoiceStudio() {
           </main>
 
           <aside className={styles.side}>
+            <select className={styles.search} value={topic} onChange={e => pickTopic(e.target.value)}>
+              <option value="all">All topics</option>
+              {COURSE.levels.map(l => <option key={l.id} value={l.id}>{l.title}</option>)}
+            </select>
             <div className={styles.chips}>
               {FILTERS.map(f => (
                 <button key={f.id} className={`${styles.chip} ${filter === f.id ? styles.chipOn : ''}`} onClick={() => setFilter(f.id)}>
