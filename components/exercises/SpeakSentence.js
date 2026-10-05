@@ -446,9 +446,7 @@ export default function SpeakSentence({ exercise, onAnswer, disabled }) {
         </div>
       </div>
 
-      {succeeded && lastSpoken ? (
-        <p className={`${styles.speakHeard} ${styles.speakHeardOk}`} lang="bg">{lastSpoken}</p>
-      ) : livePreview && !lastSpoken && (
+      {!succeeded && livePreview && !lastSpoken && (
         <p className={styles.speakHeard} lang="bg">{livePreview}</p>
       )}
       {failed && (

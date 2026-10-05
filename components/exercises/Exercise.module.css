@@ -273,7 +273,6 @@
   font-size:16px; color:var(--blue); font-weight:700;
   margin-bottom:20px; text-align:center;
 }
-.speakHeardOk { color:var(--green); }
 .speakRetryMsg {
   font-size:14px; color:var(--red); font-weight:600;
   margin-bottom:20px; text-align:center;
