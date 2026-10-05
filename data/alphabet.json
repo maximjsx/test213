@@ -24,41 +24,41 @@
           "type": "introduce",
           "id": "abc-1-02",
           "label": "NEW LETTER",
-          "display": "О",
-          "sublabel": "\"o\" as in \"or\"",
-          "mnemonic": "Same shape, same sound. Always a short, round \"o\".",
-          "tts": "О"
+          "display": "М",
+          "sublabel": "\"m\" as in \"map\"",
+          "mnemonic": "Exactly like English M.",
+          "tts": "М"
         },
         {
           "type": "sound_choice",
           "id": "abc-1-03",
           "mode": "read",
-          "display": "А",
+          "display": "МАМА",
           "choices": [
-            "А",
-            "О"
+            "мама",
+            "мома",
+            "тата"
           ],
-          "answer": "А",
-          "romanized": "a"
+          "answer": "мама",
+          "romanized": "mama"
         },
         {
-          "type": "sound_choice",
+          "type": "introduce",
           "id": "abc-1-04",
-          "mode": "listen",
-          "choices": [
-            "О",
-            "А"
-          ],
-          "answer": "О"
+          "label": "NEW WORD",
+          "display": "мама",
+          "translation": "mom",
+          "sublabel": "Your first Bulgarian word, and an easy one: same as English.",
+          "tts": "мама"
         },
         {
           "type": "introduce",
           "id": "abc-1-05",
           "label": "NEW LETTER",
-          "display": "М",
-          "sublabel": "\"m\" as in \"map\"",
-          "mnemonic": "Exactly like English M.",
-          "tts": "М"
+          "display": "О",
+          "sublabel": "\"o\" as in \"or\"",
+          "mnemonic": "Same shape, same sound. Always a short, round \"o\".",
+          "tts": "О"
         },
         {
           "type": "introduce",
@@ -73,29 +73,18 @@
           "type": "sound_choice",
           "id": "abc-1-07",
           "mode": "read",
-          "display": "МА",
+          "display": "АТОМ",
           "choices": [
-            "ма",
-            "мо",
-            "та"
+            "атом",
+            "отам",
+            "атам"
           ],
-          "answer": "ма",
-          "romanized": "ma"
-        },
-        {
-          "type": "sound_choice",
-          "id": "abc-1-08",
-          "mode": "listen",
-          "choices": [
-            "то",
-            "та",
-            "мо"
-          ],
-          "answer": "то"
+          "answer": "атом",
+          "romanized": "atom"
         },
         {
           "type": "introduce",
-          "id": "abc-1-09",
+          "id": "abc-1-08",
           "label": "NEW LETTER",
           "display": "К",
           "sublabel": "\"k\" as in \"kit\"",
@@ -103,50 +92,8 @@
           "tts": "К"
         },
         {
-          "type": "introduce",
-          "id": "abc-1-10",
-          "label": "NEW LETTER",
-          "display": "Е",
-          "sublabel": "\"e\" as in \"bed\"",
-          "mnemonic": "Always the \"e\" of \"bed\", never \"ee\".",
-          "tts": "Е"
-        },
-        {
           "type": "sound_choice",
-          "id": "abc-1-11",
-          "mode": "listen",
-          "choices": [
-            "К",
-            "Т",
-            "М"
-          ],
-          "answer": "К"
-        },
-        {
-          "type": "sound_choice",
-          "id": "abc-1-12",
-          "mode": "read",
-          "display": "МАМА",
-          "choices": [
-            "мама",
-            "мома",
-            "тата"
-          ],
-          "answer": "мама",
-          "romanized": "mama"
-        },
-        {
-          "type": "introduce",
-          "id": "abc-1-13",
-          "label": "NEW WORD",
-          "display": "мама",
-          "translation": "mom",
-          "sublabel": "You just read your first Bulgarian word. Easy one: same as English.",
-          "tts": "мама"
-        },
-        {
-          "type": "sound_choice",
-          "id": "abc-1-14",
+          "id": "abc-1-09",
           "mode": "read",
           "display": "КОТКА",
           "choices": [
@@ -159,16 +106,16 @@
         },
         {
           "type": "introduce",
-          "id": "abc-1-15",
+          "id": "abc-1-10",
           "label": "NEW WORD",
           "display": "котка",
           "translation": "cat",
-          "sublabel": "Picture a cat named Kotka.",
+          "sublabel": "Starts like \"cot\": picture a cat curled up asleep in a cot.",
           "tts": "котка"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-1-16",
+          "id": "abc-1-11",
           "question": "Which one is the cat?",
           "choices": [
             "котка",
@@ -178,7 +125,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-1-17",
+          "id": "abc-1-12",
           "mode": "read",
           "display": "татко",
           "choices": [
@@ -191,16 +138,16 @@
         },
         {
           "type": "introduce",
-          "id": "abc-1-18",
+          "id": "abc-1-13",
           "label": "NEW WORD",
           "display": "татко",
           "translation": "dad",
-          "sublabel": "Say it fast and it sounds a bit like \"daddy\".",
+          "sublabel": "Starts like \"tattoo\": picture your dad showing off a big tattoo.",
           "tts": "татко"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-1-19",
+          "id": "abc-1-14",
           "question": "Which one is dad?",
           "choices": [
             "татко",
@@ -210,19 +157,28 @@
           "answer": "татко"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-1-20",
-          "question": "What does мама mean?",
+          "type": "introduce",
+          "id": "abc-1-15",
+          "label": "NEW LETTER",
+          "display": "Е",
+          "sublabel": "\"e\" as in \"bed\"",
+          "mnemonic": "The one to watch: always the \"e\" of \"bed\", never \"ee\".",
+          "tts": "Е"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-16",
+          "mode": "listen",
           "choices": [
-            "mom",
-            "dad",
-            "cat"
+            "тема",
+            "тама",
+            "тома"
           ],
-          "answer": "mom"
+          "answer": "тема"
         },
         {
           "type": "match_pairs",
-          "id": "abc-1-21",
+          "id": "abc-1-17",
           "instruction": "Match each word to its meaning:",
           "pairs": [
             {
@@ -241,7 +197,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-1-22",
+          "id": "abc-1-18",
           "instruction": "Match each letter to its sound:",
           "pairs": [
             {
@@ -264,7 +220,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-1-23",
+          "id": "abc-1-19",
           "question": "What does котка mean?",
           "choices": [
             "cat",
@@ -275,7 +231,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-1-24",
+          "id": "abc-1-20",
           "question": "Who is татко?",
           "choices": [
             "dad",
@@ -286,7 +242,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-1-25",
+          "id": "abc-1-21",
           "question": "What is АТОМ?",
           "choices": [
             "atom",
@@ -297,7 +253,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-1-26",
+          "id": "abc-1-22",
           "mode": "listen",
           "choices": [
             "мак",
@@ -307,19 +263,8 @@
           "answer": "мак"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-1-27",
-          "mode": "listen",
-          "choices": [
-            "тема",
-            "тама",
-            "мета"
-          ],
-          "answer": "тема"
-        },
-        {
           "type": "spell_word",
-          "id": "abc-1-28",
+          "id": "abc-1-23",
           "answer": "мама",
           "prompt": "mom",
           "extras": [
@@ -329,7 +274,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-1-29",
+          "id": "abc-1-24",
           "answer": "котка",
           "prompt": "cat",
           "extras": [
@@ -340,7 +285,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-1-30",
+          "id": "abc-1-25",
           "answer": "татко",
           "prompt": "dad",
           "extras": [
@@ -350,7 +295,7 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-1-31",
+          "id": "abc-1-26",
           "tts": "котка"
         }
       ]
