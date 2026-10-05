@@ -17,7 +17,8 @@
           "label": "NEW LETTER",
           "display": "А",
           "sublabel": "\"a\" as in \"father\"",
-          "mnemonic": "Good news: this whole lesson is letters you already know. А looks and sounds like English A, always the open \"a\" of \"father\"."
+          "mnemonic": "Good news: this whole lesson is letters you already know. А looks and sounds like English A, always the open \"a\" of \"father\".",
+          "tts": "А"
         },
         {
           "type": "introduce",
@@ -25,7 +26,8 @@
           "label": "NEW LETTER",
           "display": "О",
           "sublabel": "\"o\" as in \"or\"",
-          "mnemonic": "Same shape, same sound. Always a short, round \"o\"."
+          "mnemonic": "Same shape, same sound. Always a short, round \"o\".",
+          "tts": "О"
         },
         {
           "type": "sound_choice",
@@ -55,7 +57,8 @@
           "label": "NEW LETTER",
           "display": "М",
           "sublabel": "\"m\" as in \"map\"",
-          "mnemonic": "Exactly like English M."
+          "mnemonic": "Exactly like English M.",
+          "tts": "М"
         },
         {
           "type": "introduce",
@@ -63,7 +66,8 @@
           "label": "NEW LETTER",
           "display": "Т",
           "sublabel": "\"t\" as in \"top\"",
-          "mnemonic": "Exactly like English T. Lowercase т is just a small capital T."
+          "mnemonic": "Exactly like English T. Lowercase т is just a small capital T.",
+          "tts": "Т"
         },
         {
           "type": "sound_choice",
@@ -95,7 +99,8 @@
           "label": "NEW LETTER",
           "display": "К",
           "sublabel": "\"k\" as in \"kit\"",
-          "mnemonic": "Exactly like English K. Lowercase к is a small capital K."
+          "mnemonic": "Exactly like English K. Lowercase к is a small capital K.",
+          "tts": "К"
         },
         {
           "type": "introduce",
@@ -103,7 +108,8 @@
           "label": "NEW LETTER",
           "display": "Е",
           "sublabel": "\"e\" as in \"bed\"",
-          "mnemonic": "Always the \"e\" of \"bed\", never \"ee\"."
+          "mnemonic": "Always the \"e\" of \"bed\", never \"ee\".",
+          "tts": "Е"
         },
         {
           "type": "sound_choice",
@@ -384,7 +390,8 @@
           "label": "NEW LETTER",
           "display": "Р",
           "sublabel": "rolled \"r\", like Spanish \"pero\"",
-          "mnemonic": "Looks like P, but it is R. Picture the P rolling down a hill: rrr."
+          "mnemonic": "Looks like P, but it is R. Picture the P rolling down a hill: rrr.",
+          "tts": "Р"
         },
         {
           "type": "introduce",
@@ -392,7 +399,8 @@
           "label": "NEW LETTER",
           "display": "С",
           "sublabel": "\"s\" as in \"sun\"",
-          "mnemonic": "Looks like C and always says s, like the c in \"city\"."
+          "mnemonic": "Looks like C and always says s, like the c in \"city\".",
+          "tts": "С"
         },
         {
           "type": "sound_choice",
@@ -425,7 +433,8 @@
           "label": "NEW LETTER",
           "display": "Н",
           "sublabel": "\"n\" as in \"net\"",
-          "mnemonic": "Looks like H, says n. The crossbar is a net strung between two posts."
+          "mnemonic": "Looks like H, says n. The crossbar is a net strung between two posts.",
+          "tts": "Н"
         },
         {
           "type": "introduce",
@@ -433,7 +442,8 @@
           "label": "NEW LETTER",
           "display": "В",
           "sublabel": "\"v\" as in \"van\"",
-          "mnemonic": "Looks like B, says v. Two round bellies: very full."
+          "mnemonic": "Looks like B, says v. Two round bellies: very full.",
+          "tts": "В"
         },
         {
           "type": "sound_choice",
@@ -465,7 +475,8 @@
           "label": "NEW LETTER",
           "display": "У",
           "sublabel": "\"oo\" as in \"moon\"",
-          "mnemonic": "Looks like y, says oo. Picture a cup on a stem: you say \"ooh\" when you drink."
+          "mnemonic": "Looks like y, says oo. Picture a cup on a stem: you say \"ooh\" when you drink.",
+          "tts": "У"
         },
         {
           "type": "introduce",
@@ -473,7 +484,8 @@
           "label": "NEW LETTER",
           "display": "Х",
           "sublabel": "\"h\" with a rasp, like \"loch\"",
-          "mnemonic": "Looks like X, says a breathy h. X marks the spot where you go \"hhh\"."
+          "mnemonic": "Looks like X, says a breathy h. X marks the spot where you go \"hhh\".",
+          "tts": "Х"
         },
         {
           "type": "sound_choice",
@@ -500,8 +512,26 @@
           "romanized": "h"
         },
         {
-          "type": "match_pairs",
+          "type": "introduce",
           "id": "abc-2-15",
+          "label": "NEW WORD",
+          "display": "нос",
+          "translation": "nose",
+          "sublabel": "Say it out loud: it even sounds like \"nose\".",
+          "tts": "нос"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-16",
+          "label": "NEW WORD",
+          "display": "море",
+          "translation": "sea",
+          "sublabel": "Think \"marine\".",
+          "tts": "море"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-2-17",
           "instruction": "Match each fake friend to its real sound:",
           "pairs": [
             {
@@ -524,7 +554,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-2-16",
+          "id": "abc-2-18",
           "instruction": "And the rest:",
           "pairs": [
             {
@@ -547,7 +577,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-2-17",
+          "id": "abc-2-19",
           "question": "An English reader sees \"PECTOPAHT\". How does РЕСТОРАНТ really sound?",
           "choices": [
             "restorant",
@@ -558,7 +588,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-2-18",
+          "id": "abc-2-20",
           "mode": "read",
           "display": "МЕТРО",
           "choices": [
@@ -571,7 +601,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-2-19",
+          "id": "abc-2-21",
           "question": "Say it out loud: НОС. Which body part is it?",
           "choices": [
             "nose",
@@ -582,18 +612,18 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-2-20",
-          "question": "МОРЕ sounds like \"marine\". What does it mean?",
+          "id": "abc-2-22",
+          "question": "What does МОРЕ mean?",
           "choices": [
             "sea",
-            "more",
-            "moon"
+            "nose",
+            "metro"
           ],
           "answer": "sea"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-2-21",
+          "id": "abc-2-23",
           "question": "This city is on the Black Sea. How do you read ВАРНА?",
           "choices": [
             "Varna",
@@ -604,7 +634,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-2-22",
+          "id": "abc-2-24",
           "question": "What city is МОСКВА?",
           "choices": [
             "Moscow",
@@ -615,7 +645,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-2-23",
+          "id": "abc-2-25",
           "mode": "listen",
           "choices": [
             "муха",
@@ -626,7 +656,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-2-24",
+          "id": "abc-2-26",
           "mode": "listen",
           "choices": [
             "сок",
@@ -637,7 +667,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-2-25",
+          "id": "abc-2-27",
           "answer": "ресторант",
           "prompt": "restaurant",
           "extras": [
@@ -648,7 +678,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-2-26",
+          "id": "abc-2-28",
           "answer": "метро",
           "prompt": "metro",
           "extras": [
@@ -659,7 +689,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-2-27",
+          "id": "abc-2-29",
           "answer": "нос",
           "prompt": "nose",
           "extras": [
@@ -669,7 +699,7 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-2-28",
+          "id": "abc-2-30",
           "tts": "ресторант"
         }
       ]
@@ -719,7 +749,8 @@
           "label": "NEW LETTER",
           "display": "П",
           "sublabel": "\"p\" as in \"pen\"",
-          "mnemonic": "A doorway, like Greek pi (π). Pi starts with p."
+          "mnemonic": "A doorway, like Greek pi (π). Pi starts with p.",
+          "tts": "П"
         },
         {
           "type": "introduce",
@@ -727,7 +758,8 @@
           "label": "NEW LETTER",
           "display": "Л",
           "sublabel": "\"l\" as in \"lamp\"",
-          "mnemonic": "A tent, like Greek lambda (λ). Lambda starts with l."
+          "mnemonic": "A tent, like Greek lambda (λ). Lambda starts with l.",
+          "tts": "Л"
         },
         {
           "type": "sound_choice",
@@ -761,7 +793,8 @@
           "label": "NEW LETTER",
           "display": "Д",
           "sublabel": "\"d\" as in \"dog\"",
-          "mnemonic": "A little house standing on two feet, like Greek delta (Δ): d."
+          "mnemonic": "A little house standing on two feet, like Greek delta (Δ): d.",
+          "tts": "Д"
         },
         {
           "type": "introduce",
@@ -769,7 +802,8 @@
           "label": "NEW LETTER",
           "display": "Г",
           "sublabel": "\"g\" as in \"go\"",
-          "mnemonic": "An upside-down L, like Greek gamma (Γ). It also looks like a gallows: g."
+          "mnemonic": "An upside-down L, like Greek gamma (Γ). It also looks like a gallows: g.",
+          "tts": "Г"
         },
         {
           "type": "sound_choice",
@@ -801,7 +835,8 @@
           "label": "NEW LETTER",
           "display": "Ф",
           "sublabel": "\"f\" as in \"fun\"",
-          "mnemonic": "A face with a long nose down the middle: f for face."
+          "mnemonic": "A face with a long nose down the middle: f for face.",
+          "tts": "Ф"
         },
         {
           "type": "introduce",
@@ -809,7 +844,8 @@
           "label": "NEW LETTER",
           "display": "И",
           "sublabel": "\"ee\" as in \"see\"",
-          "mnemonic": "A backwards N that says ee. On its own, и means \"and\"."
+          "mnemonic": "A backwards N that says ee. On its own, и means \"and\".",
+          "tts": "И"
         },
         {
           "type": "sound_choice",
@@ -836,8 +872,17 @@
           "romanized": "film"
         },
         {
-          "type": "match_pairs",
+          "type": "introduce",
           "id": "abc-3-16",
+          "label": "NEW WORD",
+          "display": "вода",
+          "translation": "water",
+          "sublabel": "Vodka literally means \"little water\".",
+          "tts": "вода"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-3-17",
           "instruction": "Match each letter to its sound:",
           "pairs": [
             {
@@ -860,7 +905,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-3-17",
+          "id": "abc-3-18",
           "instruction": "Mix them up with the fake friends:",
           "pairs": [
             {
@@ -883,7 +928,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-3-18",
+          "id": "abc-3-19",
           "question": "What country is КАНАДА?",
           "choices": [
             "Canada",
@@ -894,7 +939,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-3-19",
+          "id": "abc-3-20",
           "question": "What is ТАКСИ?",
           "choices": [
             "taxi",
@@ -905,7 +950,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-3-20",
+          "id": "abc-3-21",
           "question": "What is ГИТАРА?",
           "choices": [
             "guitar",
@@ -916,7 +961,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-3-21",
+          "id": "abc-3-22",
           "question": "What is ТЕЛЕФОН?",
           "choices": [
             "telephone",
@@ -927,18 +972,18 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-3-22",
-          "question": "ВОДКА means \"little water\". So what is ВОДА?",
+          "id": "abc-3-23",
+          "question": "What is ВОДА?",
           "choices": [
             "water",
             "wine",
-            "bread"
+            "taxi"
           ],
           "answer": "water"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-3-23",
+          "id": "abc-3-24",
           "question": "Bulgaria's second city. How do you read ПЛОВДИВ?",
           "choices": [
             "Plovdiv",
@@ -949,7 +994,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-3-24",
+          "id": "abc-3-25",
           "mode": "read",
           "display": "вино",
           "choices": [
@@ -962,7 +1007,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-3-25",
+          "id": "abc-3-26",
           "mode": "listen",
           "choices": [
             "лимон",
@@ -973,7 +1018,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-3-26",
+          "id": "abc-3-27",
           "answer": "Лондон",
           "prompt": "London",
           "extras": [
@@ -984,7 +1029,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-3-27",
+          "id": "abc-3-28",
           "answer": "такси",
           "prompt": "taxi",
           "extras": [
@@ -995,7 +1040,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-3-28",
+          "id": "abc-3-29",
           "answer": "вода",
           "prompt": "water",
           "extras": [
@@ -1006,7 +1051,7 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-3-29",
+          "id": "abc-3-30",
           "tts": "Пловдив"
         }
       ]
@@ -1057,7 +1102,8 @@
           "label": "NEW LETTER",
           "display": "Б",
           "sublabel": "\"b\" as in \"bed\"",
-          "mnemonic": "A B with its top bump flattened into a roof. Lowercase б looks like a 6."
+          "mnemonic": "A B with its top bump flattened into a roof. Lowercase б looks like a 6.",
+          "tts": "Б"
         },
         {
           "type": "introduce",
@@ -1065,7 +1111,8 @@
           "label": "NEW LETTER",
           "display": "З",
           "sublabel": "\"z\" as in \"zoo\"",
-          "mnemonic": "Looks like the number 3. Z and 3 are buddies."
+          "mnemonic": "Looks like the number 3. Z and 3 are buddies.",
+          "tts": "З"
         },
         {
           "type": "sound_choice",
@@ -1097,7 +1144,8 @@
           "label": "NEW LETTER",
           "display": "Ъ",
           "sublabel": "\"uh\", like the \"u\" in \"but\"",
-          "mnemonic": "A b with a little flag on top. It is the lazy \"uh\" sound, and it is everywhere: БЪЛГАРИЯ starts with it."
+          "mnemonic": "A b with a little flag on top. It is the lazy \"uh\" sound, and it is everywhere: БЪЛГАРИЯ starts with it. In Latin letters it is usually written as a.",
+          "tts": "Ъ"
         },
         {
           "type": "introduce",
@@ -1138,7 +1186,8 @@
           "label": "NEW LETTER",
           "display": "Я",
           "sublabel": "\"ya\" as in \"yard\"",
-          "mnemonic": "A backwards R that cheerfully shouts \"ya!\""
+          "mnemonic": "A backwards R that cheerfully shouts \"ya!\"",
+          "tts": "Я"
         },
         {
           "type": "introduce",
@@ -1146,7 +1195,8 @@
           "label": "NEW LETTER",
           "display": "Ю",
           "sublabel": "\"yu\" as in \"you\"",
-          "mnemonic": "Looks like I and O stuck together and says \"you\". Think: I owe you."
+          "mnemonic": "Looks like I and O stuck together and says \"you\". Think: I owe you.",
+          "tts": "Ю"
         },
         {
           "type": "sound_choice",
@@ -1246,7 +1296,7 @@
           "question": "What is МУЗЕЙ?",
           "choices": [
             "museum",
-            "music",
+            "market",
             "mosque"
           ],
           "answer": "museum"
@@ -1254,7 +1304,7 @@
         {
           "type": "multiple_choice",
           "id": "abc-4-21",
-          "question": "Bulgaria's most famous food. What is ЙОГУРТ?",
+          "question": "Bulgaria is famous for it. What is ЙОГУРТ?",
           "choices": [
             "yogurt",
             "yoga",
@@ -1278,11 +1328,11 @@
           "id": "abc-4-23",
           "question": "The capital of Bulgaria. How do you read СОФИЯ?",
           "choices": [
-            "Sofia",
-            "Cofia",
-            "Sofna"
+            "Sofiya",
+            "Cofiya",
+            "Sofnya"
           ],
-          "answer": "Sofia"
+          "answer": "Sofiya"
         },
         {
           "type": "sound_choice",
@@ -1371,7 +1421,7 @@
           "choices": [
             "yabalka",
             "rbblka",
-            "yabulka"
+            "rabalka"
           ],
           "answer": "yabalka"
         },
@@ -1381,7 +1431,8 @@
           "label": "NEW LETTER",
           "display": "Ш",
           "sublabel": "\"sh\" as in \"shop\"",
-          "mnemonic": "Three fingers raised to your lips: shhh!"
+          "mnemonic": "Three fingers raised to your lips: shhh!",
+          "tts": "Ш"
         },
         {
           "type": "introduce",
@@ -1389,7 +1440,8 @@
           "label": "NEW LETTER",
           "display": "Щ",
           "sublabel": "\"sht\" as in \"ashtray\"",
-          "mnemonic": "Ш with a little tail. The tail adds a t: sh + t = sht."
+          "mnemonic": "Ш with a little tail. The tail adds a t: sh + t = sht.",
+          "tts": "Щ"
         },
         {
           "type": "sound_choice",
@@ -1421,7 +1473,8 @@
           "label": "NEW LETTER",
           "display": "Ж",
           "sublabel": "\"zh\", the \"s\" in \"measure\"",
-          "mnemonic": "A beetle with its legs out, buzzing zhzhzh."
+          "mnemonic": "A beetle with its legs out, buzzing zhzhzh.",
+          "tts": "Ж"
         },
         {
           "type": "introduce",
@@ -1429,7 +1482,8 @@
           "label": "NEW LETTER",
           "display": "Ц",
           "sublabel": "\"ts\" as in \"cats\"",
-          "mnemonic": "A cup with a tail. The tail hisses: ts, like the end of \"cats\"."
+          "mnemonic": "A cup with a tail. The tail hisses: ts, like the end of \"cats\".",
+          "tts": "Ц"
         },
         {
           "type": "sound_choice",
@@ -1461,7 +1515,8 @@
           "label": "NEW LETTER",
           "display": "Ч",
           "sublabel": "\"ch\" as in \"chair\"",
-          "mnemonic": "Looks like a 4, or a chair turned upside down: ch for chair."
+          "mnemonic": "Looks like a 4, or a chair turned upside down: ch for chair.",
+          "tts": "Ч"
         },
         {
           "type": "introduce",
@@ -1484,8 +1539,17 @@
           "answer": "чай"
         },
         {
-          "type": "sound_choice",
+          "type": "introduce",
           "id": "abc-5-15",
+          "label": "NEW WORD",
+          "display": "чай",
+          "translation": "tea",
+          "sublabel": "Like \"chai\".",
+          "tts": "чай"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-16",
           "mode": "read",
           "display": "ШОФЬОР",
           "choices": [
@@ -1498,7 +1562,7 @@
         },
         {
           "type": "introduce",
-          "id": "abc-5-16",
+          "id": "abc-5-17",
           "label": "NEW WORD",
           "display": "мечка",
           "translation": "bear",
@@ -1507,7 +1571,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-17",
+          "id": "abc-5-18",
           "question": "What is a мечка?",
           "choices": [
             "bear",
@@ -1518,7 +1582,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-5-18",
+          "id": "abc-5-19",
           "instruction": "Match the hissing letters:",
           "pairs": [
             {
@@ -1541,7 +1605,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-5-19",
+          "id": "abc-5-20",
           "instruction": "Do not let them fool you:",
           "pairs": [
             {
@@ -1564,7 +1628,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-20",
+          "id": "abc-5-21",
           "question": "What is ШОКОЛАД?",
           "choices": [
             "chocolate",
@@ -1575,7 +1639,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-21",
+          "id": "abc-5-22",
           "question": "What animal is a ЖИРАФ?",
           "choices": [
             "giraffe",
@@ -1586,29 +1650,29 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-22",
+          "id": "abc-5-23",
           "question": "What is ЦИРК?",
           "choices": [
             "circus",
-            "circle",
-            "church"
+            "bakery",
+            "garden"
           ],
           "answer": "circus"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-23",
-          "question": "Careful: what country is ШВЕЦИЯ?",
+          "id": "abc-5-24",
+          "question": "What country is ШВЕЦИЯ?",
           "choices": [
             "Sweden",
-            "Switzerland",
-            "Swaziland"
+            "Brazil",
+            "Japan"
           ],
           "answer": "Sweden"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-5-24",
+          "id": "abc-5-25",
           "question": "How do you read ЩАСТИЕ (happiness)?",
           "choices": [
             "shtastie",
@@ -1619,7 +1683,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-5-25",
+          "id": "abc-5-26",
           "answer": "мечка",
           "prompt": "bear",
           "extras": [
@@ -1630,7 +1694,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-5-26",
+          "id": "abc-5-27",
           "answer": "шоколад",
           "prompt": "chocolate",
           "extras": [
@@ -1641,7 +1705,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-5-27",
+          "id": "abc-5-28",
           "answer": "пица",
           "prompt": "pizza",
           "extras": [
@@ -1652,12 +1716,12 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-5-28",
+          "id": "abc-5-29",
           "tts": "щастие"
         },
         {
           "type": "speak_sentence",
-          "id": "abc-5-29",
+          "id": "abc-5-30",
           "tts": "шоколад"
         }
       ]
@@ -2032,19 +2096,28 @@
           "answer": "ИЗХОД"
         },
         {
-          "type": "multiple_choice",
+          "type": "introduce",
           "id": "abc-7-05",
-          "question": "АПТЕКА sounds like \"apothecary\". What is it?",
-          "choices": [
-            "pharmacy",
-            "bakery",
-            "library"
-          ],
-          "answer": "pharmacy"
+          "label": "REAL SIGN",
+          "display": "АПТЕКА",
+          "translation": "pharmacy",
+          "sublabel": "Like the old word \"apothecary\"",
+          "tts": "аптека"
         },
         {
           "type": "multiple_choice",
           "id": "abc-7-06",
+          "question": "You need medicine. Which shop?",
+          "choices": [
+            "АПТЕКА",
+            "ХОТЕЛ",
+            "ИЗХОД"
+          ],
+          "answer": "АПТЕКА"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-07",
           "question": "What is ТОАЛЕТНА?",
           "choices": [
             "toilet",
@@ -2055,18 +2128,18 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-07",
+          "id": "abc-7-08",
           "question": "What is ЦЕНТЪР?",
           "choices": [
             "centre",
-            "century",
+            "beach",
             "cinema"
           ],
           "answer": "centre"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-08",
+          "id": "abc-7-09",
           "question": "What is ХОТЕЛ?",
           "choices": [
             "hotel",
@@ -2077,18 +2150,18 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-09",
+          "id": "abc-7-10",
           "question": "What is ПОЛИЦИЯ?",
           "choices": [
             "police",
-            "politics",
+            "bakery",
             "post office"
           ],
           "answer": "police"
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-10",
+          "id": "abc-7-11",
           "question": "What is АВТОБУС?",
           "choices": [
             "bus",
@@ -2099,7 +2172,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-11",
+          "id": "abc-7-12",
           "question": "Bulgaria's highest mountains are the РИЛА. How do you read it?",
           "choices": [
             "Rila",
@@ -2110,7 +2183,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-12",
+          "id": "abc-7-13",
           "question": "The train board says this train goes to БУРГАС. Where are you headed?",
           "choices": [
             "Burgas",
@@ -2121,7 +2194,7 @@
         },
         {
           "type": "multiple_choice",
-          "id": "abc-7-13",
+          "id": "abc-7-14",
           "question": "A café menu says КАФЕ, ЧАЙ, ПИЦА, ШОКОЛАД. What can you not order?",
           "choices": [
             "beer",
@@ -2133,7 +2206,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-7-14",
+          "id": "abc-7-15",
           "mode": "read",
           "display": "ШОПСКА САЛАТА",
           "choices": [
@@ -2146,7 +2219,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-7-15",
+          "id": "abc-7-16",
           "mode": "listen",
           "choices": [
             "Бургас",
@@ -2157,7 +2230,7 @@
         },
         {
           "type": "sound_choice",
-          "id": "abc-7-16",
+          "id": "abc-7-17",
           "mode": "listen",
           "choices": [
             "Велико Търново",
@@ -2168,7 +2241,7 @@
         },
         {
           "type": "match_pairs",
-          "id": "abc-7-17",
+          "id": "abc-7-18",
           "instruction": "Match each city to its name:",
           "pairs": [
             {
@@ -2195,7 +2268,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-7-18",
+          "id": "abc-7-19",
           "answer": "аптека",
           "prompt": "pharmacy",
           "extras": [
@@ -2206,7 +2279,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-7-19",
+          "id": "abc-7-20",
           "answer": "хотел",
           "prompt": "hotel",
           "extras": [
@@ -2217,7 +2290,7 @@
         },
         {
           "type": "spell_word",
-          "id": "abc-7-20",
+          "id": "abc-7-21",
           "answer": "център",
           "prompt": "centre",
           "extras": [
@@ -2228,7 +2301,7 @@
         },
         {
           "type": "speak_sentence",
-          "id": "abc-7-21",
+          "id": "abc-7-22",
           "tts": "Добре дошли в България"
         }
       ]
