@@ -61,7 +61,11 @@ export default function LessonPage() {
     tokenRef.current = beginActivity('lesson', found.lesson.id)
   }, [found, hydrated, round, beginActivity])
 
-  const exercises = useMemo(() => (content ? orderExercises(content.exercises) : []), [content, round])
+  // An `ordered` lesson is sequenced by hand, so its exercise types stay interleaved
+  const exercises = useMemo(() => {
+    if (!content) return []
+    return content.ordered ? content.exercises : orderExercises(content.exercises)
+  }, [content, round])
 
   if (!found) {
     return (
