@@ -95,6 +95,10 @@ function getExerciseDisplay(ex) {
       return { q: ex.tts, a: ex.answers?.[0] || '—' }
     case 'speak_sentence':
       return { q: ex.tts, a: ex.tts }
+    case 'sound_choice':
+      return { q: ex.display || 'Listen', a: ex.romanized ? `${ex.answer} (${ex.romanized})` : ex.answer }
+    case 'spell_word':
+      return { q: ex.prompt || 'Spell it', a: ex.answer }
     default:
       return { q: '—', a: ex.answer || ex.answers?.[0] || '—' }
   }

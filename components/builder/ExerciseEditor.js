@@ -40,6 +40,41 @@ function StringList({ label, values, onChange, placeholder = 'Add item…', minI
   )
 }
 
+function ChoiceList({ ex, onChange, hint }) {
+  const choices = ex.choices || []
+  const set = (field, val) => onChange({ ...ex, [field]: val })
+  return (
+    <div className={styles.fieldRow}>
+      <label className={styles.fieldLabel}>
+        Choices
+        <span className={styles.fieldLabelHint}>click ✓ to mark correct</span>
+      </label>
+      <div className={styles.fieldInput}>
+        {choices.map((c, i) => (
+          <div key={i} className={styles.choiceRow}>
+            <input
+              className={`${styles.input} ${c && c === ex.answer ? styles.inputCorrect : ''}`}
+              value={c}
+              placeholder={`Option ${i + 1}`}
+              onChange={e => { const n = [...choices]; n[i] = e.target.value; set('choices', n) }}
+            />
+            <button
+              className={`${styles.correctBtn} ${c && c === ex.answer ? styles.correctBtnActive : ''}`}
+              onClick={() => set('answer', c)}
+              title="Mark as correct answer"
+            >✓</button>
+            {choices.length > 2 && (
+              <button className={styles.removeBtn} onClick={() => onChange({ ...ex, choices: choices.filter((_, j) => j !== i), answer: ex.answer === c ? '' : ex.answer })} title="Remove">✕</button>
+            )}
+          </div>
+        ))}
+        <button className={styles.addSmallBtn} onClick={() => set('choices', [...choices, ''])}>+ Add choice</button>
+        {ex.answer && <div className={styles.correctHint}>✓ correct answer: <strong>{ex.answer}</strong></div>}
+        {hint && <div className={styles.fieldHint}>{hint}</div>}
+      </div>
+    </div>
+  )
+}
 
 // Tags that apply to every exercise type
 function UsageFields({ ex, onChange }) {
@@ -103,6 +138,9 @@ function TypeFields({ ex, onChange, courseId }) {
         <FieldRow label="Sublabel (usage note)">
           <input className={styles.input} value={ex.sublabel || ''} placeholder="informal hello to one person" onChange={e => set('sublabel', e.target.value)} />
         </FieldRow>
+        <FieldRow label="Memory hook (optional)" hint="A picture or story that ties the shape to the sound">
+          <input className={styles.input} value={ex.mnemonic || ''} placeholder="Ж looks like a beetle buzzing zhzhzh" onChange={e => set('mnemonic', e.target.value)} />
+        </FieldRow>
         <FieldRow label="Translation">
           <input className={styles.input} value={ex.translation || ''} placeholder="Hello!" onChange={e => set('translation', e.target.value)} />
         </FieldRow>
@@ -115,34 +153,40 @@ function TypeFields({ ex, onChange, courseId }) {
         <FieldRow label="Question">
           <input className={styles.input} value={ex.question || ''} placeholder="Which means 'Hello'?" onChange={e => set('question', e.target.value)} />
         </FieldRow>
-        <div className={styles.fieldRow}>
-          <label className={styles.fieldLabel}>
-            Choices
-            <span className={styles.fieldLabelHint}>click ✓ to mark correct</span>
-          </label>
-          <div className={styles.fieldInput}>
-            {(ex.choices || []).map((c, i) => (
-              <div key={i} className={styles.choiceRow}>
-                <input
-                  className={`${styles.input} ${c && c === ex.answer ? styles.inputCorrect : ''}`}
-                  value={c}
-                  placeholder={`Option ${i + 1}`}
-                  onChange={e => { const n = [...(ex.choices || [])]; n[i] = e.target.value; set('choices', n) }}
-                />
-                <button
-                  className={`${styles.correctBtn} ${c && c === ex.answer ? styles.correctBtnActive : ''}`}
-                  onClick={() => set('answer', c)}
-                  title="Mark as correct answer"
-                >✓</button>
-                {(ex.choices || []).length > 2 && (
-                  <button className={styles.removeBtn} onClick={() => { const n = (ex.choices || []).filter((_, j) => j !== i); set('choices', n); if (ex.answer === c) set('answer', '') }} title="Remove">✕</button>
-                )}
-              </div>
-            ))}
-            <button className={styles.addSmallBtn} onClick={() => set('choices', [...(ex.choices || []), ''])}>+ Add choice</button>
-            {ex.answer && <div className={styles.correctHint}>✓ correct answer: <strong>{ex.answer}</strong></div>}
-          </div>
-        </div>
+        <ChoiceList ex={ex} onChange={onChange} />
+        {ttsField}
+      </>
+    )
+
+    case 'sound_choice': return (
+      <>
+        <FieldRow label="Mode">
+          <select className={styles.select} value={ex.mode || 'read'} onChange={e => set('mode', e.target.value)}>
+            <option value="read">read: show the Cyrillic, choices are recordings</option>
+            <option value="listen">listen: play the answer, choices are Cyrillic spellings</option>
+          </select>
+        </FieldRow>
+        {ex.mode !== 'listen' && (
+          <FieldRow label="Shown text" hint="Usually the same as the correct choice, maybe in capitals">
+            <input className={styles.input} value={ex.display || ''} placeholder="КОТКА" onChange={e => set('display', e.target.value)} />
+          </FieldRow>
+        )}
+        <ChoiceList ex={ex} onChange={onChange} hint="Bulgarian only. Misreadings make the best distractors (РОТ read as пот)." />
+        <FieldRow label="Romanized (optional)" hint="Shown after answering">
+          <input className={styles.input} value={ex.romanized || ''} placeholder="kotka" onChange={e => set('romanized', e.target.value)} />
+        </FieldRow>
+      </>
+    )
+
+    case 'spell_word': return (
+      <>
+        <FieldRow label="Word to spell">
+          <input className={styles.input} value={ex.answer || ''} placeholder="Котка" onChange={e => set('answer', e.target.value)} />
+        </FieldRow>
+        <FieldRow label="Prompt (optional)" hint="Shown next to the speaker, e.g. the English meaning">
+          <input className={styles.input} value={ex.prompt || ''} placeholder="cat" onChange={e => set('prompt', e.target.value)} />
+        </FieldRow>
+        <StringList label="Extra letter tiles" values={ex.extras || []} onChange={v => set('extras', v)} placeholder="One letter" minItems={0} />
         {ttsField}
       </>
     )

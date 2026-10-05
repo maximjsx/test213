@@ -1,149 +1,2127 @@
 {
   "id": "alphabet",
   "title": "The Alphabet",
-  "subtitle": "All 30 Cyrillic letters",
+  "subtitle": "All 30 letters, starting with the ones you know",
   "color": "#1cb0f6",
   "icon": "Аа",
-  "notes": "## The Bulgarian Cyrillic Alphabet\n\nBulgarian uses the Cyrillic alphabet with 30 letters. Each letter always makes the same sound.\n\n| Letter | Sound | Example |\n|--------|-------|---------|\n| А а | \"a\" as in bath | Аз (I) |\n| Б б | \"b\" as in bug | Баща (father) |\n| В в | \"v\" as in vet | Вода (water) |\n| Г г | \"g\" as in good | Град (city) |\n| Д д | \"d\" as in dog | Добре (fine) |\n| Е е | \"e\" as in best | Един (one) |\n| Ж ж | \"zh\" as in treasure | Жена (woman) |\n| З з | \"z\" as in zoo | Здравей (hello) |\n| И и | \"ee\" as in machine | Играя (I play) |\n| Й й | \"y\" as in yes (short) | Майка (mother) |\n| К к | \"k\" as in make | Котка (cat) |\n| Л л | \"l\" as in lend | Лимон (lemon) |\n| М м | \"m\" as in man | Майка (mother) |\n| Н н | \"n\" as in no | Нощ (night) |\n| О о | \"o\" as in order | Огън (fire) |\n| П п | \"p\" as in pet | Писмо (letter) |\n| Р р | trilled r | Риба (fish) |\n| С с | \"s\" as in sound | Супа (soup) |\n| Т т | \"t\" as in top | Такси (taxi) |\n| У у | \"oo\" as in tool | Учител (teacher) |\n| Ф ф | \"f\" as in food | Фен (fan) |\n| Х х | \"kh\" as in loch | Хляб (bread) |\n| Ц ц | \"ts\" as in fits | Цвете (flower) |\n| Ч ч | \"ch\" as in chip | Чай (tea) |\n| Ш ш | \"sh\" as in shot | Шоколад (chocolate) |\n| Щ щ | \"sht\" as in shtick | Щастие (happiness) |\n| Ъ ъ | \"u\" as in turn | Ъгъл (corner) |\n| Ь ь | soft sign (softens prev. consonant) | |\n| Ю ю | \"yu\" as in youth | Юли (July) |\n| Я я | \"ya\" as in yard | Яйце (egg) |\n\n## Tips\n- No silent letters - every letter is always pronounced\n- Cyrillic looks new but many sounds match English\n- А, Е, К, М, О, Т look like Latin letters but some have different sounds (В = v, Н = n, Р = r, С = s, У = oo, Х = kh)",
+  "notes": "## How this topic works\n\nBulgarian has 30 letters and every one always makes the same sound. Instead of going А to Я, the lessons start with the letters you already know and add new ones a few at a time, so you can read real words from the very first lesson.\n\n| Lesson | Letters | Why they go together |\n|--------|---------|----------------------|\n| Letters you know | А О Е К М Т | Look and sound like English |\n| Fake friends | Р С Н В У Х | Look like English, sound different |\n| Greek lookalikes | П Г Д Л Ф И | Shapes from the Greek alphabet |\n| New shapes | Б З Ъ Й Я Ю | Brand new, each with a memory hook |\n| The hissing letters | Ж Ш Щ Ц Ч Ь | The sh, zh, ts and ch family |\n| Tricky twins | all | Telling look-alikes apart |\n| Read real Bulgarian | all | Signs, menus and city names |\n\n## The fake friends\n\nThese six trip up every English speaker. Learn them as pairs:\n\n| Looks like | Is | Sounds like |\n|------------|----|-------------|\n| P | Р р | rolled r |\n| C | С с | s |\n| H | Н н | n |\n| B | В в | v |\n| y | У у | oo |\n| X | Х х | h, as in \"loch\" |\n\nSo РЕСТОРАНТ is \"restorant\", not \"pectopaht\".\n\n## All 30 letters\n\n| Letter | Sound | Example |\n|--------|-------|---------|\n| А а | \"a\" as in father | мама (mom) |\n| Б б | \"b\" as in bed | банан (banana) |\n| В в | \"v\" as in van | вода (water) |\n| Г г | \"g\" as in go | гитара (guitar) |\n| Д д | \"d\" as in dog | да (yes) |\n| Е е | \"e\" as in bed | метро (metro) |\n| Ж ж | \"zh\", the s in measure | жираф (giraffe) |\n| З з | \"z\" as in zoo | зебра (zebra) |\n| И и | \"ee\" as in see | такси (taxi) |\n| Й й | \"y\" as in boy | чай (tea) |\n| К к | \"k\" as in kit | котка (cat) |\n| Л л | \"l\" as in lamp | лимон (lemon) |\n| М м | \"m\" as in map | море (sea) |\n| Н н | \"n\" as in net | нос (nose) |\n| О о | \"o\" as in or | сок (juice) |\n| П п | \"p\" as in pen | парк (park) |\n| Р р | rolled r | ресторант (restaurant) |\n| С с | \"s\" as in sun | сестра (sister) |\n| Т т | \"t\" as in top | татко (dad) |\n| У у | \"oo\" as in moon | муха (fly) |\n| Ф ф | \"f\" as in fun | филм (film) |\n| Х х | \"h\", as in loch | хотел (hotel) |\n| Ц ц | \"ts\" as in cats | пица (pizza) |\n| Ч ч | \"ch\" as in chair | чай (tea) |\n| Ш ш | \"sh\" as in shop | шоколад (chocolate) |\n| Щ щ | \"sht\" as in ashtray | щастие (happiness) |\n| Ъ ъ | \"uh\" as in but | България (Bulgaria) |\n| Ь ь | only in ьо, says \"yo\" | шофьор (driver) |\n| Ю ю | \"yu\" as in you | юли (July) |\n| Я я | \"ya\" as in yard | ябълка (apple) |\n\n## Tips\n\n- No silent letters: read every letter, left to right.\n- Ш is sh, Щ is sh with a tail, which adds a t: sht.\n- Й is И with a hat, a quick y. Ь never sounds on its own.",
   "lessons": [
     {
       "id": "alph-1",
-      "title": "А to Д",
+      "title": "Letters you know",
       "coins": 10,
       "exercises": [
-        { "type": "introduce", "id": "alph-1-i1", "label": "NEW LETTER", "display": "А", "sublabel": "\"a\" as in \"bath\"", "tts": "А" },
-        { "type": "multiple_choice", "id": "alph-1-mc1", "question": "What sound does А make?", "choices": ["\"a\" as in bath", "\"b\" as in bug", "\"g\" as in good"], "answer": "\"a\" as in bath", "tts": "А" },
-        { "type": "introduce", "id": "alph-1-i2", "label": "NEW LETTER", "display": "Б", "sublabel": "\"b\" as in \"bug\"", "tts": "Бъ" },
-        { "type": "multiple_choice", "id": "alph-1-mc2", "question": "Which letter makes the \"b\" sound?", "choices": ["Б", "А", "Г"], "answer": "Б", "tts": "Бъ" },
-        { "type": "introduce", "id": "alph-1-i3", "label": "NEW LETTER", "display": "В", "sublabel": "\"v\" as in \"vet\"", "tts": "Въ" },
-        { "type": "multiple_choice", "id": "alph-1-mc3", "question": "What sound does В make?", "choices": ["\"v\" as in vet", "\"b\" as in bug", "\"d\" as in dog"], "answer": "\"v\" as in vet", "tts": "Въ" },
-        { "type": "match_pairs", "id": "alph-1-mp0", "instruction": "Quick check: match the letters you just learned:", "pairs": [{ "left": "А", "right": "a" }, { "left": "Б", "right": "b" }, { "left": "В", "right": "v" }] },
-        { "type": "introduce", "id": "alph-1-i4", "label": "NEW LETTER", "display": "Г", "sublabel": "\"g\" as in \"good\"", "tts": "Гъ" },
-        { "type": "multiple_choice", "id": "alph-1-mc4", "question": "Which letter makes the \"g\" sound?", "choices": ["Г", "В", "Б"], "answer": "Г", "tts": "Гъ" },
-        { "type": "introduce", "id": "alph-1-i5", "label": "NEW LETTER", "display": "Д", "sublabel": "\"d\" as in \"dog\"", "tts": "Дъ" },
-        { "type": "multiple_choice", "id": "alph-1-mc5", "question": "What sound does Д make?", "choices": ["\"d\" as in dog", "\"g\" as in good", "\"v\" as in vet"], "answer": "\"d\" as in dog", "tts": "Дъ" },
-        { "type": "match_pairs", "id": "alph-1-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "А", "right": "a" }, { "left": "Б", "right": "b" }, { "left": "В", "right": "v" }, { "left": "Г", "right": "g" }] },
-        { "type": "listen_and_type", "id": "alph-1-lat1", "tts": "Баба", "answer": "Баба" },
-        { "type": "speak_sentence", "id": "alph-1-sp1", "tts": "Баща" }
+        {
+          "type": "introduce",
+          "id": "abc-1-01",
+          "label": "NEW LETTER",
+          "display": "А",
+          "sublabel": "\"a\" as in \"father\"",
+          "mnemonic": "Good news: this whole lesson is letters you already know. А looks and sounds like English A, always the open \"a\" of \"father\"."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-02",
+          "label": "NEW LETTER",
+          "display": "О",
+          "sublabel": "\"o\" as in \"or\"",
+          "mnemonic": "Same shape, same sound. Always a short, round \"o\"."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-03",
+          "mode": "read",
+          "display": "А",
+          "choices": [
+            "А",
+            "О"
+          ],
+          "answer": "А",
+          "romanized": "a"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-04",
+          "mode": "listen",
+          "choices": [
+            "О",
+            "А"
+          ],
+          "answer": "О"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-05",
+          "label": "NEW LETTER",
+          "display": "М",
+          "sublabel": "\"m\" as in \"map\"",
+          "mnemonic": "Exactly like English M."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-06",
+          "label": "NEW LETTER",
+          "display": "Т",
+          "sublabel": "\"t\" as in \"top\"",
+          "mnemonic": "Exactly like English T. Lowercase т is just a small capital T."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-07",
+          "mode": "read",
+          "display": "МА",
+          "choices": [
+            "ма",
+            "мо",
+            "та"
+          ],
+          "answer": "ма",
+          "romanized": "ma"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-08",
+          "mode": "listen",
+          "choices": [
+            "то",
+            "та",
+            "мо"
+          ],
+          "answer": "то"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-09",
+          "label": "NEW LETTER",
+          "display": "К",
+          "sublabel": "\"k\" as in \"kit\"",
+          "mnemonic": "Exactly like English K. Lowercase к is a small capital K."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-1-10",
+          "label": "NEW LETTER",
+          "display": "Е",
+          "sublabel": "\"e\" as in \"bed\"",
+          "mnemonic": "Always the \"e\" of \"bed\", never \"ee\"."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-11",
+          "mode": "listen",
+          "choices": [
+            "К",
+            "Т",
+            "М"
+          ],
+          "answer": "К"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-12",
+          "mode": "read",
+          "display": "МАМА",
+          "choices": [
+            "мама",
+            "мома",
+            "тата"
+          ],
+          "answer": "мама",
+          "romanized": "mama"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-1-13",
+          "instruction": "Match each letter to its sound:",
+          "pairs": [
+            {
+              "left": "Е",
+              "right": "e"
+            },
+            {
+              "left": "К",
+              "right": "k"
+            },
+            {
+              "left": "Т",
+              "right": "t"
+            },
+            {
+              "left": "О",
+              "right": "o"
+            }
+          ]
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-14",
+          "mode": "read",
+          "display": "КОТКА",
+          "choices": [
+            "котка",
+            "кокта",
+            "тотка"
+          ],
+          "answer": "котка",
+          "romanized": "kotka"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-15",
+          "mode": "read",
+          "display": "татко",
+          "choices": [
+            "татко",
+            "такто",
+            "катко"
+          ],
+          "answer": "татко",
+          "romanized": "tatko"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-1-16",
+          "question": "You just read your first Bulgarian word. What is a КОТКА?",
+          "choices": [
+            "cat",
+            "coat",
+            "cake"
+          ],
+          "answer": "cat"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-1-17",
+          "question": "What is АТОМ?",
+          "choices": [
+            "atom",
+            "item",
+            "autumn"
+          ],
+          "answer": "atom"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-18",
+          "mode": "listen",
+          "choices": [
+            "мак",
+            "мок",
+            "так"
+          ],
+          "answer": "мак"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-1-19",
+          "mode": "listen",
+          "choices": [
+            "тема",
+            "тама",
+            "мета"
+          ],
+          "answer": "тема"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-1-20",
+          "answer": "мама",
+          "prompt": "mom",
+          "extras": [
+            "о"
+          ],
+          "tts": "мама"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-1-21",
+          "answer": "котка",
+          "prompt": "cat",
+          "extras": [
+            "е",
+            "м"
+          ],
+          "tts": "котка"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-1-22",
+          "answer": "татко",
+          "prompt": "dad",
+          "extras": [
+            "е"
+          ],
+          "tts": "татко"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-1-23",
+          "tts": "котка"
+        }
       ]
     },
     {
       "id": "alph-2",
-      "title": "Е to Й",
+      "title": "Fake friends",
       "coins": 10,
       "exercises": [
-        { "type": "introduce", "id": "alph-2-i1", "label": "NEW LETTER", "display": "Е", "sublabel": "\"e\" as in \"best\"", "tts": "Е" },
-        { "type": "multiple_choice", "id": "alph-2-mc1", "question": "What sound does Е make?", "choices": ["\"e\" as in best", "\"ee\" as in machine", "\"a\" as in bath"], "answer": "\"e\" as in best", "tts": "Е" },
-        { "type": "introduce", "id": "alph-2-i2", "label": "NEW LETTER", "display": "Ж", "sublabel": "\"zh\" like the \"s\" in \"treasure\"", "tts": "Жъ" },
-        { "type": "multiple_choice", "id": "alph-2-mc2", "question": "Which letter makes the \"zh\" sound (like \"s\" in \"treasure\")?", "choices": ["Ж", "З", "Е"], "answer": "Ж", "tts": "Жъ" },
-        { "type": "introduce", "id": "alph-2-i3", "label": "NEW LETTER", "display": "З", "sublabel": "\"z\" as in \"zoo\"", "tts": "Зъ" },
-        { "type": "multiple_choice", "id": "alph-2-mc3", "question": "What sound does З make?", "choices": ["\"z\" as in zoo", "\"zh\" as in treasure", "\"s\" as in sound"], "answer": "\"z\" as in zoo", "tts": "Зъ" },
-        { "type": "match_pairs", "id": "alph-2-mp0", "instruction": "Quick check: match the letters you just learned:", "pairs": [{ "left": "Е", "right": "e" }, { "left": "Ж", "right": "zh" }, { "left": "З", "right": "z" }] },
-        { "type": "introduce", "id": "alph-2-i4", "label": "NEW LETTER", "display": "И", "sublabel": "\"ee\" as in \"machine\"", "tts": "И" },
-        { "type": "multiple_choice", "id": "alph-2-mc4", "question": "Which letter makes the \"ee\" sound?", "choices": ["И", "Е", "Й"], "answer": "И", "tts": "И" },
-        { "type": "introduce", "id": "alph-2-i5", "label": "NEW LETTER", "display": "Й", "sublabel": "\"y\" as in \"yes\" (a short glide)", "tts": "Йъ" },
-        { "type": "multiple_choice", "id": "alph-2-mc5", "question": "What sound does Й make?", "choices": ["\"y\" as in yes", "\"ee\" as in machine", "\"e\" as in best"], "answer": "\"y\" as in yes", "tts": "Йъ" },
-        { "type": "match_pairs", "id": "alph-2-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "Е", "right": "e" }, { "left": "Ж", "right": "zh" }, { "left": "З", "right": "z" }, { "left": "И", "right": "ee" }] },
-        { "type": "listen_and_type", "id": "alph-2-lat1", "tts": "Виза", "answer": "Виза" },
-        { "type": "multiple_choice", "id": "alph-2-word1", "question": "You can now read this word! What does ВИЗА mean?", "choices": ["visa", "vase", "jazz", "idea"], "answer": "visa", "tts": "Виза" },
-        { "type": "speak_sentence", "id": "alph-2-sp1", "tts": "Здравей" }
+        {
+          "type": "sound_choice",
+          "id": "abc-2-01",
+          "mode": "listen",
+          "choices": [
+            "котка",
+            "кокта",
+            "тотка"
+          ],
+          "answer": "котка"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-02",
+          "mode": "read",
+          "display": "Е",
+          "choices": [
+            "Е",
+            "А",
+            "О"
+          ],
+          "answer": "Е",
+          "romanized": "e"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-03",
+          "label": "NEW LETTER",
+          "display": "Р",
+          "sublabel": "rolled \"r\", like Spanish \"pero\"",
+          "mnemonic": "Looks like P, but it is R. Picture the P rolling down a hill: rrr."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-04",
+          "label": "NEW LETTER",
+          "display": "С",
+          "sublabel": "\"s\" as in \"sun\"",
+          "mnemonic": "Looks like C and always says s, like the c in \"city\"."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-05",
+          "mode": "read",
+          "display": "Р",
+          "choices": [
+            "Р",
+            "П"
+          ],
+          "answer": "Р",
+          "romanized": "r"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-06",
+          "mode": "read",
+          "display": "СОК",
+          "choices": [
+            "сок",
+            "кок",
+            "рок"
+          ],
+          "answer": "сок",
+          "romanized": "sok"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-07",
+          "label": "NEW LETTER",
+          "display": "Н",
+          "sublabel": "\"n\" as in \"net\"",
+          "mnemonic": "Looks like H, says n. The crossbar is a net strung between two posts."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-08",
+          "label": "NEW LETTER",
+          "display": "В",
+          "sublabel": "\"v\" as in \"van\"",
+          "mnemonic": "Looks like B, says v. Two round bellies: very full."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-09",
+          "mode": "read",
+          "display": "НОС",
+          "choices": [
+            "нос",
+            "хос",
+            "нок"
+          ],
+          "answer": "нос",
+          "romanized": "nos"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-10",
+          "mode": "listen",
+          "choices": [
+            "Варна",
+            "Нарва",
+            "Варно"
+          ],
+          "answer": "Варна"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-11",
+          "label": "NEW LETTER",
+          "display": "У",
+          "sublabel": "\"oo\" as in \"moon\"",
+          "mnemonic": "Looks like y, says oo. Picture a cup on a stem: you say \"ooh\" when you drink."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-2-12",
+          "label": "NEW LETTER",
+          "display": "Х",
+          "sublabel": "\"h\" with a rasp, like \"loch\"",
+          "mnemonic": "Looks like X, says a breathy h. X marks the spot where you go \"hhh\"."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-13",
+          "mode": "listen",
+          "choices": [
+            "У",
+            "Н",
+            "В"
+          ],
+          "answer": "У"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-14",
+          "mode": "read",
+          "display": "Х",
+          "choices": [
+            "Х",
+            "К",
+            "С"
+          ],
+          "answer": "Х",
+          "romanized": "h"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-2-15",
+          "instruction": "Match each fake friend to its real sound:",
+          "pairs": [
+            {
+              "left": "Р",
+              "right": "r"
+            },
+            {
+              "left": "Н",
+              "right": "n"
+            },
+            {
+              "left": "В",
+              "right": "v"
+            },
+            {
+              "left": "С",
+              "right": "s"
+            }
+          ]
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-2-16",
+          "instruction": "And the rest:",
+          "pairs": [
+            {
+              "left": "У",
+              "right": "oo"
+            },
+            {
+              "left": "Х",
+              "right": "h"
+            },
+            {
+              "left": "Р",
+              "right": "r"
+            },
+            {
+              "left": "В",
+              "right": "v"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-2-17",
+          "question": "An English reader sees \"PECTOPAHT\". How does РЕСТОРАНТ really sound?",
+          "choices": [
+            "restorant",
+            "pectopaht",
+            "pestorant"
+          ],
+          "answer": "restorant"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-18",
+          "mode": "read",
+          "display": "МЕТРО",
+          "choices": [
+            "метро",
+            "метпо",
+            "мерто"
+          ],
+          "answer": "метро",
+          "romanized": "metro"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-2-19",
+          "question": "Say it out loud: НОС. Which body part is it?",
+          "choices": [
+            "nose",
+            "neck",
+            "knee"
+          ],
+          "answer": "nose"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-2-20",
+          "question": "МОРЕ sounds like \"marine\". What does it mean?",
+          "choices": [
+            "sea",
+            "more",
+            "moon"
+          ],
+          "answer": "sea"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-2-21",
+          "question": "This city is on the Black Sea. How do you read ВАРНА?",
+          "choices": [
+            "Varna",
+            "Barha",
+            "Bapha"
+          ],
+          "answer": "Varna"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-2-22",
+          "question": "What city is МОСКВА?",
+          "choices": [
+            "Moscow",
+            "Monaco",
+            "Mexico"
+          ],
+          "answer": "Moscow"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-23",
+          "mode": "listen",
+          "choices": [
+            "муха",
+            "мука",
+            "муна"
+          ],
+          "answer": "муха"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-2-24",
+          "mode": "listen",
+          "choices": [
+            "сок",
+            "сук",
+            "сох"
+          ],
+          "answer": "сок"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-2-25",
+          "answer": "ресторант",
+          "prompt": "restaurant",
+          "extras": [
+            "х",
+            "у"
+          ],
+          "tts": "ресторант"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-2-26",
+          "answer": "метро",
+          "prompt": "metro",
+          "extras": [
+            "н",
+            "в"
+          ],
+          "tts": "метро"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-2-27",
+          "answer": "нос",
+          "prompt": "nose",
+          "extras": [
+            "х"
+          ],
+          "tts": "нос"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-2-28",
+          "tts": "ресторант"
+        }
       ]
     },
     {
       "id": "alph-3",
-      "title": "К to О",
+      "title": "Greek lookalikes",
       "coins": 10,
       "exercises": [
-        { "type": "introduce", "id": "alph-3-i1", "label": "NEW LETTER", "display": "К", "sublabel": "\"k\" as in \"make\"", "tts": "Къ" },
-        { "type": "multiple_choice", "id": "alph-3-mc1", "question": "Which letter makes the \"k\" sound?", "choices": ["К", "Г", "Д"], "answer": "К", "tts": "Къ" },
-        { "type": "introduce", "id": "alph-3-i2", "label": "NEW LETTER", "display": "Л", "sublabel": "\"l\" as in \"lend\"", "tts": "Лъ" },
-        { "type": "multiple_choice", "id": "alph-3-mc2", "question": "What sound does Л make?", "choices": ["\"l\" as in lend", "\"n\" as in no", "\"m\" as in man"], "answer": "\"l\" as in lend", "tts": "Лъ" },
-        { "type": "introduce", "id": "alph-3-i3", "label": "NEW LETTER", "display": "М", "sublabel": "\"m\" as in \"man\"", "tts": "Мъ" },
-        { "type": "multiple_choice", "id": "alph-3-mc3", "question": "Which letter makes the \"m\" sound?", "choices": ["М", "Н", "Л"], "answer": "М", "tts": "Мъ" },
-        { "type": "listen_and_type", "id": "alph-3-lat0", "tts": "Мама", "answer": "Мама" },
-        { "type": "introduce", "id": "alph-3-i4", "label": "NEW LETTER", "display": "Н", "sublabel": "\"n\" as in \"no\"", "tts": "Нъ" },
-        { "type": "multiple_choice", "id": "alph-3-mc4", "question": "What sound does Н make?", "choices": ["\"n\" as in no", "\"m\" as in man", "\"l\" as in lend"], "answer": "\"n\" as in no", "tts": "Нъ" },
-        { "type": "introduce", "id": "alph-3-i5", "label": "NEW LETTER", "display": "О", "sublabel": "\"o\" as in \"order\"", "tts": "О" },
-        { "type": "multiple_choice", "id": "alph-3-mc5", "question": "Which letter makes the \"o\" sound (as in \"order\")?", "choices": ["О", "У", "А"], "answer": "О", "tts": "О" },
-        { "type": "match_pairs", "id": "alph-3-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "К", "right": "k" }, { "left": "Л", "right": "l" }, { "left": "М", "right": "m" }, { "left": "Н", "right": "n" }] },
-        { "type": "listen_and_type", "id": "alph-3-lat1", "tts": "Банан", "answer": "Банан" },
-        { "type": "multiple_choice", "id": "alph-3-city1", "question": "You can read real city names now! What city is ЛОНДОН?", "choices": ["London", "Paris", "Berlin", "Rome"], "answer": "London", "tts": "Лондон" },
-        { "type": "multiple_choice", "id": "alph-3-city2", "question": "What country is КАНАДА?", "choices": ["Canada", "Kenya", "Ghana", "Albania"], "answer": "Canada", "tts": "Канада" },
-        { "type": "listen_and_type", "id": "alph-3-lat2", "tts": "Лондон", "answer": "Лондон" },
-        { "type": "speak_sentence", "id": "alph-3-sp1", "tts": "Лимон" }
+        {
+          "type": "sound_choice",
+          "id": "abc-3-01",
+          "mode": "read",
+          "display": "В",
+          "choices": [
+            "В",
+            "Б"
+          ],
+          "answer": "В",
+          "romanized": "v"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-02",
+          "mode": "listen",
+          "choices": [
+            "нос",
+            "ноу",
+            "хос"
+          ],
+          "answer": "нос"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-03",
+          "question": "How do you read ХОР?",
+          "choices": [
+            "hor",
+            "xop",
+            "kop"
+          ],
+          "answer": "hor"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-3-04",
+          "label": "NEW LETTER",
+          "display": "П",
+          "sublabel": "\"p\" as in \"pen\"",
+          "mnemonic": "A doorway, like Greek pi (π). Pi starts with p."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-3-05",
+          "label": "NEW LETTER",
+          "display": "Л",
+          "sublabel": "\"l\" as in \"lamp\"",
+          "mnemonic": "A tent, like Greek lambda (λ). Lambda starts with l."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-06",
+          "mode": "read",
+          "display": "ПАРК",
+          "choices": [
+            "парк",
+            "рарк",
+            "барк"
+          ],
+          "answer": "парк",
+          "romanized": "park"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-07",
+          "mode": "read",
+          "display": "ЛАМПА",
+          "choices": [
+            "лампа",
+            "ламба",
+            "нампа"
+          ],
+          "answer": "лампа",
+          "romanized": "lampa"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-3-08",
+          "label": "NEW LETTER",
+          "display": "Д",
+          "sublabel": "\"d\" as in \"dog\"",
+          "mnemonic": "A little house standing on two feet, like Greek delta (Δ): d."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-3-09",
+          "label": "NEW LETTER",
+          "display": "Г",
+          "sublabel": "\"g\" as in \"go\"",
+          "mnemonic": "An upside-down L, like Greek gamma (Γ). It also looks like a gallows: g."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-10",
+          "mode": "read",
+          "display": "ДА",
+          "choices": [
+            "да",
+            "ла",
+            "га"
+          ],
+          "answer": "да",
+          "romanized": "da (yes)"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-11",
+          "mode": "listen",
+          "choices": [
+            "Канада",
+            "Каната",
+            "Ганада"
+          ],
+          "answer": "Канада"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-3-12",
+          "label": "NEW LETTER",
+          "display": "Ф",
+          "sublabel": "\"f\" as in \"fun\"",
+          "mnemonic": "A face with a long nose down the middle: f for face."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-3-13",
+          "label": "NEW LETTER",
+          "display": "И",
+          "sublabel": "\"ee\" as in \"see\"",
+          "mnemonic": "A backwards N that says ee. On its own, и means \"and\"."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-14",
+          "mode": "listen",
+          "choices": [
+            "И",
+            "Н",
+            "П"
+          ],
+          "answer": "И"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-15",
+          "mode": "read",
+          "display": "ФИЛМ",
+          "choices": [
+            "филм",
+            "пилм",
+            "фемл"
+          ],
+          "answer": "филм",
+          "romanized": "film"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-3-16",
+          "instruction": "Match each letter to its sound:",
+          "pairs": [
+            {
+              "left": "П",
+              "right": "p"
+            },
+            {
+              "left": "Л",
+              "right": "l"
+            },
+            {
+              "left": "Д",
+              "right": "d"
+            },
+            {
+              "left": "Г",
+              "right": "g"
+            }
+          ]
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-3-17",
+          "instruction": "Mix them up with the fake friends:",
+          "pairs": [
+            {
+              "left": "Ф",
+              "right": "f"
+            },
+            {
+              "left": "И",
+              "right": "ee"
+            },
+            {
+              "left": "Н",
+              "right": "n"
+            },
+            {
+              "left": "Р",
+              "right": "r"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-18",
+          "question": "What country is КАНАДА?",
+          "choices": [
+            "Canada",
+            "Kenya",
+            "Ghana"
+          ],
+          "answer": "Canada"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-19",
+          "question": "What is ТАКСИ?",
+          "choices": [
+            "taxi",
+            "tax",
+            "text"
+          ],
+          "answer": "taxi"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-20",
+          "question": "What is ГИТАРА?",
+          "choices": [
+            "guitar",
+            "garage",
+            "gift"
+          ],
+          "answer": "guitar"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-21",
+          "question": "What is ТЕЛЕФОН?",
+          "choices": [
+            "telephone",
+            "television",
+            "telescope"
+          ],
+          "answer": "telephone"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-22",
+          "question": "ВОДКА means \"little water\". So what is ВОДА?",
+          "choices": [
+            "water",
+            "wine",
+            "bread"
+          ],
+          "answer": "water"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-3-23",
+          "question": "Bulgaria's second city. How do you read ПЛОВДИВ?",
+          "choices": [
+            "Plovdiv",
+            "Nrobanb",
+            "Plobdib"
+          ],
+          "answer": "Plovdiv"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-24",
+          "mode": "read",
+          "display": "вино",
+          "choices": [
+            "вино",
+            "бино",
+            "вина"
+          ],
+          "answer": "вино",
+          "romanized": "vino (wine)"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-3-25",
+          "mode": "listen",
+          "choices": [
+            "лимон",
+            "лимун",
+            "димон"
+          ],
+          "answer": "лимон"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-3-26",
+          "answer": "Лондон",
+          "prompt": "London",
+          "extras": [
+            "п",
+            "г"
+          ],
+          "tts": "Лондон"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-3-27",
+          "answer": "такси",
+          "prompt": "taxi",
+          "extras": [
+            "п",
+            "н"
+          ],
+          "tts": "такси"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-3-28",
+          "answer": "вода",
+          "prompt": "water",
+          "extras": [
+            "г",
+            "л"
+          ],
+          "tts": "вода"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-3-29",
+          "tts": "Пловдив"
+        }
       ]
     },
     {
       "id": "alph-4",
-      "title": "П to У",
+      "title": "New shapes",
       "coins": 10,
       "exercises": [
-        { "type": "introduce", "id": "alph-4-i1", "label": "NEW LETTER", "display": "П", "sublabel": "\"p\" as in \"pet\"", "tts": "Пъ" },
-        { "type": "multiple_choice", "id": "alph-4-mc1", "question": "What sound does П make?", "choices": ["\"p\" as in pet", "\"b\" as in bug", "\"t\" as in top"], "answer": "\"p\" as in pet", "tts": "Пъ" },
-        { "type": "introduce", "id": "alph-4-i2", "label": "NEW LETTER", "display": "Р", "sublabel": "trilled \"r\" (like in Spanish)", "tts": "Ръ" },
-        { "type": "multiple_choice", "id": "alph-4-mc2", "question": "Р is a trilled \"r\". Which letter is it?", "choices": ["Р", "П", "С"], "answer": "Р", "tts": "Ръ" },
-        { "type": "introduce", "id": "alph-4-i3", "label": "NEW LETTER", "display": "С", "sublabel": "\"s\" as in \"sound\"", "tts": "Съ" },
-        { "type": "multiple_choice", "id": "alph-4-mc3", "question": "What sound does С make?", "choices": ["\"s\" as in sound", "\"z\" as in zoo", "\"sh\" as in shot"], "answer": "\"s\" as in sound", "tts": "Съ" },
-        { "type": "listen_and_type", "id": "alph-4-lat0", "tts": "Прага", "answer": "Прага" },
-        { "type": "introduce", "id": "alph-4-i4", "label": "NEW LETTER", "display": "Т", "sublabel": "\"t\" as in \"top\"", "tts": "Тъ" },
-        { "type": "multiple_choice", "id": "alph-4-mc4", "question": "Which letter makes the \"t\" sound?", "choices": ["Т", "Д", "С"], "answer": "Т", "tts": "Тъ" },
-        { "type": "introduce", "id": "alph-4-i5", "label": "NEW LETTER", "display": "У", "sublabel": "\"oo\" as in \"tool\"", "tts": "У" },
-        { "type": "multiple_choice", "id": "alph-4-mc5", "question": "What sound does У make?", "choices": ["\"oo\" as in tool", "\"o\" as in order", "\"u\" as in cup"], "answer": "\"oo\" as in tool", "tts": "У" },
-        { "type": "match_pairs", "id": "alph-4-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "П", "right": "p" }, { "left": "Р", "right": "r" }, { "left": "С", "right": "s" }, { "left": "Т", "right": "t" }] },
-        { "type": "multiple_choice", "id": "alph-4-city1", "question": "What city is ПАРИЖ?", "choices": ["Paris", "Prague", "Rome", "Berlin"], "answer": "Paris", "tts": "Париж" },
-        { "type": "multiple_choice", "id": "alph-4-city2", "question": "What city is ПРАГА?", "choices": ["Prague", "Paris", "Vienna", "Madrid"], "answer": "Prague", "tts": "Прага" },
-        { "type": "listen_and_type", "id": "alph-4-lat1", "tts": "Рим", "answer": "Рим" },
-        { "type": "listen_and_type", "id": "alph-4-lat2", "tts": "Берлин", "answer": "Берлин" },
-        { "type": "speak_sentence", "id": "alph-4-sp1", "tts": "Риба" }
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-01",
+          "question": "How do you read ВИНО?",
+          "choices": [
+            "vino",
+            "bino",
+            "wino"
+          ],
+          "answer": "vino"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-02",
+          "mode": "listen",
+          "choices": [
+            "Л",
+            "П",
+            "Д"
+          ],
+          "answer": "Л"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-03",
+          "mode": "read",
+          "display": "Ф",
+          "choices": [
+            "Ф",
+            "В",
+            "Х"
+          ],
+          "answer": "Ф",
+          "romanized": "f"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-4-04",
+          "label": "NEW LETTER",
+          "display": "Б",
+          "sublabel": "\"b\" as in \"bed\"",
+          "mnemonic": "A B with its top bump flattened into a roof. Lowercase б looks like a 6."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-4-05",
+          "label": "NEW LETTER",
+          "display": "З",
+          "sublabel": "\"z\" as in \"zoo\"",
+          "mnemonic": "Looks like the number 3. Z and 3 are buddies."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-06",
+          "mode": "read",
+          "display": "БАНАН",
+          "choices": [
+            "банан",
+            "ванан",
+            "бакан"
+          ],
+          "answer": "банан",
+          "romanized": "banan"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-07",
+          "mode": "listen",
+          "choices": [
+            "зебра",
+            "зерба",
+            "себра"
+          ],
+          "answer": "зебра"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-4-08",
+          "label": "NEW LETTER",
+          "display": "Ъ",
+          "sublabel": "\"uh\", like the \"u\" in \"but\"",
+          "mnemonic": "A b with a little flag on top. It is the lazy \"uh\" sound, and it is everywhere: БЪЛГАРИЯ starts with it."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-4-09",
+          "label": "NEW LETTER",
+          "display": "Й",
+          "sublabel": "\"y\" as in \"boy\"",
+          "mnemonic": "И wearing a little hat. The hat makes it short: a quick y, like the end of \"boy\".",
+          "tts": "йо"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-10",
+          "mode": "read",
+          "display": "Ъ",
+          "choices": [
+            "Ъ",
+            "А",
+            "У"
+          ],
+          "answer": "Ъ",
+          "romanized": "uh"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-11",
+          "mode": "listen",
+          "choices": [
+            "хокей",
+            "хокеи",
+            "хакей"
+          ],
+          "answer": "хокей"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-4-12",
+          "label": "NEW LETTER",
+          "display": "Я",
+          "sublabel": "\"ya\" as in \"yard\"",
+          "mnemonic": "A backwards R that cheerfully shouts \"ya!\""
+        },
+        {
+          "type": "introduce",
+          "id": "abc-4-13",
+          "label": "NEW LETTER",
+          "display": "Ю",
+          "sublabel": "\"yu\" as in \"you\"",
+          "mnemonic": "Looks like I and O stuck together and says \"you\". Think: I owe you."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-14",
+          "mode": "listen",
+          "choices": [
+            "Я",
+            "Р",
+            "Ю"
+          ],
+          "answer": "Я"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-15",
+          "mode": "read",
+          "display": "ЮЛИ",
+          "choices": [
+            "юли",
+            "яли",
+            "ули"
+          ],
+          "answer": "юли",
+          "romanized": "yuli (July)"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-4-16",
+          "instruction": "Match each new letter to its sound:",
+          "pairs": [
+            {
+              "left": "Б",
+              "right": "b"
+            },
+            {
+              "left": "З",
+              "right": "z"
+            },
+            {
+              "left": "Ъ",
+              "right": "uh"
+            },
+            {
+              "left": "Й",
+              "right": "y"
+            }
+          ]
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-4-17",
+          "instruction": "Keep them apart:",
+          "pairs": [
+            {
+              "left": "Я",
+              "right": "ya"
+            },
+            {
+              "left": "Ю",
+              "right": "yu"
+            },
+            {
+              "left": "В",
+              "right": "v"
+            },
+            {
+              "left": "У",
+              "right": "oo"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-18",
+          "question": "What country is БЪЛГАРИЯ?",
+          "choices": [
+            "Bulgaria",
+            "Belgium",
+            "Bolivia"
+          ],
+          "answer": "Bulgaria"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-19",
+          "question": "What country is ЯПОНИЯ?",
+          "choices": [
+            "Japan",
+            "Yemen",
+            "Jamaica"
+          ],
+          "answer": "Japan"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-20",
+          "question": "What is МУЗЕЙ?",
+          "choices": [
+            "museum",
+            "music",
+            "mosque"
+          ],
+          "answer": "museum"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-21",
+          "question": "Bulgaria's most famous food. What is ЙОГУРТ?",
+          "choices": [
+            "yogurt",
+            "yoga",
+            "yacht"
+          ],
+          "answer": "yogurt"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-22",
+          "question": "This is how you say hello. How do you read ЗДРАВЕЙ?",
+          "choices": [
+            "zdravey",
+            "3dpabeu",
+            "zdrabey"
+          ],
+          "answer": "zdravey"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-4-23",
+          "question": "The capital of Bulgaria. How do you read СОФИЯ?",
+          "choices": [
+            "Sofia",
+            "Cofia",
+            "Sofna"
+          ],
+          "answer": "Sofia"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-4-24",
+          "mode": "listen",
+          "choices": [
+            "ябълка",
+            "юбълка",
+            "ябалка"
+          ],
+          "answer": "ябълка"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-4-25",
+          "answer": "банан",
+          "prompt": "banana",
+          "extras": [
+            "в",
+            "п"
+          ],
+          "tts": "банан"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-4-26",
+          "answer": "България",
+          "prompt": "Bulgaria",
+          "extras": [
+            "у",
+            "в"
+          ],
+          "tts": "България"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-4-27",
+          "answer": "зебра",
+          "prompt": "zebra",
+          "extras": [
+            "с",
+            "в"
+          ],
+          "tts": "зебра"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-4-28",
+          "tts": "Здравей"
+        }
       ]
     },
     {
       "id": "alph-5",
-      "title": "Ф to Ш",
+      "title": "The hissing letters",
       "coins": 10,
       "exercises": [
-        { "type": "introduce", "id": "alph-5-i1", "label": "NEW LETTER", "display": "Ф", "sublabel": "\"f\" as in \"food\"", "tts": "Фъ" },
-        { "type": "multiple_choice", "id": "alph-5-mc1", "question": "Which letter makes the \"f\" sound?", "choices": ["Ф", "В", "Х"], "answer": "Ф", "tts": "Фъ" },
-        { "type": "introduce", "id": "alph-5-i2", "label": "NEW LETTER", "display": "Х", "sublabel": "\"kh\" like the \"ch\" in Scottish \"loch\"", "tts": "Хъ" },
-        { "type": "multiple_choice", "id": "alph-5-mc2", "question": "What sound does Х make?", "choices": ["\"kh\" as in loch", "\"f\" as in food", "\"h\" as in hat"], "answer": "\"kh\" as in loch", "tts": "Хъ" },
-        { "type": "introduce", "id": "alph-5-i3", "label": "NEW LETTER", "display": "Ц", "sublabel": "\"ts\" as in \"fits\"", "tts": "Цъ" },
-        { "type": "multiple_choice", "id": "alph-5-mc3", "question": "Which letter makes the \"ts\" sound (as in \"fits\")?", "choices": ["Ц", "Ч", "С"], "answer": "Ц", "tts": "Цъ" },
-        { "type": "listen_and_type", "id": "alph-5-lat0", "tts": "Хляб", "answer": "Хляб" },
-        { "type": "introduce", "id": "alph-5-i4", "label": "NEW LETTER", "display": "Ч", "sublabel": "\"ch\" as in \"chip\"", "tts": "Чъ" },
-        { "type": "multiple_choice", "id": "alph-5-mc4", "question": "What sound does Ч make?", "choices": ["\"ch\" as in chip", "\"ts\" as in fits", "\"sh\" as in shot"], "answer": "\"ch\" as in chip", "tts": "Чъ" },
-        { "type": "introduce", "id": "alph-5-i5", "label": "NEW LETTER", "display": "Ш", "sublabel": "\"sh\" as in \"shot\"", "tts": "Шъ" },
-        { "type": "multiple_choice", "id": "alph-5-mc5", "question": "Which letter makes the \"sh\" sound?", "choices": ["Ш", "Щ", "Ж"], "answer": "Ш", "tts": "Шъ" },
-        { "type": "match_pairs", "id": "alph-5-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "Ф", "right": "f" }, { "left": "Х", "right": "kh" }, { "left": "Ц", "right": "ts" }, { "left": "Ч", "right": "ch" }] },
-        { "type": "multiple_choice", "id": "alph-5-city1", "question": "What country is ФРАНЦИЯ?", "choices": ["France", "Finland", "Czech Republic", "Switzerland"], "answer": "France", "tts": "Франция" },
-        { "type": "multiple_choice", "id": "alph-5-city2", "question": "What country is ЧЕХИЯ?", "choices": ["Czech Republic", "Chile", "China", "Switzerland"], "answer": "Czech Republic", "tts": "Чехия" },
-        { "type": "listen_and_type", "id": "alph-5-lat1", "tts": "Чили", "answer": "Чили" },
-        { "type": "listen_and_type", "id": "alph-5-lat2", "tts": "Чай", "answer": "Чай" },
-        { "type": "speak_sentence", "id": "alph-5-sp1", "tts": "Хляб" }
+        {
+          "type": "sound_choice",
+          "id": "abc-5-01",
+          "mode": "listen",
+          "choices": [
+            "Б",
+            "В",
+            "Ъ"
+          ],
+          "answer": "Б"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-02",
+          "mode": "read",
+          "display": "ЗООПАРК",
+          "choices": [
+            "зоопарк",
+            "сопарк",
+            "зупарк"
+          ],
+          "answer": "зоопарк",
+          "romanized": "zoopark"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-03",
+          "question": "How do you read ЯБЪЛКА (apple)?",
+          "choices": [
+            "yabalka",
+            "rbblka",
+            "yabulka"
+          ],
+          "answer": "yabalka"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-5-04",
+          "label": "NEW LETTER",
+          "display": "Ш",
+          "sublabel": "\"sh\" as in \"shop\"",
+          "mnemonic": "Three fingers raised to your lips: shhh!"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-5-05",
+          "label": "NEW LETTER",
+          "display": "Щ",
+          "sublabel": "\"sht\" as in \"ashtray\"",
+          "mnemonic": "Ш with a little tail. The tail adds a t: sh + t = sht."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-06",
+          "mode": "read",
+          "display": "Щ",
+          "choices": [
+            "Щ",
+            "Ш",
+            "Ц"
+          ],
+          "answer": "Щ",
+          "romanized": "sht"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-07",
+          "mode": "listen",
+          "choices": [
+            "шах",
+            "щах",
+            "сах"
+          ],
+          "answer": "шах"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-5-08",
+          "label": "NEW LETTER",
+          "display": "Ж",
+          "sublabel": "\"zh\", the \"s\" in \"measure\"",
+          "mnemonic": "A beetle with its legs out, buzzing zhzhzh."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-5-09",
+          "label": "NEW LETTER",
+          "display": "Ц",
+          "sublabel": "\"ts\" as in \"cats\"",
+          "mnemonic": "A cup with a tail. The tail hisses: ts, like the end of \"cats\"."
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-10",
+          "mode": "read",
+          "display": "ПИЦА",
+          "choices": [
+            "пица",
+            "пища",
+            "писа"
+          ],
+          "answer": "пица",
+          "romanized": "pitsa"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-11",
+          "mode": "listen",
+          "choices": [
+            "Ж",
+            "Х",
+            "З"
+          ],
+          "answer": "Ж"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-5-12",
+          "label": "NEW LETTER",
+          "display": "Ч",
+          "sublabel": "\"ch\" as in \"chair\"",
+          "mnemonic": "Looks like a 4, or a chair turned upside down: ch for chair."
+        },
+        {
+          "type": "introduce",
+          "id": "abc-5-13",
+          "label": "NEW LETTER",
+          "display": "Ь",
+          "sublabel": "\"yo\", but only in \"ьо\"",
+          "mnemonic": "A silent helper. It only ever comes before о, and ьо says \"yo\": шофьор (driver) is \"shofyor\".",
+          "tts": "шофьор"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-14",
+          "mode": "listen",
+          "choices": [
+            "чай",
+            "цай",
+            "шай"
+          ],
+          "answer": "чай"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-5-15",
+          "mode": "read",
+          "display": "ШОФЬОР",
+          "choices": [
+            "шофьор",
+            "шофор",
+            "шофиор"
+          ],
+          "answer": "шофьор",
+          "romanized": "shofyor (driver)"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-5-16",
+          "instruction": "Match the hissing letters:",
+          "pairs": [
+            {
+              "left": "Ж",
+              "right": "zh"
+            },
+            {
+              "left": "Ш",
+              "right": "sh"
+            },
+            {
+              "left": "Щ",
+              "right": "sht"
+            },
+            {
+              "left": "Ч",
+              "right": "ch"
+            }
+          ]
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-5-17",
+          "instruction": "Do not let them fool you:",
+          "pairs": [
+            {
+              "left": "Ц",
+              "right": "ts"
+            },
+            {
+              "left": "Ж",
+              "right": "zh"
+            },
+            {
+              "left": "Х",
+              "right": "h"
+            },
+            {
+              "left": "З",
+              "right": "z"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-18",
+          "question": "What is ШОКОЛАД?",
+          "choices": [
+            "chocolate",
+            "cocoa",
+            "shock"
+          ],
+          "answer": "chocolate"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-19",
+          "question": "What animal is a ЖИРАФ?",
+          "choices": [
+            "giraffe",
+            "zebra",
+            "gorilla"
+          ],
+          "answer": "giraffe"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-20",
+          "question": "What is ЦИРК?",
+          "choices": [
+            "circus",
+            "circle",
+            "church"
+          ],
+          "answer": "circus"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-21",
+          "question": "Careful: what country is ШВЕЦИЯ?",
+          "choices": [
+            "Sweden",
+            "Switzerland",
+            "Swaziland"
+          ],
+          "answer": "Sweden"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-5-22",
+          "question": "How do you read ЩАСТИЕ (happiness)?",
+          "choices": [
+            "shtastie",
+            "shastie",
+            "chastie"
+          ],
+          "answer": "shtastie"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-5-23",
+          "answer": "мечка",
+          "prompt": "bear",
+          "extras": [
+            "ш",
+            "ц"
+          ],
+          "tts": "мечка"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-5-24",
+          "answer": "шоколад",
+          "prompt": "chocolate",
+          "extras": [
+            "щ",
+            "ж"
+          ],
+          "tts": "шоколад"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-5-25",
+          "answer": "пица",
+          "prompt": "pizza",
+          "extras": [
+            "щ",
+            "с"
+          ],
+          "tts": "пица"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-5-26",
+          "tts": "щастие"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-5-27",
+          "tts": "шоколад"
+        }
       ]
     },
     {
       "id": "alph-6",
-      "title": "Щ to Я",
+      "title": "Tricky twins",
+      "coins": 10,
+      "exercises": [
+        {
+          "type": "sound_choice",
+          "id": "abc-6-01",
+          "mode": "listen",
+          "choices": [
+            "Ш",
+            "Щ",
+            "Ж"
+          ],
+          "answer": "Ш"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-02",
+          "mode": "listen",
+          "choices": [
+            "Щ",
+            "Ш",
+            "Ц"
+          ],
+          "answer": "Щ"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-03",
+          "mode": "read",
+          "display": "Ц",
+          "choices": [
+            "Ц",
+            "Щ",
+            "С"
+          ],
+          "answer": "Ц",
+          "romanized": "ts"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-04",
+          "mode": "listen",
+          "choices": [
+            "Ж",
+            "Х",
+            "З"
+          ],
+          "answer": "Ж"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-05",
+          "mode": "read",
+          "display": "Х",
+          "choices": [
+            "Х",
+            "Ж",
+            "К"
+          ],
+          "answer": "Х",
+          "romanized": "h"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-06",
+          "mode": "listen",
+          "choices": [
+            "И",
+            "Й",
+            "Н"
+          ],
+          "answer": "И"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-07",
+          "mode": "read",
+          "display": "Н",
+          "choices": [
+            "Н",
+            "И",
+            "Х"
+          ],
+          "answer": "Н",
+          "romanized": "n"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-08",
+          "mode": "listen",
+          "choices": [
+            "Ъ",
+            "Ь",
+            "Б"
+          ],
+          "answer": "Ъ"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-09",
+          "mode": "read",
+          "display": "Р",
+          "choices": [
+            "Р",
+            "Я",
+            "П"
+          ],
+          "answer": "Р",
+          "romanized": "r"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-10",
+          "mode": "listen",
+          "choices": [
+            "Я",
+            "Р",
+            "Ю"
+          ],
+          "answer": "Я"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-11",
+          "mode": "read",
+          "display": "В",
+          "choices": [
+            "В",
+            "Б",
+            "Ф"
+          ],
+          "answer": "В",
+          "romanized": "v"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-12",
+          "mode": "listen",
+          "choices": [
+            "У",
+            "Ъ",
+            "Ю"
+          ],
+          "answer": "У"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-13",
+          "mode": "read",
+          "display": "З",
+          "choices": [
+            "З",
+            "С",
+            "Ж"
+          ],
+          "answer": "З",
+          "romanized": "z"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-14",
+          "mode": "listen",
+          "choices": [
+            "Д",
+            "Л",
+            "Г"
+          ],
+          "answer": "Д"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-6-15",
+          "instruction": "Lowercase looks a little different. Match them:",
+          "pairs": [
+            {
+              "left": "б",
+              "right": "Б"
+            },
+            {
+              "left": "г",
+              "right": "Г"
+            },
+            {
+              "left": "д",
+              "right": "Д"
+            },
+            {
+              "left": "л",
+              "right": "Л"
+            }
+          ]
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-6-16",
+          "instruction": "And these:",
+          "pairs": [
+            {
+              "left": "ш",
+              "right": "Ш"
+            },
+            {
+              "left": "щ",
+              "right": "Щ"
+            },
+            {
+              "left": "ъ",
+              "right": "Ъ"
+            },
+            {
+              "left": "ь",
+              "right": "Ь"
+            }
+          ]
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-17",
+          "mode": "listen",
+          "choices": [
+            "жаба",
+            "шаба",
+            "хаба"
+          ],
+          "answer": "жаба"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-18",
+          "mode": "read",
+          "display": "ЦАР",
+          "choices": [
+            "цар",
+            "щар",
+            "сар"
+          ],
+          "answer": "цар",
+          "romanized": "tsar"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-6-19",
+          "mode": "listen",
+          "choices": [
+            "път",
+            "пут",
+            "пят"
+          ],
+          "answer": "път"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-6-20",
+          "question": "ХУБАВ means \"nice\". How do you read it?",
+          "choices": [
+            "hubav",
+            "xybab",
+            "hubab"
+          ],
+          "answer": "hubav"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-6-21",
+          "question": "How do you read СУПЕР?",
+          "choices": [
+            "super",
+            "cynep",
+            "supep"
+          ],
+          "answer": "super"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-6-22",
+          "question": "How do you read ЧЕРЕША (cherry)?",
+          "choices": [
+            "cheresha",
+            "tseresha",
+            "chereshta"
+          ],
+          "answer": "cheresha"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-6-23",
+          "answer": "щастие",
+          "prompt": "happiness",
+          "extras": [
+            "ш",
+            "ц"
+          ],
+          "tts": "щастие"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-6-24",
+          "answer": "жираф",
+          "prompt": "giraffe",
+          "extras": [
+            "х",
+            "з"
+          ],
+          "tts": "жираф"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-6-25",
+          "answer": "хубав",
+          "prompt": "nice",
+          "extras": [
+            "п",
+            "ф"
+          ],
+          "tts": "хубав"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-6-26",
+          "tts": "хубав"
+        }
+      ]
+    },
+    {
+      "id": "alph-7",
+      "title": "Read real Bulgarian",
       "coins": 15,
       "exercises": [
-        { "type": "introduce", "id": "alph-6-i1", "label": "NEW LETTER", "display": "Щ", "sublabel": "\"sht\" as in \"shtick\"", "tts": "Щъ" },
-        { "type": "multiple_choice", "id": "alph-6-mc1", "question": "What sound does Щ make?", "choices": ["\"sht\" as in shtick", "\"sh\" as in shot", "\"ch\" as in chip"], "answer": "\"sht\" as in shtick", "tts": "Щъ" },
-        { "type": "introduce", "id": "alph-6-i2", "label": "NEW LETTER", "display": "Ъ", "sublabel": "\"u\" as in \"turn\" - short unstressed vowel", "tts": "Ъ" },
-        { "type": "multiple_choice", "id": "alph-6-mc2", "question": "Which letter makes the \"u as in turn\" sound?", "choices": ["Ъ", "У", "А"], "answer": "Ъ", "tts": "Ъ" },
-        { "type": "introduce", "id": "alph-6-i3", "label": "NEW LETTER", "display": "Ь", "sublabel": "soft sign - makes the consonant before it softer, no sound of its own", "tts": "Ьъ" },
-        { "type": "multiple_choice", "id": "alph-6-mc-soft", "question": "What does the soft sign Ь do?", "choices": ["Softens the consonant before it", "Makes a \"y\" sound", "Acts like a vowel"], "answer": "Softens the consonant before it" },
-        { "type": "match_pairs", "id": "alph-6-mp0", "instruction": "Quick check: these tricky letters all look similar. Match them:", "pairs": [{ "left": "Щ", "right": "sht" }, { "left": "Ш", "right": "sh" }, { "left": "Ж", "right": "zh" }, { "left": "Ъ", "right": "u (turn)" }] },
-        { "type": "introduce", "id": "alph-6-i4", "label": "NEW LETTER", "display": "Ю", "sublabel": "\"yu\" as in \"youth\"", "tts": "Ю" },
-        { "type": "multiple_choice", "id": "alph-6-mc3", "question": "What sound does Ю make?", "choices": ["\"yu\" as in youth", "\"ya\" as in yard", "\"y\" as in yes"], "answer": "\"yu\" as in youth", "tts": "Ю" },
-        { "type": "introduce", "id": "alph-6-i5", "label": "NEW LETTER", "display": "Я", "sublabel": "\"ya\" as in \"yard\"", "tts": "Я" },
-        { "type": "multiple_choice", "id": "alph-6-mc4", "question": "Which letter makes the \"ya\" sound?", "choices": ["Я", "Ю", "Й"], "answer": "Я", "tts": "Я" },
-        { "type": "match_pairs", "id": "alph-6-mp1", "instruction": "Match each letter to its sound:", "pairs": [{ "left": "Щ", "right": "sht" }, { "left": "Ъ", "right": "u (turn)" }, { "left": "Ю", "right": "yu" }, { "left": "Я", "right": "ya" }] },
-        { "type": "multiple_choice", "id": "alph-6-city1", "question": "What country is ЯПОНИЯ?", "choices": ["Japan", "Jamaica", "Jordan", "Yemen"], "answer": "Japan", "tts": "Япония" },
-        { "type": "multiple_choice", "id": "alph-6-city2", "question": "What country is ЯМАЙКА?", "choices": ["Jamaica", "Japan", "Yemen", "Zambia"], "answer": "Jamaica", "tts": "Ямайка" },
-        { "type": "listen_and_type", "id": "alph-6-lat1", "tts": "Ямайка", "answer": "Ямайка" },
-        { "type": "listen_and_type", "id": "alph-6-lat2", "tts": "Яйце", "answer": "Яйце" },
-        { "type": "speak_sentence", "id": "alph-6-sp1", "tts": "Щастие" },
-        { "type": "match_pairs", "id": "alph-6-mp2", "instruction": "Grand review - tricky letters:", "pairs": [{ "left": "Ж", "right": "zh" }, { "left": "Ц", "right": "ts" }, { "left": "Щ", "right": "sht" }, { "left": "Й", "right": "y" }] }
+        {
+          "type": "introduce",
+          "id": "abc-7-01",
+          "label": "REAL SIGN",
+          "display": "ВХОД",
+          "translation": "entrance",
+          "sublabel": "On doors and shops",
+          "tts": "вход"
+        },
+        {
+          "type": "introduce",
+          "id": "abc-7-02",
+          "label": "REAL SIGN",
+          "display": "ИЗХОД",
+          "translation": "exit",
+          "sublabel": "из = out of",
+          "tts": "изход"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-7-03",
+          "mode": "listen",
+          "choices": [
+            "изход",
+            "исход",
+            "изхот"
+          ],
+          "answer": "изход"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-04",
+          "question": "You want to leave the building. Which door?",
+          "choices": [
+            "ИЗХОД",
+            "ВХОД"
+          ],
+          "answer": "ИЗХОД"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-05",
+          "question": "АПТЕКА sounds like \"apothecary\". What is it?",
+          "choices": [
+            "pharmacy",
+            "bakery",
+            "library"
+          ],
+          "answer": "pharmacy"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-06",
+          "question": "What is ТОАЛЕТНА?",
+          "choices": [
+            "toilet",
+            "tablet",
+            "towel"
+          ],
+          "answer": "toilet"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-07",
+          "question": "What is ЦЕНТЪР?",
+          "choices": [
+            "centre",
+            "century",
+            "cinema"
+          ],
+          "answer": "centre"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-08",
+          "question": "What is ХОТЕЛ?",
+          "choices": [
+            "hotel",
+            "hospital",
+            "harbour"
+          ],
+          "answer": "hotel"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-09",
+          "question": "What is ПОЛИЦИЯ?",
+          "choices": [
+            "police",
+            "politics",
+            "post office"
+          ],
+          "answer": "police"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-10",
+          "question": "What is АВТОБУС?",
+          "choices": [
+            "bus",
+            "autumn",
+            "car park"
+          ],
+          "answer": "bus"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-11",
+          "question": "Bulgaria's highest mountains are the РИЛА. How do you read it?",
+          "choices": [
+            "Rila",
+            "Pnna",
+            "Pila"
+          ],
+          "answer": "Rila"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-12",
+          "question": "The train board says this train goes to БУРГАС. Where are you headed?",
+          "choices": [
+            "Burgas",
+            "Varna",
+            "Ruse"
+          ],
+          "answer": "Burgas"
+        },
+        {
+          "type": "multiple_choice",
+          "id": "abc-7-13",
+          "question": "A café menu says КАФЕ, ЧАЙ, ПИЦА, ШОКОЛАД. What can you not order?",
+          "choices": [
+            "beer",
+            "coffee",
+            "tea",
+            "pizza"
+          ],
+          "answer": "beer"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-7-14",
+          "mode": "read",
+          "display": "ШОПСКА САЛАТА",
+          "choices": [
+            "шопска салата",
+            "шопка салата",
+            "жопска салата"
+          ],
+          "answer": "шопска салата",
+          "romanized": "shopska salata"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-7-15",
+          "mode": "listen",
+          "choices": [
+            "Бургас",
+            "Вургас",
+            "Бурсаг"
+          ],
+          "answer": "Бургас"
+        },
+        {
+          "type": "sound_choice",
+          "id": "abc-7-16",
+          "mode": "listen",
+          "choices": [
+            "Велико Търново",
+            "Белико Търново",
+            "Велико Тарново"
+          ],
+          "answer": "Велико Търново"
+        },
+        {
+          "type": "match_pairs",
+          "id": "abc-7-17",
+          "instruction": "Match each city to its name:",
+          "pairs": [
+            {
+              "left": "София",
+              "right": "Sofia"
+            },
+            {
+              "left": "Пловдив",
+              "right": "Plovdiv"
+            },
+            {
+              "left": "Варна",
+              "right": "Varna"
+            },
+            {
+              "left": "Бургас",
+              "right": "Burgas"
+            },
+            {
+              "left": "Русе",
+              "right": "Ruse"
+            }
+          ]
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-7-18",
+          "answer": "аптека",
+          "prompt": "pharmacy",
+          "extras": [
+            "б",
+            "д"
+          ],
+          "tts": "аптека"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-7-19",
+          "answer": "хотел",
+          "prompt": "hotel",
+          "extras": [
+            "к",
+            "ж"
+          ],
+          "tts": "хотел"
+        },
+        {
+          "type": "spell_word",
+          "id": "abc-7-20",
+          "answer": "център",
+          "prompt": "centre",
+          "extras": [
+            "щ",
+            "ь"
+          ],
+          "tts": "център"
+        },
+        {
+          "type": "speak_sentence",
+          "id": "abc-7-21",
+          "tts": "Добре дошли в България"
+        }
       ]
     }
   ]

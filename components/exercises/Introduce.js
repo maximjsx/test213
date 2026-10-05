@@ -45,6 +45,12 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
         {exercise.sublabel && (
           <p className={styles.introduceSublabel}>{exercise.sublabel}</p>
         )}
+        {exercise.mnemonic && (
+          <p className={styles.introduceMnemonic}>
+            <img src="/icons/lightning.png" alt="" width={18} height={18} />
+            <span>{exercise.mnemonic}</span>
+          </p>
+        )}
         {exercise.translation && (
           <p className={styles.introduceTranslation}>{exercise.translation}</p>
         )}

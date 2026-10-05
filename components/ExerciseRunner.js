@@ -16,6 +16,8 @@ import ImageSelect from './exercises/ImageSelect'
 import ImageMatch from './exercises/ImageMatch'
 import ImageName from './exercises/ImageName'
 import ImageMultipleChoice from './exercises/ImageMultipleChoice'
+import SoundChoice from './exercises/SoundChoice'
+import SpellWord from './exercises/SpellWord'
 import Bear from './Bear'
 import Modal, { ModalText, ModalActions } from './ui/Modal'
 import Button from './ui/Button'
@@ -40,7 +42,11 @@ const EXERCISE_MAP = {
   image_match: ImageMatch,
   image_name: ImageName,
   image_mc: ImageMultipleChoice,
+  sound_choice: SoundChoice,
+  spell_word: SpellWord,
 }
+
+const LISTEN_TYPES = new Set(['listen_and_type', 'listen_translate', 'sound_choice', 'spell_word'])
 
 // Exercises that self-complete on interaction and have no CHECK button
 const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
@@ -179,7 +185,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
 
   const ExComponent = EXERCISE_MAP[exercise?.type]
   const isSpeakExercise = exercise?.type === 'speak_sentence'
-  const isListenExercise = exercise?.type === 'listen_and_type' || exercise?.type === 'listen_translate'
+  const isListenExercise = LISTEN_TYPES.has(exercise?.type)
   const isAudioExercise = isSpeakExercise || isListenExercise
   const isIntroExercise = exercise?.type === 'introduce'
 
