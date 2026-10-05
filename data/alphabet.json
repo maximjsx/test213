@@ -37,8 +37,8 @@
           "display": "МАМА",
           "choices": [
             "мама",
-            "нана",
-            "тата"
+            "котка",
+            "метро"
           ],
           "answer": "мама",
           "romanized": "mama"
@@ -87,8 +87,8 @@
           "mode": "listen",
           "choices": [
             "атом",
-            "атам",
-            "отам"
+            "мама",
+            "там"
           ],
           "answer": "атом"
         },
@@ -119,8 +119,8 @@
           "display": "КОТКА",
           "choices": [
             "котка",
-            "кокта",
-            "тотка"
+            "атом",
+            "мама"
           ],
           "answer": "котка",
           "romanized": "kotka"
@@ -151,7 +151,7 @@
           "mode": "listen",
           "choices": [
             "котка",
-            "кокта",
+            "атом",
             "мама"
           ],
           "answer": "котка"
@@ -174,8 +174,8 @@
           "display": "татко",
           "choices": [
             "татко",
-            "такто",
-            "катко"
+            "котка",
+            "мама"
           ],
           "answer": "татко",
           "romanized": "tatko"
@@ -341,8 +341,8 @@
           "mode": "listen",
           "choices": [
             "метро",
-            "мерто",
-            "мама"
+            "мама",
+            "котка"
           ],
           "answer": "метро"
         },
@@ -384,7 +384,7 @@
           "choices": [
             "текст",
             "тест",
-            "текс"
+            "метро"
           ],
           "answer": "текст"
         },
@@ -437,8 +437,8 @@
           "mode": "listen",
           "choices": [
             "Монако",
-            "Мокано",
-            "метро"
+            "метро",
+            "текст"
           ],
           "answer": "Монако"
         },
@@ -479,11 +479,11 @@
         {
           "type": "multiple_choice",
           "id": "abc-2-17",
-          "question": "An English reader sees \"PECTOPAHT\". How does РЕСТОРАНТ really sound?",
+          "question": "РЕСТОРАНТ is a place to eat. How do you read it?",
           "choices": [
             "restorant",
-            "pectopaht",
-            "pestorant"
+            "metro",
+            "tekst"
           ],
           "answer": "restorant"
         },
@@ -572,8 +572,8 @@
           "mode": "listen",
           "choices": [
             "Москва",
-            "Моска",
-            "Монако"
+            "Монако",
+            "метро"
           ],
           "answer": "Москва"
         },
@@ -614,7 +614,7 @@
           "mode": "listen",
           "choices": [
             "сауна",
-            "саона",
+            "Москва",
             "Монако"
           ],
           "answer": "сауна"
@@ -680,8 +680,8 @@
           "mode": "listen",
           "choices": [
             "хаос",
-            "каос",
-            "хаус"
+            "сауна",
+            "Москва"
           ],
           "answer": "хаос"
         },
@@ -725,8 +725,8 @@
           "question": "Varna is a city on the Black Sea. How do you read ВАРНА?",
           "choices": [
             "Varna",
-            "Bapha",
-            "Barna"
+            "Monako",
+            "Moskva"
           ],
           "answer": "Varna"
         },
@@ -783,8 +783,8 @@
           "mode": "listen",
           "choices": [
             "татко",
-            "такто",
-            "котка"
+            "котка",
+            "мама"
           ],
           "answer": "татко"
         },
@@ -826,8 +826,8 @@
           "mode": "listen",
           "choices": [
             "парк",
-            "рарк",
-            "метро"
+            "метро",
+            "хаос"
           ],
           "answer": "парк"
         },
@@ -868,8 +868,8 @@
           "mode": "listen",
           "choices": [
             "лампа",
-            "нампа",
-            "парк"
+            "парк",
+            "мама"
           ],
           "answer": "лампа"
         },
@@ -921,8 +921,8 @@
           "mode": "listen",
           "choices": [
             "дом",
-            "том",
-            "лом"
+            "парк",
+            "лампа"
           ],
           "answer": "дом"
         },
@@ -1068,8 +1068,8 @@
           "mode": "listen",
           "choices": [
             "гол",
-            "кол",
-            "дом"
+            "дом",
+            "парк"
           ],
           "answer": "гол"
         },
@@ -1110,8 +1110,8 @@
           "mode": "listen",
           "choices": [
             "фото",
-            "вото",
-            "пото"
+            "гол",
+            "лампа"
           ],
           "answer": "фото"
         },
@@ -1132,8 +1132,8 @@
           "mode": "listen",
           "choices": [
             "сауна",
-            "саона",
-            "хаос"
+            "хаос",
+            "Москва"
           ],
           "answer": "сауна"
         },
@@ -1176,8 +1176,8 @@
           "mode": "listen",
           "choices": [
             "такси",
-            "такса",
-            "токси"
+            "фото",
+            "текст"
           ],
           "answer": "такси"
         },
@@ -1322,8 +1322,8 @@
           "mode": "listen",
           "choices": [
             "банан",
-            "ванан",
-            "бакан"
+            "лампа",
+            "такси"
           ],
           "answer": "банан"
         },
@@ -1364,8 +1364,8 @@
           "mode": "listen",
           "choices": [
             "зебра",
-            "себра",
-            "зерба"
+            "банан",
+            "метро"
           ],
           "answer": "зебра"
         },
@@ -1428,8 +1428,8 @@
           "mode": "listen",
           "choices": [
             "Япония",
-            "Апония",
-            "Канада"
+            "Канада",
+            "Монако"
           ],
           "answer": "Япония"
         },
@@ -1473,8 +1473,8 @@
           "question": "Sofia is the capital of Bulgaria. How do you read СОФИЯ?",
           "choices": [
             "Sofiya",
-            "Cofiya",
-            "Sofnya"
+            "Yaponiya",
+            "Kanada"
           ],
           "answer": "Sofiya"
         },
@@ -1531,8 +1531,8 @@
           "mode": "listen",
           "choices": [
             "лампа",
-            "нампа",
-            "парк"
+            "парк",
+            "зебра"
           ],
           "answer": "лампа"
         },
@@ -1575,8 +1575,8 @@
           "mode": "listen",
           "choices": [
             "България",
-            "Белгария",
-            "Япония"
+            "Япония",
+            "Канада"
           ],
           "answer": "България"
         },
@@ -1617,8 +1617,8 @@
           "mode": "listen",
           "choices": [
             "йога",
-            "иога",
-            "йоха"
+            "гол",
+            "фото"
           ],
           "answer": "йога"
         },
@@ -1639,8 +1639,8 @@
           "mode": "listen",
           "choices": [
             "фото",
-            "вото",
-            "гол"
+            "гол",
+            "такси"
           ],
           "answer": "фото"
         },
@@ -1681,8 +1681,8 @@
           "mode": "listen",
           "choices": [
             "меню",
-            "мену",
-            "меня"
+            "йога",
+            "метро"
           ],
           "answer": "меню"
         },
@@ -1726,8 +1726,8 @@
           "question": "This is how you say hello. How do you read ЗДРАВЕЙ?",
           "choices": [
             "zdravey",
-            "3dpabeu",
-            "zdrabey"
+            "yoga",
+            "menyu"
           ],
           "answer": "zdravey"
         },
@@ -1828,8 +1828,8 @@
           "mode": "listen",
           "choices": [
             "шоколад",
-            "соколад",
-            "хоколад"
+            "банан",
+            "лампа"
           ],
           "answer": "шоколад"
         },
@@ -1882,8 +1882,8 @@
           "mode": "listen",
           "choices": [
             "борщ",
-            "борш",
-            "бор"
+            "дом",
+            "парк"
           ],
           "answer": "борщ"
         },
@@ -1935,8 +1935,8 @@
           "mode": "listen",
           "choices": [
             "жираф",
-            "шираф",
-            "хираф"
+            "зебра",
+            "шоколад"
           ],
           "answer": "жираф"
         },
@@ -1980,8 +1980,8 @@
           "question": "ЩАСТИЕ means happiness. How do you read it?",
           "choices": [
             "shtastie",
-            "shastie",
-            "hastie"
+            "shokolad",
+            "zebra"
           ],
           "answer": "shtastie"
         },
@@ -2038,8 +2038,8 @@
           "mode": "listen",
           "choices": [
             "зебра",
-            "себра",
-            "банан"
+            "банан",
+            "жираф"
           ],
           "answer": "зебра"
         },
@@ -2082,8 +2082,8 @@
           "mode": "listen",
           "choices": [
             "пица",
-            "пища",
-            "писа"
+            "борщ",
+            "такси"
           ],
           "answer": "пица"
         },
@@ -2124,8 +2124,8 @@
           "mode": "listen",
           "choices": [
             "чипс",
-            "ципс",
-            "шипс"
+            "пица",
+            "такси"
           ],
           "answer": "чипс"
         },
@@ -2146,8 +2146,8 @@
           "mode": "listen",
           "choices": [
             "йога",
-            "иога",
-            "меню"
+            "меню",
+            "банан"
           ],
           "answer": "йога"
         },
@@ -2177,8 +2177,8 @@
           "mode": "listen",
           "choices": [
             "шофьор",
-            "шофор",
-            "шофиор"
+            "шоколад",
+            "жираф"
           ],
           "answer": "шофьор"
         },
@@ -2317,8 +2317,8 @@
           "mode": "listen",
           "choices": [
             "борщ",
-            "борш",
-            "борц"
+            "пица",
+            "чипс"
           ],
           "answer": "борщ"
         },
@@ -2363,8 +2363,8 @@
           "question": "How do you read ХАОС?",
           "choices": [
             "haos",
-            "xaoc",
-            "kaos"
+            "sauna",
+            "park"
           ],
           "answer": "haos"
         },
@@ -2443,8 +2443,8 @@
           "question": "How do you read САУНА?",
           "choices": [
             "sauna",
-            "cayha",
-            "sayna"
+            "haos",
+            "Moskva"
           ],
           "answer": "sauna"
         },
@@ -2467,8 +2467,8 @@
           "question": "How do you read СУПЕР?",
           "choices": [
             "super",
-            "cynep",
-            "supep"
+            "park",
+            "metro"
           ],
           "answer": "super"
         },
@@ -2531,7 +2531,7 @@
           "choices": [
             "изход",
             "вход",
-            "изхот"
+            "хаос"
           ],
           "answer": "изход"
         },
@@ -2616,8 +2616,8 @@
           "mode": "listen",
           "choices": [
             "Бургас",
-            "Вургас",
-            "Бурсаг"
+            "Варна",
+            "Москва"
           ],
           "answer": "Бургас"
         },
@@ -2654,8 +2654,8 @@
           "question": "Bulgaria's highest mountains are the РИЛА. How do you read it?",
           "choices": [
             "Rila",
-            "Pnna",
-            "Pila"
+            "Varna",
+            "Ruse"
           ],
           "answer": "Rila"
         },
@@ -2666,8 +2666,8 @@
           "display": "ШОПСКА САЛАТА",
           "choices": [
             "шопска салата",
-            "шопка салата",
-            "жопска салата"
+            "шоколад",
+            "пица"
           ],
           "answer": "шопска салата",
           "romanized": "shopska salata"
