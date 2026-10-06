@@ -7,6 +7,7 @@ import { useProgress } from '../../../hooks/useProgress'
 import { onSplashFinished } from '../../../lib/splash'
 import { unlockAudio } from '../../../lib/audio'
 import { claimFirstCompletion } from '../../../lib/pathCelebration'
+import { lastOpenedIn } from '../../../lib/lastOpened'
 import LessonPath from '../../../components/LessonPath'
 import TopicArt from '../../../components/TopicArt'
 import Chevron from '../../../components/Chevron'
@@ -26,9 +27,11 @@ function claimCelebration(lessons) {
   return claimFirstCompletion(best) ? best : null
 }
 
-// The lesson in this topic finished most recently, replays included
-function lastPlayedIn(lessons, progress) {
-  let best = null, bestAt = 0
+// The lesson in this topic played most recently: finished (replays included)
+// or just opened and left halfway, whichever happened last
+function lastPlayedIn(lessons, progress, opened) {
+  const known = opened && lessons.some(l => l.id === opened.id)
+  let best = known ? opened.id : null, bestAt = known ? opened.at : 0
   for (const { id } of lessons) {
     const at = progress?.[id]?.completedAt || 0
     if (at > bestAt) { bestAt = at; best = id }
@@ -45,6 +48,8 @@ export default function TopicPage() {
   const currentRef = useRef(null)
   // Decided once on arrival: later state changes must not restart it
   const [justCompletedId] = useState(() => (hydrated ? claimCelebration(state.lessons) : null))
+  const [opened, setOpened] = useState(null)
+  useEffect(() => setOpened(lastOpenedIn(id)), [id])
 
   const locked = hydrated && level && !isTopicUnlocked(level)
   useEffect(() => {
@@ -120,7 +125,7 @@ export default function TopicPage() {
           isLessonComplete={isLessonComplete}
           isLessonUnlocked={isLessonUnlocked}
           justCompletedId={justCompletedId}
-          lastPlayedId={lastPlayedIn(level.lessons, state.lessons)}
+          lastPlayedId={lastPlayedIn(level.lessons, state.lessons, opened)}
           currentRef={currentRef}
         />
         {!nextLesson && nextTopic && (

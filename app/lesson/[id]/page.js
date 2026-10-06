@@ -5,6 +5,7 @@ import { findLesson, orderExercises } from '../../../lib/course'
 import { refreshVoiceMap } from '../../../lib/audio'
 import { useProgress } from '../../../hooks/useProgress'
 import { noteCompletion } from '../../../lib/pathCelebration'
+import { noteLessonOpened } from '../../../lib/lastOpened'
 import ExerciseRunner from '../../../components/ExerciseRunner'
 import LessonComplete from '../../../components/LessonComplete'
 import LoadingBear from '../../../components/LoadingBear'
@@ -63,6 +64,7 @@ export default function LessonPage() {
   useEffect(() => {
     if (!found || !hydrated) return
     tokenRef.current = beginActivity('lesson', found.lesson.id)
+    noteLessonOpened(found.level.id, found.lesson.id)
   }, [found, hydrated, round, beginActivity])
 
   // An `ordered` lesson is sequenced by hand, so its exercise types stay interleaved
