@@ -1,15 +1,15 @@
 'use client'
 import { useEffect } from 'react'
-import Bear from './Bear'
+import BearBody from './BearBody'
 import { playStreak, hapticCorrect } from '../lib/audio'
 import styles from './StreakCheer.module.css'
 
 // Each milestone gets the next scene, so a long streak keeps surprising
 const SCENES = [
-  { name: 'jump', mood: 'cheer', line: 'You are on fire. Keep it going!' },
-  { name: 'run', mood: 'cheer', line: 'Nothing can stop you now.' },
-  { name: 'hang', mood: 'cheer', line: 'Hanging in there like a pro.' },
-  { name: 'berries', mood: 'munch', line: 'A berry break, well earned.' },
+  { name: 'jump', line: 'You are on fire. Keep it going!' },
+  { name: 'run', line: 'Nothing can stop you now.' },
+  { name: 'hang', line: 'Hanging in there like a pro.' },
+  { name: 'berries', bear: 'munch', line: 'A berry break, well earned.' },
 ]
 const SPARKS = 10
 const BERRIES = 4
@@ -40,10 +40,10 @@ export default function StreakCheer({ count }) {
         {Array.from({ length: SPARKS }, (_, i) => (
           <span key={i} className={styles.spark} style={{ '--angle': `${(360 / SPARKS) * i}deg`, '--delay': `${(i % 3) * 60}ms` }} />
         ))}
+        {scene.name === 'hang' && <span className={styles.vine} />}
         <div className={styles.actor}>
-          {scene.name === 'hang' && <span className={styles.vine} />}
           {scene.name === 'run' && [0, 1, 2].map(i => <span key={i} className={styles.dust} style={{ '--i': i }} />)}
-          <Bear mood={scene.mood} size={150} />
+          <BearBody scene={scene.bear || scene.name} size={150} />
         </div>
         {scene.name === 'berries' && Array.from({ length: BERRIES }, (_, i) => (
           <span key={i} className={styles.berry} style={{ '--i': i }} />
