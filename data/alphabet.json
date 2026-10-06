@@ -2451,6 +2451,20 @@
           "answer": "ch"
         },
         {
+          "type": "image_mc",
+          "id": "abc-9-10i",
+          "image": {
+            "url": "/pictures/chips.jpg",
+            "ai": true
+          },
+          "choices": [
+            "чипс",
+            "пица",
+            "шоколад"
+          ],
+          "answer": "чипс"
+        },
+        {
           "type": "letter_sound",
           "id": "abc-9-12p",
           "mode": "letter",
