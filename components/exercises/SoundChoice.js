@@ -11,6 +11,7 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
   const [selected, setSelected] = useState(null)
   const [checked, setChecked] = useState(false)
   const selectedRef = useRef(null)
+  const checkedRef = useRef(false)
   const choices = useMemo(() => shuffle(exercise.choices), [exercise.id])
   const isRead = exercise.mode === 'read'
   const isLetters = choices.every(c => c.length <= 2)
@@ -23,7 +24,7 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
 
   function select(choice) {
     if (isRead) speakBulgarian(choice)
-    if (disabled || checked) return
+    if (disabled || checkedRef.current) return
     hapticTap()
     setSelected(choice)
     selectedRef.current = choice
@@ -31,7 +32,17 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
   }
 
   useEffect(() => {
-    if (checkTrigger === 0 || !selectedRef.current || checked) return
+    function onKeyDown(e) {
+      const idx = parseInt(e.key) - 1
+      if (idx >= 0 && idx < choices.length) select(choices[idx])
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [choices, disabled]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (checkTrigger === 0 || !selectedRef.current || checkedRef.current) return
+    checkedRef.current = true
     setChecked(true)
     if (selectedRef.current === exercise.answer) {
       onAnswer(true, exercise.romanized ? `It reads "${exercise.romanized}".` : '')
@@ -48,6 +59,8 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
     if (choice === exercise.answer) return selected === choice ? 'correct' : 'reveal'
     return selected === choice ? 'wrong' : 'idle'
   }
+
+  const keyHint = i => <span className={styles.keyHint}>{i + 1}</span>
 
   return (
     <div className={styles.wrap}>
@@ -83,7 +96,7 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
           className={isLetters ? styles.cyrillicGrid : styles.choiceList}
           style={isLetters ? { gridTemplateColumns: `repeat(${choices.length}, 1fr)` } : undefined}
         >
-          {choices.map(choice => (
+          {choices.map((choice, i) => (
             <button
               key={choice}
               lang="bg"
@@ -91,7 +104,7 @@ export default function SoundChoice({ exercise, onAnswer, onPendingChange, check
               onClick={() => select(choice)}
               disabled={disabled || checked}
             >
-              {isLetters ? <span className={styles.bigChar}>{choice}</span> : choice}
+              {isLetters ? <span className={styles.bigChar}>{choice}</span> : <>{keyHint(i)}<span>{choice}</span></>}
             </button>
           ))}
         </div>

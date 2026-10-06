@@ -450,7 +450,8 @@
 }
 .soundBtn:hover { border-color:var(--text-muted); background:var(--surface-hi); transform:translateY(-3px); }
 .soundNum { font-size:var(--fs-sm); font-weight:900; color:var(--text-dim); }
-.soundWord { font-size:24px; text-align:center; }
+.soundWord { display:flex; align-items:center; gap:14px; font-size:24px; }
+.soundWord span:last-child { flex:1; text-align:center; padding-right:26px; }
 
 /* ── Spell word ──────────────────────────────────────────── */
 .spellHead { display:flex; align-items:center; gap:14px; margin-bottom:16px; min-height:44px; }
@@ -537,4 +538,6 @@
   .letterCard .keyHint { display:none; }
   .letterSoundChoice .keyHint { display:none; }
   .letterSoundChoice span:last-child { padding-right:0; }
+  .soundWord .keyHint { display:none; }
+  .soundWord span:last-child { padding-right:0; }
 }
