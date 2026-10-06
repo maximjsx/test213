@@ -9,7 +9,7 @@ import styles from './LessonPath.module.css'
 // re-allocated for every lesson on every render.
 const NODE_POSITIONS = ['center', 'right', 'center', 'left', 'center', 'right', 'center', 'left']
 
-function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, isResume, justCompleted, levelId, isLast, levelIndex, pos }) {
+function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnlocked, isResume, isLastPlayed, justCompleted, levelId, isLast, levelIndex, pos }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const [pressed, setPressed] = useState(false)
   const nodeRef = useRef(null)
@@ -75,6 +75,10 @@ function LessonNode({ lesson, levelLessons, idx, levelColor, isComplete, isUnloc
           : !isUnlocked ? <span className={styles.lockIcon}><img src="/icons/lock.png" alt="" width={36} height={36} /></span>
           : <span className={styles.nodeNum}>{lessonNum}</span>}
       </button>
+
+      {isLastPlayed && !showTooltip && (
+        <span className={styles.lastPlayed} style={{ '--lvl': levelColor }}>LAST PLAYED</span>
+      )}
 
       {showTooltip && (
         isUnlocked ? (
@@ -194,16 +198,18 @@ function LessonPathWithLines({ children, lessons, isLessonComplete, levelColor, 
 }
 
 // One topic's lessons as a zigzag path. `currentRef` lands on the first
-// startable, unfinished lesson so the page can scroll to it.
-export default function LessonPath({ level, levelIndex, isLessonComplete, isLessonUnlocked, justCompletedId, currentRef }) {
+// startable, unfinished lesson so the page can scroll to it, or the last one
+// played once the whole topic is done.
+export default function LessonPath({ level, levelIndex, isLessonComplete, isLessonUnlocked, justCompletedId, lastPlayedId, currentRef }) {
   const resumeIdx = level.lessons.findIndex((l, idx) => isLessonUnlocked(level.lessons, idx) && !isLessonComplete(l.id))
+  const scrollIdx = resumeIdx >= 0 ? resumeIdx : level.lessons.findIndex(l => l.id === lastPlayedId)
   return (
     <LessonPathWithLines lessons={level.lessons} isLessonComplete={isLessonComplete} levelColor={level.color} justCompletedId={justCompletedId}>
       {level.lessons.map((lesson, idx) => {
         const pos = NODE_POSITIONS[idx % NODE_POSITIONS.length]
         const isResume = idx === resumeIdx
         return (
-          <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`} ref={isResume ? currentRef : null}>
+          <div key={lesson.id} className={`${styles.pathStep} ${styles[`pos_${pos}`]}`} ref={idx === scrollIdx ? currentRef : null}>
             <LessonNode
               lesson={lesson}
               levelLessons={level.lessons}
@@ -212,6 +218,7 @@ export default function LessonPath({ level, levelIndex, isLessonComplete, isLess
               isComplete={isLessonComplete(lesson.id)}
               isUnlocked={isLessonUnlocked(level.lessons, idx)}
               isResume={isResume}
+              isLastPlayed={lesson.id === lastPlayedId}
               justCompleted={lesson.id === justCompletedId}
               levelId={level.id}
               isLast={idx === level.lessons.length - 1}

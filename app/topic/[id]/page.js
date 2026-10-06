@@ -26,6 +26,16 @@ function claimCelebration(lessons) {
   return claimFirstCompletion(best) ? best : null
 }
 
+// The lesson in this topic finished most recently, replays included
+function lastPlayedIn(lessons, progress) {
+  let best = null, bestAt = 0
+  for (const { id } of lessons) {
+    const at = progress?.[id]?.completedAt || 0
+    if (at > bestAt) { bestAt = at; best = id }
+  }
+  return best
+}
+
 export default function TopicPage() {
   const { id } = useParams()
   const { state, hydrated, isLessonComplete, isLessonUnlocked, levelProgress, isTopicUnlocked } = useProgress()
@@ -110,6 +120,7 @@ export default function TopicPage() {
           isLessonComplete={isLessonComplete}
           isLessonUnlocked={isLessonUnlocked}
           justCompletedId={justCompletedId}
+          lastPlayedId={lastPlayedIn(level.lessons, state.lessons)}
           currentRef={currentRef}
         />
         {!nextLesson && nextTopic && (

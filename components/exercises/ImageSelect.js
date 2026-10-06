@@ -47,13 +47,13 @@ export default function ImageSelect({ exercise, onAnswer, onPendingChange, check
     <div className={styles.wrap}>
       <p className={styles.label}>WHICH PICTURE?</p>
       <div className={styles.imageListenRow}>
-        <button className={styles.ttsBtn} onClick={play} title="Listen again">
-          <img src="/icons/speaker.png" alt="" width={20} height={20} />
+        <button className={`${styles.ttsBtn} ${styles.imageListenBtn}`} onClick={play} title="Listen again">
+          <img src="/icons/speaker.png" alt="" width={30} height={30} />
           <span>{exercise.prompt || 'Listen'}</span>
         </button>
       </div>
 
-      <div className={styles.imageGrid}>
+      <div className={`${styles.imageGrid} ${styles.imageGridSelect}`}>
         {options.map(opt => (
           <button
             key={opt.key}

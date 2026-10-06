@@ -371,7 +371,10 @@
   30%          { transform:translateY(-5px); opacity:1; }
 }
 /* ── Image exercises ─────────────────────────────────────── */
-.imageListenRow { display:flex; justify-content:center; margin-bottom:8px; }
+.imageListenRow { display:flex; justify-content:center; margin-bottom:24px; }
+.imageListenBtn { gap:14px; padding:14px 30px 14px 22px; margin-bottom:0; color:var(--text); font-size:clamp(28px, 7vw, 40px); font-weight:900; }
+.imageListenBtn img { width:30px; height:30px; }
+.imageGridSelect { max-width:440px; width:100%; margin-left:auto; margin-right:auto; }
 
 .imageGrid {
   display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:8px;

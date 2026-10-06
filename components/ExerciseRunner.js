@@ -21,7 +21,7 @@ import SpellWord from './exercises/SpellWord'
 import LetterSound from './exercises/LetterSound'
 import TraceLetter from './exercises/TraceLetter'
 import Bear from './Bear'
-import StreakCheer from './StreakCheer'
+import StreakCheer, { isCheerStreak } from './StreakCheer'
 import Modal, { ModalText, ModalActions } from './ui/Modal'
 import Button from './ui/Button'
 import { playCorrect, playWrong, hapticTap, hapticCorrect, hapticWrong, getTTSMuted, setTTSMuted } from '../lib/audio'
@@ -58,9 +58,6 @@ const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
 
 // Skipping these costs nothing, since the device may not allow them right now
 const FREE_SKIP_TYPES = new Set(['trace_letter'])
-
-// A cheer screen breaks up the lesson every time the streak reaches a multiple of this
-const CHEER_EVERY = 5
 
 function QuitConfirm({ onQuit, onCancel }) {
   return (
@@ -176,7 +173,7 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
   }
 
   function handleNext() {
-    const milestone = feedback?.ok === true && !isIntroExercise && combo > 0 && combo % CHEER_EVERY === 0 && current + 1 < queue.length
+    const milestone = feedback?.ok === true && !isIntroExercise && isCheerStreak(combo) && current + 1 < queue.length
     setFeedback(null)
     setCheckTrigger(0)
     if (milestone) {

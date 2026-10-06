@@ -2,8 +2,9 @@ import styles from './Bear.module.css'
 
 // Site mascot: a brown bear. Pure inline SVG so it needs no assets,
 // swap the shapes for real art later without touching call sites.
-// moods: idle | happy | cheer | sad
+// moods: idle | happy | cheer | munch | sad
 export default function Bear({ mood = 'happy', size = 96, className = '' }) {
+  const joyful = mood === 'cheer' || mood === 'munch'
   const anim = mood === 'cheer' ? styles.bounce : mood === 'sad' ? styles.sway : styles.bob
   return (
     <svg
@@ -35,7 +36,7 @@ export default function Bear({ mood = 'happy', size = 96, className = '' }) {
       <ellipse cx="60" cy="68.5" rx="6.5" ry="5" fill="#42301e" />
 
       {/* eyes */}
-      {mood === 'cheer' ? (
+      {joyful ? (
         <>
           <path d="M40 55 Q45.5 48.5 51 55" stroke="#42301e" strokeWidth="3.5" fill="none" strokeLinecap="round" />
           <path d="M69 55 Q74.5 48.5 80 55" stroke="#42301e" strokeWidth="3.5" fill="none" strokeLinecap="round" />
@@ -59,7 +60,7 @@ export default function Bear({ mood = 'happy', size = 96, className = '' }) {
       )}
 
       {/* blush when cheering */}
-      {mood === 'cheer' && (
+      {joyful && (
         <>
           <ellipse cx="34" cy="66" rx="6" ry="4" fill="#e08a8a" opacity="0.55" />
           <ellipse cx="86" cy="66" rx="6" ry="4" fill="#e08a8a" opacity="0.55" />
@@ -69,6 +70,8 @@ export default function Bear({ mood = 'happy', size = 96, className = '' }) {
       {/* mouth */}
       {mood === 'sad' ? (
         <path d="M53 82 Q60 77 67 82" stroke="#42301e" strokeWidth="3" fill="none" strokeLinecap="round" />
+      ) : mood === 'munch' ? (
+        <ellipse cx="60" cy="81" rx="6.5" ry="5" fill="#42301e" className={styles.chew} />
       ) : mood === 'cheer' ? (
         <path d="M52 78 Q60 87 68 78 Z" fill="#42301e" />
       ) : (
