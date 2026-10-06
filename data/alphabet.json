@@ -206,7 +206,6 @@
           "label": "NEW WORD",
           "display": "татко",
           "translation": "dad",
-          "sublabel": "Starts like \"tattoo\": picture your dad showing off a big tattoo.",
           "tts": "татко",
           "image": {
             "url": "/pictures/dad.jpg",
