@@ -213,6 +213,9 @@
   cursor:pointer; transition:background 0.15s, transform 0.1s;
 }
 .introduceAudioBtn:hover { background:color-mix(in srgb, var(--blue) 22%, transparent); transform:translateY(-1px); }
+.introducePicture {
+  width:180px; aspect-ratio:1/1; border-radius:var(--r); border:3px solid var(--border-hi); overflow:hidden;
+}
 .introduceActions { display:flex; align-items:center; justify-content:center; gap:10px; }
 
 /* ── Speak sentence ──────────────────────────────────────── */
@@ -381,9 +384,7 @@
 }
 .imageCard:hover:not(:disabled) { border-color:var(--text-muted); transform:translateY(-2px); }
 .imageCard:disabled { cursor:default; }
-.imageCard img {
-  width:100%; aspect-ratio:1/1; object-fit:cover; display:block;
-}
+.imageCard .picture { width:100%; aspect-ratio:1/1; }
 .imagePlaceholder {
   width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
   font-size:38px; font-weight:800; color:var(--text-dim);
@@ -391,9 +392,17 @@
 
 /* Big single image (name the picture / image multiple choice) */
 .imageBig {
-  display:block; width:100%; max-width:300px; margin:0 auto 28px;
-  aspect-ratio:4/3; object-fit:cover;
-  border-radius:var(--r); border:3px solid var(--border-hi);
+  width:100%; max-width:260px; margin:0 auto 24px; aspect-ratio:1/1;
+  border-radius:var(--r); border:3px solid var(--border-hi); overflow:hidden;
+}
+
+.picture { position:relative; display:block; }
+.picture img { display:block; width:100%; height:100%; object-fit:cover; }
+.aiTag {
+  position:absolute; left:6px; bottom:6px; padding:2px 8px; border-radius:999px;
+  background:color-mix(in srgb, var(--bg) 80%, transparent);
+  color:var(--text-muted); font-size:var(--fs-xs); font-weight:800; line-height:1.5;
+  pointer-events:none;
 }
 
 /* Image chip inside a match column */
@@ -405,7 +414,7 @@
 }
 .imageMatchChip:hover:not(:disabled) { border-color:var(--text-muted); transform:translateY(-2px); }
 .imageMatchChip:disabled { cursor:default; }
-.imageMatchChip img { width:100%; height:96px; object-fit:cover; display:block; }
+.imageMatchChip .picture { width:100%; height:96px; }
 
 .dialogAnswerArea { margin-top:4px; }
 .dialogPrompt {

@@ -132,7 +132,11 @@
           "display": "котка",
           "translation": "cat",
           "sublabel": "Starts like \"cot\": picture a cat curled up asleep in a cot.",
-          "tts": "котка"
+          "tts": "котка",
+          "image": {
+            "url": "/pictures/cat.jpg",
+            "ai": true
+          }
         },
         {
           "type": "multiple_choice",
@@ -212,6 +216,20 @@
             "мама"
           ],
           "answer": "татко"
+        },
+        {
+          "type": "image_mc",
+          "id": "abc-1-18i",
+          "image": {
+            "url": "/pictures/cat.jpg",
+            "ai": true
+          },
+          "choices": [
+            "котка",
+            "мама",
+            "татко"
+          ],
+          "answer": "котка"
         },
         {
           "type": "introduce",
@@ -668,6 +686,20 @@
           "tts": "сауна"
         },
         {
+          "type": "image_mc",
+          "id": "abc-3-10i",
+          "image": {
+            "url": "/pictures/sauna.jpg",
+            "ai": true
+          },
+          "choices": [
+            "сауна",
+            "Москва",
+            "Монако"
+          ],
+          "answer": "сауна"
+        },
+        {
           "type": "letter_sound",
           "id": "abc-3-10s",
           "mode": "sound",
@@ -960,6 +992,20 @@
           "tts": "лампа"
         },
         {
+          "type": "image_mc",
+          "id": "abc-4-11i",
+          "image": {
+            "url": "/pictures/lamp.jpg",
+            "ai": true
+          },
+          "choices": [
+            "лампа",
+            "парк",
+            "мама"
+          ],
+          "answer": "лампа"
+        },
+        {
           "type": "letter_sound",
           "id": "abc-4-12p",
           "mode": "letter",
@@ -1031,6 +1077,42 @@
             "л"
           ],
           "tts": "дом"
+        },
+        {
+          "type": "image_select",
+          "id": "abc-4-16i",
+          "prompt": "дом",
+          "options": [
+            {
+              "key": "abc-4-16i-0",
+              "image": {
+                "url": "/pictures/house.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-4-16i-1",
+              "image": {
+                "url": "/pictures/lamp.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-4-16i-2",
+              "image": {
+                "url": "/pictures/cat.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-4-16i-3",
+              "image": {
+                "url": "/pictures/sauna.jpg",
+                "ai": true
+              }
+            }
+          ],
+          "answer": 0
         },
         {
           "type": "match_pairs",
@@ -1295,6 +1377,20 @@
           "tts": "такси"
         },
         {
+          "type": "image_mc",
+          "id": "abc-5-17i",
+          "image": {
+            "url": "/pictures/taxi.jpg",
+            "ai": true
+          },
+          "choices": [
+            "такси",
+            "фото",
+            "текст"
+          ],
+          "answer": "такси"
+        },
+        {
           "type": "match_pairs",
           "id": "abc-5-18",
           "instruction": "Match each letter to its sound:",
@@ -1436,6 +1532,20 @@
           "tts": "банан"
         },
         {
+          "type": "image_mc",
+          "id": "abc-6-07i",
+          "image": {
+            "url": "/pictures/banana.jpg",
+            "ai": true
+          },
+          "choices": [
+            "банан",
+            "лампа",
+            "такси"
+          ],
+          "answer": "банан"
+        },
+        {
           "type": "introduce",
           "id": "abc-6-08",
           "label": "NEW LETTER",
@@ -1482,6 +1592,42 @@
             "в"
           ],
           "tts": "зебра"
+        },
+        {
+          "type": "image_select",
+          "id": "abc-6-11i",
+          "prompt": "зебра",
+          "options": [
+            {
+              "key": "abc-6-11i-0",
+              "image": {
+                "url": "/pictures/zebra.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-6-11i-1",
+              "image": {
+                "url": "/pictures/banana.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-6-11i-2",
+              "image": {
+                "url": "/pictures/taxi.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-6-11i-3",
+              "image": {
+                "url": "/pictures/cat.jpg",
+                "ai": true
+              }
+            }
+          ],
+          "answer": 0
         },
         {
           "type": "letter_sound",
@@ -1757,6 +1903,20 @@
           "tts": "йога"
         },
         {
+          "type": "image_mc",
+          "id": "abc-7-11i",
+          "image": {
+            "url": "/pictures/yoga.jpg",
+            "ai": true
+          },
+          "choices": [
+            "йога",
+            "гол",
+            "фото"
+          ],
+          "answer": "йога"
+        },
+        {
           "type": "letter_sound",
           "id": "abc-7-12p",
           "mode": "letter",
@@ -1971,6 +2131,20 @@
           "tts": "шоколад"
         },
         {
+          "type": "image_mc",
+          "id": "abc-8-07i",
+          "image": {
+            "url": "/pictures/chocolate.jpg",
+            "ai": true
+          },
+          "choices": [
+            "шоколад",
+            "банан",
+            "лампа"
+          ],
+          "answer": "шоколад"
+        },
+        {
           "type": "introduce",
           "id": "abc-8-08",
           "label": "NEW LETTER",
@@ -2112,6 +2286,42 @@
             "з"
           ],
           "tts": "жираф"
+        },
+        {
+          "type": "image_select",
+          "id": "abc-8-19i",
+          "prompt": "жираф",
+          "options": [
+            {
+              "key": "abc-8-19i-0",
+              "image": {
+                "url": "/pictures/giraffe.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-8-19i-1",
+              "image": {
+                "url": "/pictures/zebra.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-8-19i-2",
+              "image": {
+                "url": "/pictures/chocolate.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-8-19i-3",
+              "image": {
+                "url": "/pictures/yoga.jpg",
+                "ai": true
+              }
+            }
+          ],
+          "answer": 0
         },
         {
           "type": "match_pairs",
@@ -2264,6 +2474,20 @@
             "с"
           ],
           "tts": "пица"
+        },
+        {
+          "type": "image_mc",
+          "id": "abc-9-07i",
+          "image": {
+            "url": "/pictures/pizza.jpg",
+            "ai": true
+          },
+          "choices": [
+            "пица",
+            "такси",
+            "шоколад"
+          ],
+          "answer": "пица"
         },
         {
           "type": "introduce",
@@ -2704,6 +2928,45 @@
           "answer": "super"
         },
         {
+          "type": "image_match",
+          "id": "abc-10-16i",
+          "instruction": "Match each picture to its word:",
+          "pairs": [
+            {
+              "key": "abc-10-16i-giraffe",
+              "word": "жираф",
+              "image": {
+                "url": "/pictures/giraffe.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-10-16i-zebra",
+              "word": "зебра",
+              "image": {
+                "url": "/pictures/zebra.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-10-16i-pizza",
+              "word": "пица",
+              "image": {
+                "url": "/pictures/pizza.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-10-16i-chocolate",
+              "word": "шоколад",
+              "image": {
+                "url": "/pictures/chocolate.jpg",
+                "ai": true
+              }
+            }
+          ]
+        },
+        {
           "type": "spell_word",
           "id": "abc-10-17",
           "answer": "жираф",
@@ -2829,6 +3092,20 @@
             "ж"
           ],
           "tts": "хотел"
+        },
+        {
+          "type": "image_mc",
+          "id": "abc-11-10i",
+          "image": {
+            "url": "/pictures/hotel.jpg",
+            "ai": true
+          },
+          "choices": [
+            "хотел",
+            "аптека",
+            "изход"
+          ],
+          "answer": "хотел"
         },
         {
           "type": "multiple_choice",

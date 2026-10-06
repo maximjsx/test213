@@ -3,6 +3,7 @@ import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
 import { playClip, speakText, hapticTap } from '../../lib/audio'
 import { langOf } from '../../lib/lang'
+import Picture from './Picture'
 import styles from './Exercise.module.css'
 
 // Show a picture, pick the correct Bulgarian word/phrase from text choices.
@@ -37,9 +38,7 @@ export default function ImageMultipleChoice({ exercise, onAnswer, onPendingChang
   return (
     <div className={styles.wrap}>
       <p className={styles.label}>SELECT THE CORRECT ANSWER</p>
-      {exercise.image?.url && (
-        <img src={exercise.image.url} alt="" className={styles.imageBig} />
-      )}
+      <Picture image={exercise.image} className={styles.imageBig} />
       {exercise.question && <h2 className={styles.question} style={{ marginBottom: 16 }}>{exercise.question}</h2>}
 
       <div className={styles.choiceList}>

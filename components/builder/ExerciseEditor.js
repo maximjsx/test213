@@ -144,6 +144,9 @@ function TypeFields({ ex, onChange, courseId }) {
         <FieldRow label="Translation">
           <input className={styles.input} value={ex.translation || ''} placeholder="Hello!" onChange={e => set('translation', e.target.value)} />
         </FieldRow>
+        <FieldRow label="Picture (optional)">
+          <ImageField image={ex.image || null} onChange={img => set('image', img)} courseId={courseId} label="Picture" />
+        </FieldRow>
         {ttsField}
       </>
     )

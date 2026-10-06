@@ -4,6 +4,7 @@ import { playClip } from '../../lib/audio'
 import { langOf } from '../../lib/lang'
 import UsageNote from './UsageNote'
 import AddToDeckButton from '../decks/AddToDeckButton'
+import Picture from './Picture'
 import styles from './Exercise.module.css'
 
 export default function Introduce({ exercise, onPendingChange, checkTrigger, onAnswer }) {
@@ -31,6 +32,7 @@ export default function Introduce({ exercise, onPendingChange, checkTrigger, onA
       <p className={styles.label}>{exercise.label || 'NEW'}</p>
 
       <div className={styles.introduceCard}>
+        <Picture image={exercise.image} className={styles.introducePicture} />
         <div className={styles.introduceLetterRow} lang={langOf(upper)}>
           {showBothCases ? (
             <>

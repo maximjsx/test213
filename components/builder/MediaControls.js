@@ -122,7 +122,7 @@ export function AudioField({ audio, onChange, courseId, hint = 'Record or upload
   )
 }
 
-// ── Image: upload a picture for image-based exercises. `image` is { id, url } | null ──
+// ── Image: upload a picture for image-based exercises. `image` is { id, url, ai? } | null ──
 export function ImageField({ image, onChange, courseId, label = 'Image' }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -169,6 +169,12 @@ export function ImageField({ image, onChange, courseId, label = 'Image' }) {
           <input ref={fileRef} type="file" accept="image/*" className={styles.hiddenInput} onChange={onPickFile} />
         </div>
       </div>
+      {image?.url && (
+        <label className={styles.aiToggle}>
+          <input type="checkbox" checked={!!image.ai} onChange={e => onChange({ ...image, ai: e.target.checked })} />
+          AI generated (shows a label, required by EU law)
+        </label>
+      )}
       {error && <div className={styles.error}>{error}</div>}
     </div>
   )

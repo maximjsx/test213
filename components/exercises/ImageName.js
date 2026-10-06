@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { checkAnswer } from '../../lib/checker'
 import { playClip } from '../../lib/audio'
+import Picture from './Picture'
 import styles from './Exercise.module.css'
 
 // Show a picture, learner types the Bulgarian word for it.
@@ -47,9 +48,7 @@ export default function ImageName({ exercise, onAnswer, onPendingChange, checkTr
   return (
     <div className={styles.wrap}>
       <p className={styles.label}>NAME THE PICTURE</p>
-      {exercise.image?.url && (
-        <img src={exercise.image.url} alt="" className={styles.imageBig} />
-      )}
+      <Picture image={exercise.image} className={styles.imageBig} />
       <div className={styles.inputRow}>
         <input
           className={`${styles.input} ${state === 'ok' ? styles.inputOk : state === 'bad' ? styles.inputBad : ''}`}

@@ -88,6 +88,7 @@
   flex-shrink: 0;
 }
 .hiddenInput { display: none; }
+.aiToggle { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; }
 
 /* ── audio trimmer ── */
 .trimmer {

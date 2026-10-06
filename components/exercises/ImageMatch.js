@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react'
 import { shuffle } from '../../lib/checker'
 import { speakText, hapticTap, hapticWrong } from '../../lib/audio'
+import Picture from './Picture'
 import styles from './Exercise.module.css'
 
 // Connect each picture (left) to its Bulgarian word (right).
@@ -72,7 +73,7 @@ export default function ImageMatch({ exercise, onAnswer, disabled }) {
               disabled={isLeftMatched(item.id) || disabled}
             >
               {item.image?.url
-                ? <img src={item.image.url} alt="" />
+                ? <Picture image={item.image} />
                 : <span className={styles.imagePlaceholder}>?</span>}
             </button>
           ))}

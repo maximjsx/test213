@@ -2,6 +2,7 @@
 import { useState, useRef, useMemo, useEffect } from 'react'
 import { shuffle } from '../../lib/checker'
 import { playClip, hapticTap } from '../../lib/audio'
+import Picture from './Picture'
 import styles from './Exercise.module.css'
 
 // Hear a Bulgarian word, tap the matching picture.
@@ -61,7 +62,7 @@ export default function ImageSelect({ exercise, onAnswer, onPendingChange, check
             disabled={disabled || checked}
           >
             {opt.image?.url
-              ? <img src={opt.image.url} alt="" />
+              ? <Picture image={opt.image} />
               : <span className={styles.imagePlaceholder}>?</span>}
           </button>
         ))}

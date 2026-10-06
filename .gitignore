@@ -1,3 +1,6 @@
 .next/
 node_modules/
 .env.local
+
+# Full size originals of public/pictures; the site serves the 512px .jpg copies
+public/pictures/*.jfif
