@@ -178,6 +178,32 @@ function TypeFields({ ex, onChange, courseId }) {
       </>
     )
 
+    case 'letter_sound': return (
+      <>
+        <FieldRow label="Mode">
+          <select className={styles.select} value={ex.mode || 'sound'} onChange={e => set('mode', e.target.value)}>
+            <option value="sound">sound: show a letter, choices are sounds</option>
+            <option value="letter">letter: show a sound, choices are letters</option>
+          </select>
+        </FieldRow>
+        <FieldRow label={ex.mode === 'letter' ? 'Sound shown' : 'Letter shown'}>
+          <input className={styles.input} value={ex.display || ''} placeholder={ex.mode === 'letter' ? 'f' : 'Ф'} onChange={e => set('display', e.target.value)} />
+        </FieldRow>
+        <ChoiceList ex={ex} onChange={onChange} hint={ex.mode === 'letter' ? 'Letters the learner already knows, ideally look-alikes.' : 'Sounds of letters the learner already knows.'} />
+      </>
+    )
+
+    case 'trace_letter': return (
+      <>
+        <FieldRow label="Letter" hint="One letter, shown faded for the learner to draw over">
+          <input className={styles.input} value={ex.display || ''} placeholder="Ф" maxLength={1} onChange={e => set('display', e.target.value)} />
+        </FieldRow>
+        <FieldRow label="Sound" hint="Shown above the letter, like f">
+          <input className={styles.input} value={ex.sound || ''} placeholder="f" onChange={e => set('sound', e.target.value)} />
+        </FieldRow>
+      </>
+    )
+
     case 'spell_word': return (
       <>
         <FieldRow label="Word to spell">

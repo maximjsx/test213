@@ -97,6 +97,10 @@ function getExerciseDisplay(ex) {
       return { q: ex.tts, a: ex.tts }
     case 'sound_choice':
       return { q: ex.display || 'Listen', a: ex.romanized ? `${ex.answer} (${ex.romanized})` : ex.answer }
+    case 'letter_sound':
+      return { q: ex.mode === 'sound' ? ex.display : `Letter for "${ex.display}"`, a: ex.answer }
+    case 'trace_letter':
+      return { q: 'Trace the letter', a: ex.display }
     case 'spell_word':
       return { q: ex.prompt || 'Spell it', a: ex.answer }
     default:

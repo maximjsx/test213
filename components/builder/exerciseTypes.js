@@ -23,6 +23,8 @@ export const EXERCISE_TYPES = [
   { type: 'image_mc',        label: 'Image Multiple Choice', icon: '🏞️', desc: 'Show a picture, pick the correct Bulgarian word' },
   { type: 'sound_choice',    label: 'Sound Choice',       icon: '🔉', desc: 'See Cyrillic and pick the recording, or hear one and pick the spelling' },
   { type: 'spell_word',      label: 'Spell the Word',     icon: '🔤', desc: 'Hear a word, build it from letter tiles' },
+  { type: 'letter_sound',    label: 'Letter and Sound',   icon: '🔠', desc: 'See a letter and pick its sound, or see a sound and pick the letter' },
+  { type: 'trace_letter',    label: 'Trace the Letter',   icon: '✍️', desc: 'Draw over a faded letter with a finger or mouse' },
 ]
 
 export function defaultExercise(type) {
@@ -46,6 +48,8 @@ export function defaultExercise(type) {
     case 'image_mc':        return { type, id, image: null, question: '', choices: ['', '', ''], answer: '', tts: '', audio: null }
     case 'sound_choice':    return { type, id, mode: 'read', display: '', choices: ['', '', ''], answer: '', romanized: '' }
     case 'spell_word':      return { type, id, answer: '', prompt: '', extras: ['', ''], tts: '' }
+    case 'letter_sound':    return { type, id, mode: 'sound', display: '', choices: ['', '', ''], answer: '' }
+    case 'trace_letter':    return { type, id, display: '', sound: '' }
     default: return { type, id }
   }
 }
@@ -74,6 +78,8 @@ export function exerciseSummary(ex) {
     case 'image_mc':        return ex.question || ex.answer || ''
     case 'sound_choice':    return `${ex.mode === 'read' ? 'Read' : 'Hear'}: ${ex.display || ex.answer || ''}`
     case 'spell_word':      return ex.answer || ''
+    case 'letter_sound':    return ex.mode === 'sound' ? `${ex.display || ''}: which sound` : `"${ex.display || ''}": which letter`
+    case 'trace_letter':    return ex.display || ''
     default: return ''
   }
 }

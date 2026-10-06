@@ -18,6 +18,8 @@ import ImageName from './exercises/ImageName'
 import ImageMultipleChoice from './exercises/ImageMultipleChoice'
 import SoundChoice from './exercises/SoundChoice'
 import SpellWord from './exercises/SpellWord'
+import LetterSound from './exercises/LetterSound'
+import TraceLetter from './exercises/TraceLetter'
 import Bear from './Bear'
 import Modal, { ModalText, ModalActions } from './ui/Modal'
 import Button from './ui/Button'
@@ -44,12 +46,17 @@ const EXERCISE_MAP = {
   image_mc: ImageMultipleChoice,
   sound_choice: SoundChoice,
   spell_word: SpellWord,
+  letter_sound: LetterSound,
+  trace_letter: TraceLetter,
 }
 
 const LISTEN_TYPES = new Set(['listen_and_type', 'listen_translate', 'sound_choice', 'spell_word'])
 
 // Exercises that self-complete on interaction and have no CHECK button
 const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
+
+// Skipping these costs nothing, since the device may not allow them right now
+const FREE_SKIP_TYPES = new Set(['trace_letter'])
 
 function QuitConfirm({ onQuit, onCancel }) {
   return (
@@ -149,8 +156,8 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
 
   function handleSkip() {
     if (feedback) return
-    if (isAudioExercise) {
-      setFeedback({ ok: 'skip', message: 'No penalty for audio skips' })
+    if (isAudioExercise || FREE_SKIP_TYPES.has(exercise?.type)) {
+      setFeedback({ ok: 'skip', message: isAudioExercise ? 'No penalty for audio skips' : 'No penalty for skipping' })
     } else {
       playWrong()
       hapticWrong()

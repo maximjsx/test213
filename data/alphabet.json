@@ -157,6 +157,19 @@
           "answer": "котка"
         },
         {
+          "type": "letter_sound",
+          "id": "abc-1-14p",
+          "mode": "letter",
+          "display": "k",
+          "choices": [
+            "К",
+            "Т",
+            "М",
+            "А"
+          ],
+          "answer": "К"
+        },
+        {
           "type": "spell_word",
           "id": "abc-1-15",
           "answer": "котка",
@@ -210,17 +223,16 @@
           "tts": "Е"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-1-20",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-1-20s",
+          "mode": "sound",
           "display": "Е",
           "choices": [
-            "Е",
-            "И",
-            "А"
+            "e",
+            "ee",
+            "a"
           ],
-          "answer": "Е",
-          "romanized": "e"
+          "answer": "e"
         },
         {
           "type": "spell_word",
@@ -324,16 +336,16 @@
           "answer": "metro"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-2-04",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-2-04s",
+          "mode": "sound",
           "display": "Р",
           "choices": [
-            "Р",
-            "П"
+            "r",
+            "p",
+            "t"
           ],
-          "answer": "Р",
-          "romanized": "r"
+          "answer": "r"
         },
         {
           "type": "sound_choice",
@@ -400,6 +412,18 @@
           "tts": "текст"
         },
         {
+          "type": "letter_sound",
+          "id": "abc-2-10s",
+          "mode": "sound",
+          "display": "С",
+          "choices": [
+            "s",
+            "k",
+            "t"
+          ],
+          "answer": "s"
+        },
+        {
           "type": "introduce",
           "id": "abc-2-11",
           "label": "NEW LETTER",
@@ -420,16 +444,16 @@
           "answer": "Monaco"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-2-13",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-2-13s",
+          "mode": "sound",
           "display": "Н",
           "choices": [
-            "Н",
-            "Х"
+            "n",
+            "h",
+            "m"
           ],
-          "answer": "Н",
-          "romanized": "n"
+          "answer": "n"
         },
         {
           "type": "sound_choice",
@@ -452,6 +476,19 @@
             "е"
           ],
           "tts": "Монако"
+        },
+        {
+          "type": "letter_sound",
+          "id": "abc-2-15p",
+          "mode": "letter",
+          "display": "r",
+          "choices": [
+            "Р",
+            "Т",
+            "Е",
+            "К"
+          ],
+          "answer": "Р"
         },
         {
           "type": "match_pairs",
@@ -555,16 +592,16 @@
           "answer": "Moscow"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-3-04",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-3-04s",
+          "mode": "sound",
           "display": "В",
           "choices": [
-            "В",
-            "Б"
+            "v",
+            "b",
+            "n"
           ],
-          "answer": "В",
-          "romanized": "v"
+          "answer": "v"
         },
         {
           "type": "sound_choice",
@@ -631,15 +668,29 @@
           "tts": "сауна"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-3-11",
-          "question": "Remember? Which one is the cat?",
+          "type": "letter_sound",
+          "id": "abc-3-10s",
+          "mode": "sound",
+          "display": "У",
           "choices": [
-            "котка",
-            "татко",
-            "мама"
+            "oo",
+            "y",
+            "a"
           ],
-          "answer": "котка"
+          "answer": "oo"
+        },
+        {
+          "type": "letter_sound",
+          "id": "abc-3-11p",
+          "mode": "letter",
+          "display": "n",
+          "choices": [
+            "Н",
+            "Х",
+            "В",
+            "Р"
+          ],
+          "answer": "Н"
         },
         {
           "type": "introduce",
@@ -662,17 +713,16 @@
           "answer": "chaos"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-3-14",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-3-14s",
+          "mode": "sound",
           "display": "Х",
           "choices": [
-            "Х",
-            "К",
-            "С"
+            "h",
+            "k",
+            "s"
           ],
-          "answer": "Х",
-          "romanized": "h"
+          "answer": "h"
         },
         {
           "type": "sound_choice",
@@ -695,6 +745,19 @@
             "у"
           ],
           "tts": "хаос"
+        },
+        {
+          "type": "letter_sound",
+          "id": "abc-3-16p",
+          "mode": "letter",
+          "display": "v",
+          "choices": [
+            "В",
+            "Р",
+            "С",
+            "У"
+          ],
+          "answer": "В"
         },
         {
           "type": "match_pairs",
@@ -798,6 +861,12 @@
           "tts": "П"
         },
         {
+          "type": "trace_letter",
+          "id": "abc-4-03t",
+          "display": "П",
+          "sound": "p"
+        },
+        {
           "type": "multiple_choice",
           "id": "abc-4-04",
           "question": "What is ПАРК?",
@@ -809,16 +878,16 @@
           "answer": "park"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-4-05",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-4-05s",
+          "mode": "sound",
           "display": "П",
           "choices": [
-            "П",
-            "Р"
+            "p",
+            "r",
+            "n"
           ],
-          "answer": "П",
-          "romanized": "p"
+          "answer": "p"
         },
         {
           "type": "sound_choice",
@@ -850,6 +919,12 @@
           "sublabel": "\"l\" as in \"lamp\"",
           "mnemonic": "Shaped like a lampshade. You will see it in ЛАМПА.",
           "tts": "Л"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-4-08t",
+          "display": "Л",
+          "sound": "l"
         },
         {
           "type": "multiple_choice",
@@ -885,15 +960,17 @@
           "tts": "лампа"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-4-12",
-          "question": "Remember? Which one is the metro?",
+          "type": "letter_sound",
+          "id": "abc-4-12p",
+          "mode": "letter",
+          "display": "r",
           "choices": [
-            "метро",
-            "текст",
-            "Монако"
+            "Р",
+            "П",
+            "Л",
+            "Н"
           ],
-          "answer": "метро"
+          "answer": "Р"
         },
         {
           "type": "introduce",
@@ -903,6 +980,12 @@
           "sublabel": "\"d\" as in \"door\"",
           "mnemonic": "Looks like a little house. And ДОМ means house!",
           "tts": "Д"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-4-13t",
+          "display": "Д",
+          "sound": "d"
         },
         {
           "type": "multiple_choice",
@@ -925,6 +1008,18 @@
             "лампа"
           ],
           "answer": "дом"
+        },
+        {
+          "type": "letter_sound",
+          "id": "abc-4-15s",
+          "mode": "sound",
+          "display": "Д",
+          "choices": [
+            "d",
+            "l",
+            "p"
+          ],
+          "answer": "d"
         },
         {
           "type": "spell_word",
@@ -1019,17 +1114,6 @@
           "answer": "house"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-5-02",
-          "question": "What country is МОНАКО?",
-          "choices": [
-            "Monaco",
-            "Moscow",
-            "Canada"
-          ],
-          "answer": "Monaco"
-        },
-        {
           "type": "introduce",
           "id": "abc-5-03",
           "label": "NEW LETTER",
@@ -1037,6 +1121,12 @@
           "sublabel": "\"g\" as in \"goal\"",
           "mnemonic": "Half a goalpost. You will see it in ГОЛ!",
           "tts": "Г"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-5-03t",
+          "display": "Г",
+          "sound": "g"
         },
         {
           "type": "multiple_choice",
@@ -1050,17 +1140,16 @@
           "answer": "goal"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-5-05",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-5-05s",
+          "mode": "sound",
           "display": "Г",
           "choices": [
-            "Г",
-            "Л",
-            "П"
+            "g",
+            "l",
+            "p"
           ],
-          "answer": "Г",
-          "romanized": "g"
+          "answer": "g"
         },
         {
           "type": "sound_choice",
@@ -1092,6 +1181,12 @@
           "sublabel": "\"f\" as in \"photo\"",
           "mnemonic": "Round like a camera lens. You will see it in ФОТО.",
           "tts": "Ф"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-5-08t",
+          "display": "Ф",
+          "sound": "f"
         },
         {
           "type": "multiple_choice",
@@ -1127,15 +1222,17 @@
           "tts": "фото"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-5-12",
-          "mode": "listen",
+          "type": "letter_sound",
+          "id": "abc-5-12p",
+          "mode": "letter",
+          "display": "d",
           "choices": [
-            "сауна",
-            "хаос",
-            "Москва"
+            "Д",
+            "Л",
+            "П",
+            "Г"
           ],
-          "answer": "сауна"
+          "answer": "Д"
         },
         {
           "type": "introduce",
@@ -1145,6 +1242,12 @@
           "sublabel": "\"ee\" as in \"see\"",
           "mnemonic": "A backwards N that says ee. You will see it in ТАКСИ.",
           "tts": "И"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-5-13t",
+          "display": "И",
+          "sound": "ee"
         },
         {
           "type": "multiple_choice",
@@ -1158,17 +1261,16 @@
           "answer": "taxi"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-5-15",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-5-15s",
+          "mode": "sound",
           "display": "И",
           "choices": [
-            "И",
-            "Н",
-            "Е"
+            "ee",
+            "n",
+            "e"
           ],
-          "answer": "И",
-          "romanized": "ee"
+          "answer": "ee"
         },
         {
           "type": "sound_choice",
@@ -1274,17 +1376,6 @@
           "answer": "taxi"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-6-02",
-          "question": "What is ХАОС?",
-          "choices": [
-            "chaos",
-            "house",
-            "goal"
-          ],
-          "answer": "chaos"
-        },
-        {
           "type": "introduce",
           "id": "abc-6-03",
           "label": "NEW LETTER",
@@ -1292,6 +1383,12 @@
           "sublabel": "\"b\" as in \"banana\"",
           "mnemonic": "Like a 6 wearing a flat cap. You will see it in БАНАН.",
           "tts": "Б"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-6-03t",
+          "display": "Б",
+          "sound": "b"
         },
         {
           "type": "multiple_choice",
@@ -1305,16 +1402,16 @@
           "answer": "banana"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-6-05",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-6-05s",
+          "mode": "sound",
           "display": "Б",
           "choices": [
-            "Б",
-            "В"
+            "b",
+            "v",
+            "p"
           ],
-          "answer": "Б",
-          "romanized": "b"
+          "answer": "b"
         },
         {
           "type": "sound_choice",
@@ -1346,6 +1443,12 @@
           "sublabel": "\"z\" as in \"zebra\"",
           "mnemonic": "Looks like the number 3. You will see it in ЗЕБРА.",
           "tts": "З"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-6-08t",
+          "display": "З",
+          "sound": "z"
         },
         {
           "type": "multiple_choice",
@@ -1381,15 +1484,17 @@
           "tts": "зебра"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-6-12",
-          "question": "Remember? Which one means house?",
+          "type": "letter_sound",
+          "id": "abc-6-12p",
+          "mode": "letter",
+          "display": "ee",
           "choices": [
-            "дом",
-            "парк",
-            "лампа"
+            "И",
+            "Н",
+            "Е",
+            "П"
           ],
-          "answer": "дом"
+          "answer": "И"
         },
         {
           "type": "introduce",
@@ -1399,6 +1504,12 @@
           "sublabel": "\"ya\" as in \"yard\"",
           "mnemonic": "A backwards R that says ya. You will see it in ЯПОНИЯ.",
           "tts": "Я"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-6-13t",
+          "display": "Я",
+          "sound": "ya"
         },
         {
           "type": "multiple_choice",
@@ -1412,15 +1523,16 @@
           "answer": "Japan"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-6-15",
-          "mode": "listen",
+          "type": "letter_sound",
+          "id": "abc-6-15s",
+          "mode": "sound",
+          "display": "Я",
           "choices": [
-            "Я",
-            "Р",
-            "А"
+            "ya",
+            "r",
+            "a"
           ],
-          "answer": "Я"
+          "answer": "ya"
         },
         {
           "type": "sound_choice",
@@ -1546,6 +1658,12 @@
           "tts": "Ъ"
         },
         {
+          "type": "trace_letter",
+          "id": "abc-7-03t",
+          "display": "Ъ",
+          "sound": "uh"
+        },
+        {
           "type": "multiple_choice",
           "id": "abc-7-04",
           "question": "What country is БЪЛГАРИЯ?",
@@ -1557,17 +1675,16 @@
           "answer": "Bulgaria"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-7-05",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-7-05s",
+          "mode": "sound",
           "display": "Ъ",
           "choices": [
-            "Ъ",
-            "А",
-            "У"
+            "uh",
+            "a",
+            "oo"
           ],
-          "answer": "Ъ",
-          "romanized": "uh"
+          "answer": "uh"
         },
         {
           "type": "sound_choice",
@@ -1599,6 +1716,12 @@
           "sublabel": "\"y\" as in \"boy\"",
           "mnemonic": "И wearing a little hat: a quick y. You will see it in ЙОГА.",
           "tts": "йо"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-7-08t",
+          "display": "Й",
+          "sound": "y"
         },
         {
           "type": "multiple_choice",
@@ -1634,15 +1757,17 @@
           "tts": "йога"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-7-12",
-          "mode": "listen",
+          "type": "letter_sound",
+          "id": "abc-7-12p",
+          "mode": "letter",
+          "display": "z",
           "choices": [
-            "фото",
-            "гол",
-            "такси"
+            "З",
+            "Б",
+            "Я",
+            "В"
           ],
-          "answer": "фото"
+          "answer": "З"
         },
         {
           "type": "introduce",
@@ -1652,6 +1777,12 @@
           "sublabel": "\"yu\" as in \"you\"",
           "mnemonic": "Looks like I and O stuck together, and says \"you\". You will see it in МЕНЮ.",
           "tts": "Ю"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-7-13t",
+          "display": "Ю",
+          "sound": "yu"
         },
         {
           "type": "multiple_choice",
@@ -1665,15 +1796,16 @@
           "answer": "menu"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-7-15",
-          "mode": "listen",
+          "type": "letter_sound",
+          "id": "abc-7-15s",
+          "mode": "sound",
+          "display": "Ю",
           "choices": [
-            "Ю",
-            "Я",
-            "У"
+            "yu",
+            "ya",
+            "oo"
           ],
-          "answer": "Ю"
+          "answer": "yu"
         },
         {
           "type": "sound_choice",
@@ -1779,17 +1911,6 @@
           "answer": "menu"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-8-02",
-          "question": "What is ГОЛ?",
-          "choices": [
-            "goal",
-            "yoga",
-            "zebra"
-          ],
-          "answer": "goal"
-        },
-        {
           "type": "introduce",
           "id": "abc-8-03",
           "label": "NEW LETTER",
@@ -1797,6 +1918,12 @@
           "sublabel": "\"sh\" as in \"shop\"",
           "mnemonic": "Three fingers on your lips: shh! You will see it in ШОКОЛАД.",
           "tts": "Ш"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-8-03t",
+          "display": "Ш",
+          "sound": "sh"
         },
         {
           "type": "multiple_choice",
@@ -1810,17 +1937,16 @@
           "answer": "chocolate"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-8-05",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-8-05s",
+          "mode": "sound",
           "display": "Ш",
           "choices": [
-            "Ш",
-            "С",
-            "Х"
+            "sh",
+            "s",
+            "h"
           ],
-          "answer": "Ш",
-          "romanized": "sh"
+          "answer": "sh"
         },
         {
           "type": "sound_choice",
@@ -1852,6 +1978,12 @@
           "sublabel": "\"sht\" as in \"ashtray\"",
           "mnemonic": "Ш with a little tail, and the tail adds a t: sht. You will see it in ЗАЩО.",
           "tts": "Щ"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-8-08t",
+          "display": "Щ",
+          "sound": "sht"
         },
         {
           "type": "sound_choice",
@@ -1887,16 +2019,16 @@
           "answer": "why"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-8-12",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-8-12s",
+          "mode": "sound",
           "display": "Щ",
           "choices": [
-            "Щ",
-            "Ш"
+            "sht",
+            "sh",
+            "s"
           ],
-          "answer": "Щ",
-          "romanized": "sht"
+          "answer": "sht"
         },
         {
           "type": "sound_choice",
@@ -1921,15 +2053,17 @@
           "tts": "защо"
         },
         {
-          "type": "multiple_choice",
-          "id": "abc-8-15",
-          "question": "Remember? Which one is Japan?",
+          "type": "letter_sound",
+          "id": "abc-8-15p",
+          "mode": "letter",
+          "display": "yu",
           "choices": [
-            "Япония",
-            "България",
-            "Канада"
+            "Ю",
+            "Я",
+            "Й",
+            "Ъ"
           ],
-          "answer": "Япония"
+          "answer": "Ю"
         },
         {
           "type": "introduce",
@@ -1939,6 +2073,12 @@
           "sublabel": "\"zh\", the \"s\" in \"measure\"",
           "mnemonic": "A bug with its legs out, buzzing zhzh. You will see it in ЖИРАФ.",
           "tts": "Ж"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-8-16t",
+          "display": "Ж",
+          "sound": "zh"
         },
         {
           "type": "multiple_choice",
@@ -2075,6 +2215,12 @@
           "tts": "Ц"
         },
         {
+          "type": "trace_letter",
+          "id": "abc-9-03t",
+          "display": "Ц",
+          "sound": "ts"
+        },
+        {
           "type": "multiple_choice",
           "id": "abc-9-04",
           "question": "What is ПИЦА?",
@@ -2086,17 +2232,16 @@
           "answer": "pizza"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-9-05",
-          "mode": "read",
+          "type": "letter_sound",
+          "id": "abc-9-05s",
+          "mode": "sound",
           "display": "Ц",
           "choices": [
-            "Ц",
-            "С",
-            "Щ"
+            "ts",
+            "s",
+            "sht"
           ],
-          "answer": "Ц",
-          "romanized": "ts"
+          "answer": "ts"
         },
         {
           "type": "sound_choice",
@@ -2130,6 +2275,12 @@
           "tts": "Ч"
         },
         {
+          "type": "trace_letter",
+          "id": "abc-9-08t",
+          "display": "Ч",
+          "sound": "ch"
+        },
+        {
           "type": "multiple_choice",
           "id": "abc-9-09",
           "question": "What is ЧИПС?",
@@ -2152,6 +2303,18 @@
           "answer": "чипс"
         },
         {
+          "type": "letter_sound",
+          "id": "abc-9-10s",
+          "mode": "sound",
+          "display": "Ч",
+          "choices": [
+            "ch",
+            "ts",
+            "sh"
+          ],
+          "answer": "ch"
+        },
+        {
           "type": "spell_word",
           "id": "abc-9-11",
           "answer": "чипс",
@@ -2163,15 +2326,17 @@
           "tts": "чипс"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-9-12",
-          "mode": "listen",
+          "type": "letter_sound",
+          "id": "abc-9-12p",
+          "mode": "letter",
+          "display": "sh",
           "choices": [
-            "йога",
-            "меню",
-            "банан"
+            "Ш",
+            "Щ",
+            "Ж",
+            "Ч"
           ],
-          "answer": "йога"
+          "answer": "Ш"
         },
         {
           "type": "introduce",
@@ -2181,6 +2346,11 @@
           "sublabel": "no sound of its own",
           "mnemonic": "Ь makes no sound by itself. A 1945 spelling reform removed almost all of them, so today it only ever comes before о, and ьо says \"yo\". It is rare: one of the few words with it is ШОФЬОР, from \"chauffeur\": a driver.",
           "tts": "шофьор"
+        },
+        {
+          "type": "trace_letter",
+          "id": "abc-9-13t",
+          "display": "Ь"
         },
         {
           "type": "multiple_choice",
@@ -2334,6 +2504,19 @@
           "romanized": "ts"
         },
         {
+          "type": "letter_sound",
+          "id": "abc-10-03p",
+          "mode": "letter",
+          "display": "zh",
+          "choices": [
+            "Ж",
+            "Ш",
+            "Щ",
+            "З"
+          ],
+          "answer": "Ж"
+        },
+        {
           "type": "sound_choice",
           "id": "abc-10-04",
           "mode": "listen",
@@ -2398,6 +2581,19 @@
             "Я",
             "Р",
             "Ю"
+          ],
+          "answer": "Я"
+        },
+        {
+          "type": "letter_sound",
+          "id": "abc-10-09p",
+          "mode": "letter",
+          "display": "ya",
+          "choices": [
+            "Я",
+            "Ю",
+            "Р",
+            "А"
           ],
           "answer": "Я"
         },
@@ -2482,6 +2678,19 @@
           ],
           "answer": "З",
           "romanized": "z"
+        },
+        {
+          "type": "letter_sound",
+          "id": "abc-10-15p",
+          "mode": "letter",
+          "display": "ts",
+          "choices": [
+            "Ц",
+            "Щ",
+            "Ч",
+            "С"
+          ],
+          "answer": "Ц"
         },
         {
           "type": "multiple_choice",
