@@ -4,6 +4,7 @@ import { useMemo, useState, useRef, useEffect } from 'react'
 import { findLesson, orderExercises } from '../../../lib/course'
 import { refreshVoiceMap } from '../../../lib/audio'
 import { useProgress } from '../../../hooks/useProgress'
+import { noteCompletion } from '../../../lib/pathCelebration'
 import ExerciseRunner from '../../../components/ExerciseRunner'
 import LessonComplete from '../../../components/LessonComplete'
 import LoadingBear from '../../../components/LoadingBear'
@@ -85,6 +86,7 @@ export default function LessonPage() {
   async function handleComplete(finalScore) {
     prevWrongIdsRef.current = { ...state.wrongExercises }
     setScore(finalScore)
+    noteCompletion(lesson.id, !!state.lessons[lesson.id]?.completed)
     const result = completeLesson(lesson.id, {
       correct: finalScore.correct,
       total: finalScore.total,

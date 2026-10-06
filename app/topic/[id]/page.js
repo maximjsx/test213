@@ -6,6 +6,7 @@ import { LEVELS, findLevelIndex, lessonHref } from '../../../lib/course'
 import { useProgress } from '../../../hooks/useProgress'
 import { onSplashFinished } from '../../../lib/splash'
 import { unlockAudio } from '../../../lib/audio'
+import { claimFirstCompletion } from '../../../lib/pathCelebration'
 import LessonPath from '../../../components/LessonPath'
 import TopicArt from '../../../components/TopicArt'
 import Chevron from '../../../components/Chevron'
@@ -14,22 +15,15 @@ import Button from '../../../components/ui/Button'
 import { TopicSkeleton } from '../../../components/PageSkeletons'
 import styles from './page.module.css'
 
-// Completions already celebrated in this tab, so coming back to the page or
-// a progress update from the server never replays the animation
-const celebrated = new Set()
-
-// The lesson finished in the last few seconds, so its node pops and its
-// connector draws in once when the learner lands back here.
+// The lesson finished for the first time in the last few seconds, so its node
+// pops and its connector draws in once when the learner lands back here.
 function claimCelebration(lessons) {
   let best = null, bestAt = 0
   for (const [id, v] of Object.entries(lessons || {})) {
     if (v?.completedAt > bestAt) { bestAt = v.completedAt; best = id }
   }
   if (!best || Date.now() - bestAt > 8000) return null
-  const key = `${best}:${bestAt}`
-  if (celebrated.has(key)) return null
-  celebrated.add(key)
-  return best
+  return claimFirstCompletion(best) ? best : null
 }
 
 export default function TopicPage() {
