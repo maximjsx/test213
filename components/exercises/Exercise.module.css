@@ -214,7 +214,7 @@
 }
 .introduceAudioBtn:hover { background:color-mix(in srgb, var(--blue) 22%, transparent); transform:translateY(-1px); }
 .introducePicture {
-  width:180px; aspect-ratio:1/1; border-radius:var(--r); border:3px solid var(--border-hi); overflow:hidden;
+  width:100%; max-width:280px; aspect-ratio:1/1; border-radius:var(--r); border:3px solid var(--border-hi); overflow:hidden;
 }
 .introduceActions { display:flex; align-items:center; justify-content:center; gap:10px; }
 

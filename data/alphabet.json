@@ -50,7 +50,11 @@
           "display": "мама",
           "translation": "mom",
           "sublabel": "Your first Bulgarian word, and an easy one: same as English.",
-          "tts": "мама"
+          "tts": "мама",
+          "image": {
+            "url": "/pictures/mom.jpg",
+            "ai": true
+          }
         },
         {
           "type": "introduce",
@@ -131,7 +135,6 @@
           "label": "NEW WORD",
           "display": "котка",
           "translation": "cat",
-          "sublabel": "Starts like \"cot\": picture a cat curled up asleep in a cot.",
           "tts": "котка",
           "image": {
             "url": "/pictures/cat.jpg",
@@ -204,7 +207,11 @@
           "display": "татко",
           "translation": "dad",
           "sublabel": "Starts like \"tattoo\": picture your dad showing off a big tattoo.",
-          "tts": "татко"
+          "tts": "татко",
+          "image": {
+            "url": "/pictures/dad.jpg",
+            "ai": true
+          }
         },
         {
           "type": "multiple_choice",
@@ -334,6 +341,35 @@
           "answer": "cat"
         },
         {
+          "type": "image_select",
+          "id": "abc-2-01i",
+          "prompt": "татко",
+          "options": [
+            {
+              "key": "abc-2-01i-0",
+              "image": {
+                "url": "/pictures/dad.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-2-01i-1",
+              "image": {
+                "url": "/pictures/mom.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-2-01i-2",
+              "image": {
+                "url": "/pictures/cat.jpg",
+                "ai": true
+              }
+            }
+          ],
+          "answer": 0
+        },
+        {
           "type": "introduce",
           "id": "abc-2-02",
           "label": "NEW LETTER",
@@ -386,6 +422,20 @@
             "а"
           ],
           "tts": "метро"
+        },
+        {
+          "type": "image_mc",
+          "id": "abc-2-06i",
+          "image": {
+            "url": "/pictures/metro.jpg",
+            "ai": true
+          },
+          "choices": [
+            "метро",
+            "татко",
+            "котка"
+          ],
+          "answer": "метро"
         },
         {
           "type": "introduce",
@@ -944,6 +994,20 @@
           "tts": "парк"
         },
         {
+          "type": "image_mc",
+          "id": "abc-4-07i",
+          "image": {
+            "url": "/pictures/park.jpg",
+            "ai": true
+          },
+          "choices": [
+            "парк",
+            "метро",
+            "сауна"
+          ],
+          "answer": "парк"
+        },
+        {
           "type": "introduce",
           "id": "abc-4-08",
           "label": "NEW LETTER",
@@ -1302,6 +1366,42 @@
             "п"
           ],
           "tts": "фото"
+        },
+        {
+          "type": "image_select",
+          "id": "abc-5-11i",
+          "prompt": "фото",
+          "options": [
+            {
+              "key": "abc-5-11i-0",
+              "image": {
+                "url": "/pictures/photo.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-5-11i-1",
+              "image": {
+                "url": "/pictures/park.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-5-11i-2",
+              "image": {
+                "url": "/pictures/metro.jpg",
+                "ai": true
+              }
+            },
+            {
+              "key": "abc-5-11i-3",
+              "image": {
+                "url": "/pictures/lamp.jpg",
+                "ai": true
+              }
+            }
+          ],
+          "answer": 0
         },
         {
           "type": "letter_sound",
@@ -3036,7 +3136,11 @@
           "display": "АПТЕКА",
           "translation": "pharmacy",
           "sublabel": "Like the old word \"apothecary\"",
-          "tts": "аптека"
+          "tts": "аптека",
+          "image": {
+            "url": "/pictures/pharmacy.jpg",
+            "ai": true
+          }
         },
         {
           "type": "multiple_choice",
