@@ -153,17 +153,6 @@
           "answer": "cat"
         },
         {
-          "type": "sound_choice",
-          "id": "abc-1-14",
-          "mode": "listen",
-          "choices": [
-            "котка",
-            "атом",
-            "мама"
-          ],
-          "answer": "котка"
-        },
-        {
           "type": "letter_sound",
           "id": "abc-1-14p",
           "mode": "letter",
@@ -175,17 +164,6 @@
             "А"
           ],
           "answer": "К"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-1-15",
-          "answer": "котка",
-          "prompt": "cat",
-          "extras": [
-            "т",
-            "м"
-          ],
-          "tts": "котка"
         },
         {
           "type": "sound_choice",
@@ -257,17 +235,6 @@
             "a"
           ],
           "answer": "e"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-1-21",
-          "answer": "татко",
-          "prompt": "dad",
-          "extras": [
-            "м",
-            "а"
-          ],
-          "tts": "татко"
         },
         {
           "type": "match_pairs",
@@ -468,17 +435,6 @@
           "answer": "текст"
         },
         {
-          "type": "spell_word",
-          "id": "abc-2-10",
-          "answer": "текст",
-          "prompt": "text",
-          "extras": [
-            "р",
-            "м"
-          ],
-          "tts": "текст"
-        },
-        {
           "type": "letter_sound",
           "id": "abc-2-10s",
           "mode": "sound",
@@ -532,17 +488,6 @@
             "текст"
           ],
           "answer": "Монако"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-2-15",
-          "answer": "Монако",
-          "prompt": "Monaco",
-          "extras": [
-            "р",
-            "е"
-          ],
-          "tts": "Монако"
         },
         {
           "type": "letter_sound",
@@ -682,17 +627,6 @@
           "answer": "Москва"
         },
         {
-          "type": "spell_word",
-          "id": "abc-3-06",
-          "answer": "Москва",
-          "prompt": "Moscow",
-          "extras": [
-            "н",
-            "р"
-          ],
-          "tts": "Москва"
-        },
-        {
           "type": "introduce",
           "id": "abc-3-07",
           "label": "NEW LETTER",
@@ -722,17 +656,6 @@
             "Монако"
           ],
           "answer": "сауна"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-3-10",
-          "answer": "сауна",
-          "prompt": "sauna",
-          "extras": [
-            "о",
-            "в"
-          ],
-          "tts": "сауна"
         },
         {
           "type": "image_mc",
@@ -982,17 +905,6 @@
           "answer": "парк"
         },
         {
-          "type": "spell_word",
-          "id": "abc-4-07",
-          "answer": "парк",
-          "prompt": "park",
-          "extras": [
-            "н",
-            "т"
-          ],
-          "tts": "парк"
-        },
-        {
           "type": "image_mc",
           "id": "abc-4-07i",
           "image": {
@@ -1042,17 +954,6 @@
             "мама"
           ],
           "answer": "лампа"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-4-11",
-          "answer": "лампа",
-          "prompt": "lamp",
-          "extras": [
-            "н",
-            "р"
-          ],
-          "tts": "лампа"
         },
         {
           "type": "image_mc",
@@ -1356,17 +1257,6 @@
           "answer": "фото"
         },
         {
-          "type": "spell_word",
-          "id": "abc-5-11",
-          "answer": "фото",
-          "prompt": "photo",
-          "extras": [
-            "в",
-            "п"
-          ],
-          "tts": "фото"
-        },
-        {
           "type": "image_select",
           "id": "abc-5-11i",
           "prompt": "фото",
@@ -1463,17 +1353,6 @@
             "текст"
           ],
           "answer": "такси"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-5-17",
-          "answer": "такси",
-          "prompt": "taxi",
-          "extras": [
-            "п",
-            "н"
-          ],
-          "tts": "такси"
         },
         {
           "type": "image_mc",
@@ -1682,17 +1561,6 @@
           "answer": "зебра"
         },
         {
-          "type": "spell_word",
-          "id": "abc-6-11",
-          "answer": "зебра",
-          "prompt": "zebra",
-          "extras": [
-            "с",
-            "в"
-          ],
-          "tts": "зебра"
-        },
-        {
           "type": "image_select",
           "id": "abc-6-11i",
           "prompt": "зебра",
@@ -1789,17 +1657,6 @@
             "Монако"
           ],
           "answer": "Япония"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-6-17",
-          "answer": "Япония",
-          "prompt": "Japan",
-          "extras": [
-            "р",
-            "а"
-          ],
-          "tts": "Япония"
         },
         {
           "type": "match_pairs",
@@ -1943,17 +1800,6 @@
           "answer": "България"
         },
         {
-          "type": "spell_word",
-          "id": "abc-7-07",
-          "answer": "България",
-          "prompt": "Bulgaria",
-          "extras": [
-            "у",
-            "в"
-          ],
-          "tts": "България"
-        },
-        {
           "type": "introduce",
           "id": "abc-7-08",
           "label": "NEW LETTER",
@@ -2076,17 +1922,6 @@
             "метро"
           ],
           "answer": "меню"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-7-17",
-          "answer": "меню",
-          "prompt": "menu",
-          "extras": [
-            "у",
-            "я"
-          ],
-          "tts": "меню"
         },
         {
           "type": "match_pairs",
@@ -2217,17 +2052,6 @@
             "лампа"
           ],
           "answer": "шоколад"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-8-07",
-          "answer": "шоколад",
-          "prompt": "chocolate",
-          "extras": [
-            "с",
-            "х"
-          ],
-          "tts": "шоколад"
         },
         {
           "type": "image_mc",
@@ -2374,17 +2198,6 @@
             "шоколад"
           ],
           "answer": "жираф"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-8-19",
-          "answer": "жираф",
-          "prompt": "giraffe",
-          "extras": [
-            "х",
-            "з"
-          ],
-          "tts": "жираф"
         },
         {
           "type": "image_select",
@@ -2638,17 +2451,6 @@
           "answer": "ch"
         },
         {
-          "type": "spell_word",
-          "id": "abc-9-11",
-          "answer": "чипс",
-          "prompt": "chips",
-          "extras": [
-            "ц",
-            "ш"
-          ],
-          "tts": "чипс"
-        },
-        {
           "type": "letter_sound",
           "id": "abc-9-12p",
           "mode": "letter",
@@ -2696,17 +2498,6 @@
             "жираф"
           ],
           "answer": "шофьор"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-9-16",
-          "answer": "шофьор",
-          "prompt": "driver",
-          "extras": [
-            "ъ",
-            "щ"
-          ],
-          "tts": "шофьор"
         },
         {
           "type": "match_pairs",
@@ -2849,17 +2640,6 @@
             "чипс"
           ],
           "answer": "защо"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-10-05",
-          "answer": "шофьор",
-          "prompt": "driver",
-          "extras": [
-            "щ",
-            "ж"
-          ],
-          "tts": "шофьор"
         },
         {
           "type": "sound_choice",
@@ -3066,17 +2846,6 @@
           ]
         },
         {
-          "type": "spell_word",
-          "id": "abc-10-17",
-          "answer": "жираф",
-          "prompt": "giraffe",
-          "extras": [
-            "ш",
-            "з"
-          ],
-          "tts": "жираф"
-        },
-        {
           "type": "speak_sentence",
           "id": "abc-10-18",
           "tts": "шофьор"
@@ -3151,17 +2920,6 @@
             "ИЗХОД"
           ],
           "answer": "АПТЕКА"
-        },
-        {
-          "type": "spell_word",
-          "id": "abc-11-07",
-          "answer": "аптека",
-          "prompt": "pharmacy",
-          "extras": [
-            "б",
-            "д"
-          ],
-          "tts": "аптека"
         },
         {
           "type": "multiple_choice",

@@ -59,6 +59,15 @@ const NO_CHECK_TYPES = new Set(['match_pairs', 'image_match'])
 // Skipping these costs nothing, since the device may not allow them right now
 const FREE_SKIP_TYPES = new Set(['trace_letter'])
 
+// Building a long word from sound alone is a real jump for a beginner, so say so up front
+const SPELLING_TYPES = new Set(['spell_word', 'listen_and_type'])
+const HARD_WORD_LENGTH = 6
+
+function isHardExercise(exercise) {
+  if (!SPELLING_TYPES.has(exercise?.type)) return false
+  return String(exercise.answer || '').replace(/s/g, '').length >= HARD_WORD_LENGTH
+}
+
 function QuitConfirm({ onQuit, onCancel }) {
   return (
     <Modal role="alertdialog" size="sm" title="Quit lesson?" icon={<Bear mood="sad" size={80} />} dismissable={false} onClose={onCancel}>
@@ -249,6 +258,12 @@ export default function ExerciseRunner({ lesson, level, exercises, onComplete, o
           {exercise?.isPreviousMistake && (
             <div className={styles.prevMistakeBanner}>
               ↩ Previous mistake, try again!
+            </div>
+          )}
+          {!cheer && isHardExercise(exercise) && (
+            <div className={styles.hardBadge}>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor" /></svg>
+              Hard exercise
             </div>
           )}
           {cheer && <StreakCheer count={cheer} />}
